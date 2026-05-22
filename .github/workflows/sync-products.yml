@@ -1,9 +1,9 @@
-name: "카페24 상품 자동 동기화"
+name: "카페24 상품 실시 동기화"
 
 on:
   schedule:
-    - cron: "0 0 * * *"   # 매일 오전 9시 KST (00:00 UTC)
-  workflow_dispatch:        # 수동 실행도 가능
+    - cron: "0 0 * * *"
+  workflow_dispatch:
 
 jobs:
   sync:
@@ -11,8 +11,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: 저장소 체크아웃
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: 액세스 토큰 발급
         id: token
@@ -24,12 +23,10 @@ jobs:
             -u "${{ secrets.CAFE24_CLIENT_ID }}:${{ secrets.CAFE24_CLIENT_SECRET }}" \
             -d "grant_type=refresh_token&refresh_token=${{ secrets.CAFE24_REFRESH_TOKEN }}")
 
-          echo "📦 토큰 응답 확인..."
           ACCESS_TOKEN=$(echo "$RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('access_token','ERROR'))")
 
           if [ "$ACCESS_TOKEN" = "ERROR" ]; then
             echo "❌ 액세스 토큰 발급 실패"
-            echo "$RESPONSE"
             exit 1
           fi
 
@@ -61,11 +58,11 @@ jobs:
                   params={"limit": 100, "offset": offset, "display": "T", "selling": "T"},
               )
               if r.status_code != 200:
-                  print(f"❌ API 오류: {r.status_code} - {r.text}")
+                  print(f"❌ API 오류: {r.status_code}")
                   break
 
               items = r.json().get("products", [])
-              print(f"  📦 offset={offset} → {len(items)}개 수신")
+              print(f"  📦 offset={offset} → {len(items)}개")
 
               if not items:
                   break
@@ -115,9 +112,9 @@ jobs:
           git config user.email "actions@github.com"
           git add products.json
           if git diff --staged --quiet; then
-            echo "ℹ️ 상품 변경사항 없음 — 커밋 생략"
+            echo "ℹ️ 동기화된 상품 없음"
           else
-            git commit -m "chore: 카페24 상품 자동 업데이트 $(date '+%Y-%m-%d %H:%M KST')"
+            git commit -m "chore: 카페24 상품 동기화 $(date '+%Y-%m-%d %H:%M')"
             git push
             echo "✅ products.json 업데이트 완료"
           fi
