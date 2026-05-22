@@ -157,6 +157,8 @@ header{position:sticky;top:0;z-index:100;background:rgba(12,12,12,.92);backdrop-
 .pay-modal{background:var(--surface);border-radius:18px;width:min(460px,100%);border:1px solid rgba(46,204,64,.25);overflow:hidden;box-shadow:0 0 40px rgba(46,204,64,.15);}
 .pay-modal-head{background:#fff;border-bottom:1px solid rgba(46,204,64,.3);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;}
 .pay-modal-head h2{font-family:'Pretendard',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:0;color:#111;}
+.pay-modal-head h2 .lg{font-size:1.1rem;-webkit-text-stroke:0;text-shadow:none;}
+.pay-modal-head h2 .ly{font-size:1.1rem;-webkit-text-stroke:0;text-shadow:none;}
 .pay-modal-close{background:rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.15);color:#333;cursor:pointer;border-radius:6px;padding:3px 10px;font-size:.9rem;}
 .pay-modal-body{padding:18px;}
 .order-summary{background:var(--bg);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden;}
@@ -265,7 +267,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(12,12,12,.92);backdrop-
 <div class="pay-modal-overlay" id="pay-modal-overlay">
   <div class="pay-modal">
     <div class="pay-modal-head">
-      <h2>FROKY 결제</h2>
+      <h2><span class="lg">F</span><span class="ly">R</span><span class="lg">O</span><span class="ly">K</span><span class="lg">Y</span> 결제</h2>
       <button class="pay-modal-close" onclick="closePayModal()">✕</button>
     </div>
     <div class="pay-modal-body">
