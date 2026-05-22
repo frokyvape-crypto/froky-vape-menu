@@ -16,7 +16,7 @@ jobs:
             "https://frokyvape.cafe24api.com/api/v2/oauth/token" \
             -H "Content-Type: application/x-www-form-urlencoded" \
             -u "${{ secrets.CAFE24_CLIENT_ID }}:${{ secrets.CAFE24_CLIENT_SECRET }}" \
-            -d "grant_type=authorization_code&code=P5xbB3XfLCOPfWw91fahrK&redirect_uri=https://frokyvape-crypto.github.io/froky-vape-menu/callback.html")
+            -d "grant_type=authorization_code&code=XRRgrSMHPhBlBuKxc8BG2A&redirect_uri=https://frokyvape-crypto.github.io/froky-vape-menu/callback.html")
 
           echo "📦 응답: $RESPONSE"
 
