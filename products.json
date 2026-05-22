@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1001,
+    "name": "FROKY SALT 딸기",
+    "price": 12000,
+    "img": "https://frokyvape.cafe24.com/web/product/small/202405/1234567_shop1_27e8c84d1234.jpg",
+    "flavor": "딸기의 상큼한 맛과 부드러운 입호흡",
+    "cat": "고농도",
+    "sale": false,
+    "options": []
+  },
+  {
+    "id": 1002,
+    "name": "FROKY SALT 포도",
+    "price": 12000,
+    "img": "https://frokyvape.cafe24.com/web/product/small/202405/1234567_shop1_27e8c84d1235.jpg",
+    "flavor": "진한 포도 향의 고농도 액상",
+    "cat": "고농도",
+    "sale": false,
+    "options": []
+  },
+  {
+    "id": 2001,
+    "name": "FROKY 폐호흡 레몬 모드",
+    "price": 18000,
+    "img": "https://frokyvape.cafe24.com/web/product/small/202405/1234567_shop1_27e8c84d2001.jpg",
+    "flavor": "레몬의 상큼함과 강한 입자감",
+    "cat": "폐호흡",
+    "sale": true,
+    "options": []
+  },
+  {
+    "id": 2002,
+    "name": "FROKY RDA 멘솔",
+    "price": 22000,
+    "img": "https://frokyvape.cafe24.com/web/product/small/202405/1234567_shop1_27e8c84d2002.jpg",
+    "flavor": "시원한 멘솔의 강한 맛",
+    "cat": "폐호흡",
+    "sale": false,
+    "options": []
+  },
+  {
+    "id": 3001,
+    "name": "FROKY 디스포저블 딸기",
+    "price": 8000,
+    "img": "https://frokyvape.cafe24.com/web/product/small/202405/1234567_shop1_27e8c84d3001.jpg",
+    "flavor": "간편한 일회용 딸기 액상",
+    "cat": "일회용",
+    "sale": false,
+    "options": []
+  },
+  {
+    "id": 3002,
+    "name": "FROKY 디스포저블 포도",
+    "price": 8000,
+    "img": "https://frokyvape.cafe24.com/web/product/small/202405/1234567_shop1_27e8c84d3002.jpg",
+    "flavor": "편리한 디스포 타입 포도맛",
+    "cat": "일회용",
+    "sale": false,
+    "options": []
+  },
+  {
+    "id": 4001,
+    "name": "FROKY 입호흡 블루베리",
+    "price": 11000,
+    "img": "https://frokyvape.cafe24.com/web/product/small/202405/1234567_shop1_27e8c84d4001.jpg",
+    "flavor": "부드러운 블루베리 향",
+    "cat": "입호흡",
+    "sale": false,
+    "options": []
+  },
+  {
+    "id": 4002,
+    "name": "FROKY 입호흡 복숭아",
+    "price": 11000,
+    "img": "https://frokyvape.cafe24.com/web/product/small/202405/1234567_shop1_27e8c84d4002.jpg",
+    "flavor": "달콤한 복숭아의 맛",
+    "cat": "입호흡",
+    "sale": false,
+    "options": []
+  }
+]
