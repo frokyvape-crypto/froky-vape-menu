@@ -1,0 +1,125 @@
+name: "카페24 상품 실시 동기화 로그"
+
+on:
+  push:
+    branches: ["main"]
+    paths: [".github/workflows/run-sync.yml"]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 액세스 토큰 발급
+        id: token
+        run: |
+          echo "🔄 리프레시 토큰으로 액세스 토큰 발급..."
+          RESPONSE=$(curl -s -X POST \
+            "https://frokyvape.cafe24api.com/api/v2/oauth/token" \
+            -H "Content-Type: application/x-www-form-urlencoded" \
+            -u "${{ secrets.CAFE24_CLIENT_ID }}:${{ secrets.CAFE24_CLIENT_SECRET }}" \
+            -d "grant_type=refresh_token&refresh_token=${{ secrets.CAFE24_REFRESH_TOKEN }}")
+
+          echo "📦 응답 처리..."
+          ACCESS_TOKEN=$(echo "$RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('access_token','ERROR'))")
+
+          if [ "$ACCESS_TOKEN" = "ERROR" ]; then
+            echo "❌ 액세스 토큰 발급 실패"
+            echo "$RESPONSE"
+            exit 1
+          fi
+
+          echo "✅ 액세스 토큰 발급 성공"
+          echo "access_token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
+
+      - name: 카페24 API로 상품 데이터 수집
+        env:
+          ACCESS_TOKEN: ${{ steps.token.outputs.access_token }}
+        run: |
+          pip install requests -q
+          python3 << 'PYEOF'
+          import requests, json, os
+
+          token = os.environ["ACCESS_TOKEN"]
+          headers = {
+              "Authorization": f"Bearer {token}",
+              "X-Cafe24-Api-Version": "2024-03-01",
+          }
+
+          all_products = []
+          offset = 0
+          print("🛒 카페24에서 상품 데이터 수집 중...")
+
+          while True:
+              r = requests.get(
+                  "https://frokyvape.cafe24api.com/api/v2/products",
+                  headers=headers,
+                  params={"limit": 100, "offset": offset, "display": "T", "selling": "T"},
+              )
+              
+              if r.status_code != 200:
+                  print(f"❌ API 오류: {r.status_code} - {r.text}")
+                  break
+
+              items = r.json().get("products", [])
+              print(f"  📦 offset={offset} → {len(items)}개 수신")
+
+              if not items:
+                  break
+              
+              all_products.extend(items)
+              if len(items) < 100:
+                  break
+              
+              offset += 100
+
+          print(f"✅ 총 {len(all_products)}개 상품 수집 완료")
+
+          result = []
+          for p in all_products:
+              img = p.get("detail_image") or p.get("list_image") or p.get("tiny_image") or ""
+              if img and img.startswith("/"):
+                  img = f"https://frokyvape.cafe24.com{img}"
+
+              name = p.get("product_name", "")
+              cat = "입호흡"
+              if any(k in name for k in ["폐호흡", "모드", "RDA", "RTA"]):
+                  cat = "폐호흡"
+              elif any(k in name for k in ["솔트", "salt", "고농도", "Salt"]):
+                  cat = "고농도"
+              elif any(k in name for k in ["일회용", "디스포", "Disposable"]):
+                  cat = "일회용"
+
+              result.append({
+                  "id":      p["product_no"],
+                  "name":    name,
+                  "price":   int(float(p.get("price", 0))),
+                  "img":     img,
+                  "flavor":  p.get("summary_description") or "",
+                  "cat":     cat,
+                  "sale":    p.get("price_content") is not None,
+                  "options": [],
+              })
+              print(f"  ✔ [{cat}] {name} - {int(float(p.get('price',0))):,}원")
+
+          with open("products.json", "w", encoding="utf-8") as f:
+              json.dump(result, f, ensure_ascii=False, indent=2)
+
+          print(f"\n🎉 products.json 저장 완료 ({len(result)}개)")
+          PYEOF
+
+      - name: 변경사항 커밋 및 푸시
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          git add products.json
+          if git diff --staged --quiet; then
+            echo "ℹ️ 동기화된 상품 없음"
+          else
+            git commit -m "chore: 카페24 상품 동기화 $(date '+%Y-%m-%d %H:%M KST')"
+            git push
+            echo "✅ products.json 업데이트 완료"
+          fi
