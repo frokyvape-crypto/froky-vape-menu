@@ -155,11 +155,11 @@ header{position:sticky;top:0;z-index:100;background:rgba(12,12,12,.92);backdrop-
 .pay-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:400;display:none;align-items:center;justify-content:center;padding:20px;}
 .pay-modal-overlay.open{display:flex;}
 .pay-modal{background:var(--surface);border-radius:18px;width:min(460px,100%);border:1px solid rgba(46,204,64,.25);overflow:hidden;box-shadow:0 0 40px rgba(46,204,64,.15);}
-.pay-modal-head{background:linear-gradient(135deg,#0d2e10,#1a1500);border-bottom:1px solid rgba(46,204,64,.3);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;}
-.pay-modal-head h2{font-family:'Lilita One',cursive;font-size:1.2rem;letter-spacing:1px;}
-.pay-modal-head h2 .lg{font-size:1.2rem;}
-.pay-modal-head h2 .ly{font-size:1.2rem;}
-.pay-modal-close{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;cursor:pointer;border-radius:6px;padding:3px 10px;font-size:.9rem;}
+.pay-modal-head{background:#fff;border-bottom:1px solid rgba(46,204,64,.3);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;}
+.pay-modal-head h2{font-family:'Lilita One',cursive;font-size:1.2rem;letter-spacing:1px;color:#111;}
+.pay-modal-head h2 .lg{font-size:1.2rem;-webkit-text-stroke:1.5px #0a4a10;}
+.pay-modal-head h2 .ly{font-size:1.2rem;-webkit-text-stroke:1.5px #6b5e00;}
+.pay-modal-close{background:rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.15);color:#333;cursor:pointer;border-radius:6px;padding:3px 10px;font-size:.9rem;}
 .pay-modal-body{padding:18px;}
 .order-summary{background:var(--bg);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden;}
 .order-summary-title{padding:9px 13px;font-size:.78rem;color:var(--g);font-weight:800;letter-spacing:.5px;border-bottom:1px solid var(--border);}
@@ -173,9 +173,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(12,12,12,.92);backdrop-
 .order-total-label{font-weight:800;font-size:.95rem;color:var(--text);}
 .order-total-val{color:var(--y);font-weight:900;font-size:1.1rem;}
 [data-theme="light"] .order-total-val{color:#7a6e00;}
-.pay-btns{display:grid;grid-template-columns:auto 1fr;gap:8px;}
-.copy-btn{background:var(--bg);color:var(--g);border:1.5px solid rgba(46,204,64,.4);cursor:pointer;padding:14px 16px;border-radius:12px;font-family:'Pretendard',sans-serif;font-size:.88rem;font-weight:700;white-space:nowrap;transition:background .2s;}
-.copy-btn:hover{background:rgba(46,204,64,.1);}
+.pay-btns{display:grid;grid-template-columns:1fr;gap:8px;}
 .go-pay-btn{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:14px;border-radius:12px;font-family:'Pretendard',sans-serif;font-size:1rem;font-weight:800;box-shadow:0 0 16px var(--g-glow);}
 .go-pay-btn:hover{opacity:.88;}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--g);color:#fff;padding:10px 22px;border-radius:20px;font-size:.83rem;font-weight:700;z-index:500;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px var(--g-glow);}
@@ -282,7 +280,6 @@ header{position:sticky;top:0;z-index:100;background:rgba(12,12,12,.92);backdrop-
         </div>
       </div>
       <div class="pay-btns">
-        <button class="copy-btn" id="copy-btn" onclick="copyOrder()">📋 복사</button>
         <button class="go-pay-btn" onclick="goToPay()">결제 페이지로 이동 →</button>
       </div>
     </div>
@@ -332,9 +329,7 @@ function sheetQty(d){sq=Math.max(1,sq+d);document.getElementById('s-qty').textCo
 function updateTotal(){if(sp)document.getElementById('s-total').textContent='합계: '+fmt(sp.price*sq);}
 function sheetAddCart(){const opt=document.getElementById('s-option').value;if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}addToCart(sp,opt,sq);closeSheet();}
 function sheetBuyNow(){const opt=document.getElementById('s-option').value;if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}addToCart(sp,opt,sq);closeSheet();openPayModal();}
-let copyText='';
-function openPayModal(){closeCart();const total=cart.reduce((s,c)=>s+c.price*c.qty,0);document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${c.name}</div><div class="order-row-opt">${c.option} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');document.getElementById('pm-total').textContent=fmt(total);const lines=cart.map(c=>`• ${c.name} (${c.option}) × ${c.qty}개 = ${fmt(c.price*c.qty)}`).join('\n');copyText=`[FROKY VAPE 주문]\n${lines}\n합계: ${fmt(total)}`;navigator.clipboard.writeText(copyText).catch(()=>{});document.getElementById('copy-btn').textContent='📋 복사';document.getElementById('pay-modal-overlay').classList.add('open');}
-function copyOrder(){navigator.clipboard.writeText(copyText).then(()=>{const btn=document.getElementById('copy-btn');btn.textContent='✅ 복사됨';setTimeout(()=>btn.textContent='📋 복사',2000);});}
+function openPayModal(){closeCart();const total=cart.reduce((s,c)=>s+c.price*c.qty,0);document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${c.name}</div><div class="order-row-opt">${c.option} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');document.getElementById('pm-total').textContent=fmt(total);document.getElementById('pay-modal-overlay').classList.add('open');}
 function closePayModal(){document.getElementById('pay-modal-overlay').classList.remove('open');}
 function goToPay(){window.open(PAY_URL,'_blank');closePayModal();}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
