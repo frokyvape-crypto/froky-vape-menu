@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FROKY VAPE</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g:#2ecc40;--g2:#1aa82e;--g-glow:rgba(46,204,64,.35);
+  --y:#f5dc00;--y2:#d4be00;
+  --bg:#0c0c0c;--surface:#141414;--card:#181818;--border:#242424;
+  --text:#f0f0f0;--muted:#666;--shadow:rgba(0,0,0,.7);
+}
+[data-theme="light"]{
+  --bg:#f0f4f0;--surface:#fff;--card:#fff;--border:#e0e8e0;
+  --text:#111;--muted:#888;--shadow:rgba(0,0,0,.1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Pretendard',-apple-system,sans-serif;min-height:100vh;transition:background .3s,color .3s;overflow-x:hidden;}
+header{position:sticky;top:0;z-index:100;background:rgba(12,12,12,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(46,204,64,.2);display:flex;align-items:center;justify-content:space-between;padding:0 16px;height:58px;transition:background .3s;}
+[data-theme="light"] header{background:rgba(255,255,255,.92);border-bottom:1px solid rgba(46,204,64,.3);}
+.logo{font-family:'Lilita One',cursive;font-size:1.6rem;letter-spacing:2px;display:flex;align-items:center;gap:0;}
+.lg{color:var(--g);-webkit-text-stroke:2px #0a4a10;text-shadow:0 0 12px var(--g-glow),2px 2px 0 #0a4a10;}
+.ly{color:var(--y);-webkit-text-stroke:2px #6b5e00;text-shadow:0 0 12px rgba(245,220,0,.3),2px 2px 0 #6b5e00;}
+.header-right{display:flex;align-items:center;gap:10px;}
+.theme-toggle{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:3px;gap:2px;}
+.th-btn{background:none;border:none;cursor:pointer;width:30px;height:26px;border-radius:14px;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.th-btn.active{background:var(--g);}
+.cart-btn{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:7px 16px;border-radius:20px;font-family:'Pretendard',sans-serif;font-size:.85rem;font-weight:700;display:flex;align-items:center;gap:6px;box-shadow:0 0 14px var(--g-glow);transition:box-shadow .2s,opacity .2s;}
+.cart-btn:hover{opacity:.88;box-shadow:0 0 22px var(--g-glow);}
+.cart-count{background:#fff;color:var(--g2);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:900;}
+.hero{position:relative;overflow:hidden;padding:36px 20px 32px;background:linear-gradient(160deg,#0c1a0e 0%,#0c0c0c 60%,#1a1500 100%);border-bottom:1px solid rgba(46,204,64,.15);}
+[data-theme="light"] .hero{background:linear-gradient(160deg,#e8f5e8 0%,#f0f4f0 60%,#f5f3e0 100%);}
+.hero-glow{position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:400px;height:200px;background:radial-gradient(ellipse,rgba(46,204,64,.18) 0%,transparent 70%);pointer-events:none;}
+.hero-title{font-family:'Lilita One',cursive;font-size:3.2rem;text-align:center;letter-spacing:4px;line-height:1;margin-bottom:8px;position:relative;}
+.hero-title .lg{font-size:3.2rem;}
+.hero-title .ly{font-size:3.2rem;}
+.hero-sub{text-align:center;font-size:.85rem;color:var(--muted);font-weight:500;margin-bottom:20px;letter-spacing:.5px;}
+[data-theme="light"] .hero-sub{color:#666;}
+.hero-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;}
+.hero-tag{padding:5px 14px;border-radius:20px;font-size:.75rem;font-weight:700;border:1px solid;cursor:default;}
+.hero-tag.green{border-color:var(--g);color:var(--g);background:rgba(46,204,64,.08);}
+.hero-tag.yellow{border-color:var(--y);color:var(--y2);background:rgba(245,220,0,.08);}
+[data-theme="light"] .hero-tag.yellow{color:#8a7800;}
+.categories{display:flex;gap:8px;padding:12px 14px;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:58px;z-index:90;}
+.categories::-webkit-scrollbar{display:none;}
+.cat-btn{white-space:nowrap;padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:'Pretendard',sans-serif;font-size:.8rem;font-weight:600;transition:all .2s;}
+.cat-btn.active{border-color:var(--g);color:var(--g);background:rgba(46,204,64,.1);box-shadow:0 0 8px rgba(46,204,64,.15);}
+.cat-btn:hover:not(.active){border-color:var(--g);color:var(--g);}
+.search-bar{padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);}
+.search-wrap{position:relative;}
+.search-input{width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--text);padding:9px 38px 9px 14px;border-radius:10px;font-family:'Pretendard',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s,box-shadow .2s;}
+.search-input:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(46,204,64,.1);}
+.search-input::placeholder{color:var(--muted);}
+.search-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.1rem;display:none;}
+.search-result-label{font-size:.78rem;color:var(--muted);padding:8px 14px 0;}
+.best-section{padding:20px 0 0;}
+.best-header{display:flex;align-items:center;padding:0 14px 12px;gap:8px;}
+.best-header h2{font-size:1rem;font-weight:800;color:var(--text);}
+.best-badge{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;font-size:.62rem;padding:3px 10px;border-radius:10px;font-weight:700;box-shadow:0 0 8px var(--g-glow);}
+.carousel-wrap{overflow:hidden;position:relative;}
+.carousel-wrap::before,.carousel-wrap::after{content:'';position:absolute;top:0;bottom:0;width:40px;z-index:1;pointer-events:none;}
+.carousel-wrap::before{left:0;background:linear-gradient(to right,var(--bg),transparent);}
+.carousel-wrap::after{right:0;background:linear-gradient(to left,var(--bg),transparent);}
+.carousel-track{display:flex;gap:10px;padding:4px 14px 16px;animation:slide 30s linear infinite;width:max-content;}
+.carousel-wrap:hover .carousel-track{animation-play-state:paused;}
+@keyframes slide{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.best-card{width:130px;flex-shrink:0;background:var(--card);border:1px solid rgba(46,204,64,.2);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+.best-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(46,204,64,.2);}
+.best-card img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--surface);}
+.best-card-body{padding:8px 10px 10px;}
+.best-card-name{font-size:.75rem;font-weight:600;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.best-card-price{color:var(--y);font-size:.82rem;font-weight:800;}
+[data-theme="light"] .best-card-price{color:#7a6e00;}
+.hot{background:var(--g);color:#fff;font-size:.58rem;padding:1px 5px;border-radius:4px;margin-left:3px;font-weight:700;}
+.section-title{padding:20px 14px 12px;font-size:.82rem;font-weight:800;color:var(--g);text-transform:uppercase;letter-spacing:2px;display:flex;align-items:center;gap:10px;}
+.section-title::after{content:'';flex:1;height:1px;background:linear-gradient(to right,rgba(46,204,64,.4),transparent);}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(152px,1fr));gap:14px;padding:0 14px 120px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform .22s,box-shadow .22s,border-color .22s;box-shadow:0 2px 8px var(--shadow);}
+.card:hover{transform:translateY(-5px);border-color:rgba(46,204,64,.5);box-shadow:0 12px 32px rgba(46,204,64,.18);}
+.card-img-wrap{position:relative;overflow:hidden;}
+.card-img-wrap img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--surface);display:block;transition:transform .3s;}
+.card:hover .card-img-wrap img{transform:scale(1.05);}
+.card-badge{position:absolute;top:8px;left:8px;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;font-size:.62rem;font-weight:700;padding:3px 8px;border-radius:6px;box-shadow:0 0 8px var(--g-glow);}
+.card-quick{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5);backdrop-filter:blur(2px);color:#fff;font-size:.82rem;font-weight:700;font-family:'Pretendard',sans-serif;opacity:0;transition:opacity .2s;border:none;cursor:pointer;text-shadow:0 1px 4px rgba(0,0,0,.5);}
+.card:hover .card-quick{opacity:1;}
+.card-body{padding:11px 12px 4px;flex:1;}
+.card-name{font-size:.83rem;font-weight:700;line-height:1.4;margin-bottom:3px;}
+.card-flavor{font-size:.72rem;color:var(--muted);margin-bottom:6px;}
+.card-price{color:var(--y);font-weight:900;font-size:1rem;text-shadow:0 0 8px rgba(245,220,0,.2);}
+[data-theme="light"] .card-price{color:#7a6e00;text-shadow:none;}
+.card-btns{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px 10px 10px;}
+.btn-cart-card{background:rgba(46,204,64,.1);color:var(--g);border:1px solid rgba(46,204,64,.3);cursor:pointer;padding:8px;border-radius:8px;font-family:'Pretendard',sans-serif;font-size:.78rem;font-weight:700;transition:background .2s;}
+.btn-cart-card:hover{background:rgba(46,204,64,.2);}
+.btn-buy-card{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:8px;border-radius:8px;font-family:'Pretendard',sans-serif;font-size:.78rem;font-weight:700;box-shadow:0 0 10px var(--g-glow);transition:opacity .2s;}
+.btn-buy-card:hover{opacity:.85;}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:none;}
+.overlay.open{display:block;}
+.drawer{position:fixed;right:0;top:0;bottom:0;width:min(370px,100vw);background:var(--surface);z-index:201;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column;border-left:1px solid rgba(46,204,64,.2);}
+.drawer.open{transform:translateX(0);}
+.drawer-header{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.drawer-header h2{font-size:1rem;font-weight:800;color:var(--g);}
+.close-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.3rem;}
+.cart-items{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;}
+.cart-empty{text-align:center;color:var(--muted);padding:40px 0;font-size:.9rem;}
+.cart-item{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:10px;display:grid;grid-template-columns:50px 1fr auto;gap:10px;align-items:center;transition:border-color .2s;}
+.cart-item:hover{border-color:rgba(46,204,64,.3);}
+.cart-item img{width:50px;height:50px;object-fit:cover;border-radius:8px;background:var(--border);}
+.ci-name{font-size:.82rem;font-weight:600;margin-bottom:2px;}
+.ci-opt{font-size:.72rem;color:var(--muted);margin-bottom:6px;}
+.qty-ctrl{display:flex;align-items:center;gap:8px;}
+.qty-btn{background:var(--border);border:none;color:var(--text);cursor:pointer;width:24px;height:24px;border-radius:5px;font-size:.95rem;}
+.qty-val{font-size:.85rem;min-width:18px;text-align:center;font-weight:700;}
+.ci-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.ci-price{color:var(--y);font-weight:800;font-size:.85rem;white-space:nowrap;}
+[data-theme="light"] .ci-price{color:#7a6e00;}
+.ci-del{background:none;border:none;color:#e33;cursor:pointer;font-size:.78rem;}
+.drawer-footer{padding:14px 16px;border-top:1px solid rgba(46,204,64,.15);}
+.total-row{display:flex;justify-content:space-between;margin-bottom:12px;font-weight:700;}
+.total-price{color:var(--y);font-size:1.2rem;font-weight:900;}
+[data-theme="light"] .total-price{color:#7a6e00;}
+.checkout-btn{width:100%;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:14px;border-radius:12px;font-family:'Pretendard',sans-serif;font-size:.95rem;font-weight:800;box-shadow:0 0 16px var(--g-glow);transition:opacity .2s;}
+.checkout-btn:hover{opacity:.88;}
+.checkout-btn:disabled{background:var(--border);color:var(--muted);cursor:not-allowed;box-shadow:none;}
+.sheet-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;display:none;align-items:flex-end;justify-content:center;}
+.sheet-overlay.open{display:flex;}
+.sheet{background:var(--surface);width:100%;max-width:520px;border-radius:22px 22px 0 0;border-top:2px solid rgba(46,204,64,.35);animation:slideUp .25s ease;}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.sheet-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:12px auto 0;}
+.sheet-top{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);}
+.sheet-thumb{width:66px;height:66px;object-fit:cover;border-radius:12px;border:2px solid rgba(46,204,64,.25);}
+.sheet-info{flex:1;}
+.sheet-name{font-size:.9rem;font-weight:700;line-height:1.4;margin-bottom:4px;}
+.sheet-price{color:var(--y);font-size:1.05rem;font-weight:900;}
+[data-theme="light"] .sheet-price{color:#7a6e00;}
+.sheet-total{font-size:.8rem;color:var(--muted);margin-top:2px;}
+.sheet-tag{display:inline-block;border:1px solid rgba(46,204,64,.4);color:var(--g);font-size:.68rem;padding:2px 9px;border-radius:10px;font-weight:600;margin-top:5px;}
+.sheet-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.5rem;align-self:flex-start;padding:2px;}
+.sheet-body{padding:16px;}
+.sheet-label{font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.sheet-select{width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--text);padding:10px 12px;border-radius:10px;font-family:'Pretendard',sans-serif;font-size:.88rem;outline:none;margin-bottom:14px;transition:border-color .2s,box-shadow .2s;}
+.sheet-select:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(46,204,64,.1);}
+.qty-wrap{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;width:fit-content;margin-bottom:16px;}
+.sq-btn{background:var(--bg);border:none;color:var(--text);cursor:pointer;width:42px;height:40px;font-size:1.2rem;display:flex;align-items:center;justify-content:center;font-family:'Pretendard',sans-serif;}
+.sq-val{min-width:60px;height:40px;display:flex;align-items:center;justify-content:center;font-size:.95rem;font-weight:700;border-left:1px solid var(--border);border-right:1px solid var(--border);}
+.sheet-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+.btn-sheet-cart{background:rgba(46,204,64,.1);color:var(--g);border:1.5px solid rgba(46,204,64,.35);cursor:pointer;padding:13px;border-radius:12px;font-family:'Pretendard',sans-serif;font-size:.9rem;font-weight:700;transition:background .2s;}
+.btn-sheet-cart:hover{background:rgba(46,204,64,.2);}
+.btn-sheet-buy{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:13px;border-radius:12px;font-family:'Pretendard',sans-serif;font-size:.9rem;font-weight:800;box-shadow:0 0 12px var(--g-glow);}
+.btn-sheet-buy:hover{opacity:.88;}
+.btn-sheet-detail{width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--muted);cursor:pointer;font-family:'Pretendard',sans-serif;font-size:.88rem;font-weight:600;padding:13px;border-radius:12px;transition:border-color .2s,color .2s;}
+.btn-sheet-detail:hover{border-color:var(--g);color:var(--g);}
+.pay-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:400;display:none;align-items:center;justify-content:center;padding:20px;}
+.pay-modal-overlay.open{display:flex;}
+.pay-modal{background:var(--surface);border-radius:18px;width:min(460px,100%);border:1px solid rgba(46,204,64,.25);overflow:hidden;box-shadow:0 0 40px rgba(46,204,64,.15);}
+.pay-modal-head{background:linear-gradient(135deg,#0d2e10,#1a1500);border-bottom:1px solid rgba(46,204,64,.3);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;}
+.pay-modal-head h2{font-family:'Lilita One',cursive;font-size:1.2rem;letter-spacing:1px;}
+.pay-modal-head h2 .lg{font-size:1.2rem;}
+.pay-modal-head h2 .ly{font-size:1.2rem;}
+.pay-modal-close{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;cursor:pointer;border-radius:6px;padding:3px 10px;font-size:.9rem;}
+.pay-modal-body{padding:18px;}
+.order-summary{background:var(--bg);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden;}
+.order-summary-title{padding:9px 13px;font-size:.78rem;color:var(--g);font-weight:800;letter-spacing:.5px;border-bottom:1px solid var(--border);}
+.order-row{display:flex;justify-content:space-between;align-items:center;padding:9px 13px;border-bottom:1px solid var(--border);font-size:.88rem;}
+.order-row:last-child{border-bottom:none;}
+.order-row-name{font-weight:700;color:var(--text);}
+.order-row-opt{font-size:.76rem;color:var(--muted);margin-top:2px;}
+.order-row-price{color:var(--y);font-weight:800;white-space:nowrap;font-size:.95rem;}
+[data-theme="light"] .order-row-price{color:#7a6e00;}
+.order-total-row{display:flex;justify-content:space-between;padding:12px 13px;border-top:1px solid rgba(46,204,64,.3);background:rgba(46,204,64,.05);}
+.order-total-label{font-weight:800;font-size:.95rem;color:var(--text);}
+.order-total-val{color:var(--y);font-weight:900;font-size:1.1rem;}
+[data-theme="light"] .order-total-val{color:#7a6e00;}
+.pay-btns{display:grid;grid-template-columns:auto 1fr;gap:8px;}
+.copy-btn{background:var(--bg);color:var(--g);border:1.5px solid rgba(46,204,64,.4);cursor:pointer;padding:14px 16px;border-radius:12px;font-family:'Pretendard',sans-serif;font-size:.88rem;font-weight:700;white-space:nowrap;transition:background .2s;}
+.copy-btn:hover{background:rgba(46,204,64,.1);}
+.go-pay-btn{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:14px;border-radius:12px;font-family:'Pretendard',sans-serif;font-size:1rem;font-weight:800;box-shadow:0 0 16px var(--g-glow);}
+.go-pay-btn:hover{opacity:.88;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--g);color:#fff;padding:10px 22px;border-radius:20px;font-size:.83rem;font-weight:700;z-index:500;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px var(--g-glow);}
+.toast.show{opacity:1;}
+.kakao-float{position:fixed;bottom:24px;right:16px;z-index:90;background:#fee500;color:#191919;border:none;cursor:pointer;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 4px 16px rgba(0,0,0,.3);transition:transform .2s;}
+.kakao-float:hover{transform:scale(1.08);}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><span class="lg">F</span><span class="ly">R</span><span class="lg">O</span><span class="ly">K</span><span class="lg">Y</span>&nbsp;<span class="ly">V</span><span class="lg">A</span><span class="ly">P</span><span class="lg">E</span></div>
+  <div class="header-right">
+    <div class="theme-toggle">
+      <button class="th-btn active" id="btn-dark"  onclick="setTheme('dark')">🌙</button>
+      <button class="th-btn"        id="btn-light" onclick="setTheme('light')">☀️</button>
+    </div>
+    <button class="cart-btn" onclick="openCart()">🛒 <span class="cart-count" id="cart-count">0</span></button>
+  </div>
+</header>
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-title"><span class="lg">F</span><span class="ly">R</span><span class="lg">O</span><span class="ly">K</span><span class="lg">Y</span>&nbsp;<span class="ly">V</span><span class="lg">A</span><span class="ly">P</span><span class="lg">E</span></div>
+  <div class="hero-sub">프리미엄 전자담배 & 액상 전문</div>
+  <div class="hero-tags">
+    <span class="hero-tag green">🌿 입호흡 액상</span>
+    <span class="hero-tag yellow">⚡ 고농도 솔트</span>
+    <span class="hero-tag green">💨 폐호흡 액상</span>
+    <span class="hero-tag yellow">🔋 일회용 기기</span>
+  </div>
+</div>
+<div class="categories">
+  <button class="cat-btn active" onclick="filterCat('all',this)">전체</button>
+  <button class="cat-btn" onclick="filterCat('best',this)">🏆 베스트</button>
+  <button class="cat-btn" onclick="filterCat('입호흡',this)">입호흡 액상</button>
+  <button class="cat-btn" onclick="filterCat('폐호흡',this)">폐호흡 액상</button>
+  <button class="cat-btn" onclick="filterCat('고농도',this)">고농도 액상</button>
+  <button class="cat-btn" onclick="filterCat('일회용',this)">일회용 기기</button>
+</div>
+<div class="search-bar">
+  <div class="search-wrap">
+    <input class="search-input" id="search-input" type="text" placeholder="🔍  상품명을 검색하세요..." oninput="onSearch(this.value)" autocomplete="off">
+    <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
+  </div>
+</div>
+<div class="search-result-label" id="search-result-label" style="display:none"></div>
+<div class="best-section" id="best-section">
+  <div class="best-header"><h2>🏆 베스트 상품</h2><span class="best-badge">HOT</span></div>
+  <div class="carousel-wrap"><div class="carousel-track" id="carousel-track"></div></div>
+</div>
+<div class="section-title" id="section-label">전체 상품</div>
+<div class="grid" id="product-grid"></div>
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header"><h2>🛒 장바구니</h2><button class="close-btn" onclick="closeCart()">✕</button></div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="drawer-footer">
+    <div class="total-row"><span>합계</span><span class="total-price" id="total-price">0원</span></div>
+    <button class="checkout-btn" id="checkout-btn" onclick="openPayModal()" disabled>구매하기 →</button>
+  </div>
+</div>
+<div class="sheet-overlay" id="sheet-overlay" onclick="closeSheetOut(event)">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-top">
+      <img class="sheet-thumb" id="s-img" src="" alt="">
+      <div class="sheet-info">
+        <div class="sheet-name" id="s-name"></div>
+        <div class="sheet-price" id="s-price"></div>
+        <div class="sheet-total" id="s-total">합계: 0원</div>
+        <span class="sheet-tag" id="s-tag"></span>
+      </div>
+      <button class="sheet-close" onclick="closeSheet()">×</button>
+    </div>
+    <div class="sheet-body">
+      <div class="sheet-label">옵션 선택</div>
+      <select class="sheet-select" id="s-option" onchange="updateTotal()"><option value="">옵션 선택</option></select>
+      <div class="sheet-label">수량</div>
+      <div class="qty-wrap">
+        <button class="sq-btn" onclick="sheetQty(-1)">−</button>
+        <div class="sq-val" id="s-qty">1</div>
+        <button class="sq-btn" onclick="sheetQty(1)">+</button>
+      </div>
+      <div class="sheet-actions">
+        <button class="btn-sheet-cart" onclick="sheetAddCart()">장바구니 담기</button>
+        <button class="btn-sheet-buy"  onclick="sheetBuyNow()">구매하기</button>
+      </div>
+      <button class="btn-sheet-detail" onclick="closeSheet()">상세 이미지 보기</button>
+    </div>
+  </div>
+</div>
+<div class="pay-modal-overlay" id="pay-modal-overlay">
+  <div class="pay-modal">
+    <div class="pay-modal-head">
+      <h2><span class="lg">F</span><span class="ly">R</span><span class="lg">O</span><span class="ly">K</span><span class="lg">Y</span> 결제</h2>
+      <button class="pay-modal-close" onclick="closePayModal()">✕</button>
+    </div>
+    <div class="pay-modal-body">
+      <div class="order-summary">
+        <div class="order-summary-title">📦 주문 상품 내역</div>
+        <div id="pm-items"></div>
+        <div class="order-total-row">
+          <span class="order-total-label">총 결제금액</span>
+          <span class="order-total-val" id="pm-total">0원</span>
+        </div>
+      </div>
+      <div class="pay-btns">
+        <button class="copy-btn" id="copy-btn" onclick="copyOrder()">📋 복사</button>
+        <button class="go-pay-btn" onclick="goToPay()">결제 페이지로 이동 →</button>
+      </div>
+    </div>
+  </div>
+</div>
+<button class="kakao-float" onclick="window.open('https://pf.kakao.com/_eYxitG/chat','_blank')">💬</button>
+<div class="toast" id="toast"></div>
+<script>
+const PAY_URL='https://frokyvape.com/product/%EA%B0%9C%EC%9D%B8-%EA%B2%B0%EC%A0%9C%EC%B0%BD/1134/category/27/display/1/';
+const P=[
+  {id:1,name:'망고 아이스',flavor:'과일&멘솔',cat:'best',price:12000,sale:true,options:['3mg','6mg','12mg'],img:'https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?w=300&q=80'},
+  {id:2,name:'블루베리 민트',flavor:'과일&멘솔',cat:'best',price:11000,sale:true,options:['3mg','6mg'],img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&q=80'},
+  {id:3,name:'수박 쿨러',flavor:'과일&멘솔',cat:'best',price:13000,sale:false,options:['3mg','6mg','9mg'],img:'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=300&q=80'},
+  {id:4,name:'버지니아 클래식',flavor:'연초',cat:'입호흡',price:15000,sale:false,options:['3mg','6mg'],img:'https://images.unsplash.com/photo-1574169208507-84376144848b?w=300&q=80'},
+  {id:5,name:'민트 쿨 브리즈',flavor:'멘솔',cat:'입호흡',price:14000,sale:false,options:['3mg','6mg','9mg'],img:'https://images.unsplash.com/photo-1576086213369-97a306d36557?w=300&q=80'},
+  {id:6,name:'복숭아 아이스티',flavor:'과일&디저트',cat:'입호흡',price:13500,sale:false,options:['3mg','6mg'],img:'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=300&q=80'},
+  {id:7,name:'트로피컬 믹스',flavor:'과일',cat:'폐호흡',price:18000,sale:false,options:['0mg','3mg','6mg'],img:'https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=300&q=80'},
+  {id:8,name:'레몬 체리',flavor:'과일',cat:'폐호흡',price:17000,sale:true,options:['0mg','3mg'],img:'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=300&q=80'},
+  {id:9,name:'쿠키 앤 크림',flavor:'디저트',cat:'폐호흡',price:19000,sale:false,options:['0mg','3mg','6mg'],img:'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=300&q=80'},
+  {id:10,name:'솔트 망고',flavor:'고농도 솔트',cat:'고농도',price:16000,sale:false,options:['25mg','50mg'],img:'https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?w=300&q=80'},
+  {id:11,name:'솔트 딸기',flavor:'고농도 솔트',cat:'고농도',price:16000,sale:true,options:['25mg','50mg'],img:'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=300&q=80'},
+  {id:12,name:'솔트 포도',flavor:'고농도 솔트',cat:'고농도',price:16000,sale:false,options:['25mg','50mg'],img:'https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=300&q=80'},
+  {id:13,name:'하이코 5000',flavor:'일회용 기기',cat:'일회용',price:22000,sale:false,options:['망고','블루베리','수박'],img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&q=80'},
+  {id:14,name:'엘프바 BC5000',flavor:'일회용 기기',cat:'일회용',price:24000,sale:true,options:['딸기','포도','복숭아'],img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300&q=80'},
+  {id:15,name:'로스트메리 퍼프',flavor:'일회용 기기',cat:'일회용',price:20000,sale:false,options:['민트','연초','과일'],img:'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=300&q=80'},
+];
+let cart=[],sp=null,sq=1;
+const fmt=n=>n.toLocaleString('ko-KR')+'원';
+function setTheme(t){document.documentElement.setAttribute('data-theme',t);document.getElementById('btn-dark').classList.toggle('active',t==='dark');document.getElementById('btn-light').classList.toggle('active',t==='light');localStorage.setItem('fv-theme',t);}
+(()=>{const s=localStorage.getItem('fv-theme');if(s)setTheme(s);})();
+function cardHTML(p){return`<div class="card"><div class="card-img-wrap"><img src="${p.img}" alt="${p.name}" loading="lazy">${p.sale?'<span class="card-badge">SALE</span>':''}<button class="card-quick" onclick="openSheet(${p.id})">간단보기 👁</button></div><div class="card-body"><div class="card-name">${p.name}</div><div class="card-flavor">${p.flavor}</div><div class="card-price">${fmt(p.price)}</div></div><div class="card-btns"><button class="btn-cart-card" onclick="openSheet(${p.id})">담기</button><button class="btn-buy-card" onclick="openSheet(${p.id})">구매하기</button></div></div>`;}
+function buildCarousel(){const best=P.filter(p=>p.cat==='best');document.getElementById('carousel-track').innerHTML=[...best,...best].map(p=>`<div class="best-card" onclick="openSheet(${p.id})"><img src="${p.img}" alt="${p.name}" loading="lazy"><div class="best-card-body"><div class="best-card-name">${p.name}${p.sale?'<span class="hot">SALE</span>':''}</div><div class="best-card-price">${fmt(p.price)}</div></div></div>`).join('');}
+function renderGrid(cat){const items=cat==='all'?P:P.filter(p=>p.cat===cat);document.getElementById('best-section').style.display=cat==='all'?'':'none';const lb={all:'전체 상품',best:'🏆 베스트',입호흡:'입호흡 액상',폐호흡:'폐호흡 액상',고농도:'고농도 액상',일회용:'일회용 기기'};document.getElementById('section-label').textContent=lb[cat]||cat;document.getElementById('product-grid').innerHTML=items.map(cardHTML).join('');}
+function filterCat(cat,el){document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderGrid(cat);}
+function onSearch(val){const q=val.trim();document.getElementById('search-clear').style.display=q?'block':'none';if(!q){document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');return;}document.getElementById('best-section').style.display='none';const res=P.filter(p=>p.name.includes(q)||p.flavor.includes(q));const lbl=document.getElementById('search-result-label');lbl.style.display='block';lbl.textContent=`"${q}" 검색 결과 ${res.length}개`;document.getElementById('section-label').textContent='검색 결과';document.getElementById('product-grid').innerHTML=res.length?res.map(cardHTML).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0">검색 결과가 없습니다 😢</div>';}
+function clearSearch(){document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');}
+function addToCart(p,option,qty){const key=`${p.id}_${option}`;const ex=cart.find(c=>c.key===key);if(ex)ex.qty+=qty;else cart.push({key,id:p.id,name:p.name,option,price:p.price,qty,img:p.img});updateCartUI();showToast(`🛒 ${p.name} 담겼습니다`);}
+function updateCartUI(){const total=cart.reduce((s,c)=>s+c.price*c.qty,0);const count=cart.reduce((s,c)=>s+c.qty,0);document.getElementById('cart-count').textContent=count;document.getElementById('total-price').textContent=fmt(total);document.getElementById('checkout-btn').disabled=!cart.length;const el=document.getElementById('cart-items');if(!cart.length){el.innerHTML='<div class="cart-empty">장바구니가 비어있습니다 🛒</div>';return;}el.innerHTML=cart.map(c=>`<div class="cart-item"><img src="${c.img}" alt="${c.name}"><div><div class="ci-name">${c.name}</div><div class="ci-opt">${c.option}</div><div class="qty-ctrl"><button class="qty-btn" onclick="changeQty('${c.key}',-1)">−</button><span class="qty-val">${c.qty}</span><button class="qty-btn" onclick="changeQty('${c.key}',1)">+</button></div></div><div class="ci-right"><span class="ci-price">${fmt(c.price*c.qty)}</span><button class="ci-del" onclick="removeItem('${c.key}')">삭제</button></div></div>`).join('');}
+function changeQty(k,d){const i=cart.find(c=>c.key===k);if(i)i.qty=Math.max(1,i.qty+d);updateCartUI();}
+function removeItem(k){cart=cart.filter(c=>c.key!==k);updateCartUI();}
+function openCart(){document.getElementById('overlay').classList.add('open');document.getElementById('drawer').classList.add('open');}
+function closeCart(){document.getElementById('overlay').classList.remove('open');document.getElementById('drawer').classList.remove('open');}
+function openSheet(id){sp=P.find(p=>p.id===id);sq=1;document.getElementById('s-img').src=sp.img;document.getElementById('s-name').textContent=sp.name;document.getElementById('s-price').textContent=fmt(sp.price);document.getElementById('s-total').textContent='합계: '+fmt(sp.price);document.getElementById('s-tag').textContent=sp.flavor;document.getElementById('s-qty').textContent=1;document.getElementById('s-option').innerHTML='<option value="">옵션 선택</option>'+sp.options.map(o=>`<option>${o}</option>`).join('');document.getElementById('sheet-overlay').classList.add('open');}
+function closeSheet(){document.getElementById('sheet-overlay').classList.remove('open');}
+function closeSheetOut(e){if(e.target===document.getElementById('sheet-overlay'))closeSheet();}
+function sheetQty(d){sq=Math.max(1,sq+d);document.getElementById('s-qty').textContent=sq;updateTotal();}
+function updateTotal(){if(sp)document.getElementById('s-total').textContent='합계: '+fmt(sp.price*sq);}
+function sheetAddCart(){const opt=document.getElementById('s-option').value;if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}addToCart(sp,opt,sq);closeSheet();}
+function sheetBuyNow(){const opt=document.getElementById('s-option').value;if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}addToCart(sp,opt,sq);closeSheet();openPayModal();}
+let copyText='';
+function openPayModal(){closeCart();const total=cart.reduce((s,c)=>s+c.price*c.qty,0);document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${c.name}</div><div class="order-row-opt">${c.option} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');document.getElementById('pm-total').textContent=fmt(total);const lines=cart.map(c=>`• ${c.name} (${c.option}) × ${c.qty}개 = ${fmt(c.price*c.qty)}`).join('\n');copyText=`[FROKY VAPE 주문]\n${lines}\n합계: ${fmt(total)}`;navigator.clipboard.writeText(copyText).catch(()=>{});document.getElementById('copy-btn').textContent='📋 복사';document.getElementById('pay-modal-overlay').classList.add('open');}
+function copyOrder(){navigator.clipboard.writeText(copyText).then(()=>{const btn=document.getElementById('copy-btn');btn.textContent='✅ 복사됨';setTimeout(()=>btn.textContent='📋 복사',2000);});}
+function closePayModal(){document.getElementById('pay-modal-overlay').classList.remove('open');}
+function goToPay(){window.open(PAY_URL,'_blank');closePayModal();}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
+buildCarousel();
+renderGrid('all');
+</script>
+</body>
+</html>
