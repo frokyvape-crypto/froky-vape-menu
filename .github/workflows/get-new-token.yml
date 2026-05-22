@@ -26,23 +26,19 @@ jobs:
             -u "${{ secrets.CAFE24_CLIENT_ID }}:${{ secrets.CAFE24_CLIENT_SECRET }}" \
             -d "grant_type=authorization_code&code=6eeWLSyfSJuv1aRSeXqwdA&redirect_uri=https://frokyvape-crypto.github.io/froky-vape-menu/callback.html")
 
-          echo "📦 응답: $RESPONSE"
+          echo "응답: $RESPONSE"
 
           REFRESH_TOKEN=$(echo "$RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('refresh_token','ERROR'))")
           ACCESS_TOKEN=$(echo "$RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('access_token','ERROR'))")
 
           if [ "$REFRESH_TOKEN" = "ERROR" ] || [ -z "$REFRESH_TOKEN" ]; then
-            echo "❌ 토큰 발급 실패"
+            echo "토큰 발급 실패"
             echo "$RESPONSE"
             exit 1
           fi
 
-          echo "✅ Refresh Token 발급 성공"
-
-          # GitHub Secret 자동 업데이트
           echo "$REFRESH_TOKEN" | gh secret set CAFE24_REFRESH_TOKEN -R ${{ github.repository }}
-          echo "✅ CAFE24_REFRESH_TOKEN Secret 업데이트 완료"
-
+          echo "Secret 업데이트 완료"
           echo "access_token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
 
       - name: 카페24 상품 즉시 동기화
@@ -68,18 +64,18 @@ while True:
         params={"limit": 100, "offset": offset, "display": "T", "selling": "T"},
     )
     if r.status_code != 200:
-        print(f"❌ API 오류: {r.status_code} - {r.text}")
+        print(f"API 오류: {r.status_code} - {r.text}")
         break
     items = r.json().get("products", [])
     if not items:
         break
     all_products.extend(items)
-    print(f"  📦 {len(all_products)}개 수집 중...")
+    print(f"{len(all_products)}개 수집 중...")
     if len(items) < 100:
         break
     offset += 100
 
-print(f"✅ 총 {len(all_products)}개 상품")
+print(f"총 {len(all_products)}개 상품")
 
 CAT_KEYWORDS = {
     "폐호흡": ["폐호흡", "모드", "RDA", "RTA", "서브옴"],
@@ -128,12 +124,12 @@ for p in all_products:
         "sale":    bool(p.get("price_content")),
         "options": options,
     })
-    print(f"  ✔ [{result[-1]['cat']}] {name} - {int(float(p.get('price',0))):,}원")
+    print(f"[{result[-1]['cat']}] {name}")
 
 with open("products.json", "w", encoding="utf-8") as f:
     json.dump(result, f, ensure_ascii=False, indent=2)
 
-print(f"\n🎉 products.json 완료 ({len(result)}개)")
+print(f"products.json 완료 ({len(result)}개)")
 PYEOF
 
       - name: 커밋 & 푸시
@@ -142,9 +138,9 @@ PYEOF
           git config user.email "actions@github.com"
           git add products.json
           if git diff --staged --quiet; then
-            echo "ℹ️ 변경사항 없음"
+            echo "변경사항 없음"
           else
             git commit -m "chore: 카페24 상품 동기화 $(date '+%Y-%m-%d %H:%M KST')"
             git push
-            echo "✅ products.json 업데이트 완료"
+            echo "products.json 업데이트 완료"
           fi
