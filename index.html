@@ -289,24 +289,8 @@ header{position:sticky;top:0;z-index:100;background:rgba(12,12,12,.92);backdrop-
 <div class="toast" id="toast"></div>
 <script>
 const PAY_URL='https://frokyvape.com/product/%EA%B0%9C%EC%9D%B8-%EA%B2%B0%EC%A0%9C%EC%B0%BD/1134/category/27/display/1/';
-const P=[
-  {id:1,name:'망고 아이스',flavor:'과일&멘솔',cat:'best',price:12000,sale:true,options:['3mg','6mg','12mg'],img:'https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?w=300&q=80'},
-  {id:2,name:'블루베리 민트',flavor:'과일&멘솔',cat:'best',price:11000,sale:true,options:['3mg','6mg'],img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&q=80'},
-  {id:3,name:'수박 쿨러',flavor:'과일&멘솔',cat:'best',price:13000,sale:false,options:['3mg','6mg','9mg'],img:'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=300&q=80'},
-  {id:4,name:'버지니아 클래식',flavor:'연초',cat:'입호흡',price:15000,sale:false,options:['3mg','6mg'],img:'https://images.unsplash.com/photo-1574169208507-84376144848b?w=300&q=80'},
-  {id:5,name:'민트 쿨 브리즈',flavor:'멘솔',cat:'입호흡',price:14000,sale:false,options:['3mg','6mg','9mg'],img:'https://images.unsplash.com/photo-1576086213369-97a306d36557?w=300&q=80'},
-  {id:6,name:'복숭아 아이스티',flavor:'과일&디저트',cat:'입호흡',price:13500,sale:false,options:['3mg','6mg'],img:'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=300&q=80'},
-  {id:7,name:'트로피컬 믹스',flavor:'과일',cat:'폐호흡',price:18000,sale:false,options:['0mg','3mg','6mg'],img:'https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=300&q=80'},
-  {id:8,name:'레몬 체리',flavor:'과일',cat:'폐호흡',price:17000,sale:true,options:['0mg','3mg'],img:'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=300&q=80'},
-  {id:9,name:'쿠키 앤 크림',flavor:'디저트',cat:'폐호흡',price:19000,sale:false,options:['0mg','3mg','6mg'],img:'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=300&q=80'},
-  {id:10,name:'솔트 망고',flavor:'고농도 솔트',cat:'고농도',price:16000,sale:false,options:['25mg','50mg'],img:'https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?w=300&q=80'},
-  {id:11,name:'솔트 딸기',flavor:'고농도 솔트',cat:'고농도',price:16000,sale:true,options:['25mg','50mg'],img:'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=300&q=80'},
-  {id:12,name:'솔트 포도',flavor:'고농도 솔트',cat:'고농도',price:16000,sale:false,options:['25mg','50mg'],img:'https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=300&q=80'},
-  {id:13,name:'하이코 5000',flavor:'일회용 기기',cat:'일회용',price:22000,sale:false,options:['망고','블루베리','수박'],img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&q=80'},
-  {id:14,name:'엘프바 BC5000',flavor:'일회용 기기',cat:'일회용',price:24000,sale:true,options:['딸기','포도','복숭아'],img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300&q=80'},
-  {id:15,name:'로스트메리 퍼프',flavor:'일회용 기기',cat:'일회용',price:20000,sale:false,options:['민트','연초','과일'],img:'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=300&q=80'},
-];
-let cart=[],sp=null,sq=1;
+const API_URL='https://froky-vape-api.up.railway.app';
+let P=[],cart=[],sp=null,sq=1;
 const fmt=n=>n.toLocaleString('ko-KR')+'원';
 function setTheme(t){document.documentElement.setAttribute('data-theme',t);document.getElementById('btn-dark').classList.toggle('active',t==='dark');document.getElementById('btn-light').classList.toggle('active',t==='light');localStorage.setItem('fv-theme',t);}
 (()=>{const s=localStorage.getItem('fv-theme');if(s)setTheme(s);})();
@@ -333,8 +317,19 @@ function openPayModal(){closeCart();const total=cart.reduce((s,c)=>s+c.price*c.q
 function closePayModal(){document.getElementById('pay-modal-overlay').classList.remove('open');}
 function goToPay(){window.open(PAY_URL,'_blank');closePayModal();}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
-buildCarousel();
-renderGrid('all');
+async function loadProducts(){
+  document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품을 불러오는 중... ⏳</div>';
+  try{
+    const res=await fetch(API_URL+'/products');
+    if(!res.ok)throw new Error('API 오류');
+    P=await res.json();
+    buildCarousel();
+    renderGrid('all');
+  }catch(e){
+    document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품을 불러오지 못했습니다 😢<br><small>백엔드 서버 상태를 확인해주세요</small></div>';
+  }
+}
+loadProducts();
 </script>
 </body>
 </html>
