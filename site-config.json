@@ -1,6 +1,6 @@
 {
   "noticeMode": "stock",
-  "noticeBannerImg": "images/notice-banner.png",
+  "noticeBannerImg": "images/notice-banner.svg",
   "noticePopupEnabled": true,
   "noticePopupImg": "images/notice-popup.png"
 }

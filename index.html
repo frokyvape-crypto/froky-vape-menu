@@ -44,9 +44,9 @@ header{position:sticky;top:0;z-index:100;background:rgba(12,12,12,.92);backdrop-
 .hero-tag.green{border-color:var(--g);color:var(--g);background:rgba(46,204,64,.08);}
 .hero-tag.yellow{border-color:var(--y);color:var(--y2);background:rgba(245,220,0,.08);}
 [data-theme="light"] .hero-tag.yellow{color:#8a7800;}
-.notice-banner-wrap{display:none;position:relative;z-index:1;}
-.notice-banner-wrap img{display:block;width:min(100%,800px);margin:0 auto;border-radius:8px;box-shadow:0 8px 24px rgba(0,20,60,.24);}
-body[data-notice-mode="stock"] .hero{padding:10px 12px;background:#003f86;border-bottom:1px solid rgba(255,255,255,.18);}
+.notice-banner-wrap{display:none;position:relative;z-index:1;width:100%;}
+.notice-banner-wrap img{display:block;width:100%;height:auto;margin:0;border-radius:0;box-shadow:none;}
+body[data-notice-mode="stock"] .hero{padding:0;background:#f7f6f2;border-bottom:1px solid rgba(0,0,0,.08);}
 body[data-notice-mode="stock"] .hero-glow,body[data-notice-mode="stock"] .hero-brand{display:none;}
 body[data-notice-mode="stock"] .notice-banner-wrap{display:block;}
 .categories{display:flex;gap:8px;padding:12px 14px;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:58px;z-index:90;}
@@ -324,7 +324,7 @@ body[data-notice-mode="stock"] .notice-banner-wrap{display:block;}
 <div class="toast" id="toast"></div>
 <script>
 const PAY_URL='https://frokyvape.com/product/%EA%B0%9C%EC%9D%B8-%EA%B2%B0%EC%A0%9C%EC%B0%BD/1134/category/27/display/1/';
-const DEFAULT_SITE_CONFIG={noticeMode:'stock',noticeBannerImg:'images/notice-banner.png',noticePopupEnabled:true,noticePopupImg:'images/notice-popup.png'};
+const DEFAULT_SITE_CONFIG={noticeMode:'stock',noticeBannerImg:'images/notice-banner.svg',noticePopupEnabled:true,noticePopupImg:'images/notice-popup.png'};
 let siteConfig={...DEFAULT_SITE_CONFIG};
 let P=[],cart=[],sp=null,sq=1;
 const fmt=n=>n.toLocaleString('ko-KR')+'원';
