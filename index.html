@@ -44,8 +44,8 @@ header{position:sticky;top:0;z-index:100;background:rgba(12,12,12,.92);backdrop-
 .hero-tag.green{border-color:var(--g);color:var(--g);background:rgba(46,204,64,.08);}
 .hero-tag.yellow{border-color:var(--y);color:var(--y2);background:rgba(245,220,0,.08);}
 [data-theme="light"] .hero-tag.yellow{color:#8a7800;}
-.notice-banner-wrap{display:none;position:relative;z-index:1;width:100%;}
-.notice-banner-wrap img{display:block;width:100%;height:auto;margin:0;border-radius:0;box-shadow:none;}
+.notice-banner-wrap{display:none;position:relative;z-index:1;width:100%;overflow:hidden;line-height:0;}
+.notice-banner-wrap img{display:block;width:100%;height:clamp(140px,28vw,260px);object-fit:cover;object-position:center;margin:0;border-radius:0;box-shadow:none;image-rendering:auto;}
 body[data-notice-mode="stock"] .hero{padding:0;background:#f7f6f2;border-bottom:1px solid rgba(0,0,0,.08);}
 body[data-notice-mode="stock"] .hero-glow,body[data-notice-mode="stock"] .hero-brand{display:none;}
 body[data-notice-mode="stock"] .notice-banner-wrap{display:block;}
@@ -350,6 +350,7 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 <div class="toast" id="toast"></div>
 <script>
 const PAY_URL='https://frokyvape.com/product/%EA%B0%9C%EC%9D%B8-%EA%B2%B0%EC%A0%9C%EC%B0%BD/1134/category/27/display/1/';
+const REPO='frokyvape-crypto/froky-vape-menu';
 const DEFAULT_SITE_CONFIG={noticeMode:'stock',noticeBannerImgs:['images/notice-banner.svg'],noticeBannerImg:'images/notice-banner.svg',noticePopupEnabled:true,noticePopupImgs:['images/notice-popup.png'],noticePopupImg:'images/notice-popup.png'};
 let siteConfig={...DEFAULT_SITE_CONFIG};
 let P=[],cart=[],sp=null,sq=1;
@@ -364,7 +365,20 @@ function applySiteConfig(cfg){
   document.getElementById('notice-banner-img').src=bannerImgs[0]||DEFAULT_SITE_CONFIG.noticeBannerImg;
   if(siteConfig.noticePopupEnabled)openNoticePopup();
 }
-async function loadSiteConfig(){try{const res=await fetch('site-config.json?t='+Date.now());if(res.ok)applySiteConfig(await res.json());else applySiteConfig(DEFAULT_SITE_CONFIG);}catch(e){applySiteConfig(DEFAULT_SITE_CONFIG);}}
+async function loadSiteConfig(){
+  const t=Date.now();
+  // GitHub API is not CDN-cached — always returns the latest committed file
+  try{
+    const r=await fetch(`https://api.github.com/repos/${REPO}/contents/site-config.json`,{headers:{'Accept':'application/vnd.github.v3.raw'},cache:'no-store'});
+    if(r.ok){applySiteConfig(await r.json());return;}
+  }catch(e){}
+  // Fallback: direct URL with cache-bust + no-store
+  try{
+    const r=await fetch(`site-config.json?t=${t}`,{cache:'no-store'});
+    if(r.ok){applySiteConfig(await r.json());return;}
+  }catch(e){}
+  applySiteConfig(DEFAULT_SITE_CONFIG);
+}
 let _popupImgs=[],_popupIdx=0;
 function noticeTodayKey(){const imgs=getNoticeImgs('noticePopupImg',DEFAULT_SITE_CONFIG.noticePopupImg);const d=new Date();return`${imgs.join(',')}|${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function openNoticePopup(){try{if(localStorage.getItem('fv-notice-popup-hide-today')===noticeTodayKey())return;}catch(e){}_popupImgs=getNoticeImgs('noticePopupImg',DEFAULT_SITE_CONFIG.noticePopupImg);_popupIdx=0;renderPopupCarousel();document.getElementById('notice-popup-today').checked=false;document.getElementById('notice-popup-overlay').classList.add('open');}
