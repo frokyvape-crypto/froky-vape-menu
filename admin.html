@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FROKY VAPE 관리자</title>
+<title>FROKY VAPE 관리자 v3.2</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -157,7 +160,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
 
 <div id="page-app">
   <div class="topbar">
-    <span class="topbar-logo">FROKY VAPE 관리자</span>
+    <span class="topbar-logo">FROKY VAPE 관리자 <span style="font-size:.6rem;color:var(--muted);font-weight:400">v3.2</span></span>
     <span class="topbar-user" id="topbar-user"></span>
     <button class="btn-sm-ghost" id="theme-btn" onclick="toggleTheme()">🌙</button>
     <button class="btn-sm-ghost" onclick="logout()">로그아웃</button>
@@ -481,27 +484,38 @@ function renderTable() {
 async function saveAndDeploy() {
   if (!confirm('변경사항을 저장하고 사이트에 배포하시겠습니까?')) return;
   try {
-    toast('GitHub 동기화 중...', 'info');
-    // 항상 최신 SHA를 가져옴 (캐시된 SHA가 오래될 수 있으므로)
+    toast('SHA 확인 중...', 'info');
     const check = await ghApi('GET', `/repos/${REPO}/contents/${FILE}`);
     if (check.ok) {
       const cur = await check.json();
       fileSha = cur.sha;
-    } else if (check.status !== 404) {
-      throw new Error('파일 조회 실패: ' + check.status);
+      console.log('[saveAndDeploy] GET OK, sha=', fileSha);
+    } else if (check.status === 404) {
+      fileSha = '';
+      console.log('[saveAndDeploy] products.json 없음 (신규 생성)');
+    } else {
+      throw new Error(`SHA 조회 실패 (HTTP ${check.status})`);
     }
     toast('저장 중...', 'info');
     const content = btoa(unescape(encodeURIComponent(JSON.stringify(products, null, 2))));
-    const body = { message: `chore: 상품 업데이트 (관리자) ${new Date().toLocaleString('ko-KR')}`, content, branch: 'main' };
+    const body = {
+      message: `chore: 상품 업데이트 (관리자) ${new Date().toLocaleString('ko-KR')}`,
+      content, branch: 'main',
+    };
     if (fileSha) body.sha = fileSha;
+    console.log('[saveAndDeploy] PUT body.sha=', body.sha || '(없음 — 신규)');
     const r = await ghApi('PUT', `/repos/${REPO}/contents/${FILE}`, body);
-    if (!r.ok) { const e = await r.json(); throw new Error(e.message); }
-    fileSha = (await r.json()).content.sha;
+    if (!r.ok) {
+      const e = await r.json();
+      throw new Error(`PUT ${r.status}: ${e.message} | sha=${body.sha ? body.sha.slice(0,8) : 'MISSING'}`);
+    }
+    const rj = await r.json();
+    fileSha = rj.content.sha;
     dbSave();
     document.getElementById('deploy-banner').classList.add('show');
     setTimeout(() => document.getElementById('deploy-banner').classList.remove('show'), 70000);
     toast('저장 & 배포 시작!', 'ok');
-  } catch (e) { toast('실패: ' + e.message, 'err'); }
+  } catch (e) { toast('실패: ' + e.message, 'err'); console.error('[saveAndDeploy]', e); }
 }
 
 let editId = null;
