@@ -40,5 +40,29 @@
       "파인"
     ],
     "sale": false
+  },
+  {
+    "id": 1779802611451,
+    "name": "아이스",
+    "price": 15000,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779802597962_bsmi.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779802597962_bsmi.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779802601004_pvw0.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779802604792_st9y.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779802608321_cv9d.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779802601004_pvw0.png",
+    "cat": "best",
+    "flavor": "테스트",
+    "options": [
+      "딸기",
+      "멜론",
+      "수박",
+      "복숭아"
+    ],
+    "sale": true
   }
 ]
