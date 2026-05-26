@@ -18,7 +18,11 @@ body{background:var(--bg);color:var(--text);font-family:'Pretendard',-apple-syst
 .login-label{display:block;text-align:left;font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
 .login-input{width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--text);padding:12px 14px;border-radius:10px;font-family:'Pretendard',sans-serif;font-size:.9rem;outline:none;margin-bottom:16px;transition:border-color .2s;}
 .login-input:focus{border-color:var(--g);}
-.login-btn{width:100%;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:14px;border-radius:10px;font-family:'Pretendard',sans-serif;font-size:.95rem;font-weight:700;}
+.login-btn{width:100%;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:14px;border-radius:10px;font-family:'Pretendard',sans-serif;font-size:.95rem;font-weight:700;transition:opacity .2s;}
+.login-btn:disabled{opacity:.6;cursor:not-allowed;}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.tbody-loading td{text-align:center;padding:40px!important;color:var(--muted);}
 .login-hint{font-size:.75rem;color:var(--muted);margin-top:14px;line-height:1.6;}
 .login-hint a{color:var(--g);text-decoration:none;}
 
@@ -136,7 +140,7 @@ header{background:var(--surface);border-bottom:1px solid var(--border);padding:0
     <div class="login-sub">관리자 페이지 — GitHub 토큰으로 로그인</div>
     <label class="login-label">GitHub Personal Access Token</label>
     <input class="login-input" id="token-input" type="password" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off">
-    <button class="login-btn" onclick="doLogin()">로그인</button>
+    <button class="login-btn" id="login-btn" onclick="doLogin()">로그인</button>
     <div class="login-hint">
       토큰이 없으면 <a href="https://github.com/settings/tokens/new?scopes=repo&description=FROKY+VAPE+Admin" target="_blank">여기서 발급</a>하세요.<br>
       권한: <strong>repo (contents write)</strong> 필요
@@ -296,9 +300,15 @@ let importPanelOpen = true;
 function doLogin() {
   const t = document.getElementById('token-input').value.trim();
   if (!t) return showToast('토큰을 입력하세요', 'error');
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span>연결 중...';
   token = t;
   localStorage.setItem('fv-token', t);
-  initApp();
+  initApp().catch(() => {
+    btn.disabled = false;
+    btn.innerHTML = '로그인';
+  });
 }
 
 function logout() {
@@ -333,7 +343,7 @@ async function ghApi(method, path, body) {
 // ── 상품 로드 ──
 async function loadProducts() {
   try {
-    showToast('상품 불러오는 중...', 'info');
+    document.getElementById('product-tbody').innerHTML = '<tr class="tbody-loading"><td colspan="7"><span class="spin"></span> 상품 불러오는 중...</td></tr>';
     const res = await ghApi('GET', `/repos/${REPO}/contents/${FILE}`);
     if (!res.ok) { products = []; fileSha = ''; renderTable(); showToast('products.json 없음 — 새로 만들어집니다', 'info'); return; }
     const data = await res.json();
