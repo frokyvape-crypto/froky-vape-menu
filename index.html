@@ -169,6 +169,8 @@ body[data-notice-mode="stock"] .notice-banner-wrap{display:block;}
 .notice-popup{position:relative;width:min(390px,calc(100vw - 32px));}
 .notice-popup img{display:block;width:100%;border-radius:18px;box-shadow:0 20px 50px rgba(0,0,0,.45);}
 .notice-popup-close{position:absolute;top:-12px;right:-12px;background:#fff;color:#0b2239;border:1px solid rgba(0,0,0,.16);cursor:pointer;border-radius:50%;width:34px;height:34px;font-size:1rem;font-weight:900;box-shadow:0 4px 14px rgba(0,0,0,.35);}
+.notice-popup-today{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;color:#fff;font-size:.9rem;font-weight:700;text-shadow:0 1px 6px rgba(0,0,0,.4);}
+.notice-popup-today input{width:18px;height:18px;accent-color:var(--g);cursor:pointer;}
 .pay-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:400;display:none;align-items:center;justify-content:center;padding:20px;}
 .pay-modal-overlay.open{display:flex;}
 .pay-modal{background:var(--surface);border-radius:18px;width:min(460px,100%);border:1px solid rgba(46,204,64,.25);overflow:hidden;box-shadow:0 0 40px rgba(46,204,64,.15);}
@@ -294,6 +296,7 @@ body[data-notice-mode="stock"] .notice-banner-wrap{display:block;}
   <div class="notice-popup">
     <button class="notice-popup-close" onclick="closeNoticePopup()">×</button>
     <img id="notice-popup-img" src="" alt="담배사업법 개정에 따른 제품 판매 안내">
+    <label class="notice-popup-today"><input type="checkbox" id="notice-popup-today">오늘은 그만보기</label>
   </div>
 </div>
 <div class="pay-modal-overlay" id="pay-modal-overlay">
@@ -327,8 +330,9 @@ let P=[],cart=[],sp=null,sq=1;
 const fmt=n=>n.toLocaleString('ko-KR')+'원';
 function applySiteConfig(cfg){siteConfig={...DEFAULT_SITE_CONFIG,...(cfg||{})};document.body.setAttribute('data-notice-mode',siteConfig.noticeMode==='stock'?'stock':'default');document.getElementById('notice-banner-img').src=siteConfig.noticeBannerImg||DEFAULT_SITE_CONFIG.noticeBannerImg;document.getElementById('notice-popup-img').src=siteConfig.noticePopupImg||DEFAULT_SITE_CONFIG.noticePopupImg;if(siteConfig.noticePopupEnabled)openNoticePopup();}
 async function loadSiteConfig(){try{const res=await fetch('site-config.json?t='+Date.now());if(res.ok)applySiteConfig(await res.json());else applySiteConfig(DEFAULT_SITE_CONFIG);}catch(e){applySiteConfig(DEFAULT_SITE_CONFIG);}}
-function openNoticePopup(){try{if(sessionStorage.getItem('fv-notice-popup-closed')===(siteConfig.noticePopupImg||''))return;}catch(e){}document.getElementById('notice-popup-overlay').classList.add('open');}
-function closeNoticePopup(){try{sessionStorage.setItem('fv-notice-popup-closed',siteConfig.noticePopupImg||'closed');}catch(e){}document.getElementById('notice-popup-overlay').classList.remove('open');}
+function noticeTodayKey(){const d=new Date();return `${siteConfig.noticePopupImg||''}|${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function openNoticePopup(){try{if(localStorage.getItem('fv-notice-popup-hide-today')===noticeTodayKey())return;}catch(e){}document.getElementById('notice-popup-today').checked=false;document.getElementById('notice-popup-overlay').classList.add('open');}
+function closeNoticePopup(){try{if(document.getElementById('notice-popup-today').checked)localStorage.setItem('fv-notice-popup-hide-today',noticeTodayKey());}catch(e){}document.getElementById('notice-popup-overlay').classList.remove('open');}
 function closeNoticePopupOut(e){if(e.target===document.getElementById('notice-popup-overlay'))closeNoticePopup();}
 function setTheme(t){document.documentElement.setAttribute('data-theme',t);document.getElementById('btn-dark').classList.toggle('active',t==='dark');document.getElementById('btn-light').classList.toggle('active',t==='light');localStorage.setItem('fv-theme',t);}
 (()=>{const s=localStorage.getItem('fv-theme');if(s)setTheme(s);})();
