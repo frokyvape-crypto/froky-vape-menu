@@ -3,12 +3,21 @@
     "id": 1779771255622,
     "name": "시험",
     "price": 15200,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779771249192_45fp.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779785244755_3qo3.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779785246596_lwj9.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779785248142_avtu.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779785250117_wk5g.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779785252112_t2jm.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779785254325_lq0e.png"
+    ],
     "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779771249192_45fp.png",
-    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779780161341_gfxm.jpg",
     "detailImgs": [
       "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779780161341_gfxm.jpg",
       "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779780163242_0qqs.png"
     ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779780161341_gfxm.jpg",
     "cat": "일회용",
     "flavor": "시험",
     "options": [
