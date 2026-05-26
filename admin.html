@@ -149,6 +149,16 @@ tr:hover td{background:rgba(128,128,128,.06);}
   .form-grid,.c24-grid{grid-template-columns:1fr;}
   .action-cards{grid-template-columns:1fr 1fr;}
 }
+
+.notice-mode-item{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--card);border:1.5px solid var(--border);border-radius:8px;margin-bottom:5px;cursor:pointer;transition:border-color .15s,background .15s;}
+.notice-mode-item:hover{border-color:var(--g);}
+.notice-mode-item.active{border-color:var(--g);background:rgba(46,204,64,.08);}
+.nm-radio{width:13px;height:13px;border:2px solid var(--muted);border-radius:50%;flex-shrink:0;transition:border-color .15s,background .15s;}
+.notice-mode-item.active .nm-radio{border-color:var(--g);background:var(--g);}
+.nm-label{flex:1;font-size:.84rem;}
+.nm-value{font-size:.68rem;color:var(--muted);font-family:monospace;background:var(--bg);padding:1px 5px;border-radius:4px;}
+.nm-del{margin-left:4px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:.78rem;padding:2px 5px;border-radius:4px;line-height:1;transition:color .15s,background .15s;flex-shrink:0;}
+.nm-del:hover{color:var(--red);background:rgba(229,57,53,.12);}
 </style>
 </head>
 <body>
@@ -281,11 +291,13 @@ tr:hover td{background:rgba(128,128,128,.06);}
       </div>
       <div class="section-body">
         <div class="form-row">
-          <label>메인 화면</label>
-          <select id="notice-mode">
-            <option value="stock">재고제품 고지 배너</option>
-            <option value="default">기본 FROKY 화면</option>
-          </select>
+          <label>메인 화면 모드 — 클릭하여 선택, ✕로 삭제</label>
+          <div id="notice-modes-list"></div>
+          <div class="img-add-row" style="margin-top:6px">
+            <input id="f-notice-mode-label" type="text" placeholder="모드 이름 (예: 이벤트 화면)">
+            <input id="f-notice-mode-value" type="text" placeholder="값 (예: event)" style="max-width:120px">
+            <button class="btn btn-outline btn-xs" type="button" onclick="addNoticeMode()">+ 추가</button>
+          </div>
         </div>
         <div class="form-row">
           <label>메인 배너 이미지 — 첫 번째가 표시됩니다</label>
@@ -426,6 +438,10 @@ const FILE = 'products.json';
 const CONFIG_FILE = 'site-config.json';
 const DEFAULT_SITE_CONFIG = {
   noticeMode: 'stock',
+  noticeModes: [
+    { label: '재고제품 고지 배너', value: 'stock' },
+    { label: '기본 FROKY 화면', value: 'default' },
+  ],
   noticeBannerImgs: ['images/notice-banner.svg'],
   noticeBannerImg: 'images/notice-banner.svg',
   noticePopupEnabled: true,
@@ -436,6 +452,8 @@ let TOKEN = '', fileSha = '', products = [];
 let siteConfig = {...DEFAULT_SITE_CONFIG}, siteConfigSha = '';
 let imgSlots = { main: [], detail: [] };
 let noticeImgSlots = { banner: [], popup: [] };
+let noticeModes = [...DEFAULT_SITE_CONFIG.noticeModes];
+let selectedNoticeMode = 'stock';
 let isSaving = false;
 let WORKER_URL = localStorage.getItem('fv-worker-url') || '';
 let ADMIN_KEY = localStorage.getItem('fv-admin-key') || '';
@@ -626,8 +644,56 @@ async function loadProducts() {
   } catch (e) { if (e.message !== '401') toast('로드 실패: ' + e.message, 'err'); }
 }
 
+function renderNoticeModes() {
+  const el = document.getElementById('notice-modes-list');
+  if (!el) return;
+  if (!noticeModes.length) {
+    el.innerHTML = '<div style="font-size:.75rem;color:var(--muted);padding:6px 0">모드가 없습니다. 아래에서 추가하세요.</div>';
+    return;
+  }
+  el.innerHTML = noticeModes.map((m, i) => `
+    <div class="notice-mode-item${m.value === selectedNoticeMode ? ' active' : ''}" onclick="selectNoticeMode('${m.value.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')">
+      <div class="nm-radio"></div>
+      <span class="nm-label">${m.label}</span>
+      <span class="nm-value">${m.value}</span>
+      <button class="nm-del" type="button" onclick="event.stopPropagation();removeNoticeMode(${i})" title="삭제">✕</button>
+    </div>`).join('');
+}
+
+function selectNoticeMode(value) {
+  selectedNoticeMode = value;
+  renderNoticeModes();
+}
+
+function addNoticeMode() {
+  const labelEl = document.getElementById('f-notice-mode-label');
+  const valueEl = document.getElementById('f-notice-mode-value');
+  const label = labelEl.value.trim();
+  const rawValue = valueEl.value.trim();
+  if (!label) { toast('모드 이름을 입력하세요', 'err'); return; }
+  const value = rawValue || label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || ('mode-' + Date.now());
+  if (noticeModes.some(m => m.value === value)) { toast('같은 값의 모드가 이미 있습니다', 'err'); return; }
+  noticeModes.push({ label, value });
+  labelEl.value = '';
+  valueEl.value = '';
+  renderNoticeModes();
+}
+
+function removeNoticeMode(idx) {
+  const removed = noticeModes[idx];
+  noticeModes.splice(idx, 1);
+  if (selectedNoticeMode === removed.value) {
+    selectedNoticeMode = noticeModes[0]?.value || '';
+  }
+  renderNoticeModes();
+}
+
 function setNoticeForm() {
-  document.getElementById('notice-mode').value = siteConfig.noticeMode === 'default' ? 'default' : 'stock';
+  noticeModes = Array.isArray(siteConfig.noticeModes) && siteConfig.noticeModes.length
+    ? siteConfig.noticeModes
+    : [...DEFAULT_SITE_CONFIG.noticeModes];
+  selectedNoticeMode = siteConfig.noticeMode || noticeModes[0]?.value || 'stock';
+  renderNoticeModes();
   document.getElementById('notice-popup-enabled').checked = siteConfig.noticePopupEnabled !== false;
   const bannerImgs = Array.isArray(siteConfig.noticeBannerImgs) && siteConfig.noticeBannerImgs.length
     ? siteConfig.noticeBannerImgs
@@ -687,7 +753,8 @@ async function saveSiteConfig() {
     if (!finalBannerImgs.length) finalBannerImgs.push(DEFAULT_SITE_CONFIG.noticeBannerImg);
     if (!finalPopupImgs.length)  finalPopupImgs.push(DEFAULT_SITE_CONFIG.noticePopupImg);
     const nextConfig = {
-      noticeMode: document.getElementById('notice-mode').value === 'default' ? 'default' : 'stock',
+      noticeMode: selectedNoticeMode || noticeModes[0]?.value || 'stock',
+      noticeModes: noticeModes,
       noticeBannerImgs: finalBannerImgs,
       noticeBannerImg: finalBannerImgs[0],
       noticePopupEnabled: document.getElementById('notice-popup-enabled').checked,
