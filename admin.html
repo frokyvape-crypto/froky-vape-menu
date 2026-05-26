@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FROKY VAPE 관리자 v3.3</title>
+<title>FROKY VAPE 관리자 v3.4</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
@@ -160,7 +160,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
 
 <div id="page-app">
   <div class="topbar">
-    <span class="topbar-logo">FROKY VAPE 관리자 <span style="font-size:.6rem;color:var(--muted);font-weight:400">v3.3</span></span>
+    <span class="topbar-logo">FROKY VAPE 관리자 <span style="font-size:.6rem;color:var(--muted);font-weight:400">v3.4</span></span>
     <span class="topbar-user" id="topbar-user"></span>
     <button class="btn-sm-ghost" onclick="openWorkerModal()" title="Worker 모드 설정">⚙️</button>
     <button class="btn-sm-ghost" id="theme-btn" onclick="toggleTheme()">🌙</button>
@@ -482,7 +482,7 @@ function onFileChange(input, urlId, prevId, slot) {
 async function loadProducts() {
   document.getElementById('tbl-body').innerHTML = '<tr><td colspan="7" class="empty-msg"><span class="spin"></span>불러오는 중...</td></tr>';
   try {
-    const r = await ghApi('GET', `/repos/${REPO}/contents/${FILE}`);
+    const r = await ghApi('GET', `/repos/${REPO}/contents/${FILE}?ref=main`);
     if (!r.ok) { products = []; fileSha = ''; renderTable(); toast('products.json 없음', 'info'); return; }
     const d = await r.json();
     fileSha = d.sha;
@@ -597,7 +597,7 @@ async function saveViaWorker() {
 
 async function saveViaDirect() {
   console.log('[saveAndDeploy] Direct mode');
-  const check = await ghApi('GET', `/repos/${REPO}/contents/${FILE}`);
+  const check = await ghApi('GET', `/repos/${REPO}/contents/${FILE}?ref=main`);
   let currentSha = '';
   if (check.ok) {
     const cur = await check.json();
@@ -635,7 +635,7 @@ async function saveViaDirect() {
            : r.status === 409 ? '다른 커밋과 충돌'
            : r.status === 401 || r.status === 403 ? 'GitHub 토큰 권한 부족'
            : `HTTP ${r.status}`,
-      fix: r.status === 422 ? '저장 전 GET /contents/{path}로 현재 파일 sha를 다시 조회하세요. (v3.3은 이미 적용됨)'
+      fix: r.status === 422 ? '저장 전 GET /contents/{path}로 현재 파일 sha를 다시 조회하세요. (v3.4은 이미 적용됨)'
          : r.status === 409 ? '잠시 후 재시도. 다른 사람이 동시에 푸시 중일 수 있습니다.'
          : 'PAT의 repo 스코프 또는 fine-grained Contents:write 권한 확인.',
       status: r.status, message: e.message || 'Unknown',
