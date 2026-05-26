@@ -295,7 +295,6 @@ tr:hover td{background:rgba(128,128,128,.06);}
           <div id="notice-modes-list"></div>
           <div class="img-add-row" style="margin-top:6px">
             <input id="f-notice-mode-label" type="text" placeholder="모드 이름 (예: 이벤트 화면)">
-            <input id="f-notice-mode-value" type="text" placeholder="값 (예: event)" style="max-width:120px">
             <button class="btn btn-outline btn-xs" type="button" onclick="addNoticeMode()">+ 추가</button>
           </div>
         </div>
@@ -667,15 +666,12 @@ function selectNoticeMode(value) {
 
 function addNoticeMode() {
   const labelEl = document.getElementById('f-notice-mode-label');
-  const valueEl = document.getElementById('f-notice-mode-value');
   const label = labelEl.value.trim();
-  const rawValue = valueEl.value.trim();
   if (!label) { toast('모드 이름을 입력하세요', 'err'); return; }
-  const value = rawValue || label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || ('mode-' + Date.now());
-  if (noticeModes.some(m => m.value === value)) { toast('같은 값의 모드가 이미 있습니다', 'err'); return; }
-  noticeModes.push({ label, value });
+  const value = label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || ('mode-' + Date.now());
+  const finalValue = noticeModes.some(m => m.value === value) ? (value + '-' + Date.now()) : value;
+  noticeModes.push({ label, value: finalValue });
   labelEl.value = '';
-  valueEl.value = '';
   renderNoticeModes();
 }
 
