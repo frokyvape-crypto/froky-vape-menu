@@ -84,6 +84,8 @@ body{background:var(--bg);color:var(--text);font-family:'Pretendard',-apple-syst
 .file-label:hover{border-color:var(--g);color:var(--g);}
 .file-label input[type="file"]{display:none;}
 .img-preview{width:80px;height:80px;object-fit:cover;border-radius:8px;background:var(--card);border:1px solid var(--border);display:none;margin-top:4px;}
+.img-preview-list{display:none;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.img-preview-list img{width:80px;height:80px;object-fit:cover;border-radius:8px;background:var(--card);border:1px solid var(--border);}
 
 .tbl-wrap{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;font-size:.83rem;}
@@ -289,12 +291,12 @@ tr:hover td{background:rgba(128,128,128,.06);}
       <div class="form-row">
         <label>상세 이미지 (상세페이지용)</label>
         <div class="img-upload-row">
-          <input id="f-detail-img" type="url" placeholder="https://... (URL 직접 입력)" oninput="setPrev('f-detail-prev',this.value)">
+          <input id="f-detail-img" type="text" placeholder="https://... (여러 URL은 쉼표로 구분)" oninput="setMultiPrev('f-detail-prev',this.value)">
           <label class="file-label">📷 파일 선택
-            <input type="file" id="f-detail-img-file" accept="image/*" onchange="onFileChange(this,'f-detail-img','f-detail-prev','detail')">
+            <input type="file" id="f-detail-img-file" accept="image/*" multiple onchange="onFileChange(this,'f-detail-img','f-detail-prev','detail')">
           </label>
         </div>
-        <img id="f-detail-prev" class="img-preview" alt="" onerror="this.style.display='none'">
+        <div id="f-detail-prev" class="img-preview-list"></div>
       </div>
 
       <div class="form-grid">
@@ -365,7 +367,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
 const REPO = 'frokyvape-crypto/froky-vape-menu';
 const FILE = 'products.json';
 let TOKEN = '', fileSha = '', products = [];
-let pendingImgFile = null, pendingDetailFile = null;
+let pendingImgFile = null, pendingDetailFile = null, pendingDetailFiles = [];
 let isSaving = false;
 let WORKER_URL = localStorage.getItem('fv-worker-url') || '';
 let ADMIN_KEY = localStorage.getItem('fv-admin-key') || '';
@@ -471,12 +473,43 @@ function setPrev(id, src) {
   if (src) { el.src = src; el.style.display = 'block'; }
   else { el.src = ''; el.style.display = 'none'; }
 }
+function detailSourcesFromValue(value) {
+  return String(value || '').split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
+}
+function setMultiPrev(id, value) {
+  const el = document.getElementById(id);
+  const sources = Array.isArray(value) ? value.filter(Boolean) : detailSourcesFromValue(value);
+  el.innerHTML = '';
+  sources.forEach(src => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = '';
+    img.onerror = () => { img.style.display = 'none'; };
+    el.appendChild(img);
+  });
+  el.style.display = sources.length ? 'flex' : 'none';
+}
+function readFileAsDataURL(file) {
+  return new Promise((res, rej) => {
+    const reader = new FileReader();
+    reader.onload = e => res(e.target.result);
+    reader.onerror = rej;
+    reader.readAsDataURL(file);
+  });
+}
 function onFileChange(input, urlId, prevId, slot) {
-  const file = input.files[0]; if (!file) return;
-  if (slot === 'img') pendingImgFile = file; else pendingDetailFile = file;
-  const reader = new FileReader();
-  reader.onload = e => { document.getElementById(urlId).value = ''; setPrev(prevId, e.target.result); };
-  reader.readAsDataURL(file);
+  const files = Array.from(input.files || []); if (!files.length) return;
+  if (slot === 'img') {
+    pendingImgFile = files[0];
+    const reader = new FileReader();
+    reader.onload = e => { document.getElementById(urlId).value = ''; setPrev(prevId, e.target.result); };
+    reader.readAsDataURL(files[0]);
+    return;
+  }
+  pendingDetailFile = files[0];
+  pendingDetailFiles = files;
+  document.getElementById(urlId).value = '';
+  Promise.all(files.map(readFileAsDataURL)).then(srcs => setMultiPrev(prevId, srcs));
 }
 
 async function loadProducts() {
@@ -669,13 +702,13 @@ async function saveAndDeploy() {
 
 let editId = null;
 function resetModal() {
-  pendingImgFile = null; pendingDetailFile = null;
+  pendingImgFile = null; pendingDetailFile = null; pendingDetailFiles = [];
   ['f-id','f-name','f-price','f-img','f-detail-img','f-flavor','f-opts'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('f-cat').value = '입호흡';
   document.getElementById('f-sale').checked = false;
   document.getElementById('f-img-file').value = '';
   document.getElementById('f-detail-img-file').value = '';
-  setPrev('f-prev', ''); setPrev('f-detail-prev', '');
+  setPrev('f-prev', ''); setMultiPrev('f-detail-prev', []);
 }
 function openAddModal() {
   editId = null; resetModal();
@@ -690,13 +723,14 @@ function openEditModal(id) {
   document.getElementById('f-name').value = p.name;
   document.getElementById('f-price').value = p.price;
   document.getElementById('f-img').value = p.img || '';
-  document.getElementById('f-detail-img').value = p.detailImg || '';
+  const detailImgs = Array.isArray(p.detailImgs) && p.detailImgs.length ? p.detailImgs : (p.detailImg ? [p.detailImg] : []);
+  document.getElementById('f-detail-img').value = detailImgs.join(', ');
   document.getElementById('f-cat').value = p.cat;
   document.getElementById('f-flavor').value = p.flavor || '';
   document.getElementById('f-opts').value = (p.options || []).join(', ');
   document.getElementById('f-sale').checked = !!p.sale;
   setPrev('f-prev', p.img || '');
-  setPrev('f-detail-prev', p.detailImg || '');
+  setMultiPrev('f-detail-prev', detailImgs);
   document.getElementById('prod-modal').classList.add('open');
 }
 function closeModal() { document.getElementById('prod-modal').classList.remove('open'); }
@@ -713,12 +747,18 @@ async function saveProduct() {
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span>저장 중...';
   try {
     let img = document.getElementById('f-img').value.trim();
-    let detailImg = document.getElementById('f-detail-img').value.trim();
+    let detailImgs = detailSourcesFromValue(document.getElementById('f-detail-img').value);
+    let detailImg = detailImgs[0] || '';
     if (pendingImgFile) { toast('상품 이미지 업로드 중...', 'info'); img = await uploadImg(pendingImgFile); }
-    if (pendingDetailFile) { toast('상세 이미지 업로드 중...', 'info'); detailImg = await uploadImg(pendingDetailFile); }
+    if (pendingDetailFiles.length) {
+      toast(`상세 이미지 ${pendingDetailFiles.length}장 업로드 중...`, 'info');
+      detailImgs = [];
+      for (const file of pendingDetailFiles) detailImgs.push(await uploadImg(file));
+      detailImg = detailImgs[0] || '';
+    }
     const obj = {
       id: editId !== null ? editId : Date.now(),
-      name, price, img, detailImg,
+      name, price, img, detailImg, detailImgs,
       cat: document.getElementById('f-cat').value,
       flavor: document.getElementById('f-flavor').value.trim(),
       options: document.getElementById('f-opts').value.split(',').map(s => s.trim()).filter(Boolean),
