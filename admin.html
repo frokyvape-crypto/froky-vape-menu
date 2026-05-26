@@ -481,12 +481,16 @@ function renderTable() {
 async function saveAndDeploy() {
   if (!confirm('변경사항을 저장하고 사이트에 배포하시겠습니까?')) return;
   try {
-    toast('저장 중...', 'info');
-    // 상품 목록을 로드하지 않고 추가한 경우 SHA가 없으므로 먼저 가져옴
-    if (!fileSha) {
-      const check = await ghApi('GET', `/repos/${REPO}/contents/${FILE}`);
-      if (check.ok) fileSha = (await check.json()).sha;
+    toast('GitHub 동기화 중...', 'info');
+    // 항상 최신 SHA를 가져옴 (캐시된 SHA가 오래될 수 있으므로)
+    const check = await ghApi('GET', `/repos/${REPO}/contents/${FILE}`);
+    if (check.ok) {
+      const cur = await check.json();
+      fileSha = cur.sha;
+    } else if (check.status !== 404) {
+      throw new Error('파일 조회 실패: ' + check.status);
     }
+    toast('저장 중...', 'info');
     const content = btoa(unescape(encodeURIComponent(JSON.stringify(products, null, 2))));
     const body = { message: `chore: 상품 업데이트 (관리자) ${new Date().toLocaleString('ko-KR')}`, content, branch: 'main' };
     if (fileSha) body.sha = fileSha;
