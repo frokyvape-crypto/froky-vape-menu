@@ -327,6 +327,29 @@ const FILE = 'products.json';
 let TOKEN = '', fileSha = '', products = [];
 let pendingImgFile = null, pendingDetailFile = null;
 
+// ── localStorage DB ────────────────────────────
+function dbSave() {
+  localStorage.setItem('fv-products', JSON.stringify(products));
+  if (fileSha) localStorage.setItem('fv-sha', fileSha);
+  updateTopbar();
+}
+function dbLoad() {
+  try {
+    const raw = localStorage.getItem('fv-products');
+    if (raw) products = JSON.parse(raw);
+    fileSha = localStorage.getItem('fv-sha') || '';
+  } catch(e) { products = []; }
+}
+function dbClear() {
+  localStorage.removeItem('fv-products');
+  localStorage.removeItem('fv-sha');
+  products = []; fileSha = '';
+}
+function updateTopbar() {
+  document.getElementById('topbar-user').textContent =
+    products.length ? `상품 ${products.length}개 로드됨` : '상품 없음';
+}
+
 function toggleTheme() {
   const isLight = document.body.classList.toggle('light');
   localStorage.setItem('fv-theme', isLight ? 'light' : 'dark');
@@ -336,19 +359,21 @@ function toggleTheme() {
 function showApp() {
   document.getElementById('page-login').style.display = 'none';
   document.getElementById('page-app').style.display = 'flex';
-  document.getElementById('topbar-user').textContent = '토큰 로그인됨';
+  updateTopbar();
 }
 function doLogin() {
   const t = (document.getElementById('inp-token').value || '').trim();
   if (!t) { toast('토큰을 입력하세요', 'err'); return; }
   TOKEN = t;
   localStorage.setItem('fv-adm', t);
+  dbLoad();
   showApp();
-  toast('로그인 완료', 'ok');
+  toast('로그인 완료' + (products.length ? ` (캐시 ${products.length}개 복원)` : ''), 'ok');
 }
 function logout() {
   TOKEN = '';
   localStorage.removeItem('fv-adm');
+  products = []; fileSha = '';
   document.getElementById('page-app').style.display = 'none';
   document.getElementById('page-login').style.display = 'flex';
   document.getElementById('inp-token').value = '';
@@ -360,13 +385,16 @@ function logout() {
     document.getElementById('theme-btn').textContent = '☀️';
   }
   const t = localStorage.getItem('fv-adm');
-  if (t) { TOKEN = t; showApp(); }
+  if (t) { TOKEN = t; dbLoad(); showApp(); }
 })();
 
 function showSection(id) {
   document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
   document.getElementById(id).style.display = 'block';
-  if (id === 'sec-products' && products.length === 0) loadProducts();
+  if (id === 'sec-products') {
+    if (products.length > 0) renderTable();   // 캐시 있으면 즉시 표시
+    else loadProducts();                       // 없으면 GitHub에서 로드
+  }
 }
 
 async function ghApi(method, path, body) {
@@ -416,6 +444,7 @@ async function loadProducts() {
     const d = await r.json();
     fileSha = d.sha;
     products = JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\s/g, '')))));
+    dbSave();
     renderTable(); toast(`상품 ${products.length}개 로드`, 'ok');
   } catch (e) { if (e.message !== '401') toast('로드 실패: ' + e.message, 'err'); }
 }
@@ -464,6 +493,7 @@ async function saveAndDeploy() {
     const r = await ghApi('PUT', `/repos/${REPO}/contents/${FILE}`, body);
     if (!r.ok) { const e = await r.json(); throw new Error(e.message); }
     fileSha = (await r.json()).content.sha;
+    dbSave();
     document.getElementById('deploy-banner').classList.add('show');
     setTimeout(() => document.getElementById('deploy-banner').classList.remove('show'), 70000);
     toast('저장 & 배포 시작!', 'ok');
@@ -527,8 +557,9 @@ async function saveProduct() {
     };
     if (editId !== null) { const i = products.findIndex(p => p.id === editId); if (i >= 0) products[i] = obj; }
     else products.push(obj);
+    dbSave();
     renderTable(); closeModal();
-    toast(editId !== null ? '수정됨' : '추가됨 — 저장 & 배포 필요', 'ok');
+    toast(editId !== null ? '수정됨 (로컬 저장)' : '추가됨 (로컬 저장) — 배포하려면 저장 & 배포 클릭', 'ok');
   } catch (e) { toast('실패: ' + e.message, 'err'); }
   finally { btn.disabled = false; btn.innerHTML = '저장'; }
 }
@@ -536,8 +567,9 @@ async function saveProduct() {
 function delProduct(id) {
   if (!confirm('삭제하시겠습니까?')) return;
   products = products.filter(p => p.id !== id);
+  dbSave();
   renderTable();
-  toast('삭제됨 — 저장 & 배포 필요', 'ok');
+  toast('삭제됨 (로컬 저장) — 배포하려면 저장 & 배포 클릭', 'ok');
 }
 
 const CAT = name => {
@@ -573,12 +605,14 @@ async function fetchCafe24() {
     if (!items.length) { toast('불러온 상품 없음', 'info'); return; }
     window._c24 = items;
     document.getElementById('c24-count').textContent = items.length + '개 상품 불러옴';
+    const existingIds = new Set(products.map(p => p.id));
     document.getElementById('c24-tbody').innerHTML = items.map((p, i) => {
       const img = (p.list_image || p.detail_image || '').startsWith('/') ? 'https://frokyvape.cafe24.com' + (p.list_image || p.detail_image) : (p.list_image || p.detail_image || '');
-      return `<tr>
-        <td><input type="checkbox" class="import-check" data-i="${i}" checked></td>
+      const isDupe = existingIds.has(p.product_no);
+      return `<tr style="${isDupe ? 'opacity:.45' : ''}">
+        <td><input type="checkbox" class="import-check" data-i="${i}" ${isDupe ? '' : 'checked'}></td>
         <td><img src="${img}" style="width:32px;height:32px;object-fit:cover;border-radius:5px;" onerror="this.src=''"></td>
-        <td>${p.product_name}</td>
+        <td>${p.product_name}${isDupe ? ' <span style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">중복</span>' : ''}</td>
         <td style="white-space:nowrap">${Number(p.price).toLocaleString('ko-KR')}원</td>
         <td><span class="cat-tag c-${CAT(p.product_name)}">${CAT(p.product_name)}</span></td>
       </tr>`;
@@ -593,9 +627,9 @@ function c24SelAll(v) { document.querySelectorAll('.import-check').forEach(cb =>
 
 function importSelected() {
   const sel = [...document.querySelectorAll('.import-check:checked')].map(cb => window._c24[+cb.dataset.i]);
-  let added = 0;
+  let added = 0, dupes = 0;
   sel.forEach(p => {
-    if (products.find(x => x.id === p.product_no)) return;
+    if (products.find(x => x.id === p.product_no)) { dupes++; return; }
     const toUrl = s => s && s.startsWith('/') ? 'https://frokyvape.cafe24.com' + s : (s || '');
     products.push({
       id: p.product_no, name: p.product_name, price: parseInt(p.price) || 0,
@@ -606,9 +640,11 @@ function importSelected() {
     });
     added++;
   });
+  dbSave();
   document.getElementById('c24-result').style.display = 'none';
   showSection('sec-products');
-  toast(added + '개 추가됨 — 저장 & 배포 필요', 'ok');
+  const msg = added + '개 추가됨' + (dupes ? ` (중복 ${dupes}개 건너뜀)` : '') + ' — 저장 & 배포 필요';
+  toast(msg, added > 0 ? 'ok' : 'info');
 }
 
 let _tt;
