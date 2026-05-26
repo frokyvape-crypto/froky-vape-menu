@@ -84,8 +84,15 @@ body{background:var(--bg);color:var(--text);font-family:'Pretendard',-apple-syst
 .file-label:hover{border-color:var(--g);color:var(--g);}
 .file-label input[type="file"]{display:none;}
 .img-preview{width:80px;height:80px;object-fit:cover;border-radius:8px;background:var(--card);border:1px solid var(--border);display:none;margin-top:4px;}
-.img-preview-list{display:none;flex-wrap:wrap;gap:6px;margin-top:4px;}
-.img-preview-list img{width:80px;height:80px;object-fit:cover;border-radius:8px;background:var(--card);border:1px solid var(--border);}
+
+.img-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;min-height:4px;}
+.img-slot{position:relative;width:72px;height:72px;flex-shrink:0;}
+.img-slot img{width:72px;height:72px;object-fit:cover;border-radius:8px;border:1.5px solid var(--border);background:var(--card);}
+.img-slot-del{position:absolute;top:-6px;right:-6px;background:var(--red);color:#fff;border:none;cursor:pointer;border-radius:50%;width:18px;height:18px;font-size:.7rem;line-height:18px;text-align:center;padding:0;transition:opacity .15s;}
+.img-slot-del:hover{opacity:.8;}
+.img-slot-num{position:absolute;bottom:3px;left:4px;background:rgba(0,0,0,.65);color:#fff;font-size:.58rem;border-radius:3px;padding:0 3px;line-height:1.6;pointer-events:none;}
+.img-add-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.img-add-row input[type="url"]{flex:1;min-width:0;margin:0;}
 
 .tbl-wrap{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;font-size:.83rem;}
@@ -312,25 +319,27 @@ tr:hover td{background:rgba(128,128,128,.06);}
       </div>
 
       <div class="form-row">
-        <label>상품 이미지 (목록용)</label>
-        <div class="img-upload-row">
-          <input id="f-img" type="url" placeholder="https://... (URL 직접 입력)" oninput="setPrev('f-prev',this.value)">
-          <label class="file-label">📷 파일 선택
-            <input type="file" id="f-img-file" accept="image/*" onchange="onFileChange(this,'f-img','f-prev','img')">
+        <label>상품 이미지 (목록용) — 첫 번째가 대표 이미지</label>
+        <div class="img-grid" id="img-grid-main"></div>
+        <div class="img-add-row">
+          <input id="f-main-url" type="url" placeholder="https://... URL 입력 후 추가">
+          <button class="btn btn-outline btn-xs" type="button" onclick="addImgUrl('main')">+ URL</button>
+          <label class="file-label">📷 파일 추가
+            <input type="file" id="f-main-file" accept="image/*" multiple onchange="addImgFiles(this,'main')">
           </label>
         </div>
-        <img id="f-prev" class="img-preview" alt="" onerror="this.style.display='none'">
       </div>
 
       <div class="form-row">
-        <label>상세 이미지 (상세페이지용)</label>
-        <div class="img-upload-row">
-          <input id="f-detail-img" type="text" placeholder="https://... (여러 URL은 쉼표로 구분)" oninput="setMultiPrev('f-detail-prev',this.value)">
-          <label class="file-label">📷 파일 선택
-            <input type="file" id="f-detail-img-file" accept="image/*" multiple onchange="onFileChange(this,'f-detail-img','f-detail-prev','detail')">
+        <label>상세 이미지 (상세페이지용) — 순서대로 표시</label>
+        <div class="img-grid" id="img-grid-detail"></div>
+        <div class="img-add-row">
+          <input id="f-detail-url" type="url" placeholder="https://... URL 입력 후 추가">
+          <button class="btn btn-outline btn-xs" type="button" onclick="addImgUrl('detail')">+ URL</button>
+          <label class="file-label">📷 파일 추가
+            <input type="file" id="f-detail-file" accept="image/*" multiple onchange="addImgFiles(this,'detail')">
           </label>
         </div>
-        <div id="f-detail-prev" class="img-preview-list"></div>
       </div>
 
       <div class="form-grid">
@@ -409,7 +418,7 @@ const DEFAULT_SITE_CONFIG = {
 };
 let TOKEN = '', fileSha = '', products = [];
 let siteConfig = {...DEFAULT_SITE_CONFIG}, siteConfigSha = '';
-let pendingImgFile = null, pendingDetailFile = null, pendingDetailFiles = [];
+let imgSlots = { main: [], detail: [] };
 let isSaving = false;
 let WORKER_URL = localStorage.getItem('fv-worker-url') || '';
 let ADMIN_KEY = localStorage.getItem('fv-admin-key') || '';
@@ -511,48 +520,48 @@ async function uploadImg(file) {
   return `https://raw.githubusercontent.com/${REPO}/main/${path}`;
 }
 
-function setPrev(id, src) {
-  const el = document.getElementById(id);
-  if (src) { el.src = src; el.style.display = 'block'; }
-  else { el.src = ''; el.style.display = 'none'; }
+// ── 이미지 호환 헬퍼 ──────────────────────────────
+function getImgs(p) {
+  if (Array.isArray(p.imgs) && p.imgs.length) return p.imgs;
+  if (p.img) return [p.img];
+  return [];
 }
-function detailSourcesFromValue(value) {
-  return String(value || '').split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
+function getDetailImgs(p) {
+  if (Array.isArray(p.detailImgs) && p.detailImgs.length) return p.detailImgs;
+  if (p.detailImg) return [p.detailImg];
+  return [];
 }
-function setMultiPrev(id, value) {
-  const el = document.getElementById(id);
-  const sources = Array.isArray(value) ? value.filter(Boolean) : detailSourcesFromValue(value);
-  el.innerHTML = '';
-  sources.forEach(src => {
-    const img = document.createElement('img');
-    img.src = src;
-    img.alt = '';
-    img.onerror = () => { img.style.display = 'none'; };
-    el.appendChild(img);
+
+// ── 멀티 이미지 슬롯 ─────────────────────────────
+function renderImgGrid(slot) {
+  const el = document.getElementById(`img-grid-${slot}`);
+  if (!el) return;
+  el.innerHTML = imgSlots[slot].map((item, i) => `
+    <div class="img-slot">
+      <img src="${escHtml(item.preview || item.url || '')}" onerror="this.src=''">
+      <span class="img-slot-num">${i + 1}</span>
+      <button type="button" class="img-slot-del" onclick="removeImgSlot('${slot}',${i})">×</button>
+    </div>`).join('');
+}
+function addImgUrl(slot) {
+  const inp = document.getElementById(`f-${slot}-url`);
+  const url = (inp.value || '').trim();
+  if (!url) { toast('URL을 입력하세요', 'err'); return; }
+  imgSlots[slot].push({ url, file: null, preview: url });
+  inp.value = '';
+  renderImgGrid(slot);
+}
+function addImgFiles(input, slot) {
+  [...input.files].forEach(file => {
+    const preview = URL.createObjectURL(file);
+    imgSlots[slot].push({ url: '', file, preview });
   });
-  el.style.display = sources.length ? 'flex' : 'none';
+  input.value = '';
+  renderImgGrid(slot);
 }
-function readFileAsDataURL(file) {
-  return new Promise((res, rej) => {
-    const reader = new FileReader();
-    reader.onload = e => res(e.target.result);
-    reader.onerror = rej;
-    reader.readAsDataURL(file);
-  });
-}
-function onFileChange(input, urlId, prevId, slot) {
-  const files = Array.from(input.files || []); if (!files.length) return;
-  if (slot === 'img') {
-    pendingImgFile = files[0];
-    const reader = new FileReader();
-    reader.onload = e => { document.getElementById(urlId).value = ''; setPrev(prevId, e.target.result); };
-    reader.readAsDataURL(files[0]);
-    return;
-  }
-  pendingDetailFile = files[0];
-  pendingDetailFiles = files;
-  document.getElementById(urlId).value = '';
-  Promise.all(files.map(readFileAsDataURL)).then(srcs => setMultiPrev(prevId, srcs));
+function removeImgSlot(slot, idx) {
+  imgSlots[slot].splice(idx, 1);
+  renderImgGrid(slot);
 }
 
 async function loadProducts() {
@@ -649,11 +658,12 @@ function renderTable() {
   const tb = document.getElementById('tbl-body');
   if (!list.length) { tb.innerHTML = '<tr><td colspan="7" class="empty-msg">상품이 없습니다</td></tr>'; return; }
   tb.innerHTML = list.map(p => `<tr>
-    <td><img class="prod-img" src="${p.img || ''}" onerror="this.src=''" alt=""></td>
+    <td><img class="prod-img" src="${getImgs(p)[0] || ''}" onerror="this.src=''" alt=""></td>
     <td>
       <div style="font-weight:700;margin-bottom:2px">${p.name}</div>
       <div style="font-size:.72rem;color:var(--muted)">${p.flavor || ''}</div>
-      ${p.detailImg ? '<div style="font-size:.68rem;color:var(--g);margin-top:2px">🖼 상세이미지 있음</div>' : ''}
+      ${getDetailImgs(p).length ? `<div style="font-size:.68rem;color:var(--g);margin-top:2px">🖼 상세이미지 ${getDetailImgs(p).length}장</div>` : ''}
+      ${getImgs(p).length > 1 ? `<div style="font-size:.68rem;color:var(--muted);margin-top:1px">📷 ${getImgs(p).length}장</div>` : ''}
     </td>
     <td style="white-space:nowrap">${fmt(p.price)}</td>
     <td><span class="cat-tag c-${p.cat}">${p.cat}</span></td>
@@ -814,13 +824,15 @@ async function saveAndDeploy() {
 
 let editId = null;
 function resetModal() {
-  pendingImgFile = null; pendingDetailFile = null; pendingDetailFiles = [];
-  ['f-id','f-name','f-price','f-img','f-detail-img','f-flavor','f-opts'].forEach(id => document.getElementById(id).value = '');
+  imgSlots = { main: [], detail: [] };
+  renderImgGrid('main'); renderImgGrid('detail');
+  ['f-id','f-name','f-price','f-flavor','f-opts'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('f-cat').value = '입호흡';
   document.getElementById('f-sale').checked = false;
-  document.getElementById('f-img-file').value = '';
-  document.getElementById('f-detail-img-file').value = '';
-  setPrev('f-prev', ''); setMultiPrev('f-detail-prev', []);
+  document.getElementById('f-main-url').value = '';
+  document.getElementById('f-detail-url').value = '';
+  document.getElementById('f-main-file').value = '';
+  document.getElementById('f-detail-file').value = '';
 }
 function openAddModal() {
   editId = null; resetModal();
@@ -834,15 +846,13 @@ function openEditModal(id) {
   document.getElementById('f-id').value = id;
   document.getElementById('f-name').value = p.name;
   document.getElementById('f-price').value = p.price;
-  document.getElementById('f-img').value = p.img || '';
-  const detailImgs = Array.isArray(p.detailImgs) && p.detailImgs.length ? p.detailImgs : (p.detailImg ? [p.detailImg] : []);
-  document.getElementById('f-detail-img').value = detailImgs.join(', ');
   document.getElementById('f-cat').value = p.cat;
   document.getElementById('f-flavor').value = p.flavor || '';
   document.getElementById('f-opts').value = (p.options || []).join(', ');
   document.getElementById('f-sale').checked = !!p.sale;
-  setPrev('f-prev', p.img || '');
-  setMultiPrev('f-detail-prev', detailImgs);
+  imgSlots.main   = getImgs(p).map(url => ({ url, file: null, preview: url }));
+  imgSlots.detail = getDetailImgs(p).map(url => ({ url, file: null, preview: url }));
+  renderImgGrid('main'); renderImgGrid('detail');
   document.getElementById('prod-modal').classList.add('open');
 }
 function closeModal() { document.getElementById('prod-modal').classList.remove('open'); }
@@ -858,19 +868,23 @@ async function saveProduct() {
   const btn = document.getElementById('btn-save-prod');
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span>저장 중...';
   try {
-    let img = document.getElementById('f-img').value.trim();
-    let detailImgs = detailSourcesFromValue(document.getElementById('f-detail-img').value);
-    let detailImg = detailImgs[0] || '';
-    if (pendingImgFile) { toast('상품 이미지 업로드 중...', 'info'); img = await uploadImg(pendingImgFile); }
-    if (pendingDetailFiles.length) {
-      toast(`상세 이미지 ${pendingDetailFiles.length}장 업로드 중...`, 'info');
-      detailImgs = [];
-      for (const file of pendingDetailFiles) detailImgs.push(await uploadImg(file));
-      detailImg = detailImgs[0] || '';
+    const finalImgs = [];
+    for (const item of imgSlots.main) {
+      if (item.file) { toast('상품 이미지 업로드 중...', 'info'); finalImgs.push(await uploadImg(item.file)); }
+      else if (item.url) finalImgs.push(item.url);
+    }
+    const finalDetailImgs = [];
+    for (const item of imgSlots.detail) {
+      if (item.file) { toast('상세 이미지 업로드 중...', 'info'); finalDetailImgs.push(await uploadImg(item.file)); }
+      else if (item.url) finalDetailImgs.push(item.url);
     }
     const obj = {
       id: editId !== null ? editId : Date.now(),
-      name, price, img, detailImg, detailImgs,
+      name, price,
+      imgs: finalImgs,
+      img: finalImgs[0] || '',
+      detailImgs: finalDetailImgs,
+      detailImg: finalDetailImgs[0] || '',
       cat: document.getElementById('f-cat').value,
       flavor: document.getElementById('f-flavor').value.trim(),
       options: document.getElementById('f-opts').value.split(',').map(s => s.trim()).filter(Boolean),

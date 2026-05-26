@@ -164,6 +164,10 @@ body[data-notice-mode="stock"] .notice-banner-wrap{display:block;}
 .detail-modal-close:hover{background:rgba(255,0,0,.5);}
 .detail-modal img{width:100%;display:block;}
 .detail-no-img{color:var(--muted);text-align:center;padding:80px 20px;font-size:.9rem;}
+.sheet-thumbs{display:flex;gap:6px;overflow-x:auto;padding:8px 0 4px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.sheet-thumbs::-webkit-scrollbar{display:none;}
+.s-thumb-mini{width:52px;height:52px;object-fit:cover;border-radius:8px;border:2px solid transparent;cursor:pointer;flex-shrink:0;transition:border-color .15s,opacity .15s;opacity:.65;}
+.s-thumb-mini.active{border-color:var(--g);opacity:1;}
 .notice-popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:650;display:none;align-items:center;justify-content:center;padding:16px;}
 .notice-popup-overlay.open{display:flex;}
 .notice-popup{position:relative;width:min(390px,calc(100vw - 32px));}
@@ -260,7 +264,10 @@ body[data-notice-mode="stock"] .notice-banner-wrap{display:block;}
   <div class="sheet">
     <div class="sheet-handle"></div>
     <div class="sheet-top">
-      <img class="sheet-thumb" id="s-img" src="" alt="">
+      <div style="display:flex;flex-direction:column;gap:0;">
+        <img class="sheet-thumb" id="s-img" src="" alt="">
+        <div class="sheet-thumbs" id="s-thumbs" style="display:none"></div>
+      </div>
       <div class="sheet-info">
         <div class="sheet-name" id="s-name"></div>
         <div class="sheet-price" id="s-price"></div>
@@ -328,6 +335,8 @@ const DEFAULT_SITE_CONFIG={noticeMode:'stock',noticeBannerImg:'images/notice-ban
 let siteConfig={...DEFAULT_SITE_CONFIG};
 let P=[],cart=[],sp=null,sq=1;
 const fmt=n=>n.toLocaleString('ko-KR')+'원';
+function getImgs(p){if(Array.isArray(p.imgs)&&p.imgs.length)return p.imgs;if(p.img)return[p.img];return[''];}
+function getDetailImgs(p){if(Array.isArray(p.detailImgs)&&p.detailImgs.length)return p.detailImgs;if(p.detailImg)return[p.detailImg];return[];}
 function applySiteConfig(cfg){siteConfig={...DEFAULT_SITE_CONFIG,...(cfg||{})};document.body.setAttribute('data-notice-mode',siteConfig.noticeMode==='stock'?'stock':'default');document.getElementById('notice-banner-img').src=siteConfig.noticeBannerImg||DEFAULT_SITE_CONFIG.noticeBannerImg;document.getElementById('notice-popup-img').src=siteConfig.noticePopupImg||DEFAULT_SITE_CONFIG.noticePopupImg;if(siteConfig.noticePopupEnabled)openNoticePopup();}
 async function loadSiteConfig(){try{const res=await fetch('site-config.json?t='+Date.now());if(res.ok)applySiteConfig(await res.json());else applySiteConfig(DEFAULT_SITE_CONFIG);}catch(e){applySiteConfig(DEFAULT_SITE_CONFIG);}}
 function noticeTodayKey(){const d=new Date();return `${siteConfig.noticePopupImg||''}|${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
@@ -336,8 +345,8 @@ function closeNoticePopup(){try{if(document.getElementById('notice-popup-today')
 function closeNoticePopupOut(e){if(e.target===document.getElementById('notice-popup-overlay'))closeNoticePopup();}
 function setTheme(t){document.documentElement.setAttribute('data-theme',t);document.getElementById('btn-dark').classList.toggle('active',t==='dark');document.getElementById('btn-light').classList.toggle('active',t==='light');localStorage.setItem('fv-theme',t);}
 (()=>{const s=localStorage.getItem('fv-theme');if(s)setTheme(s);})();
-function cardHTML(p){return`<div class="card"><div class="card-img-wrap"><img src="${p.img}" alt="${p.name}" loading="lazy">${p.sale?'<span class="card-badge">SALE</span>':''}<button class="card-quick" onclick="openSheet(${p.id})">간단보기 👁</button></div><div class="card-body"><div class="card-name">${p.name}</div><div class="card-flavor">${p.flavor}</div><div class="card-price">${fmt(p.price)}</div></div><div class="card-btns"><button class="btn-cart-card" onclick="openSheet(${p.id})">담기</button><button class="btn-buy-card" onclick="openSheet(${p.id})">구매하기</button></div></div>`;}
-function buildCarousel(){const best=P.filter(p=>p.cat==='best');document.getElementById('carousel-track').innerHTML=[...best,...best].map(p=>`<div class="best-card" onclick="openSheet(${p.id})"><img src="${p.img}" alt="${p.name}" loading="lazy"><div class="best-card-body"><div class="best-card-name">${p.name}${p.sale?'<span class="hot">SALE</span>':''}</div><div class="best-card-price">${fmt(p.price)}</div></div></div>`).join('');}
+function cardHTML(p){const img=getImgs(p)[0]||'';return`<div class="card"><div class="card-img-wrap"><img src="${img}" alt="${p.name}" loading="lazy">${p.sale?'<span class="card-badge">SALE</span>':''}<button class="card-quick" onclick="openSheet(${p.id})">간단보기 👁</button></div><div class="card-body"><div class="card-name">${p.name}</div><div class="card-flavor">${p.flavor}</div><div class="card-price">${fmt(p.price)}</div></div><div class="card-btns"><button class="btn-cart-card" onclick="openSheet(${p.id})">담기</button><button class="btn-buy-card" onclick="openSheet(${p.id})">구매하기</button></div></div>`;}
+function buildCarousel(){const best=P.filter(p=>p.cat==='best');document.getElementById('carousel-track').innerHTML=[...best,...best].map(p=>`<div class="best-card" onclick="openSheet(${p.id})"><img src="${getImgs(p)[0]||''}" alt="${p.name}" loading="lazy"><div class="best-card-body"><div class="best-card-name">${p.name}${p.sale?'<span class="hot">SALE</span>':''}</div><div class="best-card-price">${fmt(p.price)}</div></div></div>`).join('');}
 function renderGrid(cat){const items=cat==='all'?P:P.filter(p=>p.cat===cat);document.getElementById('best-section').style.display=cat==='all'?'':'none';const lb={all:'전체 상품',best:'🏆 베스트',입호흡:'입호흡 액상',폐호흡:'폐호흡 액상',고농도:'고농도 액상',일회용:'일회용 기기'};document.getElementById('section-label').textContent=lb[cat]||cat;document.getElementById('product-grid').innerHTML=items.map(cardHTML).join('');}
 function filterCat(cat,el){document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderGrid(cat);}
 function onSearch(val){const q=val.trim();document.getElementById('search-clear').style.display=q?'block':'none';if(!q){document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');return;}document.getElementById('best-section').style.display='none';const res=P.filter(p=>p.name.includes(q)||p.flavor.includes(q));const lbl=document.getElementById('search-result-label');lbl.style.display='block';lbl.textContent=`"${q}" 검색 결과 ${res.length}개`;document.getElementById('section-label').textContent='검색 결과';document.getElementById('product-grid').innerHTML=res.length?res.map(cardHTML).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0">검색 결과가 없습니다 😢</div>';}
