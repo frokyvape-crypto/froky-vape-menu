@@ -299,7 +299,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
           </div>
         </div>
         <div class="form-row">
-          <label>메인 배너 이미지 — 첫 번째가 표시됩니다</label>
+          <label>선택된 모드의 배너 이미지 — 모드 전환 시 각각 저장됩니다</label>
           <div class="img-grid" id="img-grid-notice-banner"></div>
           <div class="img-add-row">
             <input id="f-notice-banner-url" type="url" placeholder="https://... URL 입력 후 추가">
@@ -310,7 +310,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
           </div>
         </div>
         <div class="form-row">
-          <label>팝업 이미지 — 여러 장 추가 시 세로로 나열됩니다</label>
+          <label>선택된 모드의 팝업 이미지 — 여러 장 추가 시 좌우 탭으로 넘깁니다</label>
           <div class="img-grid" id="img-grid-notice-popup"></div>
           <div class="img-add-row">
             <input id="f-notice-popup-url" type="url" placeholder="https://... URL 입력 후 추가">
@@ -438,8 +438,8 @@ const CONFIG_FILE = 'site-config.json';
 const DEFAULT_SITE_CONFIG = {
   noticeMode: 'stock',
   noticeModes: [
-    { label: '재고제품 고지 배너', value: 'stock' },
-    { label: '기본 FROKY 화면', value: 'default' },
+    { label: '재고제품 고지 배너', value: 'stock', bannerImgs: ['images/notice-banner.svg'], popupImgs: ['images/notice-popup.png'] },
+    { label: '기본 FROKY 화면', value: 'default', bannerImgs: [], popupImgs: [] },
   ],
   noticeBannerImgs: ['images/notice-banner.svg'],
   noticeBannerImg: 'images/notice-banner.svg',
@@ -453,6 +453,7 @@ let imgSlots = { main: [], detail: [] };
 let noticeImgSlots = { banner: [], popup: [] };
 let noticeModes = [...DEFAULT_SITE_CONFIG.noticeModes];
 let selectedNoticeMode = 'stock';
+let modeImgSlots = {};
 let isSaving = false;
 let WORKER_URL = localStorage.getItem('fv-worker-url') || '';
 let ADMIN_KEY = localStorage.getItem('fv-admin-key') || '';
@@ -660,8 +661,22 @@ function renderNoticeModes() {
 }
 
 function selectNoticeMode(value) {
+  // save current slots to the mode we're leaving
+  modeImgSlots[selectedNoticeMode] = {
+    banner: [...noticeImgSlots.banner],
+    popup:  [...noticeImgSlots.popup],
+  };
   selectedNoticeMode = value;
+  // load the target mode's slots (or empty if new mode)
+  if (modeImgSlots[value]) {
+    noticeImgSlots = { banner: [...modeImgSlots[value].banner], popup: [...modeImgSlots[value].popup] };
+  } else {
+    noticeImgSlots = { banner: [], popup: [] };
+    modeImgSlots[value] = { banner: [], popup: [] };
+  }
   renderNoticeModes();
+  renderNoticeImgGrid('banner');
+  renderNoticeImgGrid('popup');
 }
 
 function addNoticeMode() {
@@ -670,7 +685,8 @@ function addNoticeMode() {
   if (!label) { toast('모드 이름을 입력하세요', 'err'); return; }
   const value = label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || ('mode-' + Date.now());
   const finalValue = noticeModes.some(m => m.value === value) ? (value + '-' + Date.now()) : value;
-  noticeModes.push({ label, value: finalValue });
+  noticeModes.push({ label, value: finalValue, bannerImgs: [], popupImgs: [] });
+  modeImgSlots[finalValue] = { banner: [], popup: [] };
   labelEl.value = '';
   renderNoticeModes();
 }
@@ -678,8 +694,13 @@ function addNoticeMode() {
 function removeNoticeMode(idx) {
   const removed = noticeModes[idx];
   noticeModes.splice(idx, 1);
+  delete modeImgSlots[removed.value];
   if (selectedNoticeMode === removed.value) {
     selectedNoticeMode = noticeModes[0]?.value || '';
+    const slots = modeImgSlots[selectedNoticeMode] || { banner: [], popup: [] };
+    noticeImgSlots = { banner: [...slots.banner], popup: [...slots.popup] };
+    renderNoticeImgGrid('banner');
+    renderNoticeImgGrid('popup');
   }
   renderNoticeModes();
 }
@@ -689,16 +710,37 @@ function setNoticeForm() {
     ? siteConfig.noticeModes
     : [...DEFAULT_SITE_CONFIG.noticeModes];
   selectedNoticeMode = siteConfig.noticeMode || noticeModes[0]?.value || 'stock';
-  renderNoticeModes();
-  document.getElementById('notice-popup-enabled').checked = siteConfig.noticePopupEnabled !== false;
-  const bannerImgs = Array.isArray(siteConfig.noticeBannerImgs) && siteConfig.noticeBannerImgs.length
+
+  // Initialize per-mode image slots from each mode's stored images
+  modeImgSlots = {};
+  for (const m of noticeModes) {
+    const bImgs = Array.isArray(m.bannerImgs) && m.bannerImgs.length ? m.bannerImgs : [];
+    const pImgs = Array.isArray(m.popupImgs)  && m.popupImgs.length  ? m.popupImgs  : [];
+    modeImgSlots[m.value] = {
+      banner: bImgs.map(url => ({ url, file: null, preview: url })),
+      popup:  pImgs.map(url => ({ url, file: null, preview: url })),
+    };
+  }
+
+  // The active mode's images come from the top-level fields (most recently saved)
+  const activeBanner = Array.isArray(siteConfig.noticeBannerImgs) && siteConfig.noticeBannerImgs.length
     ? siteConfig.noticeBannerImgs
     : [siteConfig.noticeBannerImg || DEFAULT_SITE_CONFIG.noticeBannerImg];
-  const popupImgs = Array.isArray(siteConfig.noticePopupImgs) && siteConfig.noticePopupImgs.length
+  const activePopup = Array.isArray(siteConfig.noticePopupImgs) && siteConfig.noticePopupImgs.length
     ? siteConfig.noticePopupImgs
     : [siteConfig.noticePopupImg || DEFAULT_SITE_CONFIG.noticePopupImg];
-  noticeImgSlots.banner = bannerImgs.map(url => ({ url, file: null, preview: url }));
-  noticeImgSlots.popup  = popupImgs.map(url  => ({ url, file: null, preview: url }));
+  modeImgSlots[selectedNoticeMode] = {
+    banner: activeBanner.map(url => ({ url, file: null, preview: url })),
+    popup:  activePopup.map(url  => ({ url, file: null, preview: url })),
+  };
+
+  noticeImgSlots = {
+    banner: [...modeImgSlots[selectedNoticeMode].banner],
+    popup:  [...modeImgSlots[selectedNoticeMode].popup],
+  };
+
+  renderNoticeModes();
+  document.getElementById('notice-popup-enabled').checked = siteConfig.noticePopupEnabled !== false;
   renderNoticeImgGrid('banner');
   renderNoticeImgGrid('popup');
 }
@@ -736,21 +778,37 @@ async function saveSiteConfig() {
     if (latest.ok) currentSha = (await latest.json()).sha;
     else if (latest.status !== 404) throw new Error(`설정 SHA 조회 실패 (${latest.status})`);
 
-    const finalBannerImgs = [];
-    for (const item of noticeImgSlots.banner) {
-      if (item.file) { toast('배너 이미지 업로드 중...', 'info'); finalBannerImgs.push(await uploadImg(item.file)); }
-      else if (item.url) finalBannerImgs.push(item.url);
+    // sync current UI slots into the active mode before saving
+    modeImgSlots[selectedNoticeMode] = {
+      banner: [...noticeImgSlots.banner],
+      popup:  [...noticeImgSlots.popup],
+    };
+
+    // process all modes: upload any pending files, collect final URLs
+    const resolvedModes = [];
+    for (const mode of noticeModes) {
+      const slots = modeImgSlots[mode.value] || { banner: [], popup: [] };
+      const finalBanner = [];
+      for (const item of slots.banner) {
+        if (item.file) { toast(`[${mode.label}] 배너 이미지 업로드 중...`, 'info'); finalBanner.push(await uploadImg(item.file)); }
+        else if (item.url) finalBanner.push(item.url);
+      }
+      const finalPopup = [];
+      for (const item of slots.popup) {
+        if (item.file) { toast(`[${mode.label}] 팝업 이미지 업로드 중...`, 'info'); finalPopup.push(await uploadImg(item.file)); }
+        else if (item.url) finalPopup.push(item.url);
+      }
+      resolvedModes.push({ label: mode.label, value: mode.value, bannerImgs: finalBanner, popupImgs: finalPopup });
     }
-    const finalPopupImgs = [];
-    for (const item of noticeImgSlots.popup) {
-      if (item.file) { toast('팝업 이미지 업로드 중...', 'info'); finalPopupImgs.push(await uploadImg(item.file)); }
-      else if (item.url) finalPopupImgs.push(item.url);
-    }
-    if (!finalBannerImgs.length) finalBannerImgs.push(DEFAULT_SITE_CONFIG.noticeBannerImg);
-    if (!finalPopupImgs.length)  finalPopupImgs.push(DEFAULT_SITE_CONFIG.noticePopupImg);
+
+    // top-level fields = active mode's resolved images (for index.html backward compat)
+    const activeResolved = resolvedModes.find(m => m.value === selectedNoticeMode) || resolvedModes[0];
+    const finalBannerImgs = activeResolved?.bannerImgs?.length ? activeResolved.bannerImgs : [DEFAULT_SITE_CONFIG.noticeBannerImg];
+    const finalPopupImgs  = activeResolved?.popupImgs?.length  ? activeResolved.popupImgs  : [DEFAULT_SITE_CONFIG.noticePopupImg];
+
     const nextConfig = {
       noticeMode: selectedNoticeMode || noticeModes[0]?.value || 'stock',
-      noticeModes: noticeModes,
+      noticeModes: resolvedModes,
       noticeBannerImgs: finalBannerImgs,
       noticeBannerImg: finalBannerImgs[0],
       noticePopupEnabled: document.getElementById('notice-popup-enabled').checked,
