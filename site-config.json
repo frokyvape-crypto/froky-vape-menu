@@ -1,22 +1,38 @@
 {
-  "noticeMode": "stock",
+  "noticeMode": "mode-1779803060597",
   "noticeModes": [
     {
       "label": "재고제품 고지 배너",
-      "value": "stock"
+      "value": "stock",
+      "bannerImgs": [
+        "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779803885662_n0bc.png"
+      ],
+      "popupImgs": [
+        "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779803887188_gfvx.png"
+      ]
     },
     {
       "label": "테스트 화면",
-      "value": "mode-1779803060597"
+      "value": "mode-1779803060597",
+      "bannerImgs": [
+        "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779804032209_cfuq.png"
+      ],
+      "popupImgs": [
+        "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779804035423_gvrc.png",
+        "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779804038484_bq2b.png",
+        "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779804042143_ejxs.png"
+      ]
     }
   ],
   "noticeBannerImgs": [
-    "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779803885662_n0bc.png"
+    "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779804032209_cfuq.png"
   ],
-  "noticeBannerImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779803885662_n0bc.png",
+  "noticeBannerImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779804032209_cfuq.png",
   "noticePopupEnabled": true,
   "noticePopupImgs": [
-    "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779803887188_gfvx.png"
+    "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779804035423_gvrc.png",
+    "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779804038484_bq2b.png",
+    "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779804042143_ejxs.png"
   ],
-  "noticePopupImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779803887188_gfvx.png"
+  "noticePopupImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779804035423_gvrc.png"
 }
