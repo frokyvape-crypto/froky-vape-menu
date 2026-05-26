@@ -1,6 +1,23 @@
 {
-  "noticeMode": "stock",
-  "noticeBannerImg": "images/notice-banner.svg",
+  "noticeMode": "mode-1779803060597",
+  "noticeModes": [
+    {
+      "label": "재고제품 고지 배너",
+      "value": "stock"
+    },
+    {
+      "label": "테스트 화면",
+      "value": "mode-1779803060597"
+    }
+  ],
+  "noticeBannerImgs": [
+    "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779803144204_5z1s.png"
+  ],
+  "noticeBannerImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779803144204_5z1s.png",
   "noticePopupEnabled": true,
-  "noticePopupImg": "images/notice-popup.png"
+  "noticePopupImgs": [
+    "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779803147163_tf5o.png",
+    "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779803150189_0cbo.png"
+  ],
+  "noticePopupImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779803147163_tf5o.png"
 }
