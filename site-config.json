@@ -1,0 +1,6 @@
+{
+  "noticeMode": "stock",
+  "noticeBannerImg": "images/notice-banner.jpg",
+  "noticePopupEnabled": true,
+  "noticePopupImg": "images/notice-popup.jpg"
+}

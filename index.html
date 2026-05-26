@@ -44,6 +44,11 @@ header{position:sticky;top:0;z-index:100;background:rgba(12,12,12,.92);backdrop-
 .hero-tag.green{border-color:var(--g);color:var(--g);background:rgba(46,204,64,.08);}
 .hero-tag.yellow{border-color:var(--y);color:var(--y2);background:rgba(245,220,0,.08);}
 [data-theme="light"] .hero-tag.yellow{color:#8a7800;}
+.notice-banner-wrap{display:none;position:relative;z-index:1;}
+.notice-banner-wrap img{display:block;width:min(100%,800px);margin:0 auto;border-radius:8px;box-shadow:0 8px 24px rgba(0,20,60,.24);}
+body[data-notice-mode="stock"] .hero{padding:10px 12px;background:#003f86;border-bottom:1px solid rgba(255,255,255,.18);}
+body[data-notice-mode="stock"] .hero-glow,body[data-notice-mode="stock"] .hero-brand{display:none;}
+body[data-notice-mode="stock"] .notice-banner-wrap{display:block;}
 .categories{display:flex;gap:8px;padding:12px 14px;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:58px;z-index:90;}
 .categories::-webkit-scrollbar{display:none;}
 .cat-btn{white-space:nowrap;padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:'Pretendard',sans-serif;font-size:.8rem;font-weight:600;transition:all .2s;}
@@ -159,6 +164,11 @@ header{position:sticky;top:0;z-index:100;background:rgba(12,12,12,.92);backdrop-
 .detail-modal-close:hover{background:rgba(255,0,0,.5);}
 .detail-modal img{width:100%;display:block;}
 .detail-no-img{color:var(--muted);text-align:center;padding:80px 20px;font-size:.9rem;}
+.notice-popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:650;display:none;align-items:center;justify-content:center;padding:16px;}
+.notice-popup-overlay.open{display:flex;}
+.notice-popup{position:relative;width:min(390px,calc(100vw - 32px));}
+.notice-popup img{display:block;width:100%;border-radius:18px;box-shadow:0 20px 50px rgba(0,0,0,.45);}
+.notice-popup-close{position:absolute;top:-12px;right:-12px;background:#fff;color:#0b2239;border:1px solid rgba(0,0,0,.16);cursor:pointer;border-radius:50%;width:34px;height:34px;font-size:1rem;font-weight:900;box-shadow:0 4px 14px rgba(0,0,0,.35);}
 .pay-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:400;display:none;align-items:center;justify-content:center;padding:20px;}
 .pay-modal-overlay.open{display:flex;}
 .pay-modal{background:var(--surface);border-radius:18px;width:min(460px,100%);border:1px solid rgba(46,204,64,.25);overflow:hidden;box-shadow:0 0 40px rgba(46,204,64,.15);}
@@ -202,14 +212,17 @@ header{position:sticky;top:0;z-index:100;background:rgba(12,12,12,.92);backdrop-
 </header>
 <div class="hero">
   <div class="hero-glow"></div>
-  <div class="hero-title"><span class="lg">F</span><span class="ly">R</span><span class="lg">O</span><span class="ly">K</span><span class="lg">Y</span>&nbsp;<span class="ly">V</span><span class="lg">A</span><span class="ly">P</span><span class="lg">E</span></div>
-  <div class="hero-sub">프리미엄 전자담배 & 액상 전문</div>
-  <div class="hero-tags">
-    <span class="hero-tag green">🌿 입호흡 액상</span>
-    <span class="hero-tag yellow">⚡ 고농도 솔트</span>
-    <span class="hero-tag green">💨 폐호흡 액상</span>
-    <span class="hero-tag yellow">🔋 일회용 기기</span>
+  <div class="hero-brand">
+    <div class="hero-title"><span class="lg">F</span><span class="ly">R</span><span class="lg">O</span><span class="ly">K</span><span class="lg">Y</span>&nbsp;<span class="ly">V</span><span class="lg">A</span><span class="ly">P</span><span class="lg">E</span></div>
+    <div class="hero-sub">프리미엄 전자담배 & 액상 전문</div>
+    <div class="hero-tags">
+      <span class="hero-tag green">🌿 입호흡 액상</span>
+      <span class="hero-tag yellow">⚡ 고농도 솔트</span>
+      <span class="hero-tag green">💨 폐호흡 액상</span>
+      <span class="hero-tag yellow">🔋 일회용 기기</span>
+    </div>
   </div>
+  <div class="notice-banner-wrap"><img id="notice-banner-img" src="" alt="담배사업법 시행일 이전 재고제품 판매 안내"></div>
 </div>
 <div class="categories">
   <button class="cat-btn active" onclick="filterCat('all',this)">전체</button>
@@ -277,6 +290,12 @@ header{position:sticky;top:0;z-index:100;background:rgba(12,12,12,.92);backdrop-
     <div id="detail-modal-content"></div>
   </div>
 </div>
+<div class="notice-popup-overlay" id="notice-popup-overlay" onclick="closeNoticePopupOut(event)">
+  <div class="notice-popup">
+    <button class="notice-popup-close" onclick="closeNoticePopup()">×</button>
+    <img id="notice-popup-img" src="" alt="담배사업법 개정에 따른 제품 판매 안내">
+  </div>
+</div>
 <div class="pay-modal-overlay" id="pay-modal-overlay">
   <div class="pay-modal">
     <div class="pay-modal-head">
@@ -302,8 +321,15 @@ header{position:sticky;top:0;z-index:100;background:rgba(12,12,12,.92);backdrop-
 <div class="toast" id="toast"></div>
 <script>
 const PAY_URL='https://frokyvape.com/product/%EA%B0%9C%EC%9D%B8-%EA%B2%B0%EC%A0%9C%EC%B0%BD/1134/category/27/display/1/';
+const DEFAULT_SITE_CONFIG={noticeMode:'stock',noticeBannerImg:'images/notice-banner.jpg',noticePopupEnabled:true,noticePopupImg:'images/notice-popup.jpg'};
+let siteConfig={...DEFAULT_SITE_CONFIG};
 let P=[],cart=[],sp=null,sq=1;
 const fmt=n=>n.toLocaleString('ko-KR')+'원';
+function applySiteConfig(cfg){siteConfig={...DEFAULT_SITE_CONFIG,...(cfg||{})};document.body.setAttribute('data-notice-mode',siteConfig.noticeMode==='stock'?'stock':'default');document.getElementById('notice-banner-img').src=siteConfig.noticeBannerImg||DEFAULT_SITE_CONFIG.noticeBannerImg;document.getElementById('notice-popup-img').src=siteConfig.noticePopupImg||DEFAULT_SITE_CONFIG.noticePopupImg;if(siteConfig.noticePopupEnabled)openNoticePopup();}
+async function loadSiteConfig(){try{const res=await fetch('site-config.json?t='+Date.now());if(res.ok)applySiteConfig(await res.json());else applySiteConfig(DEFAULT_SITE_CONFIG);}catch(e){applySiteConfig(DEFAULT_SITE_CONFIG);}}
+function openNoticePopup(){try{if(sessionStorage.getItem('fv-notice-popup-closed')===(siteConfig.noticePopupImg||''))return;}catch(e){}document.getElementById('notice-popup-overlay').classList.add('open');}
+function closeNoticePopup(){try{sessionStorage.setItem('fv-notice-popup-closed',siteConfig.noticePopupImg||'closed');}catch(e){}document.getElementById('notice-popup-overlay').classList.remove('open');}
+function closeNoticePopupOut(e){if(e.target===document.getElementById('notice-popup-overlay'))closeNoticePopup();}
 function setTheme(t){document.documentElement.setAttribute('data-theme',t);document.getElementById('btn-dark').classList.toggle('active',t==='dark');document.getElementById('btn-light').classList.toggle('active',t==='light');localStorage.setItem('fv-theme',t);}
 (()=>{const s=localStorage.getItem('fv-theme');if(s)setTheme(s);})();
 function cardHTML(p){return`<div class="card"><div class="card-img-wrap"><img src="${p.img}" alt="${p.name}" loading="lazy">${p.sale?'<span class="card-badge">SALE</span>':''}<button class="card-quick" onclick="openSheet(${p.id})">간단보기 👁</button></div><div class="card-body"><div class="card-name">${p.name}</div><div class="card-flavor">${p.flavor}</div><div class="card-price">${fmt(p.price)}</div></div><div class="card-btns"><button class="btn-cart-card" onclick="openSheet(${p.id})">담기</button><button class="btn-buy-card" onclick="openSheet(${p.id})">구매하기</button></div></div>`;}
@@ -345,7 +371,8 @@ async function loadProducts(){
     document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품 준비 중입니다 😊</div>';
   }
 }
-loadProducts();
+async function initPage(){await loadSiteConfig();loadProducts();}
+initPage();
 </script>
 </body>
 </html>
