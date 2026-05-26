@@ -311,7 +311,7 @@ body[data-notice-mode="stock"] .notice-banner-wrap{display:block;}
 <div class="notice-popup-overlay" id="notice-popup-overlay" onclick="closeNoticePopupOut(event)">
   <div class="notice-popup">
     <button class="notice-popup-close" onclick="closeNoticePopup()">×</button>
-    <img id="notice-popup-img" src="" alt="담배사업법 개정에 따른 제품 판매 안내">
+    <div id="notice-popup-imgs"></div>
     <label class="notice-popup-today"><input type="checkbox" id="notice-popup-today">오늘은 그만보기</label>
   </div>
 </div>
@@ -340,16 +340,23 @@ body[data-notice-mode="stock"] .notice-banner-wrap{display:block;}
 <div class="toast" id="toast"></div>
 <script>
 const PAY_URL='https://frokyvape.com/product/%EA%B0%9C%EC%9D%B8-%EA%B2%B0%EC%A0%9C%EC%B0%BD/1134/category/27/display/1/';
-const DEFAULT_SITE_CONFIG={noticeMode:'stock',noticeBannerImg:'images/notice-banner.svg',noticePopupEnabled:true,noticePopupImg:'images/notice-popup.png'};
+const DEFAULT_SITE_CONFIG={noticeMode:'stock',noticeBannerImgs:['images/notice-banner.svg'],noticeBannerImg:'images/notice-banner.svg',noticePopupEnabled:true,noticePopupImgs:['images/notice-popup.png'],noticePopupImg:'images/notice-popup.png'};
 let siteConfig={...DEFAULT_SITE_CONFIG};
 let P=[],cart=[],sp=null,sq=1;
 const fmt=n=>n.toLocaleString('ko-KR')+'원';
 function getImgs(p){if(Array.isArray(p.imgs)&&p.imgs.length)return p.imgs;if(p.img)return[p.img];return[''];}
 function getDetailImgs(p){if(Array.isArray(p.detailImgs)&&p.detailImgs.length)return p.detailImgs;if(p.detailImg)return[p.detailImg];return[];}
-function applySiteConfig(cfg){siteConfig={...DEFAULT_SITE_CONFIG,...(cfg||{})};document.body.setAttribute('data-notice-mode',siteConfig.noticeMode==='stock'?'stock':'default');document.getElementById('notice-banner-img').src=siteConfig.noticeBannerImg||DEFAULT_SITE_CONFIG.noticeBannerImg;document.getElementById('notice-popup-img').src=siteConfig.noticePopupImg||DEFAULT_SITE_CONFIG.noticePopupImg;if(siteConfig.noticePopupEnabled)openNoticePopup();}
+function getNoticeImgs(key,fallback){const arr=Array.isArray(siteConfig[key+'s'])&&siteConfig[key+'s'].length?siteConfig[key+'s']:siteConfig[key]?[siteConfig[key]]:[fallback];return arr;}
+function applySiteConfig(cfg){
+  siteConfig={...DEFAULT_SITE_CONFIG,...(cfg||{})};
+  document.body.setAttribute('data-notice-mode',siteConfig.noticeMode==='stock'?'stock':'default');
+  const bannerImgs=getNoticeImgs('noticeBannerImg',DEFAULT_SITE_CONFIG.noticeBannerImg);
+  document.getElementById('notice-banner-img').src=bannerImgs[0]||DEFAULT_SITE_CONFIG.noticeBannerImg;
+  if(siteConfig.noticePopupEnabled)openNoticePopup();
+}
 async function loadSiteConfig(){try{const res=await fetch('site-config.json?t='+Date.now());if(res.ok)applySiteConfig(await res.json());else applySiteConfig(DEFAULT_SITE_CONFIG);}catch(e){applySiteConfig(DEFAULT_SITE_CONFIG);}}
-function noticeTodayKey(){const d=new Date();return `${siteConfig.noticePopupImg||''}|${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
-function openNoticePopup(){try{if(localStorage.getItem('fv-notice-popup-hide-today')===noticeTodayKey())return;}catch(e){}document.getElementById('notice-popup-today').checked=false;document.getElementById('notice-popup-overlay').classList.add('open');}
+function noticeTodayKey(){const imgs=getNoticeImgs('noticePopupImg',DEFAULT_SITE_CONFIG.noticePopupImg);const d=new Date();return`${imgs.join(',')}|${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function openNoticePopup(){try{if(localStorage.getItem('fv-notice-popup-hide-today')===noticeTodayKey())return;}catch(e){}const imgs=getNoticeImgs('noticePopupImg',DEFAULT_SITE_CONFIG.noticePopupImg);document.getElementById('notice-popup-imgs').innerHTML=imgs.map((src,i)=>`<img src="${src}" alt="공지 팝업 이미지 ${i+1}" style="display:block;width:100%;${i>0?'margin-top:8px;':''}border-radius:${i===0?'18px 18px':'0'} ${i===imgs.length-1?'18px 18px':'0 0'};" onerror="this.style.display='none'">`).join('');document.getElementById('notice-popup-today').checked=false;document.getElementById('notice-popup-overlay').classList.add('open');}
 function closeNoticePopup(){try{if(document.getElementById('notice-popup-today').checked)localStorage.setItem('fv-notice-popup-hide-today',noticeTodayKey());}catch(e){}document.getElementById('notice-popup-overlay').classList.remove('open');}
 function closeNoticePopupOut(e){if(e.target===document.getElementById('notice-popup-overlay'))closeNoticePopup();}
 function setTheme(t){document.documentElement.setAttribute('data-theme',t);document.getElementById('btn-dark').classList.toggle('active',t==='dark');document.getElementById('btn-light').classList.toggle('active',t==='light');localStorage.setItem('fv-theme',t);}

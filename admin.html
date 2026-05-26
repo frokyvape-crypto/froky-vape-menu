@@ -288,12 +288,26 @@ tr:hover td{background:rgba(128,128,128,.06);}
           </select>
         </div>
         <div class="form-row">
-          <label>메인 배너 이미지 URL</label>
-          <input id="notice-banner-img" type="text" placeholder="images/notice-banner.svg">
+          <label>메인 배너 이미지 — 첫 번째가 표시됩니다</label>
+          <div class="img-grid" id="img-grid-notice-banner"></div>
+          <div class="img-add-row">
+            <input id="f-notice-banner-url" type="url" placeholder="https://... URL 입력 후 추가">
+            <button class="btn btn-outline btn-xs" type="button" onclick="addNoticeImg('banner')">+ URL</button>
+            <label class="file-label">📷 파일 추가
+              <input type="file" id="f-notice-banner-file" accept="image/*" multiple onchange="addNoticeImgFiles(this,'banner')">
+            </label>
+          </div>
         </div>
         <div class="form-row">
-          <label>팝업 이미지 URL</label>
-          <input id="notice-popup-img" type="text" placeholder="images/notice-popup.png">
+          <label>팝업 이미지 — 여러 장 추가 시 세로로 나열됩니다</label>
+          <div class="img-grid" id="img-grid-notice-popup"></div>
+          <div class="img-add-row">
+            <input id="f-notice-popup-url" type="url" placeholder="https://... URL 입력 후 추가">
+            <button class="btn btn-outline btn-xs" type="button" onclick="addNoticeImg('popup')">+ URL</button>
+            <label class="file-label">📷 파일 추가
+              <input type="file" id="f-notice-popup-file" accept="image/*" multiple onchange="addNoticeImgFiles(this,'popup')">
+            </label>
+          </div>
         </div>
         <div class="toggle-wrap">
           <label class="toggle"><input type="checkbox" id="notice-popup-enabled"><span class="slider"></span></label>
@@ -412,13 +426,16 @@ const FILE = 'products.json';
 const CONFIG_FILE = 'site-config.json';
 const DEFAULT_SITE_CONFIG = {
   noticeMode: 'stock',
+  noticeBannerImgs: ['images/notice-banner.svg'],
   noticeBannerImg: 'images/notice-banner.svg',
   noticePopupEnabled: true,
+  noticePopupImgs: ['images/notice-popup.png'],
   noticePopupImg: 'images/notice-popup.png',
 };
 let TOKEN = '', fileSha = '', products = [];
 let siteConfig = {...DEFAULT_SITE_CONFIG}, siteConfigSha = '';
 let imgSlots = { main: [], detail: [] };
+let noticeImgSlots = { banner: [], popup: [] };
 let isSaving = false;
 let WORKER_URL = localStorage.getItem('fv-worker-url') || '';
 let ADMIN_KEY = localStorage.getItem('fv-admin-key') || '';
@@ -564,6 +581,38 @@ function removeImgSlot(slot, idx) {
   renderImgGrid(slot);
 }
 
+// ── 공지 이미지 슬롯 ──────────────────────────────
+function renderNoticeImgGrid(slot) {
+  const el = document.getElementById(`img-grid-notice-${slot}`);
+  if (!el) return;
+  el.innerHTML = noticeImgSlots[slot].map((item, i) => `
+    <div class="img-slot">
+      <img src="${escHtml(item.preview || item.url || '')}" onerror="this.src=''">
+      <span class="img-slot-num">${i + 1}</span>
+      <button type="button" class="img-slot-del" onclick="removeNoticeImg('${slot}',${i})">×</button>
+    </div>`).join('');
+}
+function addNoticeImg(slot) {
+  const inp = document.getElementById(`f-notice-${slot}-url`);
+  const url = (inp.value || '').trim();
+  if (!url) { toast('URL을 입력하세요', 'err'); return; }
+  noticeImgSlots[slot].push({ url, file: null, preview: url });
+  inp.value = '';
+  renderNoticeImgGrid(slot);
+}
+function addNoticeImgFiles(input, slot) {
+  [...input.files].forEach(file => {
+    const preview = URL.createObjectURL(file);
+    noticeImgSlots[slot].push({ url: '', file, preview });
+  });
+  input.value = '';
+  renderNoticeImgGrid(slot);
+}
+function removeNoticeImg(slot, idx) {
+  noticeImgSlots[slot].splice(idx, 1);
+  renderNoticeImgGrid(slot);
+}
+
 async function loadProducts() {
   document.getElementById('tbl-body').innerHTML = '<tr><td colspan="7" class="empty-msg"><span class="spin"></span>불러오는 중...</td></tr>';
   try {
@@ -579,9 +628,17 @@ async function loadProducts() {
 
 function setNoticeForm() {
   document.getElementById('notice-mode').value = siteConfig.noticeMode === 'default' ? 'default' : 'stock';
-  document.getElementById('notice-banner-img').value = siteConfig.noticeBannerImg || DEFAULT_SITE_CONFIG.noticeBannerImg;
-  document.getElementById('notice-popup-img').value = siteConfig.noticePopupImg || DEFAULT_SITE_CONFIG.noticePopupImg;
   document.getElementById('notice-popup-enabled').checked = siteConfig.noticePopupEnabled !== false;
+  const bannerImgs = Array.isArray(siteConfig.noticeBannerImgs) && siteConfig.noticeBannerImgs.length
+    ? siteConfig.noticeBannerImgs
+    : [siteConfig.noticeBannerImg || DEFAULT_SITE_CONFIG.noticeBannerImg];
+  const popupImgs = Array.isArray(siteConfig.noticePopupImgs) && siteConfig.noticePopupImgs.length
+    ? siteConfig.noticePopupImgs
+    : [siteConfig.noticePopupImg || DEFAULT_SITE_CONFIG.noticePopupImg];
+  noticeImgSlots.banner = bannerImgs.map(url => ({ url, file: null, preview: url }));
+  noticeImgSlots.popup  = popupImgs.map(url  => ({ url, file: null, preview: url }));
+  renderNoticeImgGrid('banner');
+  renderNoticeImgGrid('popup');
 }
 
 async function loadSiteConfig() {
@@ -617,11 +674,25 @@ async function saveSiteConfig() {
     if (latest.ok) currentSha = (await latest.json()).sha;
     else if (latest.status !== 404) throw new Error(`설정 SHA 조회 실패 (${latest.status})`);
 
+    const finalBannerImgs = [];
+    for (const item of noticeImgSlots.banner) {
+      if (item.file) { toast('배너 이미지 업로드 중...', 'info'); finalBannerImgs.push(await uploadImg(item.file)); }
+      else if (item.url) finalBannerImgs.push(item.url);
+    }
+    const finalPopupImgs = [];
+    for (const item of noticeImgSlots.popup) {
+      if (item.file) { toast('팝업 이미지 업로드 중...', 'info'); finalPopupImgs.push(await uploadImg(item.file)); }
+      else if (item.url) finalPopupImgs.push(item.url);
+    }
+    if (!finalBannerImgs.length) finalBannerImgs.push(DEFAULT_SITE_CONFIG.noticeBannerImg);
+    if (!finalPopupImgs.length)  finalPopupImgs.push(DEFAULT_SITE_CONFIG.noticePopupImg);
     const nextConfig = {
       noticeMode: document.getElementById('notice-mode').value === 'default' ? 'default' : 'stock',
-      noticeBannerImg: document.getElementById('notice-banner-img').value.trim() || DEFAULT_SITE_CONFIG.noticeBannerImg,
+      noticeBannerImgs: finalBannerImgs,
+      noticeBannerImg: finalBannerImgs[0],
       noticePopupEnabled: document.getElementById('notice-popup-enabled').checked,
-      noticePopupImg: document.getElementById('notice-popup-img').value.trim() || DEFAULT_SITE_CONFIG.noticePopupImg,
+      noticePopupImgs: finalPopupImgs,
+      noticePopupImg: finalPopupImgs[0],
     };
     const body = {
       message: `chore: 공지 설정 업데이트 ${new Date().toLocaleString('ko-KR')}`,
