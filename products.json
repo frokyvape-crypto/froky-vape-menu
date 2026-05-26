@@ -1,1 +1,35 @@
-[]
+[
+  {
+    "id": 1779771255622,
+    "name": "시험",
+    "price": 15200,
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779771249192_45fp.png",
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779780161341_gfxm.jpg",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779780161341_gfxm.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779780163242_0qqs.png"
+    ],
+    "cat": "일회용",
+    "flavor": "시험",
+    "options": [
+      "시험",
+      "시험",
+      "시험"
+    ],
+    "sale": true
+  },
+  {
+    "id": 1779776969253,
+    "name": "군침싹 입호흡 30ml",
+    "price": 8900,
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779776965342_5e8s.jpg",
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779776967055_8smr.jpg",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "소다",
+      "파인"
+    ],
+    "sale": false
+  }
+]
