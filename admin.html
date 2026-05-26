@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FROKY VAPE - 관리자</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--g:#2ecc40;--g2:#1aa82e;--bg:#0c0c0c;--surface:#141414;--card:#1a1a1a;--border:#2a2a2a;--text:#f0f0f0;--muted:#666;--red:#e53935;--y:#f5dc00;}
+body{background:var(--bg);color:var(--text);font-family:'Pretendard',-apple-system,sans-serif;min-height:100vh;}
+
+/* ── 로그인 ── */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;}
+.login-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px;width:100%;max-width:420px;text-align:center;}
+.login-logo{font-size:2rem;font-weight:900;color:var(--g);margin-bottom:6px;letter-spacing:2px;}
+.login-sub{color:var(--muted);font-size:.85rem;margin-bottom:28px;}
+.login-label{display:block;text-align:left;font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.login-input{width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--text);padding:12px 14px;border-radius:10px;font-family:'Pretendard',sans-serif;font-size:.9rem;outline:none;margin-bottom:16px;transition:border-color .2s;}
+.login-input:focus{border-color:var(--g);}
+.login-btn{width:100%;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:14px;border-radius:10px;font-family:'Pretendard',sans-serif;font-size:.95rem;font-weight:700;}
+.login-hint{font-size:.75rem;color:var(--muted);margin-top:14px;line-height:1.6;}
+.login-hint a{color:var(--g);text-decoration:none;}
+
+/* ── 레이아웃 ── */
+.app{display:none;flex-direction:column;min-height:100vh;}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 20px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.h-logo{font-size:1.1rem;font-weight:900;color:var(--g);letter-spacing:1px;}
+.h-right{display:flex;align-items:center;gap:10px;}
+.h-status{font-size:.78rem;color:var(--muted);}
+.h-logout{background:none;border:1px solid var(--border);color:var(--muted);cursor:pointer;padding:5px 12px;border-radius:8px;font-family:'Pretendard',sans-serif;font-size:.78rem;}
+.main{flex:1;padding:20px;max-width:1200px;margin:0 auto;width:100%;}
+
+/* ── 상단 액션 바 ── */
+.action-bar{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.action-bar h1{font-size:1.1rem;font-weight:800;flex:1;}
+.btn{cursor:pointer;padding:9px 18px;border-radius:10px;font-family:'Pretendard',sans-serif;font-size:.85rem;font-weight:700;border:none;transition:opacity .2s;}
+.btn:hover{opacity:.85;}
+.btn-green{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--text);}
+.btn-outline:hover{border-color:var(--g);color:var(--g);}
+.btn-blue{background:#1976d2;color:#fff;}
+.btn-red{background:var(--red);color:#fff;}
+.btn-sm{padding:6px 12px;font-size:.78rem;}
+
+/* ── 필터/검색 ── */
+.filter-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.filter-input{background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:8px 14px;border-radius:8px;font-family:'Pretendard',sans-serif;font-size:.85rem;outline:none;flex:1;min-width:180px;}
+.filter-input:focus{border-color:var(--g);}
+.filter-select{background:var(--surface);border:1.5px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;font-family:'Pretendard',sans-serif;font-size:.85rem;outline:none;}
+
+/* ── 상품 테이블 ── */
+.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.table-wrap table{width:100%;border-collapse:collapse;}
+.table-wrap th{background:var(--card);padding:11px 14px;text-align:left;font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);}
+.table-wrap td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:.85rem;vertical-align:middle;}
+.table-wrap tr:last-child td{border-bottom:none;}
+.table-wrap tr:hover td{background:rgba(255,255,255,.02);}
+.prod-img{width:44px;height:44px;object-fit:cover;border-radius:8px;background:var(--border);}
+.prod-name{font-weight:700;margin-bottom:2px;}
+.prod-flavor{font-size:.75rem;color:var(--muted);}
+.cat-badge{display:inline-block;padding:2px 9px;border-radius:6px;font-size:.72rem;font-weight:700;}
+.cat-입호흡{background:rgba(33,150,243,.15);color:#64b5f6;}
+.cat-폐호흡{background:rgba(156,39,176,.15);color:#ce93d8;}
+.cat-고농도{background:rgba(255,152,0,.15);color:#ffb74d;}
+.cat-일회용{background:rgba(0,188,212,.15);color:#4dd0e1;}
+.cat-best{background:rgba(46,204,64,.15);color:var(--g);}
+.sale-badge{display:inline-block;padding:2px 7px;border-radius:5px;font-size:.68rem;font-weight:700;background:var(--red);color:#fff;}
+.opts{font-size:.75rem;color:var(--muted);}
+.td-actions{display:flex;gap:6px;}
+.empty-row{text-align:center;color:var(--muted);padding:40px!important;}
+.count-label{font-size:.8rem;color:var(--muted);margin-bottom:10px;}
+
+/* ── 모달 ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:none;align-items:center;justify-content:center;padding:16px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:18px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;}
+.modal-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.modal-head h2{font-size:1rem;font-weight:800;color:var(--g);}
+.modal-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.4rem;line-height:1;}
+.modal-body{padding:20px;}
+.form-row{margin-bottom:14px;}
+.form-label{display:block;font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
+.form-input,.form-select,.form-textarea{width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--text);padding:10px 12px;border-radius:8px;font-family:'Pretendard',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--g);}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.toggle-row{display:flex;align-items:center;gap:10px;}
+.toggle{position:relative;width:44px;height:24px;cursor:pointer;}
+.toggle input{opacity:0;width:0;height:0;}
+.toggle-slider{position:absolute;inset:0;background:var(--border);border-radius:12px;transition:.2s;}
+.toggle input:checked+.toggle-slider{background:var(--g);}
+.toggle-slider::before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;}
+.toggle input:checked+.toggle-slider::before{transform:translateX(20px);}
+.modal-foot{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;}
+
+/* ── 카페24 임포트 패널 ── */
+.import-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:20px;}
+.import-panel h3{font-size:.9rem;font-weight:800;color:var(--g);margin-bottom:4px;}
+.import-panel p{font-size:.8rem;color:var(--muted);margin-bottom:12px;}
+.import-row{display:flex;gap:8px;flex-wrap:wrap;}
+.import-fields{display:grid;grid-template-columns:1fr 1fr 2fr;gap:8px;margin-bottom:10px;}
+.import-result{margin-top:12px;}
+.import-table{width:100%;border-collapse:collapse;font-size:.82rem;}
+.import-table th{background:var(--card);padding:8px 10px;text-align:left;font-size:.72rem;color:var(--muted);border-bottom:1px solid var(--border);}
+.import-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.import-table tr:hover td{background:rgba(255,255,255,.02);}
+.import-check{width:16px;height:16px;accent-color:var(--g);}
+
+/* ── 토스트 ── */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:10px 22px;border-radius:20px;font-size:.83rem;font-weight:700;z-index:500;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;}
+.toast.success{background:var(--g);color:#fff;}
+.toast.error{background:var(--red);color:#fff;}
+.toast.info{background:#1976d2;color:#fff;}
+
+/* ── 배포 상태 ── */
+.deploy-bar{background:rgba(46,204,64,.08);border:1px solid rgba(46,204,64,.25);border-radius:10px;padding:10px 16px;display:flex;align-items:center;gap:10px;margin-bottom:16px;font-size:.83rem;}
+.deploy-dot{width:8px;height:8px;border-radius:50%;background:var(--g);flex-shrink:0;}
+.deploy-dot.pending{background:var(--y);animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+@media(max-width:700px){
+  .form-row-2{grid-template-columns:1fr;}
+  .import-fields{grid-template-columns:1fr;}
+  .table-wrap th:nth-child(4),.table-wrap td:nth-child(4),
+  .table-wrap th:nth-child(5),.table-wrap td:nth-child(5){display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- 로그인 -->
+<div class="login-wrap" id="login-wrap">
+  <div class="login-box">
+    <div class="login-logo">FROKY VAPE</div>
+    <div class="login-sub">관리자 페이지 — GitHub 토큰으로 로그인</div>
+    <label class="login-label">GitHub Personal Access Token</label>
+    <input class="login-input" id="token-input" type="password" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off">
+    <button class="login-btn" onclick="doLogin()">로그인</button>
+    <div class="login-hint">
+      토큰이 없으면 <a href="https://github.com/settings/tokens/new?scopes=repo&description=FROKY+VAPE+Admin" target="_blank">여기서 발급</a>하세요.<br>
+      권한: <strong>repo (contents write)</strong> 필요
+    </div>
+  </div>
+</div>
+
+<!-- 앱 -->
+<div class="app" id="app">
+  <header>
+    <div class="h-logo">FROKY VAPE 관리자</div>
+    <div class="h-right">
+      <span class="h-status" id="h-status"></span>
+      <button class="h-logout" onclick="logout()">로그아웃</button>
+    </div>
+  </header>
+
+  <div class="main">
+
+    <!-- 카페24 가져오기 패널 -->
+    <div class="import-panel" id="import-panel">
+      <h3>📦 카페24에서 상품 가져오기</h3>
+      <p>카페24 API 정보를 입력하고 상품을 불러온 뒤, 선택해서 추가하세요.</p>
+      <div class="import-fields">
+        <input class="form-input" id="c24-id" placeholder="Client ID" type="text" autocomplete="off">
+        <input class="form-input" id="c24-secret" placeholder="Client Secret" type="password" autocomplete="off">
+        <input class="form-input" id="c24-token" placeholder="Refresh Token" type="password" autocomplete="off">
+      </div>
+      <div class="import-row">
+        <button class="btn btn-blue" onclick="fetchCafe24()">카페24 상품 불러오기</button>
+        <button class="btn btn-outline" onclick="toggleImport()">접기 ▲</button>
+      </div>
+      <div class="import-result" id="import-result" style="display:none"></div>
+    </div>
+
+    <!-- 배포 상태 -->
+    <div class="deploy-bar" id="deploy-bar" style="display:none">
+      <div class="deploy-dot pending" id="deploy-dot"></div>
+      <span id="deploy-msg">배포 중...</span>
+    </div>
+
+    <!-- 액션 바 -->
+    <div class="action-bar">
+      <h1>상품 관리</h1>
+      <button class="btn btn-outline" onclick="loadProducts()">🔄 새로고침</button>
+      <button class="btn btn-outline" onclick="toggleImportPanel()">📦 카페24 가져오기</button>
+      <button class="btn btn-green" onclick="openAddModal()">+ 상품 추가</button>
+      <button class="btn btn-green" onclick="saveAndDeploy()" id="deploy-btn">💾 저장 & 배포</button>
+    </div>
+
+    <!-- 필터 -->
+    <div class="filter-row">
+      <input class="filter-input" id="search-q" type="text" placeholder="🔍 상품명 검색..." oninput="renderTable()">
+      <select class="filter-select" id="filter-cat" onchange="renderTable()">
+        <option value="">전체 카테고리</option>
+        <option value="best">베스트</option>
+        <option value="입호흡">입호흡</option>
+        <option value="폐호흡">폐호흡</option>
+        <option value="고농도">고농도</option>
+        <option value="일회용">일회용</option>
+      </select>
+    </div>
+
+    <div class="count-label" id="count-label"></div>
+
+    <!-- 테이블 -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:60px">이미지</th>
+            <th>상품명</th>
+            <th>가격</th>
+            <th>카테고리</th>
+            <th>옵션</th>
+            <th style="width:60px">SALE</th>
+            <th style="width:100px">액션</th>
+          </tr>
+        </thead>
+        <tbody id="product-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 상품 추가/수정 모달 -->
+<div class="modal-overlay" id="prod-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modal-title">상품 추가</h2>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="f-id">
+      <div class="form-row-2">
+        <div class="form-row">
+          <label class="form-label">상품명 *</label>
+          <input class="form-input" id="f-name" type="text" placeholder="망고 아이스">
+        </div>
+        <div class="form-row">
+          <label class="form-label">가격 (원) *</label>
+          <input class="form-input" id="f-price" type="number" placeholder="12000">
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">이미지 URL</label>
+        <input class="form-input" id="f-img" type="url" placeholder="https://...">
+      </div>
+      <div class="form-row">
+        <label class="form-label">이미지 미리보기</label>
+        <img id="f-img-preview" src="" alt="" style="width:80px;height:80px;object-fit:cover;border-radius:8px;background:var(--border);display:block;margin-top:4px;" onerror="this.src=''">
+      </div>
+      <div class="form-row-2">
+        <div class="form-row">
+          <label class="form-label">카테고리 *</label>
+          <select class="form-select" id="f-cat">
+            <option value="입호흡">입호흡 액상</option>
+            <option value="폐호흡">폐호흡 액상</option>
+            <option value="고농도">고농도 액상</option>
+            <option value="일회용">일회용 기기</option>
+            <option value="best">베스트</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">맛/설명</label>
+          <input class="form-input" id="f-flavor" type="text" placeholder="과일&멘솔">
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">옵션 (쉼표로 구분)</label>
+        <input class="form-input" id="f-options" type="text" placeholder="3mg, 6mg, 12mg">
+      </div>
+      <div class="form-row">
+        <label class="form-label">SALE 표시</label>
+        <div class="toggle-row">
+          <label class="toggle"><input type="checkbox" id="f-sale"><span class="toggle-slider"></span></label>
+          <span style="font-size:.85rem;color:var(--muted)">SALE 뱃지 표시</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeModal()">취소</button>
+      <button class="btn btn-green" onclick="saveProduct()">저장</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const REPO = 'frokyvape-crypto/froky-vape-menu';
+const FILE  = 'products.json';
+let token = '', fileSha = '', products = [], dirty = false;
+let importPanelOpen = true;
+
+// ── 인증 ──
+function doLogin() {
+  const t = document.getElementById('token-input').value.trim();
+  if (!t) return showToast('토큰을 입력하세요', 'error');
+  token = t;
+  localStorage.setItem('fv-token', t);
+  initApp();
+}
+
+function logout() {
+  localStorage.removeItem('fv-token');
+  token = '';
+  document.getElementById('login-wrap').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+}
+
+async function initApp() {
+  document.getElementById('login-wrap').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  document.getElementById('app').style.flexDirection = 'column';
+  await loadProducts();
+}
+
+// ── GitHub API ──
+async function ghApi(method, path, body) {
+  const res = await fetch(`https://api.github.com${path}`, {
+    method,
+    headers: {
+      Authorization: `token ${token}`,
+      Accept: 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json',
+    },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  if (res.status === 401) { showToast('토큰이 유효하지 않습니다', 'error'); throw new Error('401'); }
+  return res;
+}
+
+// ── 상품 로드 ──
+async function loadProducts() {
+  try {
+    showToast('상품 불러오는 중...', 'info');
+    const res = await ghApi('GET', `/repos/${REPO}/contents/${FILE}`);
+    if (!res.ok) { products = []; fileSha = ''; renderTable(); showToast('products.json 없음 — 새로 만들어집니다', 'info'); return; }
+    const data = await res.json();
+    fileSha = data.sha;
+    const content = decodeURIComponent(escape(atob(data.content.replace(/\s/g, ''))));
+    products = JSON.parse(content);
+    dirty = false;
+    renderTable();
+    document.getElementById('h-status').textContent = `상품 ${products.length}개`;
+    showToast(`상품 ${products.length}개 로드됨`, 'success');
+  } catch(e) { if(e.message !== '401') showToast('로드 실패: ' + e.message, 'error'); }
+}
+
+// ── 테이블 렌더 ──
+function renderTable() {
+  const q   = document.getElementById('search-q').value.trim().toLowerCase();
+  const cat = document.getElementById('filter-cat').value;
+  const list = products.filter(p =>
+    (!q || p.name.toLowerCase().includes(q) || (p.flavor||'').toLowerCase().includes(q)) &&
+    (!cat || p.cat === cat)
+  );
+  document.getElementById('count-label').textContent = `총 ${list.length}개 상품 (전체 ${products.length}개)`;
+  const fmt = n => Number(n).toLocaleString('ko-KR') + '원';
+  const tbody = document.getElementById('product-tbody');
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td class="empty-row" colspan="7">상품이 없습니다</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = list.map(p => `
+    <tr>
+      <td><img class="prod-img" src="${p.img||''}" alt="${p.name}" onerror="this.src=''"></td>
+      <td><div class="prod-name">${p.name}</div><div class="prod-flavor">${p.flavor||''}</div></td>
+      <td>${fmt(p.price)}</td>
+      <td><span class="cat-badge cat-${p.cat}">${p.cat}</span></td>
+      <td class="opts">${(p.options||[]).join(', ') || '-'}</td>
+      <td>${p.sale ? '<span class="sale-badge">SALE</span>' : ''}</td>
+      <td><div class="td-actions">
+        <button class="btn btn-outline btn-sm" onclick="openEditModal(${p.id})">수정</button>
+        <button class="btn btn-red btn-sm" onclick="deleteProduct(${p.id})">삭제</button>
+      </div></td>
+    </tr>`).join('');
+}
+
+// ── 저장 & 배포 ──
+async function saveAndDeploy() {
+  if (!confirm('상품 목록을 저장하고 사이트에 배포하시겠습니까?')) return;
+  try {
+    showDeployBar('저장 중...');
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(products, null, 2))));
+    const body = { message: `chore: 상품 업데이트 (관리자) ${new Date().toLocaleString('ko-KR')}`, content, branch: 'main' };
+    if (fileSha) body.sha = fileSha;
+    const res = await ghApi('PUT', `/repos/${REPO}/contents/${FILE}`, body);
+    if (!res.ok) { const e = await res.json(); throw new Error(e.message); }
+    const data = await res.json();
+    fileSha = data.content.sha;
+    dirty = false;
+    showDeployBar('배포 중... (30~60초 소요)', true);
+    setTimeout(() => hideDeployBar(), 60000);
+    showToast('저장 & 배포 시작됨!', 'success');
+  } catch(e) { hideDeployBar(); showToast('저장 실패: ' + e.message, 'error'); }
+}
+
+function showDeployBar(msg, pending=false) {
+  document.getElementById('deploy-bar').style.display = 'flex';
+  document.getElementById('deploy-msg').textContent = msg;
+  document.getElementById('deploy-dot').className = 'deploy-dot' + (pending?' pending':'');
+}
+function hideDeployBar() { document.getElementById('deploy-bar').style.display = 'none'; }
+
+// ── 모달 ──
+let editingId = null;
+function openAddModal() {
+  editingId = null;
+  document.getElementById('modal-title').textContent = '상품 추가';
+  ['f-id','f-name','f-price','f-img','f-flavor','f-options'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f-cat').value = '입호흡';
+  document.getElementById('f-sale').checked = false;
+  document.getElementById('f-img-preview').src = '';
+  document.getElementById('prod-modal').classList.add('open');
+}
+function openEditModal(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  editingId = id;
+  document.getElementById('modal-title').textContent = '상품 수정';
+  document.getElementById('f-id').value = id;
+  document.getElementById('f-name').value = p.name;
+  document.getElementById('f-price').value = p.price;
+  document.getElementById('f-img').value = p.img || '';
+  document.getElementById('f-img-preview').src = p.img || '';
+  document.getElementById('f-cat').value = p.cat;
+  document.getElementById('f-flavor').value = p.flavor || '';
+  document.getElementById('f-options').value = (p.options||[]).join(', ');
+  document.getElementById('f-sale').checked = !!p.sale;
+  document.getElementById('prod-modal').classList.add('open');
+}
+document.getElementById('f-img').addEventListener('input', function() {
+  document.getElementById('f-img-preview').src = this.value;
+});
+function closeModal() { document.getElementById('prod-modal').classList.remove('open'); }
+document.getElementById('prod-modal').addEventListener('click', e => { if(e.target===e.currentTarget) closeModal(); });
+
+function saveProduct() {
+  const name  = document.getElementById('f-name').value.trim();
+  const price = parseInt(document.getElementById('f-price').value);
+  if (!name) return showToast('상품명을 입력하세요', 'error');
+  if (!price || isNaN(price)) return showToast('가격을 입력하세요', 'error');
+  const opts = document.getElementById('f-options').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const obj = {
+    id:      editingId || Date.now(),
+    name,
+    price,
+    img:     document.getElementById('f-img').value.trim(),
+    cat:     document.getElementById('f-cat').value,
+    flavor:  document.getElementById('f-flavor').value.trim(),
+    options: opts,
+    sale:    document.getElementById('f-sale').checked,
+  };
+  if (editingId !== null) {
+    const idx = products.findIndex(p => p.id === editingId);
+    if (idx >= 0) products[idx] = obj;
+  } else {
+    products.push(obj);
+  }
+  dirty = true;
+  renderTable();
+  closeModal();
+  showToast(editingId !== null ? '수정됨 (저장 & 배포 클릭)' : '추가됨 (저장 & 배포 클릭)', 'success');
+}
+
+function deleteProduct(id) {
+  if (!confirm('이 상품을 삭제하시겠습니까?')) return;
+  products = products.filter(p => p.id !== id);
+  dirty = true;
+  renderTable();
+  document.getElementById('h-status').textContent = `상품 ${products.length}개 (미저장)`;
+  showToast('삭제됨 (저장 & 배포 클릭)', 'success');
+}
+
+// ── 카페24 임포트 ──
+function toggleImportPanel() {
+  importPanelOpen = !importPanelOpen;
+  document.getElementById('import-panel').style.display = importPanelOpen ? 'block' : 'none';
+}
+function toggleImport() { toggleImportPanel(); }
+
+async function fetchCafe24() {
+  const clientId     = document.getElementById('c24-id').value.trim();
+  const clientSecret = document.getElementById('c24-secret').value.trim();
+  const refreshToken = document.getElementById('c24-token').value.trim();
+  if (!clientId || !clientSecret || !refreshToken) return showToast('카페24 정보를 모두 입력하세요', 'error');
+
+  showToast('카페24 토큰 발급 중...', 'info');
+  try {
+    const proxyBase = 'https://corsproxy.io/?url=';
+    const tokenUrl  = 'https://frokyvape.cafe24api.com/api/v2/oauth/token';
+    const tokenRes  = await fetch(proxyBase + encodeURIComponent(tokenUrl), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', Authorization: 'Basic ' + btoa(clientId + ':' + clientSecret) },
+      body: 'grant_type=refresh_token&refresh_token=' + encodeURIComponent(refreshToken),
+    });
+    const tokenData = await tokenRes.json();
+    if (!tokenData.access_token) throw new Error('액세스 토큰 발급 실패: ' + JSON.stringify(tokenData));
+
+    showToast('상품 목록 불러오는 중...', 'info');
+    const prodUrl = 'https://frokyvape.cafe24api.com/api/v2/products?limit=100&display=T&selling=T';
+    const prodRes = await fetch(proxyBase + encodeURIComponent(prodUrl), {
+      headers: { Authorization: 'Bearer ' + tokenData.access_token, 'X-Cafe24-Api-Version': '2024-03-01' },
+    });
+    const prodData = await prodRes.json();
+    const items = prodData.products || [];
+    if (!items.length) { showToast('불러온 상품 없음', 'info'); return; }
+
+    showToast(`${items.length}개 상품 불러옴`, 'success');
+    renderImportTable(items);
+  } catch(e) { showToast('오류: ' + e.message, 'error'); }
+}
+
+function renderImportTable(items) {
+  const CAT = name => {
+    if (/폐호흡|모드|RDA|RTA/.test(name)) return '폐호흡';
+    if (/솔트|Salt|SALT|고농도/.test(name)) return '고농도';
+    if (/일회용|디스포/.test(name)) return '일회용';
+    return '입호흡';
+  };
+  const el = document.getElementById('import-result');
+  el.style.display = 'block';
+  el.innerHTML = `
+    <div style="margin-bottom:8px;display:flex;align-items:center;gap:8px;">
+      <strong style="font-size:.85rem">${items.length}개 상품</strong>
+      <button class="btn btn-green btn-sm" onclick="importSelected()">선택 항목 추가</button>
+      <button class="btn btn-outline btn-sm" onclick="selectAllImport(true)">전체 선택</button>
+      <button class="btn btn-outline btn-sm" onclick="selectAllImport(false)">전체 해제</button>
+    </div>
+    <div style="overflow-x:auto;max-height:320px;overflow-y:auto;">
+    <table class="import-table">
+      <thead><tr><th></th><th>이미지</th><th>상품명</th><th>가격</th><th>카테고리</th></tr></thead>
+      <tbody>
+        ${items.map((p,i) => {
+          const img = (p.list_image||p.detail_image||'').startsWith('/') ? 'https://frokyvape.cafe24.com'+(p.list_image||p.detail_image) : (p.list_image||p.detail_image||'');
+          return `<tr>
+            <td><input type="checkbox" class="import-check" data-idx="${i}" checked></td>
+            <td><img src="${img}" style="width:36px;height:36px;object-fit:cover;border-radius:6px;background:var(--border)" onerror="this.src=''"></td>
+            <td>${p.product_name}</td>
+            <td>${Number(p.price).toLocaleString('ko-KR')}원</td>
+            <td>${CAT(p.product_name)}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table></div>`;
+  window._c24items = items;
+}
+
+function selectAllImport(v) {
+  document.querySelectorAll('.import-check').forEach(cb => cb.checked = v);
+}
+
+function importSelected() {
+  const selected = [...document.querySelectorAll('.import-check:checked')].map(cb => window._c24items[+cb.dataset.idx]);
+  const CAT = name => {
+    if (/폐호흡|모드|RDA|RTA/.test(name)) return '폐호흡';
+    if (/솔트|Salt|SALT|고농도/.test(name)) return '고농도';
+    if (/일회용|디스포/.test(name)) return '일회용';
+    return '입호흡';
+  };
+  selected.forEach(p => {
+    if (products.find(x => x.id === p.product_no)) return;
+    const img = (p.list_image||p.detail_image||'').startsWith('/') ? 'https://frokyvape.cafe24.com'+(p.list_image||p.detail_image) : (p.list_image||p.detail_image||'');
+    products.push({
+      id:      p.product_no,
+      name:    p.product_name,
+      price:   parseInt(p.price)||0,
+      img,
+      cat:     CAT(p.product_name),
+      flavor:  (p.summary_description||'').trim(),
+      options: [],
+      sale:    !!p.price_content,
+    });
+  });
+  dirty = true;
+  renderTable();
+  document.getElementById('h-status').textContent = `상품 ${products.length}개 (미저장)`;
+  showToast(`${selected.length}개 추가됨 — 저장 & 배포 클릭`, 'success');
+  document.getElementById('import-result').style.display = 'none';
+}
+
+// ── 토스트 ──
+let toastTimer;
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── 초기화 ──
+token = localStorage.getItem('fv-token') || '';
+if (token) initApp();
+else document.getElementById('login-wrap').style.display = 'flex';
+
+window.addEventListener('beforeunload', e => {
+  if (dirty) { e.preventDefault(); e.returnValue = ''; }
+});
+<\/script>
+</body>
+</html>
