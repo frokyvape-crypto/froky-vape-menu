@@ -88,6 +88,12 @@ body[data-notice-mode="stock"] .notice-banner-wrap{display:block;}
 .card-img-wrap{position:relative;overflow:hidden;}
 .card-img-wrap img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--surface);display:block;transition:transform .3s;}
 .card:hover .card-img-wrap img{transform:scale(1.05);}
+.card-img-count{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.6);color:#fff;font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:8px;pointer-events:none;}
+.card-thumbs{display:flex;gap:4px;padding:6px 8px 2px;overflow-x:auto;scrollbar-width:none;}
+.card-thumbs::-webkit-scrollbar{display:none;}
+.card-thumb{width:36px;height:36px;object-fit:cover;border-radius:5px;flex-shrink:0;border:1.5px solid transparent;cursor:pointer;opacity:.65;transition:border-color .15s,opacity .15s;}
+.card-thumb.active{border-color:var(--g);opacity:1;}
+.card-thumb:hover{opacity:1;}
 .card-badge{position:absolute;top:8px;left:8px;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;font-size:.62rem;font-weight:700;padding:3px 8px;border-radius:6px;box-shadow:0 0 8px var(--g-glow);}
 .card-quick{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5);backdrop-filter:blur(2px);color:#fff;font-size:.82rem;font-weight:700;font-family:'Pretendard',sans-serif;opacity:0;transition:opacity .2s;border:none;cursor:pointer;text-shadow:0 1px 4px rgba(0,0,0,.5);}
 .card:hover .card-quick{opacity:1;}
@@ -129,14 +135,15 @@ body[data-notice-mode="stock"] .notice-banner-wrap{display:block;}
 .checkout-btn{width:100%;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:14px;border-radius:12px;font-family:'Pretendard',sans-serif;font-size:.95rem;font-weight:800;box-shadow:0 0 16px var(--g-glow);transition:opacity .2s;}
 .checkout-btn:hover{opacity:.88;}
 .checkout-btn:disabled{background:var(--border);color:var(--muted);cursor:not-allowed;box-shadow:none;}
-.sheet-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;display:none;align-items:flex-end;justify-content:center;}
+.sheet-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;display:none;align-items:flex-end;justify-content:center;overflow-y:auto;}
 .sheet-overlay.open{display:flex;}
-.sheet{background:var(--surface);width:100%;max-width:520px;border-radius:22px 22px 0 0;border-top:2px solid rgba(46,204,64,.35);animation:slideUp .25s ease;max-height:85svh;display:flex;flex-direction:column;overflow:hidden;}
+.sheet{background:var(--surface);width:100%;max-width:520px;border-radius:22px 22px 0 0;border-top:2px solid rgba(46,204,64,.35);animation:slideUp .25s ease;flex-shrink:0;}
 @keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
 .sheet-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:12px auto 0;}
 .sheet-top{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);}
 .sheet-img-section{position:relative;background:var(--card);}
-.sheet-main-img{width:100%;aspect-ratio:4/3;max-height:240px;object-fit:cover;display:block;}
+.sheet-main-img{width:100%;height:260px;object-fit:contain;display:block;background:var(--card);}
+@media(max-width:480px){.sheet-main-img{height:200px;}}
 .sheet-thumb{width:66px;height:66px;object-fit:cover;border-radius:12px;border:2px solid rgba(46,204,64,.25);}
 .sheet-info{flex:1;}
 .sheet-name{font-size:.9rem;font-weight:700;line-height:1.4;margin-bottom:4px;}
@@ -340,7 +347,7 @@ body[data-notice-mode="stock"] .notice-banner-wrap{display:block;}
 <div class="notice-popup-overlay" id="notice-popup-overlay" onclick="closeNoticePopupOut(event)">
   <div class="notice-popup">
     <button class="notice-popup-close" onclick="closeNoticePopup()">×</button>
-    <img id="notice-popup-img" src="" alt="담배사업법 개정에 따른 제품 판매 안내">
+    <div id="notice-popup-imgs"></div>
     <label class="notice-popup-today"><input type="checkbox" id="notice-popup-today">오늘은 그만보기</label>
   </div>
 </div>
@@ -369,21 +376,36 @@ body[data-notice-mode="stock"] .notice-banner-wrap{display:block;}
 <div class="toast" id="toast"></div>
 <script>
 const PAY_URL='https://frokyvape.com/product/%EA%B0%9C%EC%9D%B8-%EA%B2%B0%EC%A0%9C%EC%B0%BD/1134/category/27/display/1/';
-const DEFAULT_SITE_CONFIG={noticeMode:'stock',noticeBannerImg:'images/notice-banner.svg',noticePopupEnabled:true,noticePopupImg:'images/notice-popup.png'};
+const DEFAULT_SITE_CONFIG={noticeMode:'stock',noticeBannerImgs:['images/notice-banner.svg'],noticeBannerImg:'images/notice-banner.svg',noticePopupEnabled:true,noticePopupImgs:['images/notice-popup.png'],noticePopupImg:'images/notice-popup.png'};
 let siteConfig={...DEFAULT_SITE_CONFIG};
 let P=[],cart=[],sp=null,sq=1;
 const fmt=n=>n.toLocaleString('ko-KR')+'원';
 function getImgs(p){if(Array.isArray(p.imgs)&&p.imgs.length)return p.imgs;if(p.img)return[p.img];return[''];}
 function getDetailImgs(p){if(Array.isArray(p.detailImgs)&&p.detailImgs.length)return p.detailImgs;if(p.detailImg)return[p.detailImg];return[];}
-function applySiteConfig(cfg){siteConfig={...DEFAULT_SITE_CONFIG,...(cfg||{})};document.body.setAttribute('data-notice-mode',siteConfig.noticeMode==='stock'?'stock':'default');document.getElementById('notice-banner-img').src=siteConfig.noticeBannerImg||DEFAULT_SITE_CONFIG.noticeBannerImg;document.getElementById('notice-popup-img').src=siteConfig.noticePopupImg||DEFAULT_SITE_CONFIG.noticePopupImg;if(siteConfig.noticePopupEnabled)openNoticePopup();}
+function getNoticeImgs(key,fallback){const arr=Array.isArray(siteConfig[key+'s'])&&siteConfig[key+'s'].length?siteConfig[key+'s']:siteConfig[key]?[siteConfig[key]]:[fallback];return arr;}
+function applySiteConfig(cfg){
+  siteConfig={...DEFAULT_SITE_CONFIG,...(cfg||{})};
+  document.body.setAttribute('data-notice-mode',siteConfig.noticeMode==='stock'?'stock':'default');
+  const bannerImgs=getNoticeImgs('noticeBannerImg',DEFAULT_SITE_CONFIG.noticeBannerImg);
+  document.getElementById('notice-banner-img').src=bannerImgs[0]||DEFAULT_SITE_CONFIG.noticeBannerImg;
+  if(siteConfig.noticePopupEnabled)openNoticePopup();
+}
 async function loadSiteConfig(){try{const res=await fetch('site-config.json?t='+Date.now());if(res.ok)applySiteConfig(await res.json());else applySiteConfig(DEFAULT_SITE_CONFIG);}catch(e){applySiteConfig(DEFAULT_SITE_CONFIG);}}
-function noticeTodayKey(){const d=new Date();return `${siteConfig.noticePopupImg||''}|${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
-function openNoticePopup(){try{if(localStorage.getItem('fv-notice-popup-hide-today')===noticeTodayKey())return;}catch(e){}document.getElementById('notice-popup-today').checked=false;document.getElementById('notice-popup-overlay').classList.add('open');}
+function noticeTodayKey(){const imgs=getNoticeImgs('noticePopupImg',DEFAULT_SITE_CONFIG.noticePopupImg);const d=new Date();return`${imgs.join(',')}|${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function openNoticePopup(){try{if(localStorage.getItem('fv-notice-popup-hide-today')===noticeTodayKey())return;}catch(e){}const imgs=getNoticeImgs('noticePopupImg',DEFAULT_SITE_CONFIG.noticePopupImg);document.getElementById('notice-popup-imgs').innerHTML=imgs.map((src,i)=>`<img src="${src}" alt="공지 팝업 이미지 ${i+1}" style="display:block;width:100%;${i>0?'margin-top:8px;':''}border-radius:${i===0?'18px 18px':'0'} ${i===imgs.length-1?'18px 18px':'0 0'};" onerror="this.style.display='none'">`).join('');document.getElementById('notice-popup-today').checked=false;document.getElementById('notice-popup-overlay').classList.add('open');}
 function closeNoticePopup(){try{if(document.getElementById('notice-popup-today').checked)localStorage.setItem('fv-notice-popup-hide-today',noticeTodayKey());}catch(e){}document.getElementById('notice-popup-overlay').classList.remove('open');}
 function closeNoticePopupOut(e){if(e.target===document.getElementById('notice-popup-overlay'))closeNoticePopup();}
 function setTheme(t){document.documentElement.setAttribute('data-theme',t);document.getElementById('btn-dark').classList.toggle('active',t==='dark');document.getElementById('btn-light').classList.toggle('active',t==='light');localStorage.setItem('fv-theme',t);}
 (()=>{const s=localStorage.getItem('fv-theme');if(s)setTheme(s);})();
-function cardHTML(p){const img=getImgs(p)[0]||'';return`<div class="card"><div class="card-img-wrap"><img src="${img}" alt="${p.name}" loading="lazy">${p.sale?'<span class="card-badge">SALE</span>':''}<button class="card-quick" onclick="openSheet(${p.id})">간단보기 👁</button></div><div class="card-body"><div class="card-name">${p.name}</div><div class="card-flavor">${p.flavor}</div><div class="card-price">${fmt(p.price)}</div></div><div class="card-btns"><button class="btn-cart-card" onclick="openSheet(${p.id})">담기</button><button class="btn-buy-card" onclick="openSheet(${p.id})">구매하기</button></div></div>`;}
+function cardHTML(p){
+  const imgs=getImgs(p);
+  const img=imgs[0]||'';
+  const multi=imgs.length>1;
+  const thumbs=multi?`<div class="card-thumbs">${imgs.map((u,i)=>`<img class="card-thumb${i===0?' active':''}" src="${u}" loading="lazy" onclick="event.stopPropagation();switchCardImg(this,'${u.replace(/'/g,"\\'")}',${p.id})" onerror="this.style.display='none'">`).join('')}</div>`:'';
+  const count=multi?`<span class="card-img-count">📷 ${imgs.length}</span>`:'';
+  return`<div class="card" id="card-${p.id}"><div class="card-img-wrap"><img id="card-main-${p.id}" src="${img}" alt="${p.name}" loading="lazy">${p.sale?'<span class="card-badge">SALE</span>':''}${count}<button class="card-quick" onclick="openSheet(${p.id})">간단보기 👁</button></div>${thumbs}<div class="card-body"><div class="card-name">${p.name}</div><div class="card-flavor">${p.flavor}</div><div class="card-price">${fmt(p.price)}</div></div><div class="card-btns"><button class="btn-cart-card" onclick="openSheet(${p.id})">담기</button><button class="btn-buy-card" onclick="openSheet(${p.id})">구매하기</button></div></div>`;
+}
+function switchCardImg(el,url,pid){document.getElementById('card-main-'+pid).src=url;const card=document.getElementById('card-'+pid);card.querySelectorAll('.card-thumb').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
 function buildCarousel(){const best=P.filter(p=>p.cat==='best');document.getElementById('carousel-track').innerHTML=[...best,...best].map(p=>`<div class="best-card" onclick="openSheet(${p.id})"><img src="${getImgs(p)[0]||''}" alt="${p.name}" loading="lazy"><div class="best-card-body"><div class="best-card-name">${p.name}${p.sale?'<span class="hot">SALE</span>':''}</div><div class="best-card-price">${fmt(p.price)}</div></div></div>`).join('');}
 function renderGrid(cat){const items=cat==='all'?P:P.filter(p=>p.cat===cat);document.getElementById('best-section').style.display=cat==='all'?'':'none';const lb={all:'전체 상품',best:'🏆 베스트',입호흡:'입호흡 액상',폐호흡:'폐호흡 액상',고농도:'고농도 액상',일회용:'일회용 기기'};document.getElementById('section-label').textContent=lb[cat]||cat;document.getElementById('product-grid').innerHTML=items.map(cardHTML).join('');}
 function filterCat(cat,el){document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderGrid(cat);}
