@@ -13,5 +13,18 @@
       "시험"
     ],
     "sale": true
+  },
+  {
+    "id": 1779776969253,
+    "name": "군침싹 입호흡 30ml",
+    "price": 8900,
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779776965342_5e8s.jpg",
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1779776967055_8smr.jpg",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "9.8mg"
+    ],
+    "sale": false
   }
 ]
