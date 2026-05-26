@@ -358,9 +358,35 @@ function changeQty(k,d){const i=cart.find(c=>c.key===k);if(i)i.qty=Math.max(1,i.
 function removeItem(k){cart=cart.filter(c=>c.key!==k);updateCartUI();}
 function openCart(){document.getElementById('overlay').classList.add('open');document.getElementById('drawer').classList.add('open');}
 function closeCart(){document.getElementById('overlay').classList.remove('open');document.getElementById('drawer').classList.remove('open');}
-function openSheet(id){sp=P.find(p=>p.id===id);sq=1;document.getElementById('s-img').src=sp.img;document.getElementById('s-name').textContent=sp.name;document.getElementById('s-price').textContent=fmt(sp.price);document.getElementById('s-total').textContent='합계: '+fmt(sp.price);document.getElementById('s-tag').textContent=sp.flavor;document.getElementById('s-qty').textContent=1;document.getElementById('s-option').innerHTML='<option value="">옵션 선택</option>'+(sp.options||[]).map(o=>`<option>${o}</option>`).join('');const db=document.getElementById('btn-sheet-detail');db.style.display=productDetailImages(sp).length?'block':'none';document.getElementById('sheet-overlay').classList.add('open');}
+function openSheet(id){
+  sp=P.find(p=>p.id===id);sq=1;
+  const imgs=getImgs(sp);
+  document.getElementById('s-img').src=imgs[0]||'';
+  document.getElementById('s-name').textContent=sp.name;
+  document.getElementById('s-price').textContent=fmt(sp.price);
+  document.getElementById('s-total').textContent='합계: '+fmt(sp.price);
+  document.getElementById('s-tag').textContent=sp.flavor;
+  document.getElementById('s-qty').textContent=1;
+  document.getElementById('s-option').innerHTML='<option value="">옵션 선택</option>'+(sp.options||[]).map(o=>`<option>${o}</option>`).join('');
+  document.getElementById('btn-sheet-detail').style.display=getDetailImgs(sp).length?'block':'none';
+  const thumbs=document.getElementById('s-thumbs');
+  if(imgs.length>1){
+    thumbs.innerHTML=imgs.map((url,i)=>`<img class="s-thumb-mini${i===0?' active':''}" src="${url}" onclick="switchSheetImg(this)" data-url="${url.replace(/"/g,'&quot;')}" onerror="this.style.display='none'">`).join('');
+    thumbs.style.display='flex';
+  }else{thumbs.innerHTML='';thumbs.style.display='none';}
+  document.getElementById('sheet-overlay').classList.add('open');
+}
+function switchSheetImg(el){document.getElementById('s-img').src=el.dataset.url;document.querySelectorAll('.s-thumb-mini').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
 function closeSheet(){document.getElementById('sheet-overlay').classList.remove('open');}
-function openDetailModal(){if(!sp)return;const c=document.getElementById('detail-modal-content');const imgs=productDetailImages(sp);c.innerHTML=imgs.length?imgs.map(src=>`<img src="${src}" alt="${sp.name} 상세이미지" onerror="this.style.display='none'">`).join(''):'<div class="detail-no-img">등록된 상세 이미지가 없습니다</div>';document.getElementById('detail-modal-overlay').classList.add('open');}
+function openDetailModal(){
+  if(!sp)return;
+  const imgs=getDetailImgs(sp);
+  const c=document.getElementById('detail-modal-content');
+  c.innerHTML=imgs.length
+    ?imgs.map(url=>`<img src="${url}" alt="${sp.name} 상세이미지" style="width:100%;display:block;" onerror="this.style.display='none'">`).join('')
+    :'<div class="detail-no-img">등록된 상세 이미지가 없습니다</div>';
+  document.getElementById('detail-modal-overlay').classList.add('open');
+}
 function closeDetailModal(){document.getElementById('detail-modal-overlay').classList.remove('open');}
 function closeDetailModalOut(e){if(e.target===document.getElementById('detail-modal-overlay'))closeDetailModal();}
 function closeSheetOut(e){if(e.target===document.getElementById('sheet-overlay'))closeSheet();}
