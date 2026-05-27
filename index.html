@@ -350,6 +350,7 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 <div class="toast" id="toast"></div>
 <script>
 const PAY_URL='https://frokyvape.com/product/%EA%B0%9C%EC%9D%B8-%EA%B2%B0%EC%A0%9C%EC%B0%BD/1134/category/27/display/1/';
+const CAFE24_MALL='frokyvape';
 const REPO='frokyvape-crypto/froky-vape-menu';
 const DEFAULT_SITE_CONFIG={noticeMode:'stock',noticeBannerImgs:['images/notice-banner.svg'],noticeBannerImg:'images/notice-banner.svg',noticePopupEnabled:true,noticePopupImgs:['images/notice-popup.png'],noticePopupImg:'images/notice-popup.png'};
 let siteConfig={...DEFAULT_SITE_CONFIG};
@@ -462,8 +463,24 @@ function closeDetailModalOut(e){if(e.target===document.getElementById('detail-mo
 function closeSheetOut(e){if(e.target===document.getElementById('sheet-overlay'))closeSheet();}
 function sheetQty(d){sq=Math.max(1,sq+d);document.getElementById('s-qty').textContent=sq;updateTotal();}
 function updateTotal(){if(sp)document.getElementById('s-total').textContent='합계: '+fmt(sp.price*sq);}
-function sheetAddCart(){const opt=document.getElementById('s-option').value;if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}addToCart(sp,opt,sq);closeSheet();}
-function sheetBuyNow(){const opt=document.getElementById('s-option').value;if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}addToCart(sp,opt,sq);closeSheet();openPayModal();}
+function sheetAddCart(){
+  if(sp.product_no){
+    window.open(`https://${CAFE24_MALL}.cafe24.com/exec/front/order/basket/?product_no=${sp.product_no}&quantity=${sq}`,'_blank');
+    closeSheet(); return;
+  }
+  const opt=document.getElementById('s-option').value;
+  if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}
+  addToCart(sp,opt,sq);closeSheet();
+}
+function sheetBuyNow(){
+  if(sp.product_no){
+    window.open(`https://${CAFE24_MALL}.cafe24.com/product/detail.html?product_no=${sp.product_no}`,'_blank');
+    closeSheet(); return;
+  }
+  const opt=document.getElementById('s-option').value;
+  if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}
+  addToCart(sp,opt,sq);closeSheet();openPayModal();
+}
 function openPayModal(){closeCart();const total=cart.reduce((s,c)=>s+c.price*c.qty,0);document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${c.name}</div><div class="order-row-opt">${c.option} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');document.getElementById('pm-total').textContent=fmt(total);document.getElementById('pay-modal-overlay').classList.add('open');}
 function closePayModal(){document.getElementById('pay-modal-overlay').classList.remove('open');}
 function goToPay(){window.open(PAY_URL,'_blank');closePayModal();}
