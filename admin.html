@@ -540,6 +540,7 @@ async function ghApi(method, path, body) {
 }
 
 const NOTICE_IMAGE_PRESETS = {
+  banner: { width: 1546, height: 423, suffix: 'banner', sharpen: .14 },
   popup: { width: 1000, height: 1000, suffix: 'popup' },
 };
 
@@ -566,6 +567,10 @@ function drawContain(ctx, img, w, h) {
   ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
 }
 
+function drawExactResize(ctx, img, w, h) {
+  ctx.drawImage(img, 0, 0, w, h);
+}
+
 function sharpenCanvas(canvas, amount = .18) {
   const ctx = canvas.getContext('2d');
   const { width, height } = canvas;
@@ -590,7 +595,6 @@ function sharpenCanvas(canvas, amount = .18) {
 }
 
 async function prepareNoticeImage(file, slot) {
-  if (slot === 'banner') return { blob: file, name: file.name };
   const preset = NOTICE_IMAGE_PRESETS[slot];
   if (!preset || !file.type.startsWith('image/')) return { blob: file, name: file.name };
   const img = await loadImageForCanvas(file);
@@ -602,8 +606,9 @@ async function prepareNoticeImage(file, slot) {
   ctx.imageSmoothingQuality = 'high';
   ctx.fillStyle = '#f7f6f2';
   ctx.fillRect(0, 0, preset.width, preset.height);
-  drawContain(ctx, img, preset.width, preset.height);
-  try { sharpenCanvas(canvas, .10); } catch (e) {}
+  if (slot === 'banner') drawExactResize(ctx, img, preset.width, preset.height);
+  else drawContain(ctx, img, preset.width, preset.height);
+  try { sharpenCanvas(canvas, preset.sharpen || .10); } catch (e) {}
   const blob = await canvasToBlob(canvas, 'image/png');
   const base = file.name.replace(/\.[^.]+$/, '').replace(/[^a-z0-9가-힣_-]/gi, '_').slice(0, 40) || preset.suffix;
   return { blob, name: `${base}_${preset.suffix}_${preset.width}x${preset.height}.png` };
