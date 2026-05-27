@@ -1123,33 +1123,60 @@ async function exchangeCafe24Code() {
 async function fetchCafe24() {
   const cid = document.getElementById('c24-id').value.trim();
   const sec = document.getElementById('c24-secret').value.trim();
-  const rt = document.getElementById('c24-rt').value.trim();
-  if (!cid || !sec || !rt) { toast('카페24 정보를 모두 입력하세요', 'err'); return; }
+  const rt  = document.getElementById('c24-rt').value.trim();
+  if (!cid || !sec || !rt) { toast('카페24 Client ID / Secret / Refresh Token을 모두 입력하세요', 'err'); return; }
+  // 입력값 localStorage 저장
+  localStorage.setItem('fv-c24-id', cid);
+  localStorage.setItem('fv-c24-sec', sec);
+  localStorage.setItem('fv-c24-rt', rt);
+
   const btn = document.getElementById('btn-c24-load');
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span>불러오는 중...';
   document.getElementById('c24-result').style.display = 'none';
   try {
-    const proxy = 'https://corsproxy.io/?url=';
-    const tr = await fetch(proxy + encodeURIComponent('https://frokyvape.cafe24api.com/api/v2/oauth/token'), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic ' + btoa(cid + ':' + sec) },
-      body: 'grant_type=refresh_token&refresh_token=' + encodeURIComponent(rt),
-    });
-    if (!tr.ok) throw new Error('카페24 서버 오류 ' + tr.status);
-    const td = await tr.json();
-    if (td.error) throw new Error(`[${td.error}] ${td.error_description || ''} — Refresh Token이 만료되었을 수 있습니다`);
-    if (!td.access_token) throw new Error('액세스 토큰 없음: ' + JSON.stringify(td));
-    const pr = await fetch(proxy + encodeURIComponent('https://frokyvape.cafe24api.com/api/v2/products?limit=100&display=T&selling=T'), {
-      headers: { 'Authorization': 'Bearer ' + td.access_token, 'X-Cafe24-Api-Version': '2024-03-01' },
-    });
-    const items = (await pr.json()).products || [];
+    let items = [];
+
+    if (WORKER_URL && ADMIN_KEY) {
+      // Worker 모드: CORS 없이 안정적으로 호출
+      const r = await fetch(WORKER_URL + '/api/cafe24/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
+        body: JSON.stringify({ client_id: cid, client_secret: sec, refresh_token: rt, mall_id: 'frokyvape' }),
+      });
+      const d = await r.json();
+      if (!r.ok || !d.ok) throw new Error(d.message || `오류 (${r.status})`);
+      // 새 refresh_token이 있으면 자동 갱신
+      if (d.new_refresh_token) {
+        localStorage.setItem('fv-c24-rt', d.new_refresh_token);
+        document.getElementById('c24-rt').value = d.new_refresh_token;
+        toast('Refresh Token 자동 갱신됨', 'info');
+      }
+      items = d.products || [];
+    } else {
+      // 직접 모드: corsproxy.io (Worker 미설정 시 fallback)
+      const proxy = 'https://corsproxy.io/?url=';
+      const tr = await fetch(proxy + encodeURIComponent('https://frokyvape.cafe24api.com/api/v2/oauth/token'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic ' + btoa(cid + ':' + sec) },
+        body: 'grant_type=refresh_token&refresh_token=' + encodeURIComponent(rt),
+      });
+      if (!tr.ok) throw new Error('카페24 서버 오류 ' + tr.status);
+      const td = await tr.json();
+      if (td.error) throw new Error(`[${td.error}] ${td.error_description || ''} — Refresh Token 만료`);
+      if (!td.access_token) throw new Error('액세스 토큰 없음');
+      const pr = await fetch(proxy + encodeURIComponent('https://frokyvape.cafe24api.com/api/v2/products?limit=100&display=T&selling=T'), {
+        headers: { 'Authorization': 'Bearer ' + td.access_token, 'X-Cafe24-Api-Version': '2024-03-01' },
+      });
+      items = (await pr.json()).products || [];
+    }
+
     if (!items.length) { toast('불러온 상품 없음', 'info'); return; }
     window._c24 = items;
     document.getElementById('c24-count').textContent = items.length + '개 상품 불러옴';
-    const existingIds = new Set(products.map(p => p.id));
+    const existingNos = new Set(products.map(p => p.product_no).filter(Boolean));
     document.getElementById('c24-tbody').innerHTML = items.map((p, i) => {
       const img = (p.list_image || p.detail_image || '').startsWith('/') ? 'https://frokyvape.cafe24.com' + (p.list_image || p.detail_image) : (p.list_image || p.detail_image || '');
-      const isDupe = existingIds.has(p.product_no);
+      const isDupe = existingNos.has(p.product_no);
       return `<tr style="${isDupe ? 'opacity:.45' : ''}">
         <td><input type="checkbox" class="import-check" data-i="${i}" ${isDupe ? '' : 'checked'}></td>
         <td><img src="${img}" style="width:32px;height:32px;object-fit:cover;border-radius:5px;" onerror="this.src=''"></td>
