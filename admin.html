@@ -540,7 +540,7 @@ async function ghApi(method, path, body) {
 }
 
 const NOTICE_IMAGE_PRESETS = {
-  banner: { width: 2000, height: 250, suffix: 'banner' },
+  banner: { width: 1600, height: 400, suffix: 'banner' },
   popup: { width: 1000, height: 1000, suffix: 'popup' },
 };
 
@@ -603,7 +603,7 @@ async function prepareNoticeImage(file, slot) {
   ctx.fillStyle = '#f7f6f2';
   ctx.fillRect(0, 0, preset.width, preset.height);
   drawContain(ctx, img, preset.width, preset.height);
-  try { sharpenCanvas(canvas, slot === 'banner' ? .22 : .12); } catch (e) {}
+  try { sharpenCanvas(canvas, slot === 'banner' ? .06 : .10); } catch (e) {}
   const blob = await canvasToBlob(canvas, 'image/png');
   const base = file.name.replace(/\.[^.]+$/, '').replace(/[^a-z0-9가-힣_-]/gi, '_').slice(0, 40) || preset.suffix;
   return { blob, name: `${base}_${preset.suffix}_${preset.width}x${preset.height}.png` };
