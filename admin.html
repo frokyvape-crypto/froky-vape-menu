@@ -602,8 +602,7 @@ async function prepareNoticeImage(file, slot) {
   ctx.imageSmoothingQuality = 'high';
   ctx.fillStyle = '#f7f6f2';
   ctx.fillRect(0, 0, preset.width, preset.height);
-  if (slot === 'banner') ctx.drawImage(img, 0, 0, preset.width, preset.height);
-  else drawContain(ctx, img, preset.width, preset.height);
+  drawContain(ctx, img, preset.width, preset.height);
   try { sharpenCanvas(canvas, slot === 'banner' ? .22 : .12); } catch (e) {}
   const blob = await canvasToBlob(canvas, 'image/png');
   const base = file.name.replace(/\.[^.]+$/, '').replace(/[^a-z0-9가-힣_-]/gi, '_').slice(0, 40) || preset.suffix;
