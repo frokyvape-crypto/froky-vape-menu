@@ -1060,8 +1060,8 @@ function startCafe24Auth() {
   if (!cid) { toast('Client ID를 먼저 입력하세요', 'err'); return; }
   const state = Math.random().toString(36).slice(2);
   sessionStorage.setItem('c24-state', state);
-  // scope: 개발자센터에 등록된 API 권한과 일치해야 함 (쉼표 구분)
-  const scope = 'mall.read_product,mall.write_product,mall.read_category';
+  // scope: 상품 읽기만 (최소 권한)
+  const scope = 'mall.read_product';
   const authUrl = `https://${CAFE24_MALL_ID}.cafe24api.com/api/v2/oauth/authorize`
     + `?response_type=code&client_id=${encodeURIComponent(cid)}`
     + `&state=${state}&redirect_uri=${encodeURIComponent(CAFE24_CALLBACK)}`
