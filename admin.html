@@ -539,17 +539,89 @@ async function ghApi(method, path, body) {
   return r;
 }
 
-async function uploadImg(file) {
+const NOTICE_IMAGE_PRESETS = {
+  banner: { width: 2000, height: 250, suffix: 'banner' },
+  popup: { width: 1000, height: 1000, suffix: 'popup' },
+};
+
+function loadImageForCanvas(file) {
+  return new Promise((res, rej) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => { URL.revokeObjectURL(url); res(img); };
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('이미지 파일을 읽을 수 없습니다')); };
+    img.src = url;
+  });
+}
+
+function canvasToBlob(canvas, type = 'image/png', quality = .95) {
+  return new Promise((res, rej) => {
+    canvas.toBlob(blob => blob ? res(blob) : rej(new Error('이미지 변환에 실패했습니다')), type, quality);
+  });
+}
+
+function drawContain(ctx, img, w, h) {
+  const r = Math.min(w / img.naturalWidth, h / img.naturalHeight);
+  const dw = img.naturalWidth * r;
+  const dh = img.naturalHeight * r;
+  ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+}
+
+function sharpenCanvas(canvas, amount = .18) {
+  const ctx = canvas.getContext('2d');
+  const { width, height } = canvas;
+  const src = ctx.getImageData(0, 0, width, height);
+  const out = ctx.createImageData(width, height);
+  const s = src.data, d = out.data;
+  const center = 1 + amount * 4;
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const i = (y * width + x) * 4;
+      const left = (y * width + Math.max(0, x - 1)) * 4;
+      const right = (y * width + Math.min(width - 1, x + 1)) * 4;
+      const up = (Math.max(0, y - 1) * width + x) * 4;
+      const down = (Math.min(height - 1, y + 1) * width + x) * 4;
+      for (let c = 0; c < 3; c++) {
+        d[i + c] = Math.max(0, Math.min(255, s[i + c] * center - amount * (s[left + c] + s[right + c] + s[up + c] + s[down + c])));
+      }
+      d[i + 3] = s[i + 3];
+    }
+  }
+  ctx.putImageData(out, 0, 0);
+}
+
+async function prepareNoticeImage(file, slot) {
+  const preset = NOTICE_IMAGE_PRESETS[slot];
+  if (!preset || !file.type.startsWith('image/')) return { blob: file, name: file.name };
+  const img = await loadImageForCanvas(file);
+  const canvas = document.createElement('canvas');
+  canvas.width = preset.width;
+  canvas.height = preset.height;
+  const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.fillStyle = '#f7f6f2';
+  ctx.fillRect(0, 0, preset.width, preset.height);
+  if (slot === 'banner') ctx.drawImage(img, 0, 0, preset.width, preset.height);
+  else drawContain(ctx, img, preset.width, preset.height);
+  try { sharpenCanvas(canvas, slot === 'banner' ? .22 : .12); } catch (e) {}
+  const blob = await canvasToBlob(canvas, 'image/png');
+  const base = file.name.replace(/\.[^.]+$/, '').replace(/[^a-z0-9가-힣_-]/gi, '_').slice(0, 40) || preset.suffix;
+  return { blob, name: `${base}_${preset.suffix}_${preset.width}x${preset.height}.png` };
+}
+
+async function uploadImg(file, noticeSlot = '') {
+  const prepared = noticeSlot ? await prepareNoticeImage(file, noticeSlot) : { blob: file, name: file.name };
   const base64 = await new Promise((res, rej) => {
     const r = new FileReader();
     r.onload = e => res(e.target.result.split(',')[1]);
     r.onerror = rej;
-    r.readAsDataURL(file);
+    r.readAsDataURL(prepared.blob);
   });
-  const ext = (file.name.split('.').pop() || 'jpg').replace(/[^a-z0-9]/gi, '').toLowerCase();
+  const ext = (prepared.name.split('.').pop() || 'jpg').replace(/[^a-z0-9]/gi, '').toLowerCase();
   const path = `images/${Date.now()}_${Math.random().toString(36).slice(2,6)}.${ext}`;
   const r = await ghApi('PUT', `/repos/${REPO}/contents/${path}`, {
-    message: `upload: ${file.name}`, content: base64, branch: 'main',
+    message: `upload: ${prepared.name}`, content: base64, branch: 'main',
   });
   if (!r.ok) { const e = await r.json(); throw new Error(e.message); }
   return `https://raw.githubusercontent.com/${REPO}/main/${path}`;
@@ -790,12 +862,12 @@ async function saveSiteConfig() {
       const slots = modeImgSlots[mode.value] || { banner: [], popup: [] };
       const finalBanner = [];
       for (const item of slots.banner) {
-        if (item.file) { toast(`[${mode.label}] 배너 이미지 업로드 중...`, 'info'); finalBanner.push(await uploadImg(item.file)); }
+        if (item.file) { toast(`[${mode.label}] 배너 이미지 보정/업로드 중...`, 'info'); finalBanner.push(await uploadImg(item.file, 'banner')); }
         else if (item.url) finalBanner.push(item.url);
       }
       const finalPopup = [];
       for (const item of slots.popup) {
-        if (item.file) { toast(`[${mode.label}] 팝업 이미지 업로드 중...`, 'info'); finalPopup.push(await uploadImg(item.file)); }
+        if (item.file) { toast(`[${mode.label}] 팝업 이미지 보정/업로드 중...`, 'info'); finalPopup.push(await uploadImg(item.file, 'popup')); }
         else if (item.url) finalPopup.push(item.url);
       }
       resolvedModes.push({ label: mode.label, value: mode.value, bannerImgs: finalBanner, popupImgs: finalPopup });
