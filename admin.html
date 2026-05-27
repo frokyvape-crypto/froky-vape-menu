@@ -732,6 +732,18 @@ function removeNoticeImg(slot, idx) {
 async function loadProducts() {
   document.getElementById('tbl-body').innerHTML = '<tr><td colspan="7" class="empty-msg"><span class="spin"></span>불러오는 중...</td></tr>';
   try {
+    // Worker 모드: raw URL로 빠르게 로드 (SHA는 Worker가 저장 시 처리)
+    if (WORKER_URL && ADMIN_KEY) {
+      const t = Date.now();
+      const r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${FILE}?t=${t}`, { cache: 'no-store' });
+      if (!r.ok) { products = []; fileSha = ''; renderTable(); toast('products.json 없음', 'info'); return; }
+      products = await r.json();
+      fileSha = '';
+      dbSave();
+      renderTable(); toast(`상품 ${products.length}개 로드`, 'ok');
+      return;
+    }
+    // 직접 모드: GitHub API (SHA 필요)
     const r = await ghApi('GET', `/repos/${REPO}/contents/${FILE}?ref=main`);
     if (!r.ok) { products = []; fileSha = ''; renderTable(); toast('products.json 없음', 'info'); return; }
     const d = await r.json();
@@ -871,10 +883,13 @@ async function saveSiteConfig() {
   btn.disabled = true;
   btn.innerHTML = '<span class="spin"></span>저장 중...';
   try {
-    const latest = await ghApi('GET', `/repos/${REPO}/contents/${CONFIG_FILE}?ref=main`);
+    // Worker 모드: SHA 조회 불필요 (Worker가 내부적으로 처리)
     let currentSha = '';
-    if (latest.ok) currentSha = (await latest.json()).sha;
-    else if (latest.status !== 404) throw new Error(`설정 SHA 조회 실패 (${latest.status})`);
+    if (!(WORKER_URL && ADMIN_KEY)) {
+      const latest = await ghApi('GET', `/repos/${REPO}/contents/${CONFIG_FILE}?ref=main`);
+      if (latest.ok) currentSha = (await latest.json()).sha;
+      else if (latest.status !== 404) throw new Error(`설정 SHA 조회 실패 (${latest.status})`);
+    }
 
     // sync current UI slots into the active mode before saving
     modeImgSlots[selectedNoticeMode] = {
