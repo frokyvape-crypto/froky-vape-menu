@@ -1294,7 +1294,6 @@ const CAT = name => {
 
 const CAFE24_CALLBACK = 'https://frokyvape-crypto.github.io/froky-vape-menu/cafe24-callback.html';
 const CAFE24_MALL_ID  = 'frokyvape';
-const CAFE24_SCOPES   = 'mall.read_product,mall.read_category';
 
 function startCafe24Auth() {
   const cid = document.getElementById('c24-id').value.trim();
@@ -1303,8 +1302,7 @@ function startCafe24Auth() {
   sessionStorage.setItem('c24-state', state);
   const authUrl = `https://${CAFE24_MALL_ID}.cafe24api.com/api/v2/oauth/authorize`
     + `?response_type=code&client_id=${encodeURIComponent(cid)}`
-    + `&state=${state}&redirect_uri=${encodeURIComponent(CAFE24_CALLBACK)}`
-    + `&scope=${encodeURIComponent(CAFE24_SCOPES)}`;
+    + `&state=${state}&redirect_uri=${encodeURIComponent(CAFE24_CALLBACK)}`;
 
   // postMessage 수신 대기
   window._c24AuthHandler = async (e) => {
