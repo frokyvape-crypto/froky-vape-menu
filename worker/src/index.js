@@ -1,7 +1,8 @@
 // FROKY VAPE Admin — Cloudflare Worker
-// PUT /api/github/products
-//   Headers: X-Admin-Key
-//   Body:    { products: [...] }
+// PUT /api/github/products  → products.json 저장
+// PUT /api/github/config    → site-config.json 저장
+// PUT /api/github/upload    → 이미지 파일 업로드
+// GET /api/health
 //
 // Environment:
 //   vars:    GITHUB_OWNER, GITHUB_REPO, GITHUB_BRANCH, PRODUCTS_PATH
@@ -19,6 +20,18 @@ export default {
 
     if (url.pathname === '/api/github/products' && request.method === 'PUT') {
       const result = await handleSaveProducts(request, env);
+      const status = result.ok ? 200 : (result.status || 500);
+      return jsonResponse(result, status);
+    }
+
+    if (url.pathname === '/api/github/config' && request.method === 'PUT') {
+      const result = await handleSaveConfig(request, env);
+      const status = result.ok ? 200 : (result.status || 500);
+      return jsonResponse(result, status);
+    }
+
+    if (url.pathname === '/api/github/upload' && request.method === 'PUT') {
+      const result = await handleUploadFile(request, env);
       const status = result.ok ? 200 : (result.status || 500);
       return jsonResponse(result, status);
     }
@@ -54,30 +67,31 @@ function base64EncodeUtf8(str) {
   return btoa(binary);
 }
 
-async function handleSaveProducts(request, env) {
+function checkAuth(request, env) {
   const adminKey = request.headers.get('X-Admin-Key') || '';
   if (!env.ADMIN_KEY || adminKey !== env.ADMIN_KEY) {
-    return {
-      ok: false, status: 401,
-      message: 'Unauthorized',
-      guide: 'X-Admin-Key 헤더가 누락되었거나 일치하지 않습니다.',
-    };
+    return { ok: false, status: 401, message: 'Unauthorized', guide: 'X-Admin-Key 헤더가 누락되었거나 일치하지 않습니다.' };
   }
+  return null;
+}
 
+function checkEnv(env) {
   for (const k of REQUIRED_VARS) {
     if (!env[k]) {
-      return {
-        ok: false, status: 500,
-        message: `환경변수 ${k} 누락`,
-        guide: 'wrangler.toml vars 또는 wrangler secret put 으로 설정하세요.',
-      };
+      return { ok: false, status: 500, message: `환경변수 ${k} 누락`, guide: 'wrangler.toml vars 또는 wrangler secret put 으로 설정하세요.' };
     }
   }
+  return null;
+}
+
+async function handleSaveProducts(request, env) {
+  const authErr = checkAuth(request, env);
+  if (authErr) return authErr;
+  const envErr = checkEnv(env);
+  if (envErr) return envErr;
 
   let body;
-  try {
-    body = await request.json();
-  } catch {
+  try { body = await request.json(); } catch {
     return { ok: false, status: 400, message: 'Invalid JSON body', guide: 'request body는 JSON 이어야 합니다.' };
   }
 
@@ -87,9 +101,81 @@ async function handleSaveProducts(request, env) {
   }
 
   try {
-    return await saveGithubFile(env, env.PRODUCTS_PATH, products);
+    return await saveGithubJson(env, env.PRODUCTS_PATH, products, 'chore: update products from admin');
   } catch (e) {
     return { ok: false, status: 502, message: e.message || String(e), guide: 'GitHub API 호출 중 예외 발생.' };
+  }
+}
+
+async function handleSaveConfig(request, env) {
+  const authErr = checkAuth(request, env);
+  if (authErr) return authErr;
+  const envErr = checkEnv(env);
+  if (envErr) return envErr;
+
+  let body;
+  try { body = await request.json(); } catch {
+    return { ok: false, status: 400, message: 'Invalid JSON body' };
+  }
+
+  const config = body.config;
+  if (!config || typeof config !== 'object' || Array.isArray(config)) {
+    return { ok: false, status: 400, message: 'config 객체가 필요합니다.', guide: '{ "config": {...} } 형태로 전송하세요.' };
+  }
+
+  try {
+    return await saveGithubJson(env, 'site-config.json', config, 'chore: update site-config from admin');
+  } catch (e) {
+    return { ok: false, status: 502, message: e.message || String(e), guide: 'GitHub API 호출 중 예외 발생.' };
+  }
+}
+
+async function handleUploadFile(request, env) {
+  const authErr = checkAuth(request, env);
+  if (authErr) return authErr;
+  const envErr = checkEnv(env);
+  if (envErr) return envErr;
+
+  let body;
+  try { body = await request.json(); } catch {
+    return { ok: false, status: 400, message: 'Invalid JSON body' };
+  }
+
+  const { path, content } = body;
+  if (!path || !content) {
+    return { ok: false, status: 400, message: 'path와 content(base64)가 필요합니다.' };
+  }
+
+  try {
+    const currentSha = await getGithubFileSha(env, path);
+    const apiBody = {
+      message: `upload: ${path}`,
+      content: content,
+      branch: env.GITHUB_BRANCH,
+    };
+    if (currentSha) apiBody.sha = currentSha;
+
+    const apiUrl = `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${path}`;
+    const res = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${env.GITHUB_TOKEN}`,
+        'Accept': 'application/vnd.github+json',
+        'Content-Type': 'application/json',
+        'User-Agent': 'froky-vape-menu-worker',
+      },
+      body: JSON.stringify(apiBody),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      return { ok: false, status: res.status, message: data.message || '이미지 업로드 실패' };
+    }
+
+    const rawUrl = `https://raw.githubusercontent.com/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/${env.GITHUB_BRANCH}/${path}`;
+    return { ok: true, url: rawUrl, path };
+  } catch (e) {
+    return { ok: false, status: 502, message: e.message || String(e) };
   }
 }
 
@@ -112,14 +198,14 @@ async function getGithubFileSha(env, path) {
   return data.sha;
 }
 
-async function saveGithubFile(env, path, jsonData) {
+async function saveGithubJson(env, path, jsonData, commitMessage) {
   const currentSha = await getGithubFileSha(env, path);
 
   const contentText = JSON.stringify(jsonData, null, 2);
   const encodedContent = base64EncodeUtf8(contentText);
 
   const body = {
-    message: currentSha ? 'chore: update products from admin' : 'chore: create products from admin',
+    message: currentSha ? commitMessage : commitMessage.replace('update', 'create'),
     content: encodedContent,
     branch: env.GITHUB_BRANCH,
   };
@@ -145,7 +231,7 @@ async function saveGithubFile(env, path, jsonData) {
       status: res.status,
       message: data.message || 'GitHub 저장 실패',
       guide: res.status === 422
-        ? '기존 파일 업데이트 시 sha가 누락되었거나, 파일이 다른 요청으로 먼저 변경되었을 수 있습니다. 저장 직전에 파일 sha를 다시 조회하도록 수정해야 합니다.'
+        ? '기존 파일 업데이트 시 sha가 누락되었거나, 파일이 다른 요청으로 먼저 변경되었을 수 있습니다.'
         : res.status === 409
         ? '다른 커밋과 충돌. 잠시 후 다시 시도하세요.'
         : res.status === 401 || res.status === 403

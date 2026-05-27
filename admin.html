@@ -172,7 +172,8 @@ tr:hover td{background:rgba(128,128,128,.06);}
            onkeydown="if(event.key==='Enter')doLogin()">
     <button class="btn-login" onclick="doLogin()">로그인</button>
     <div class="login-hint">
-      토큰 없으면 <a href="https://github.com/settings/tokens/new?scopes=repo&description=FROKY+Admin" target="_blank">여기서 발급</a> (repo 권한 필요)
+      Worker 설정 완료 시 GitHub 토큰 불필요<br>
+      토큰 발급: <a href="https://github.com/settings/tokens/new?scopes=repo&description=FROKY+Admin" target="_blank">여기서 발급</a> (repo 권한)
     </div>
   </div>
 </div>
@@ -516,7 +517,9 @@ function logout() {
     document.getElementById('theme-btn').textContent = '☀️';
   }
   const t = localStorage.getItem('fv-adm');
-  if (t) { TOKEN = t; dbLoad(); showApp(); }
+  if (t) { TOKEN = t; dbLoad(); showApp(); return; }
+  // Worker 모드: WORKER_URL+ADMIN_KEY 있으면 GitHub PAT 없어도 자동 로그인
+  if (WORKER_URL && ADMIN_KEY) { dbLoad(); showApp(); return; }
 })();
 
 function showSection(id) {
@@ -530,12 +533,17 @@ function showSection(id) {
 }
 
 async function ghApi(method, path, body) {
+  const headers = { Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' };
+  if (TOKEN) headers['Authorization'] = 'token ' + TOKEN;
   const r = await fetch('https://api.github.com' + path, {
     method,
-    headers: { Authorization: 'token ' + TOKEN, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    headers,
     body: body ? JSON.stringify(body) : undefined,
   });
-  if (r.status === 401) { toast('토큰 권한 오류', 'err'); throw new Error('401'); }
+  if (r.status === 401) {
+    if (method !== 'GET') toast('토큰 권한 오류', 'err');
+    throw new Error('401');
+  }
   return r;
 }
 
@@ -624,6 +632,20 @@ async function uploadImg(file, noticeSlot = '') {
   });
   const ext = (prepared.name.split('.').pop() || 'jpg').replace(/[^a-z0-9]/gi, '').toLowerCase();
   const path = `images/${Date.now()}_${Math.random().toString(36).slice(2,6)}.${ext}`;
+
+  // Worker 모드: Worker를 통해 이미지 업로드
+  if (WORKER_URL && ADMIN_KEY) {
+    const r = await fetch(WORKER_URL + '/api/github/upload', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
+      body: JSON.stringify({ path, content: base64 }),
+    });
+    let data; try { data = await r.json(); } catch { data = {}; }
+    if (!r.ok || !data.ok) throw new Error(data.message || `이미지 업로드 실패 (${r.status})`);
+    return data.url;
+  }
+
+  // 직접 모드 (GitHub PAT 필요)
   const r = await ghApi('PUT', `/repos/${REPO}/contents/${path}`, {
     message: `upload: ${prepared.name}`, content: base64, branch: 'main',
   });
@@ -891,21 +913,38 @@ async function saveSiteConfig() {
       noticePopupImgs: finalPopupImgs,
       noticePopupImg: finalPopupImgs[0],
     };
-    const body = {
-      message: `chore: 공지 설정 업데이트 ${new Date().toLocaleString('ko-KR')}`,
-      content: base64EncodeUtf8(JSON.stringify(nextConfig, null, 2) + '\n'),
-      branch: 'main',
-    };
-    if (currentSha) body.sha = currentSha;
-    const r = await ghApi('PUT', `/repos/${REPO}/contents/${CONFIG_FILE}`, body);
-    if (!r.ok) {
-      let e = {}; try { e = await r.json(); } catch {}
-      throw new Error(e.message || `HTTP ${r.status}`);
+    // Worker 모드: Worker를 통해 site-config.json 저장
+    if (WORKER_URL && ADMIN_KEY) {
+      const wr = await fetch(WORKER_URL + '/api/github/config', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
+        body: JSON.stringify({ config: nextConfig }),
+      });
+      let wd; try { wd = await wr.json(); } catch { wd = {}; }
+      if (!wr.ok || !wd.ok) {
+        throw new Error(wd.message || `공지 설정 저장 실패 (${wr.status})`);
+      }
+      siteConfig = nextConfig;
+      siteConfigSha = wd.contentSha || '';
+      toast('공지 설정 저장 완료', 'ok');
+    } else {
+      // 직접 모드 (GitHub PAT 필요)
+      const body = {
+        message: `chore: 공지 설정 업데이트 ${new Date().toLocaleString('ko-KR')}`,
+        content: base64EncodeUtf8(JSON.stringify(nextConfig, null, 2) + '\n'),
+        branch: 'main',
+      };
+      if (currentSha) body.sha = currentSha;
+      const r = await ghApi('PUT', `/repos/${REPO}/contents/${CONFIG_FILE}`, body);
+      if (!r.ok) {
+        let e = {}; try { e = await r.json(); } catch {}
+        throw new Error(e.message || `HTTP ${r.status}`);
+      }
+      const saved = await r.json();
+      siteConfig = nextConfig;
+      siteConfigSha = saved.content?.sha || '';
+      toast('공지 설정 저장 완료', 'ok');
     }
-    const saved = await r.json();
-    siteConfig = nextConfig;
-    siteConfigSha = saved.content?.sha || '';
-    toast('공지 설정 저장 완료', 'ok');
   } catch (e) {
     toast('공지 설정 저장 실패: ' + e.message, 'err');
   } finally {
