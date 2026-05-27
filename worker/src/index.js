@@ -2,6 +2,7 @@
 // PUT /api/github/products  → products.json 저장
 // PUT /api/github/config    → site-config.json 저장
 // PUT /api/github/upload    → 이미지 파일 업로드
+// POST /api/cafe24/products → 카페24 상품 목록 조회
 // GET /api/health
 //
 // Environment:
@@ -32,6 +33,12 @@ export default {
 
     if (url.pathname === '/api/github/upload' && request.method === 'PUT') {
       const result = await handleUploadFile(request, env);
+      const status = result.ok ? 200 : (result.status || 500);
+      return jsonResponse(result, status);
+    }
+
+    if (url.pathname === '/api/cafe24/products' && request.method === 'POST') {
+      const result = await handleCafe24Products(request, env);
       const status = result.ok ? 200 : (result.status || 500);
       return jsonResponse(result, status);
     }
@@ -245,5 +252,59 @@ async function saveGithubJson(env, path, jsonData, commitMessage) {
     commitUrl: data.commit?.html_url || null,
     contentSha: data.content?.sha || null,
     updatedPath: path,
+  };
+}
+
+// ── Cafe24 상품 조회 ─────────────────────────────────────────────
+async function handleCafe24Products(request, env) {
+  const authErr = checkAuth(request, env);
+  if (authErr) return authErr;
+
+  let body;
+  try { body = await request.json(); } catch {
+    return { ok: false, status: 400, message: 'Invalid JSON body' };
+  }
+
+  const { client_id, client_secret, refresh_token, mall_id } = body;
+  if (!client_id || !client_secret || !refresh_token || !mall_id) {
+    return { ok: false, status: 400, message: 'client_id, client_secret, refresh_token, mall_id가 필요합니다.' };
+  }
+
+  // 1단계: Refresh Token으로 Access Token 교환
+  const tokenRes = await fetch(`https://${mall_id}.cafe24api.com/api/v2/oauth/token`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Basic ' + btoa(`${client_id}:${client_secret}`),
+    },
+    body: `grant_type=refresh_token&refresh_token=${encodeURIComponent(refresh_token)}`,
+  });
+
+  const tokenData = await tokenRes.json();
+  if (!tokenRes.ok || tokenData.error || !tokenData.access_token) {
+    return {
+      ok: false, status: 401,
+      message: `카페24 인증 실패: ${tokenData.error_description || tokenData.error || 'access_token 없음'}`,
+      guide: 'Refresh Token이 만료되었을 수 있습니다. 카페24 개발자센터에서 새 토큰을 발급받으세요.',
+    };
+  }
+
+  // 2단계: 상품 목록 조회
+  const prodRes = await fetch(`https://${mall_id}.cafe24api.com/api/v2/products?limit=100&display=T&selling=T`, {
+    headers: {
+      'Authorization': `Bearer ${tokenData.access_token}`,
+      'X-Cafe24-Api-Version': '2024-03-01',
+    },
+  });
+
+  const prodData = await prodRes.json();
+  if (!prodRes.ok) {
+    return { ok: false, status: prodRes.status, message: `상품 조회 실패: ${JSON.stringify(prodData)}` };
+  }
+
+  return {
+    ok: true,
+    products: prodData.products || [],
+    new_refresh_token: tokenData.refresh_token || null,
   };
 }
