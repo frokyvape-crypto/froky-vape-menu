@@ -3,6 +3,7 @@
 // PUT /api/github/config    → site-config.json 저장
 // PUT /api/github/upload    → 이미지 파일 업로드
 // POST /api/cafe24/products → 카페24 상품 목록 조회
+// POST /api/cafe24/token    → 카페24 OAuth 코드→토큰 교환
 // GET /api/health
 //
 // Environment:
@@ -60,7 +61,7 @@ export default {
 function corsHeaders() {
   return {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'PUT, GET, OPTIONS',
+    'Access-Control-Allow-Methods': 'PUT, POST, GET, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Key',
     'Access-Control-Max-Age': '86400',
   };

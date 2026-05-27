@@ -172,8 +172,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
            onkeydown="if(event.key==='Enter')doLogin()">
     <button class="btn-login" onclick="doLogin()">로그인</button>
     <div class="login-hint">
-      Worker 설정 완료 시 GitHub 토큰 불필요<br>
-      토큰 발급: <a href="https://github.com/settings/tokens/new?scopes=repo&description=FROKY+Admin" target="_blank">여기서 발급</a> (repo 권한)
+      토큰 없으면 <a href="https://github.com/settings/tokens/new?scopes=repo&description=FROKY+Admin" target="_blank">여기서 발급</a> (repo 권한 필요)
     </div>
   </div>
 </div>
@@ -265,29 +264,9 @@ tr:hover td{background:rgba(128,128,128,.06);}
         <div class="c24-grid">
           <div class="form-row"><label>Client ID</label><input id="c24-id" type="text" placeholder="카페24 앱 Client ID" autocomplete="off"></div>
           <div class="form-row"><label>Client Secret</label><input id="c24-secret" type="password" placeholder="Client Secret" autocomplete="off"></div>
-          <div class="form-row">
-            <label>Refresh Token <span style="color:var(--muted);font-weight:400;font-size:.75em">— 없으면 아래 인증 버튼 클릭</span></label>
-            <input id="c24-rt" type="password" placeholder="없으면 아래 '카페24 인증' 버튼으로 발급" autocomplete="off">
-          </div>
+          <div class="form-row"><label>Refresh Token</label><input id="c24-rt" type="password" placeholder="Refresh Token" autocomplete="off"></div>
         </div>
-        <div style="font-size:.75rem;color:var(--muted);margin-bottom:12px;line-height:1.7;background:var(--card);padding:10px 12px;border-radius:8px;">
-          💡 처음 사용 시: Client ID / Secret 입력 후 <b style="color:var(--g)">카페24 인증</b> 클릭 → 로그인 → Refresh Token 자동 발급<br>
-          이후엔 Refresh Token으로 자동 갱신됩니다 (2주마다 자동 연장)
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
-          <button class="btn btn-outline" id="btn-c24-auth" onclick="startCafe24Auth()">🔑 카페24 인증 (최초 1회)</button>
-          <button class="btn btn-blue" id="btn-c24-load" onclick="fetchCafe24()">카페24 상품 불러오기</button>
-        </div>
-        <!-- 인증 코드 수동 입력 (팝업 차단 시) -->
-        <div id="c24-code-row" style="display:none;margin-top:10px;">
-          <div class="form-row">
-            <label>인증 코드 <span style="color:var(--muted);font-weight:400;font-size:.75em">— 팝업이 차단된 경우 코드를 직접 입력</span></label>
-            <div style="display:flex;gap:6px;">
-              <input id="c24-code" type="text" placeholder="카페24에서 받은 인증 코드 붙여넣기" style="flex:1">
-              <button class="btn btn-g btn-xs" onclick="exchangeCafe24Code()">토큰 발급</button>
-            </div>
-          </div>
-        </div>
+        <button class="btn btn-blue" id="btn-c24-load" onclick="fetchCafe24()">카페24 상품 불러오기</button>
         <div id="c24-result" style="display:none;margin-top:14px;">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
             <strong id="c24-count" style="font-size:.83rem;"></strong>
@@ -316,11 +295,12 @@ tr:hover td{background:rgba(128,128,128,.06);}
           <div id="notice-modes-list"></div>
           <div class="img-add-row" style="margin-top:6px">
             <input id="f-notice-mode-label" type="text" placeholder="모드 이름 (예: 이벤트 화면)">
+            <input id="f-notice-mode-value" type="text" placeholder="값 (예: event)" style="max-width:120px">
             <button class="btn btn-outline btn-xs" type="button" onclick="addNoticeMode()">+ 추가</button>
           </div>
         </div>
         <div class="form-row">
-          <label>1546*423으로 배너 사이즈를 만들어서 넣어주세요</label>
+          <label>메인 배너 이미지 — 첫 번째가 표시됩니다</label>
           <div class="img-grid" id="img-grid-notice-banner"></div>
           <div class="img-add-row">
             <input id="f-notice-banner-url" type="url" placeholder="https://... URL 입력 후 추가">
@@ -331,7 +311,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
           </div>
         </div>
         <div class="form-row">
-          <label>선택된 모드의 팝업 이미지 — 여러 장 추가 시 좌우 탭으로 넘깁니다</label>
+          <label>팝업 이미지 — 여러 장 추가 시 세로로 나열됩니다</label>
           <div class="img-grid" id="img-grid-notice-popup"></div>
           <div class="img-add-row">
             <input id="f-notice-popup-url" type="url" placeholder="https://... URL 입력 후 추가">
@@ -402,10 +382,6 @@ tr:hover td{background:rgba(128,128,128,.06);}
         <div class="form-row"><label>맛 / 설명</label><input id="f-flavor" type="text" placeholder="과일&멘솔"></div>
       </div>
       <div class="form-row"><label>옵션 (쉼표 구분)</label><input id="f-opts" type="text" placeholder="3mg, 6mg, 12mg"></div>
-      <div class="form-row">
-        <label>카페24 상품번호 <span style="color:var(--muted);font-weight:400;font-size:.75em">— 입력 시 담기/구매 버튼이 카페24로 연결됩니다</span></label>
-        <input id="f-product-no" type="number" placeholder="예: 12 (카페24 상품번호)">
-      </div>
       <div class="toggle-wrap">
         <label class="toggle"><input type="checkbox" id="f-sale"><span class="slider"></span></label>
         <span style="font-size:.83rem;color:var(--muted)">SALE 뱃지 표시</span>
@@ -463,8 +439,8 @@ const CONFIG_FILE = 'site-config.json';
 const DEFAULT_SITE_CONFIG = {
   noticeMode: 'stock',
   noticeModes: [
-    { label: '재고제품 고지 배너', value: 'stock', bannerImgs: ['images/notice-banner.svg'], popupImgs: ['images/notice-popup.png'] },
-    { label: '기본 FROKY 화면', value: 'default', bannerImgs: [], popupImgs: [] },
+    { label: '재고제품 고지 배너', value: 'stock' },
+    { label: '기본 FROKY 화면', value: 'default' },
   ],
   noticeBannerImgs: ['images/notice-banner.svg'],
   noticeBannerImg: 'images/notice-banner.svg',
@@ -478,7 +454,6 @@ let imgSlots = { main: [], detail: [] };
 let noticeImgSlots = { banner: [], popup: [] };
 let noticeModes = [...DEFAULT_SITE_CONFIG.noticeModes];
 let selectedNoticeMode = 'stock';
-let modeImgSlots = {};
 let isSaving = false;
 let WORKER_URL = localStorage.getItem('fv-worker-url') || '';
 let ADMIN_KEY = localStorage.getItem('fv-admin-key') || '';
@@ -541,9 +516,7 @@ function logout() {
     document.getElementById('theme-btn').textContent = '☀️';
   }
   const t = localStorage.getItem('fv-adm');
-  if (t) { TOKEN = t; dbLoad(); showApp(); return; }
-  // Worker 모드: WORKER_URL+ADMIN_KEY 있으면 GitHub PAT 없어도 자동 로그인
-  if (WORKER_URL && ADMIN_KEY) { dbLoad(); showApp(); return; }
+  if (t) { TOKEN = t; dbLoad(); showApp(); }
 })();
 
 function showSection(id) {
@@ -554,133 +527,29 @@ function showSection(id) {
     else loadProducts();                       // 없으면 GitHub에서 로드
   }
   if (id === 'sec-notice') loadSiteConfig();
-  if (id === 'sec-cafe24') {
-    // 저장된 카페24 정보 자동 불러오기
-    const sid = localStorage.getItem('fv-c24-id');
-    const ssec = localStorage.getItem('fv-c24-sec');
-    const srt = localStorage.getItem('fv-c24-rt');
-    if (sid) document.getElementById('c24-id').value = sid;
-    if (ssec) document.getElementById('c24-secret').value = ssec;
-    if (srt) document.getElementById('c24-rt').value = srt;
-  }
 }
 
 async function ghApi(method, path, body) {
-  const headers = { Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' };
-  if (TOKEN) headers['Authorization'] = 'token ' + TOKEN;
   const r = await fetch('https://api.github.com' + path, {
     method,
-    headers,
+    headers: { Authorization: 'token ' + TOKEN, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
     body: body ? JSON.stringify(body) : undefined,
   });
-  if (r.status === 401) {
-    if (method !== 'GET') toast('토큰 권한 오류', 'err');
-    throw new Error('401');
-  }
+  if (r.status === 401) { toast('토큰 권한 오류', 'err'); throw new Error('401'); }
   return r;
 }
 
-const NOTICE_IMAGE_PRESETS = {
-  banner: { width: 1546, height: 423, suffix: 'banner', sharpen: .14 },
-  popup: { width: 1000, height: 1000, suffix: 'popup' },
-};
-
-function loadImageForCanvas(file) {
-  return new Promise((res, rej) => {
-    const img = new Image();
-    const url = URL.createObjectURL(file);
-    img.onload = () => { URL.revokeObjectURL(url); res(img); };
-    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('이미지 파일을 읽을 수 없습니다')); };
-    img.src = url;
-  });
-}
-
-function canvasToBlob(canvas, type = 'image/png', quality = .95) {
-  return new Promise((res, rej) => {
-    canvas.toBlob(blob => blob ? res(blob) : rej(new Error('이미지 변환에 실패했습니다')), type, quality);
-  });
-}
-
-function drawContain(ctx, img, w, h) {
-  const r = Math.min(w / img.naturalWidth, h / img.naturalHeight);
-  const dw = img.naturalWidth * r;
-  const dh = img.naturalHeight * r;
-  ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
-}
-
-function drawExactResize(ctx, img, w, h) {
-  ctx.drawImage(img, 0, 0, w, h);
-}
-
-function sharpenCanvas(canvas, amount = .18) {
-  const ctx = canvas.getContext('2d');
-  const { width, height } = canvas;
-  const src = ctx.getImageData(0, 0, width, height);
-  const out = ctx.createImageData(width, height);
-  const s = src.data, d = out.data;
-  const center = 1 + amount * 4;
-  for (let y = 0; y < height; y++) {
-    for (let x = 0; x < width; x++) {
-      const i = (y * width + x) * 4;
-      const left = (y * width + Math.max(0, x - 1)) * 4;
-      const right = (y * width + Math.min(width - 1, x + 1)) * 4;
-      const up = (Math.max(0, y - 1) * width + x) * 4;
-      const down = (Math.min(height - 1, y + 1) * width + x) * 4;
-      for (let c = 0; c < 3; c++) {
-        d[i + c] = Math.max(0, Math.min(255, s[i + c] * center - amount * (s[left + c] + s[right + c] + s[up + c] + s[down + c])));
-      }
-      d[i + 3] = s[i + 3];
-    }
-  }
-  ctx.putImageData(out, 0, 0);
-}
-
-async function prepareNoticeImage(file, slot) {
-  const preset = NOTICE_IMAGE_PRESETS[slot];
-  if (!preset || !file.type.startsWith('image/')) return { blob: file, name: file.name };
-  const img = await loadImageForCanvas(file);
-  const canvas = document.createElement('canvas');
-  canvas.width = preset.width;
-  canvas.height = preset.height;
-  const ctx = canvas.getContext('2d');
-  ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = 'high';
-  ctx.fillStyle = '#f7f6f2';
-  ctx.fillRect(0, 0, preset.width, preset.height);
-  if (slot === 'banner') drawExactResize(ctx, img, preset.width, preset.height);
-  else drawContain(ctx, img, preset.width, preset.height);
-  try { sharpenCanvas(canvas, preset.sharpen || .10); } catch (e) {}
-  const blob = await canvasToBlob(canvas, 'image/png');
-  const base = file.name.replace(/\.[^.]+$/, '').replace(/[^a-z0-9가-힣_-]/gi, '_').slice(0, 40) || preset.suffix;
-  return { blob, name: `${base}_${preset.suffix}_${preset.width}x${preset.height}.png` };
-}
-
-async function uploadImg(file, noticeSlot = '') {
-  const prepared = noticeSlot ? await prepareNoticeImage(file, noticeSlot) : { blob: file, name: file.name };
+async function uploadImg(file) {
   const base64 = await new Promise((res, rej) => {
     const r = new FileReader();
     r.onload = e => res(e.target.result.split(',')[1]);
     r.onerror = rej;
-    r.readAsDataURL(prepared.blob);
+    r.readAsDataURL(file);
   });
-  const ext = (prepared.name.split('.').pop() || 'jpg').replace(/[^a-z0-9]/gi, '').toLowerCase();
+  const ext = (file.name.split('.').pop() || 'jpg').replace(/[^a-z0-9]/gi, '').toLowerCase();
   const path = `images/${Date.now()}_${Math.random().toString(36).slice(2,6)}.${ext}`;
-
-  // Worker 모드: Worker를 통해 이미지 업로드
-  if (WORKER_URL && ADMIN_KEY) {
-    const r = await fetch(WORKER_URL + '/api/github/upload', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
-      body: JSON.stringify({ path, content: base64 }),
-    });
-    let data; try { data = await r.json(); } catch { data = {}; }
-    if (!r.ok || !data.ok) throw new Error(data.message || `이미지 업로드 실패 (${r.status})`);
-    return data.url;
-  }
-
-  // 직접 모드 (GitHub PAT 필요)
   const r = await ghApi('PUT', `/repos/${REPO}/contents/${path}`, {
-    message: `upload: ${prepared.name}`, content: base64, branch: 'main',
+    message: `upload: ${file.name}`, content: base64, branch: 'main',
   });
   if (!r.ok) { const e = await r.json(); throw new Error(e.message); }
   return `https://raw.githubusercontent.com/${REPO}/main/${path}`;
@@ -765,18 +634,6 @@ function removeNoticeImg(slot, idx) {
 async function loadProducts() {
   document.getElementById('tbl-body').innerHTML = '<tr><td colspan="7" class="empty-msg"><span class="spin"></span>불러오는 중...</td></tr>';
   try {
-    // Worker 모드: raw URL로 빠르게 로드 (SHA는 Worker가 저장 시 처리)
-    if (WORKER_URL && ADMIN_KEY) {
-      const t = Date.now();
-      const r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${FILE}?t=${t}`, { cache: 'no-store' });
-      if (!r.ok) { products = []; fileSha = ''; renderTable(); toast('products.json 없음', 'info'); return; }
-      products = await r.json();
-      fileSha = '';
-      dbSave();
-      renderTable(); toast(`상품 ${products.length}개 로드`, 'ok');
-      return;
-    }
-    // 직접 모드: GitHub API (SHA 필요)
     const r = await ghApi('GET', `/repos/${REPO}/contents/${FILE}?ref=main`);
     if (!r.ok) { products = []; fileSha = ''; renderTable(); toast('products.json 없음', 'info'); return; }
     const d = await r.json();
@@ -804,46 +661,29 @@ function renderNoticeModes() {
 }
 
 function selectNoticeMode(value) {
-  // save current slots to the mode we're leaving
-  modeImgSlots[selectedNoticeMode] = {
-    banner: [...noticeImgSlots.banner],
-    popup:  [...noticeImgSlots.popup],
-  };
   selectedNoticeMode = value;
-  // load the target mode's slots (or empty if new mode)
-  if (modeImgSlots[value]) {
-    noticeImgSlots = { banner: [...modeImgSlots[value].banner], popup: [...modeImgSlots[value].popup] };
-  } else {
-    noticeImgSlots = { banner: [], popup: [] };
-    modeImgSlots[value] = { banner: [], popup: [] };
-  }
   renderNoticeModes();
-  renderNoticeImgGrid('banner');
-  renderNoticeImgGrid('popup');
 }
 
 function addNoticeMode() {
   const labelEl = document.getElementById('f-notice-mode-label');
+  const valueEl = document.getElementById('f-notice-mode-value');
   const label = labelEl.value.trim();
+  const rawValue = valueEl.value.trim();
   if (!label) { toast('모드 이름을 입력하세요', 'err'); return; }
-  const value = label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || ('mode-' + Date.now());
-  const finalValue = noticeModes.some(m => m.value === value) ? (value + '-' + Date.now()) : value;
-  noticeModes.push({ label, value: finalValue, bannerImgs: [], popupImgs: [] });
-  modeImgSlots[finalValue] = { banner: [], popup: [] };
+  const value = rawValue || label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || ('mode-' + Date.now());
+  if (noticeModes.some(m => m.value === value)) { toast('같은 값의 모드가 이미 있습니다', 'err'); return; }
+  noticeModes.push({ label, value });
   labelEl.value = '';
+  valueEl.value = '';
   renderNoticeModes();
 }
 
 function removeNoticeMode(idx) {
   const removed = noticeModes[idx];
   noticeModes.splice(idx, 1);
-  delete modeImgSlots[removed.value];
   if (selectedNoticeMode === removed.value) {
     selectedNoticeMode = noticeModes[0]?.value || '';
-    const slots = modeImgSlots[selectedNoticeMode] || { banner: [], popup: [] };
-    noticeImgSlots = { banner: [...slots.banner], popup: [...slots.popup] };
-    renderNoticeImgGrid('banner');
-    renderNoticeImgGrid('popup');
   }
   renderNoticeModes();
 }
@@ -853,61 +693,22 @@ function setNoticeForm() {
     ? siteConfig.noticeModes
     : [...DEFAULT_SITE_CONFIG.noticeModes];
   selectedNoticeMode = siteConfig.noticeMode || noticeModes[0]?.value || 'stock';
-
-  // Initialize per-mode image slots from each mode's stored images
-  modeImgSlots = {};
-  for (const m of noticeModes) {
-    const bImgs = Array.isArray(m.bannerImgs) && m.bannerImgs.length ? m.bannerImgs : [];
-    const pImgs = Array.isArray(m.popupImgs)  && m.popupImgs.length  ? m.popupImgs  : [];
-    modeImgSlots[m.value] = {
-      banner: bImgs.map(url => ({ url, file: null, preview: url })),
-      popup:  pImgs.map(url => ({ url, file: null, preview: url })),
-    };
-  }
-
-  // The active mode's images come from the top-level fields (most recently saved)
-  const activeBanner = Array.isArray(siteConfig.noticeBannerImgs) && siteConfig.noticeBannerImgs.length
-    ? siteConfig.noticeBannerImgs
-    : [siteConfig.noticeBannerImg || DEFAULT_SITE_CONFIG.noticeBannerImg];
-  const activePopup = Array.isArray(siteConfig.noticePopupImgs) && siteConfig.noticePopupImgs.length
-    ? siteConfig.noticePopupImgs
-    : [siteConfig.noticePopupImg || DEFAULT_SITE_CONFIG.noticePopupImg];
-  modeImgSlots[selectedNoticeMode] = {
-    banner: activeBanner.map(url => ({ url, file: null, preview: url })),
-    popup:  activePopup.map(url  => ({ url, file: null, preview: url })),
-  };
-
-  noticeImgSlots = {
-    banner: [...modeImgSlots[selectedNoticeMode].banner],
-    popup:  [...modeImgSlots[selectedNoticeMode].popup],
-  };
-
   renderNoticeModes();
   document.getElementById('notice-popup-enabled').checked = siteConfig.noticePopupEnabled !== false;
+  const bannerImgs = Array.isArray(siteConfig.noticeBannerImgs) && siteConfig.noticeBannerImgs.length
+    ? siteConfig.noticeBannerImgs
+    : [siteConfig.noticeBannerImg || DEFAULT_SITE_CONFIG.noticeBannerImg];
+  const popupImgs = Array.isArray(siteConfig.noticePopupImgs) && siteConfig.noticePopupImgs.length
+    ? siteConfig.noticePopupImgs
+    : [siteConfig.noticePopupImg || DEFAULT_SITE_CONFIG.noticePopupImg];
+  noticeImgSlots.banner = bannerImgs.map(url => ({ url, file: null, preview: url }));
+  noticeImgSlots.popup  = popupImgs.map(url  => ({ url, file: null, preview: url }));
   renderNoticeImgGrid('banner');
   renderNoticeImgGrid('popup');
 }
 
 async function loadSiteConfig() {
   try {
-    // Worker 모드: raw URL로 직접 로드 (TOKEN 불필요)
-    if (WORKER_URL && ADMIN_KEY) {
-      const t = Date.now();
-      const r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${CONFIG_FILE}?t=${t}`, { cache: 'no-store' });
-      if (!r.ok) {
-        siteConfig = {...DEFAULT_SITE_CONFIG};
-        siteConfigSha = '';
-        setNoticeForm();
-        toast('공지 설정 파일 없음 - 기본값 표시', 'info');
-        return;
-      }
-      siteConfig = {...DEFAULT_SITE_CONFIG, ...await r.json()};
-      siteConfigSha = '';
-      setNoticeForm();
-      toast('공지 설정 로드 완료', 'ok');
-      return;
-    }
-    // 직접 모드: GitHub API (SHA 필요)
     const r = await ghApi('GET', `/repos/${REPO}/contents/${CONFIG_FILE}?ref=main`);
     if (!r.ok) {
       siteConfig = {...DEFAULT_SITE_CONFIG};
@@ -934,86 +735,47 @@ async function saveSiteConfig() {
   btn.disabled = true;
   btn.innerHTML = '<span class="spin"></span>저장 중...';
   try {
-    // Worker 모드: SHA 조회 불필요 (Worker가 내부적으로 처리)
+    const latest = await ghApi('GET', `/repos/${REPO}/contents/${CONFIG_FILE}?ref=main`);
     let currentSha = '';
-    if (!(WORKER_URL && ADMIN_KEY)) {
-      const latest = await ghApi('GET', `/repos/${REPO}/contents/${CONFIG_FILE}?ref=main`);
-      if (latest.ok) currentSha = (await latest.json()).sha;
-      else if (latest.status !== 404) throw new Error(`설정 SHA 조회 실패 (${latest.status})`);
+    if (latest.ok) currentSha = (await latest.json()).sha;
+    else if (latest.status !== 404) throw new Error(`설정 SHA 조회 실패 (${latest.status})`);
+
+    const finalBannerImgs = [];
+    for (const item of noticeImgSlots.banner) {
+      if (item.file) { toast('배너 이미지 업로드 중...', 'info'); finalBannerImgs.push(await uploadImg(item.file)); }
+      else if (item.url) finalBannerImgs.push(item.url);
     }
-
-    // sync current UI slots into the active mode before saving
-    modeImgSlots[selectedNoticeMode] = {
-      banner: [...noticeImgSlots.banner],
-      popup:  [...noticeImgSlots.popup],
-    };
-
-    // process all modes: upload any pending files, collect final URLs
-    const resolvedModes = [];
-    for (const mode of noticeModes) {
-      const slots = modeImgSlots[mode.value] || { banner: [], popup: [] };
-      const finalBanner = [];
-      for (const item of slots.banner) {
-        if (item.file) { toast(`[${mode.label}] 배너 이미지 보정/업로드 중...`, 'info'); finalBanner.push(await uploadImg(item.file, 'banner')); }
-        else if (item.url) finalBanner.push(item.url);
-      }
-      const finalPopup = [];
-      for (const item of slots.popup) {
-        if (item.file) { toast(`[${mode.label}] 팝업 이미지 보정/업로드 중...`, 'info'); finalPopup.push(await uploadImg(item.file, 'popup')); }
-        else if (item.url) finalPopup.push(item.url);
-      }
-      resolvedModes.push({ label: mode.label, value: mode.value, bannerImgs: finalBanner, popupImgs: finalPopup });
+    const finalPopupImgs = [];
+    for (const item of noticeImgSlots.popup) {
+      if (item.file) { toast('팝업 이미지 업로드 중...', 'info'); finalPopupImgs.push(await uploadImg(item.file)); }
+      else if (item.url) finalPopupImgs.push(item.url);
     }
-
-    // top-level fields = active mode's resolved images (for index.html backward compat)
-    const activeResolved = resolvedModes.find(m => m.value === selectedNoticeMode) || resolvedModes[0];
-    const finalBannerImgs = activeResolved?.bannerImgs?.length ? activeResolved.bannerImgs : [DEFAULT_SITE_CONFIG.noticeBannerImg];
-    const finalPopupImgs  = activeResolved?.popupImgs?.length  ? activeResolved.popupImgs  : [DEFAULT_SITE_CONFIG.noticePopupImg];
-
+    if (!finalBannerImgs.length) finalBannerImgs.push(DEFAULT_SITE_CONFIG.noticeBannerImg);
+    if (!finalPopupImgs.length)  finalPopupImgs.push(DEFAULT_SITE_CONFIG.noticePopupImg);
     const nextConfig = {
       noticeMode: selectedNoticeMode || noticeModes[0]?.value || 'stock',
-      noticeModes: resolvedModes,
+      noticeModes: noticeModes,
       noticeBannerImgs: finalBannerImgs,
       noticeBannerImg: finalBannerImgs[0],
       noticePopupEnabled: document.getElementById('notice-popup-enabled').checked,
       noticePopupImgs: finalPopupImgs,
       noticePopupImg: finalPopupImgs[0],
     };
-    // Worker 모드: Worker를 통해 site-config.json 저장
-    if (WORKER_URL && ADMIN_KEY) {
-      const wr = await fetch(WORKER_URL + '/api/github/config', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
-        body: JSON.stringify({ config: nextConfig }),
-      });
-      let wd; try { wd = await wr.json(); } catch { wd = {}; }
-      if (!wr.ok || !wd.ok) {
-        const msg = wr.status === 401
-          ? 'ADMIN_KEY가 일치하지 않습니다. ⚙️ Worker 설정에서 키를 확인하세요.'
-          : (wd.message || `Worker 오류 (${wr.status})`);
-        throw new Error(msg);
-      }
-      siteConfig = nextConfig;
-      siteConfigSha = wd.contentSha || '';
-      toast('공지 설정 저장 완료', 'ok');
-    } else {
-      // 직접 모드 (GitHub PAT 필요)
-      const body = {
-        message: `chore: 공지 설정 업데이트 ${new Date().toLocaleString('ko-KR')}`,
-        content: base64EncodeUtf8(JSON.stringify(nextConfig, null, 2) + '\n'),
-        branch: 'main',
-      };
-      if (currentSha) body.sha = currentSha;
-      const r = await ghApi('PUT', `/repos/${REPO}/contents/${CONFIG_FILE}`, body);
-      if (!r.ok) {
-        let e = {}; try { e = await r.json(); } catch {}
-        throw new Error(e.message || `HTTP ${r.status}`);
-      }
-      const saved = await r.json();
-      siteConfig = nextConfig;
-      siteConfigSha = saved.content?.sha || '';
-      toast('공지 설정 저장 완료', 'ok');
+    const body = {
+      message: `chore: 공지 설정 업데이트 ${new Date().toLocaleString('ko-KR')}`,
+      content: base64EncodeUtf8(JSON.stringify(nextConfig, null, 2) + '\n'),
+      branch: 'main',
+    };
+    if (currentSha) body.sha = currentSha;
+    const r = await ghApi('PUT', `/repos/${REPO}/contents/${CONFIG_FILE}`, body);
+    if (!r.ok) {
+      let e = {}; try { e = await r.json(); } catch {}
+      throw new Error(e.message || `HTTP ${r.status}`);
     }
+    const saved = await r.json();
+    siteConfig = nextConfig;
+    siteConfigSha = saved.content?.sha || '';
+    toast('공지 설정 저장 완료', 'ok');
   } catch (e) {
     toast('공지 설정 저장 실패: ' + e.message, 'err');
   } finally {
@@ -1202,7 +964,7 @@ let editId = null;
 function resetModal() {
   imgSlots = { main: [], detail: [] };
   renderImgGrid('main'); renderImgGrid('detail');
-  ['f-id','f-name','f-price','f-flavor','f-opts','f-product-no'].forEach(id => document.getElementById(id).value = '');
+  ['f-id','f-name','f-price','f-flavor','f-opts'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('f-cat').value = '입호흡';
   document.getElementById('f-sale').checked = false;
   document.getElementById('f-main-url').value = '';
@@ -1226,7 +988,6 @@ function openEditModal(id) {
   document.getElementById('f-flavor').value = p.flavor || '';
   document.getElementById('f-opts').value = (p.options || []).join(', ');
   document.getElementById('f-sale').checked = !!p.sale;
-  document.getElementById('f-product-no').value = p.product_no || '';
   imgSlots.main   = getImgs(p).map(url => ({ url, file: null, preview: url }));
   imgSlots.detail = getDetailImgs(p).map(url => ({ url, file: null, preview: url }));
   renderImgGrid('main'); renderImgGrid('detail');
@@ -1266,7 +1027,6 @@ async function saveProduct() {
       flavor: document.getElementById('f-flavor').value.trim(),
       options: document.getElementById('f-opts').value.split(',').map(s => s.trim()).filter(Boolean),
       sale: document.getElementById('f-sale').checked,
-      product_no: parseInt(document.getElementById('f-product-no').value) || null,
     };
     if (editId !== null) { const i = products.findIndex(p => p.id === editId); if (i >= 0) products[i] = obj; }
     else products.push(obj);
@@ -1300,8 +1060,8 @@ function startCafe24Auth() {
   if (!cid) { toast('Client ID를 먼저 입력하세요', 'err'); return; }
   const state = Math.random().toString(36).slice(2);
   sessionStorage.setItem('c24-state', state);
-  // scope: 스페이스 구분, encodeURIComponent 사용 안 함 (공백→%20 자동 처리)
-  const scope = 'mall.read_product mall.write_product mall.read_category';
+  // scope: 상품 읽기만 (최소 권한)
+  const scope = 'mall.read_product';
   const authUrl = `https://${CAFE24_MALL_ID}.cafe24api.com/api/v2/oauth/authorize`
     + `?response_type=code&client_id=${encodeURIComponent(cid)}`
     + `&state=${state}&redirect_uri=${encodeURIComponent(CAFE24_CALLBACK)}`
@@ -1358,6 +1118,7 @@ async function exchangeCafe24Code() {
     toast('토큰 발급 실패: ' + e.message, 'err');
   }
 }
+
 
 async function fetchCafe24() {
   const cid = document.getElementById('c24-id').value.trim();
@@ -1440,13 +1201,10 @@ function importSelected() {
     const toUrl = s => s && s.startsWith('/') ? 'https://frokyvape.cafe24.com' + s : (s || '');
     products.push({
       id: p.product_no, name: p.product_name, price: parseInt(p.price) || 0,
-      imgs: [toUrl(p.list_image || p.detail_image)].filter(Boolean),
       img: toUrl(p.list_image || p.detail_image),
-      detailImgs: [toUrl(p.detail_image)].filter(Boolean),
       detailImg: toUrl(p.detail_image),
       cat: CAT(p.product_name), flavor: (p.summary_description || '').trim(),
       options: [], sale: !!p.price_content,
-      product_no: p.product_no,  // 카페24 상품번호 저장 → 담기/구매 버튼 연결
     });
     added++;
   });

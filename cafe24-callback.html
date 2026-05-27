@@ -24,6 +24,7 @@ body{background:#0c0c0c;color:#f0f0f0;font-family:-apple-system,'Pretendard',san
 .btn-outline:hover{border-color:#2ecc40;color:#2ecc40;}
 .hint{font-size:.72rem;color:#555;margin-top:14px;line-height:1.7;}
 .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#2ecc40;border-radius:50%;animation:rot .7s linear infinite;vertical-align:middle;margin-right:6px;}
+.countdown{font-size:.72rem;color:#555;margin-top:8px;}
 @keyframes rot{to{transform:rotate(360deg);}}
 </style>
 </head>
@@ -46,6 +47,7 @@ body{background:#0c0c0c;color:#f0f0f0;font-family:-apple-system,'Pretendard',san
   if (error) {
     statusEl.className = 'status err';
     statusEl.textContent = '❌ 인증 실패: ' + (params.get('error_description') || error);
+    contentEl.innerHTML = '<div class="hint" style="color:#e53935;margin-top:8px">카페24 개발자센터에서 앱 API 권한을 확인하세요.</div>';
     return;
   }
 
@@ -67,11 +69,25 @@ body{background:#0c0c0c;color:#f0f0f0;font-family:-apple-system,'Pretendard',san
           <div class="info-label">인증 코드</div>
           <div class="code-text" id="code-display">${code}</div>
         </div>
-        <div class="hint">관리자 페이지에서 자동으로 처리됩니다.<br>이 창은 닫아도 됩니다.</div>
-        <div style="margin-top:16px">
+        <div class="hint">관리자 페이지에서 자동으로 처리 중입니다...<br>오류 발생 시 아래 코드를 복사하여 직접 입력하세요.</div>
+        <div style="margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+          <button class="btn btn-outline" onclick="copyCode()">📋 코드 복사</button>
           <button class="btn btn-outline" onclick="window.close()">창 닫기</button>
-        </div>`;
-      setTimeout(() => window.close(), 3000);
+        </div>
+        <div class="countdown" id="countdown">8초 후 자동으로 닫힙니다</div>`;
+
+      // 카운트다운 표시
+      let remaining = 8;
+      const countdownEl = document.getElementById('countdown');
+      const timer = setInterval(() => {
+        remaining--;
+        if (remaining <= 0) {
+          clearInterval(timer);
+          window.close();
+        } else {
+          if (countdownEl) countdownEl.textContent = remaining + '초 후 자동으로 닫힙니다';
+        }
+      }, 1000);
       return;
     } catch(e) {}
   }
@@ -91,7 +107,7 @@ body{background:#0c0c0c;color:#f0f0f0;font-family:-apple-system,'Pretendard',san
 function copyCode() {
   const text = document.getElementById('code-display').textContent;
   navigator.clipboard.writeText(text).then(() => {
-    const btn = document.querySelector('.btn-g');
+    const btn = event.target;
     btn.textContent = '✅ 복사됨!';
     setTimeout(() => btn.textContent = '📋 코드 복사', 2000);
   });
