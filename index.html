@@ -68,13 +68,13 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 .best-header{display:flex;align-items:center;padding:0 14px 12px;gap:8px;}
 .best-header h2{font-size:1rem;font-weight:800;color:var(--text);}
 .best-badge{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;font-size:.62rem;padding:3px 10px;border-radius:10px;font-weight:700;box-shadow:0 0 8px var(--g-glow);}
-.carousel-wrap{overflow:hidden;position:relative;}
+.carousel-wrap{overflow-x:auto;overflow-y:hidden;position:relative;cursor:grab;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.carousel-wrap::-webkit-scrollbar{display:none;}
+.carousel-wrap.dragging{cursor:grabbing;}
 .carousel-wrap::before,.carousel-wrap::after{content:'';position:absolute;top:0;bottom:0;width:40px;z-index:1;pointer-events:none;}
 .carousel-wrap::before{left:0;background:linear-gradient(to right,var(--bg),transparent);}
 .carousel-wrap::after{right:0;background:linear-gradient(to left,var(--bg),transparent);}
-.carousel-track{display:flex;gap:10px;padding:4px 14px 16px;animation:slide 30s linear infinite;width:max-content;}
-.carousel-wrap:hover .carousel-track{animation-play-state:paused;}
-@keyframes slide{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.carousel-track{display:flex;gap:10px;padding:4px 14px 16px;width:max-content;user-select:none;}
 .best-card{width:130px;flex-shrink:0;background:var(--card);border:1px solid rgba(46,204,64,.2);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;}
 .best-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(46,204,64,.2);}
 .best-card img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--surface);}
@@ -266,7 +266,7 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 <div class="search-result-label" id="search-result-label" style="display:none"></div>
 <div class="best-section" id="best-section">
   <div class="best-header"><h2>🏆 베스트 상품</h2><span class="best-badge">HOT</span></div>
-  <div class="carousel-wrap"><div class="carousel-track" id="carousel-track"></div></div>
+  <div class="carousel-wrap" id="carousel-wrap"><div class="carousel-track" id="carousel-track"></div></div>
 </div>
 <div class="section-title" id="section-label">전체 상품</div>
 <div class="grid" id="product-grid"></div>
@@ -397,7 +397,27 @@ function cardHTML(p){
   return`<div class="card" id="card-${p.id}"><div class="card-img-wrap"><img id="card-main-${p.id}" src="${img}" alt="${p.name}" loading="lazy">${p.sale?'<span class="card-badge">SALE</span>':''}${count}<button class="card-quick" onclick="openSheet(${p.id})">간단보기 👁</button></div>${thumbs}<div class="card-body"><div class="card-name">${p.name}</div><div class="card-flavor">${p.flavor}</div><div class="card-price">${fmt(p.price)}</div></div><div class="card-btns"><button class="btn-cart-card" onclick="openSheet(${p.id})">담기</button><button class="btn-buy-card" onclick="openSheet(${p.id})">구매하기</button></div></div>`;
 }
 function switchCardImg(el,url,pid){document.getElementById('card-main-'+pid).src=url;const card=document.getElementById('card-'+pid);card.querySelectorAll('.card-thumb').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
-function buildCarousel(){const best=P.filter(p=>p.cat==='best');document.getElementById('carousel-track').innerHTML=[...best,...best].map(p=>`<div class="best-card" onclick="openSheet(${p.id})"><img src="${getImgs(p)[0]||''}" alt="${p.name}" loading="lazy"><div class="best-card-body"><div class="best-card-name">${p.name}${p.sale?'<span class="hot">SALE</span>':''}</div><div class="best-card-price">${fmt(p.price)}</div></div></div>`).join('');}
+let bestAutoRaf=0,bestPausedUntil=0,bestDragging=false,bestStartX=0,bestStartScroll=0,bestSuppressClick=false;
+function openBestCard(id){if(bestSuppressClick){bestSuppressClick=false;return;}openSheet(id);}
+function pauseBestCarousel(ms=1800){bestPausedUntil=Date.now()+ms;}
+function normalizeBestCarousel(wrap,track){if(track.dataset.loop!=='1')return;const loop=track.scrollWidth/2;if(loop<=0)return;if(wrap.scrollLeft>=loop*1.5)wrap.scrollLeft-=loop;if(wrap.scrollLeft<=loop*.5)wrap.scrollLeft+=loop;}
+function startBestCarousel(){
+  const wrap=document.getElementById('carousel-wrap'),track=document.getElementById('carousel-track');
+  if(!wrap||!track)return;
+  cancelAnimationFrame(bestAutoRaf);
+  const loop=track.dataset.loop==='1';
+  const loopWidth=loop?track.scrollWidth/2:0;
+  wrap.scrollLeft=loop?loopWidth:0;
+  wrap.onpointerdown=e=>{bestDragging=true;bestSuppressClick=false;bestStartX=e.clientX;bestStartScroll=wrap.scrollLeft;wrap.classList.add('dragging');pauseBestCarousel(2200);try{wrap.setPointerCapture(e.pointerId);}catch(err){}};
+  wrap.onpointermove=e=>{if(!bestDragging)return;const dx=e.clientX-bestStartX;if(Math.abs(dx)>4)bestSuppressClick=true;wrap.scrollLeft=bestStartScroll-dx;normalizeBestCarousel(wrap,track);};
+  wrap.onpointerup=e=>{bestDragging=false;wrap.classList.remove('dragging');pauseBestCarousel(2200);try{wrap.releasePointerCapture(e.pointerId);}catch(err){}};
+  wrap.onpointercancel=()=>{bestDragging=false;wrap.classList.remove('dragging');pauseBestCarousel(2200);};
+  wrap.onmouseenter=()=>pauseBestCarousel(700);
+  wrap.onwheel=e=>{const delta=Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:(e.shiftKey?e.deltaY:0);if(!delta)return;e.preventDefault();wrap.scrollLeft+=delta;normalizeBestCarousel(wrap,track);pauseBestCarousel(1800);};
+  function step(){if(loop&&!bestDragging&&Date.now()>bestPausedUntil){wrap.scrollLeft+=.45;normalizeBestCarousel(wrap,track);}bestAutoRaf=requestAnimationFrame(step);}
+  step();
+}
+function buildCarousel(){const best=P.filter(p=>p.cat==='best');const track=document.getElementById('carousel-track');const loop=best.length>1;const items=loop?[...best,...best]:best;track.dataset.loop=loop?'1':'0';track.innerHTML=items.map(p=>`<div class="best-card" onclick="openBestCard(${p.id})"><img src="${getImgs(p)[0]||''}" alt="${p.name}" loading="lazy" draggable="false"><div class="best-card-body"><div class="best-card-name">${p.name}${p.sale?'<span class="hot">SALE</span>':''}</div><div class="best-card-price">${fmt(p.price)}</div></div></div>`).join('');startBestCarousel();}
 function renderGrid(cat){const items=cat==='all'?P:P.filter(p=>p.cat===cat);document.getElementById('best-section').style.display=cat==='all'?'':'none';const lb={all:'전체 상품',best:'🏆 베스트',입호흡:'입호흡 액상',폐호흡:'폐호흡 액상',고농도:'고농도 액상',일회용:'일회용 기기'};document.getElementById('section-label').textContent=lb[cat]||cat;document.getElementById('product-grid').innerHTML=items.map(cardHTML).join('');}
 function filterCat(cat,el){document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderGrid(cat);}
 function onSearch(val){const q=val.trim();document.getElementById('search-clear').style.display=q?'block':'none';if(!q){document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');return;}document.getElementById('best-section').style.display='none';const res=P.filter(p=>p.name.includes(q)||p.flavor.includes(q));const lbl=document.getElementById('search-result-label');lbl.style.display='block';lbl.textContent=`"${q}" 검색 결과 ${res.length}개`;document.getElementById('section-label').textContent='검색 결과';document.getElementById('product-grid').innerHTML=res.length?res.map(cardHTML).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0">검색 결과가 없습니다 😢</div>';}
