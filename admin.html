@@ -857,6 +857,24 @@ function setNoticeForm() {
 
 async function loadSiteConfig() {
   try {
+    // Worker 모드: raw URL로 직접 로드 (TOKEN 불필요)
+    if (WORKER_URL && ADMIN_KEY) {
+      const t = Date.now();
+      const r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${CONFIG_FILE}?t=${t}`, { cache: 'no-store' });
+      if (!r.ok) {
+        siteConfig = {...DEFAULT_SITE_CONFIG};
+        siteConfigSha = '';
+        setNoticeForm();
+        toast('공지 설정 파일 없음 - 기본값 표시', 'info');
+        return;
+      }
+      siteConfig = {...DEFAULT_SITE_CONFIG, ...await r.json()};
+      siteConfigSha = '';
+      setNoticeForm();
+      toast('공지 설정 로드 완료', 'ok');
+      return;
+    }
+    // 직접 모드: GitHub API (SHA 필요)
     const r = await ghApi('GET', `/repos/${REPO}/contents/${CONFIG_FILE}?ref=main`);
     if (!r.ok) {
       siteConfig = {...DEFAULT_SITE_CONFIG};
@@ -937,7 +955,10 @@ async function saveSiteConfig() {
       });
       let wd; try { wd = await wr.json(); } catch { wd = {}; }
       if (!wr.ok || !wd.ok) {
-        throw new Error(wd.message || `공지 설정 저장 실패 (${wr.status})`);
+        const msg = wr.status === 401
+          ? 'ADMIN_KEY가 일치하지 않습니다. ⚙️ Worker 설정에서 키를 확인하세요.'
+          : (wd.message || `Worker 오류 (${wr.status})`);
+        throw new Error(msg);
       }
       siteConfig = nextConfig;
       siteConfigSha = wd.contentSha || '';
