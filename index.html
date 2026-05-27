@@ -44,8 +44,8 @@ header{position:sticky;top:0;z-index:100;background:rgba(12,12,12,.92);backdrop-
 .hero-tag.green{border-color:var(--g);color:var(--g);background:rgba(46,204,64,.08);}
 .hero-tag.yellow{border-color:var(--y);color:var(--y2);background:rgba(245,220,0,.08);}
 [data-theme="light"] .hero-tag.yellow{color:#8a7800;}
-.notice-banner-wrap{display:none;position:relative;z-index:1;width:100%;min-height:clamp(180px,20vw,320px);overflow:hidden;line-height:0;background:#f7f6f2;align-items:center;justify-content:center;padding:8px 12px;}
-.notice-banner-wrap img{display:block;width:min(100%,1280px);aspect-ratio:4/1;height:auto;max-height:320px;object-fit:contain;object-position:center;margin:0 auto;border-radius:0;box-shadow:none;image-rendering:auto;}
+.notice-banner-wrap{display:none;position:relative;z-index:1;width:100%;overflow:hidden;line-height:0;background:#f7f6f2;align-items:center;justify-content:center;padding:0 12px;}
+.notice-banner-wrap img{display:block;width:min(100%,1280px);height:auto;object-fit:contain;object-position:center;margin:0 auto;border-radius:0;box-shadow:none;image-rendering:auto;}
 body[data-notice-mode="stock"] .hero{padding:0;background:#f7f6f2;border-bottom:1px solid rgba(0,0,0,.08);}
 body[data-notice-mode="stock"] .hero-glow,body[data-notice-mode="stock"] .hero-brand{display:none;}
 body[data-notice-mode="stock"] .notice-banner-wrap{display:flex;}

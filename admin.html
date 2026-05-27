@@ -567,6 +567,60 @@ function drawContain(ctx, img, w, h) {
   ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
 }
 
+function getCanvasContentBox(canvas) {
+  const ctx = canvas.getContext('2d');
+  const { width, height } = canvas;
+  const data = ctx.getImageData(0, 0, width, height).data;
+  const samples = [
+    [0, 0], [width - 1, 0], [0, height - 1], [width - 1, height - 1],
+    [Math.floor(width / 2), 0], [Math.floor(width / 2), height - 1],
+  ];
+  const bg = samples.reduce((acc, [x, y]) => {
+    const i = (y * width + x) * 4;
+    acc[0] += data[i]; acc[1] += data[i + 1]; acc[2] += data[i + 2];
+    return acc;
+  }, [0, 0, 0]).map(v => v / samples.length);
+  let minX = width, minY = height, maxX = -1, maxY = -1;
+  const step = Math.max(1, Math.floor(Math.min(width, height) / 500));
+  const threshold = 70;
+  for (let y = 0; y < height; y += step) {
+    for (let x = 0; x < width; x += step) {
+      const i = (y * width + x) * 4;
+      const alpha = data[i + 3];
+      const dr = data[i] - bg[0], dg = data[i + 1] - bg[1], db = data[i + 2] - bg[2];
+      const diff = Math.sqrt(dr * dr + dg * dg + db * db);
+      const darkText = data[i] < 185 || data[i + 1] < 185 || data[i + 2] < 185;
+      if (alpha > 24 && (diff > threshold || darkText)) {
+        minX = Math.min(minX, x); minY = Math.min(minY, y);
+        maxX = Math.max(maxX, x); maxY = Math.max(maxY, y);
+      }
+    }
+  }
+  if (maxX < minX || maxY < minY) return { x: 0, y: 0, w: width, h: height };
+  const padX = Math.round((maxX - minX + 1) * .06);
+  const padY = Math.round((maxY - minY + 1) * .12);
+  minX = Math.max(0, minX - padX);
+  minY = Math.max(0, minY - padY);
+  maxX = Math.min(width - 1, maxX + padX);
+  maxY = Math.min(height - 1, maxY + padY);
+  const box = { x: minX, y: minY, w: maxX - minX + 1, h: maxY - minY + 1 };
+  if (box.w * box.h > width * height * .92) return { x: 0, y: 0, w: width, h: height };
+  return box;
+}
+
+function drawAutoFitBanner(ctx, img, w, h) {
+  const src = document.createElement('canvas');
+  src.width = img.naturalWidth;
+  src.height = img.naturalHeight;
+  const sctx = src.getContext('2d');
+  sctx.drawImage(img, 0, 0);
+  const box = getCanvasContentBox(src);
+  const scale = Math.min(w / box.w, h / box.h);
+  const dw = box.w * scale;
+  const dh = box.h * scale;
+  ctx.drawImage(src, box.x, box.y, box.w, box.h, (w - dw) / 2, (h - dh) / 2, dw, dh);
+}
+
 function sharpenCanvas(canvas, amount = .18) {
   const ctx = canvas.getContext('2d');
   const { width, height } = canvas;
@@ -602,7 +656,8 @@ async function prepareNoticeImage(file, slot) {
   ctx.imageSmoothingQuality = 'high';
   ctx.fillStyle = '#f7f6f2';
   ctx.fillRect(0, 0, preset.width, preset.height);
-  drawContain(ctx, img, preset.width, preset.height);
+  if (slot === 'banner') drawAutoFitBanner(ctx, img, preset.width, preset.height);
+  else drawContain(ctx, img, preset.width, preset.height);
   try { sharpenCanvas(canvas, slot === 'banner' ? .06 : .10); } catch (e) {}
   const blob = await canvasToBlob(canvas, 'image/png');
   const base = file.name.replace(/\.[^.]+$/, '').replace(/[^a-z0-9가-힣_-]/gi, '_').slice(0, 40) || preset.suffix;
