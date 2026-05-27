@@ -397,23 +397,23 @@ function cardHTML(p){
   return`<div class="card" id="card-${p.id}"><div class="card-img-wrap"><img id="card-main-${p.id}" src="${img}" alt="${p.name}" loading="lazy">${p.sale?'<span class="card-badge">SALE</span>':''}${count}<button class="card-quick" onclick="openSheet(${p.id})">간단보기 👁</button></div>${thumbs}<div class="card-body"><div class="card-name">${p.name}</div><div class="card-flavor">${p.flavor}</div><div class="card-price">${fmt(p.price)}</div></div><div class="card-btns"><button class="btn-cart-card" onclick="openSheet(${p.id})">담기</button><button class="btn-buy-card" onclick="openSheet(${p.id})">구매하기</button></div></div>`;
 }
 function switchCardImg(el,url,pid){document.getElementById('card-main-'+pid).src=url;const card=document.getElementById('card-'+pid);card.querySelectorAll('.card-thumb').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
-let bestAutoRaf=0,bestPausedUntil=0,bestDragging=false,bestStartX=0,bestStartOffset=0,bestOffset=0,bestDir=-1,bestSuppressClick=false;
+let bestAutoRaf=0,bestPausedUntil=0,bestDragging=false,bestStartX=0,bestStartOffset=0,bestOffset=0,bestSuppressClick=false;
 function openBestCard(id){if(bestSuppressClick){bestSuppressClick=false;return;}openSheet(id);}
 function pauseBestCarousel(ms=1800){bestPausedUntil=Date.now()+ms;}
-function bestBounds(wrap,track){const move=Math.abs(wrap.clientWidth-track.scrollWidth);return track.scrollWidth>wrap.clientWidth?{min:-move,max:0}:{min:0,max:move};}
+function bestBounds(wrap,track){return{min:-track.scrollWidth,max:wrap.clientWidth};}
 function applyBestOffset(track){track.style.transform=`translateX(${bestOffset}px)`;}
 function startBestCarousel(){
   const wrap=document.getElementById('carousel-wrap'),track=document.getElementById('carousel-track');
   if(!wrap||!track)return;
   cancelAnimationFrame(bestAutoRaf);
-  bestOffset=0;bestDir=-1;applyBestOffset(track);
+  bestOffset=0;applyBestOffset(track);
   wrap.onpointerdown=e=>{bestDragging=true;bestSuppressClick=false;bestStartX=e.clientX;bestStartOffset=bestOffset;wrap.classList.add('dragging');pauseBestCarousel(2200);try{wrap.setPointerCapture(e.pointerId);}catch(err){}};
-  wrap.onpointermove=e=>{if(!bestDragging)return;const dx=e.clientX-bestStartX;if(Math.abs(dx)>4)bestSuppressClick=true;const b=bestBounds(wrap,track);bestOffset=Math.max(b.min,Math.min(b.max,bestStartOffset+dx));bestDir=dx<0?-1:1;applyBestOffset(track);};
+  wrap.onpointermove=e=>{if(!bestDragging)return;const dx=e.clientX-bestStartX;if(Math.abs(dx)>4)bestSuppressClick=true;const b=bestBounds(wrap,track);bestOffset=Math.max(b.min,Math.min(b.max,bestStartOffset+dx));applyBestOffset(track);};
   wrap.onpointerup=e=>{bestDragging=false;wrap.classList.remove('dragging');pauseBestCarousel(2200);try{wrap.releasePointerCapture(e.pointerId);}catch(err){}};
   wrap.onpointercancel=()=>{bestDragging=false;wrap.classList.remove('dragging');pauseBestCarousel(2200);};
   wrap.onmouseenter=()=>pauseBestCarousel(700);
-  wrap.onwheel=e=>{const delta=Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:(e.shiftKey?e.deltaY:0);if(!delta)return;e.preventDefault();const b=bestBounds(wrap,track);bestOffset=Math.max(b.min,Math.min(b.max,bestOffset-delta));bestDir=delta>0?-1:1;applyBestOffset(track);pauseBestCarousel(1800);};
-  function step(){const b=bestBounds(wrap,track);if(!bestDragging&&Date.now()>bestPausedUntil&&b.max>b.min){bestOffset+=bestDir*.35;if(bestOffset<=b.min||bestOffset>=b.max){bestOffset=Math.max(b.min,Math.min(b.max,bestOffset));bestDir*=-1;}applyBestOffset(track);}bestAutoRaf=requestAnimationFrame(step);}
+  wrap.onwheel=e=>{const delta=Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:(e.shiftKey?e.deltaY:0);if(!delta)return;e.preventDefault();const b=bestBounds(wrap,track);bestOffset=Math.max(b.min,Math.min(b.max,bestOffset-delta));applyBestOffset(track);pauseBestCarousel(1800);};
+  function step(){const b=bestBounds(wrap,track);if(!bestDragging&&Date.now()>bestPausedUntil){bestOffset-=.42;if(bestOffset<=b.min)bestOffset=b.max;applyBestOffset(track);}bestAutoRaf=requestAnimationFrame(step);}
   step();
 }
 function buildCarousel(){const best=P.filter(p=>p.cat==='best');const track=document.getElementById('carousel-track');track.innerHTML=best.map(p=>`<div class="best-card" onclick="openBestCard(${p.id})"><img src="${getImgs(p)[0]||''}" alt="${p.name}" loading="lazy" draggable="false"><div class="best-card-body"><div class="best-card-name">${p.name}${p.sale?'<span class="hot">SALE</span>':''}</div><div class="best-card-price">${fmt(p.price)}</div></div></div>`).join('');startBestCarousel();}
