@@ -43,6 +43,12 @@ export default {
       return jsonResponse(result, status);
     }
 
+    if (url.pathname === '/api/cafe24/token' && request.method === 'POST') {
+      const result = await handleCafe24Token(request, env);
+      const status = result.ok ? 200 : (result.status || 500);
+      return jsonResponse(result, status);
+    }
+
     if (url.pathname === '/api/health' && request.method === 'GET') {
       return jsonResponse({ ok: true, ts: Date.now() });
     }
@@ -252,6 +258,47 @@ async function saveGithubJson(env, path, jsonData, commitMessage) {
     commitUrl: data.commit?.html_url || null,
     contentSha: data.content?.sha || null,
     updatedPath: path,
+  };
+}
+
+// ── Cafe24 인증 코드 → 토큰 교환 ────────────────────────────────
+async function handleCafe24Token(request, env) {
+  const authErr = checkAuth(request, env);
+  if (authErr) return authErr;
+
+  let body;
+  try { body = await request.json(); } catch {
+    return { ok: false, status: 400, message: 'Invalid JSON body' };
+  }
+
+  const { client_id, client_secret, code, redirect_uri, mall_id } = body;
+  if (!client_id || !client_secret || !code || !redirect_uri || !mall_id) {
+    return { ok: false, status: 400, message: 'client_id, client_secret, code, redirect_uri, mall_id가 필요합니다.' };
+  }
+
+  const tokenRes = await fetch(`https://${mall_id}.cafe24api.com/api/v2/oauth/token`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Basic ' + btoa(`${client_id}:${client_secret}`),
+    },
+    body: `grant_type=authorization_code&code=${encodeURIComponent(code)}&redirect_uri=${encodeURIComponent(redirect_uri)}`,
+  });
+
+  const tokenData = await tokenRes.json();
+  if (!tokenRes.ok || tokenData.error) {
+    return {
+      ok: false, status: 401,
+      message: `토큰 교환 실패: ${tokenData.error_description || tokenData.error || ''}`,
+      guide: '인증 코드가 만료되었거나 redirect_uri가 일치하지 않습니다.',
+    };
+  }
+
+  return {
+    ok: true,
+    access_token: tokenData.access_token,
+    refresh_token: tokenData.refresh_token,
+    expires_at: tokenData.expires_at,
   };
 }
 

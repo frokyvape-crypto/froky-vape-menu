@@ -265,13 +265,29 @@ tr:hover td{background:rgba(128,128,128,.06);}
         <div class="c24-grid">
           <div class="form-row"><label>Client ID</label><input id="c24-id" type="text" placeholder="카페24 앱 Client ID" autocomplete="off"></div>
           <div class="form-row"><label>Client Secret</label><input id="c24-secret" type="password" placeholder="Client Secret" autocomplete="off"></div>
-          <div class="form-row"><label>Refresh Token</label><input id="c24-rt" type="password" placeholder="Refresh Token" autocomplete="off"></div>
+          <div class="form-row">
+            <label>Refresh Token <span style="color:var(--muted);font-weight:400;font-size:.75em">— 없으면 아래 인증 버튼 클릭</span></label>
+            <input id="c24-rt" type="password" placeholder="없으면 아래 '카페24 인증' 버튼으로 발급" autocomplete="off">
+          </div>
         </div>
-        <div style="font-size:.75rem;color:var(--muted);margin-bottom:10px;line-height:1.7">
-          💡 입력값은 브라우저에 저장됩니다. Refresh Token은 2주마다 갱신 필요.<br>
-          Worker 모드 활성 시 CORS 없이 안정적으로 불러옵니다.
+        <div style="font-size:.75rem;color:var(--muted);margin-bottom:12px;line-height:1.7;background:var(--card);padding:10px 12px;border-radius:8px;">
+          💡 처음 사용 시: Client ID / Secret 입력 후 <b style="color:var(--g)">카페24 인증</b> 클릭 → 로그인 → Refresh Token 자동 발급<br>
+          이후엔 Refresh Token으로 자동 갱신됩니다 (2주마다 자동 연장)
         </div>
-        <button class="btn btn-blue" id="btn-c24-load" onclick="fetchCafe24()">카페24 상품 불러오기</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
+          <button class="btn btn-outline" id="btn-c24-auth" onclick="startCafe24Auth()">🔑 카페24 인증 (최초 1회)</button>
+          <button class="btn btn-blue" id="btn-c24-load" onclick="fetchCafe24()">카페24 상품 불러오기</button>
+        </div>
+        <!-- 인증 코드 수동 입력 (팝업 차단 시) -->
+        <div id="c24-code-row" style="display:none;margin-top:10px;">
+          <div class="form-row">
+            <label>인증 코드 <span style="color:var(--muted);font-weight:400;font-size:.75em">— 팝업이 차단된 경우 코드를 직접 입력</span></label>
+            <div style="display:flex;gap:6px;">
+              <input id="c24-code" type="text" placeholder="카페24에서 받은 인증 코드 붙여넣기" style="flex:1">
+              <button class="btn btn-g btn-xs" onclick="exchangeCafe24Code()">토큰 발급</button>
+            </div>
+          </div>
+        </div>
         <div id="c24-result" style="display:none;margin-top:14px;">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
             <strong id="c24-count" style="font-size:.83rem;"></strong>
@@ -1275,6 +1291,72 @@ const CAT = name => {
   if (/일회용|디스포/.test(name)) return '일회용';
   return '입호흡';
 };
+
+const CAFE24_CALLBACK = 'https://frokyvape-crypto.github.io/froky-vape-menu/cafe24-callback.html';
+const CAFE24_MALL_ID  = 'frokyvape';
+const CAFE24_SCOPES   = 'mall.read_product,mall.read_category';
+
+function startCafe24Auth() {
+  const cid = document.getElementById('c24-id').value.trim();
+  if (!cid) { toast('Client ID를 먼저 입력하세요', 'err'); return; }
+  const state = Math.random().toString(36).slice(2);
+  sessionStorage.setItem('c24-state', state);
+  const authUrl = `https://${CAFE24_MALL_ID}.cafe24api.com/api/v2/oauth/authorize`
+    + `?response_type=code&client_id=${encodeURIComponent(cid)}`
+    + `&state=${state}&redirect_uri=${encodeURIComponent(CAFE24_CALLBACK)}`
+    + `&scope=${encodeURIComponent(CAFE24_SCOPES)}`;
+
+  // postMessage 수신 대기
+  window._c24AuthHandler = async (e) => {
+    if (e.data?.type !== 'cafe24-auth-code') return;
+    window.removeEventListener('message', window._c24AuthHandler);
+    document.getElementById('c24-code-row').style.display = 'none';
+    document.getElementById('c24-code').value = e.data.code;
+    await exchangeCafe24Code();
+  };
+  window.addEventListener('message', window._c24AuthHandler);
+
+  const popup = window.open(authUrl, 'cafe24auth', 'width=540,height=680,scrollbars=yes');
+  if (!popup) {
+    // 팝업 차단 → 코드 수동 입력 안내
+    document.getElementById('c24-code-row').style.display = 'block';
+    toast('팝업이 차단됐습니다. 아래 링크로 인증 후 코드를 입력하세요', 'info');
+    window.open(authUrl, '_blank');
+  } else {
+    document.getElementById('c24-code-row').style.display = 'block';
+    toast('카페24 로그인 후 인증을 완료하세요', 'info');
+  }
+}
+
+async function exchangeCafe24Code() {
+  const cid  = document.getElementById('c24-id').value.trim();
+  const sec  = document.getElementById('c24-secret').value.trim();
+  const code = document.getElementById('c24-code').value.trim();
+  if (!cid || !sec || !code) { toast('Client ID, Secret, 인증 코드를 모두 입력하세요', 'err'); return; }
+  if (!WORKER_URL || !ADMIN_KEY) { toast('Worker 설정이 필요합니다 (⚙️ 버튼)', 'err'); return; }
+
+  toast('토큰 발급 중...', 'info');
+  try {
+    const r = await fetch(WORKER_URL + '/api/cafe24/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
+      body: JSON.stringify({ client_id: cid, client_secret: sec, code, redirect_uri: CAFE24_CALLBACK, mall_id: CAFE24_MALL_ID }),
+    });
+    const d = await r.json();
+    if (!r.ok || !d.ok) throw new Error(d.message || `오류 (${r.status})`);
+
+    // 발급된 토큰 저장
+    localStorage.setItem('fv-c24-id',  cid);
+    localStorage.setItem('fv-c24-sec', sec);
+    localStorage.setItem('fv-c24-rt',  d.refresh_token);
+    document.getElementById('c24-rt').value   = d.refresh_token;
+    document.getElementById('c24-code').value = '';
+    document.getElementById('c24-code-row').style.display = 'none';
+    toast('✅ Refresh Token 발급 완료! 이제 상품을 불러올 수 있습니다', 'ok');
+  } catch (e) {
+    toast('토큰 발급 실패: ' + e.message, 'err');
+  }
+}
 
 async function fetchCafe24() {
   const cid = document.getElementById('c24-id').value.trim();
