@@ -51,7 +51,12 @@ export default {
     }
 
     if (url.pathname === '/api/health' && request.method === 'GET') {
-      return jsonResponse({ ok: true, ts: Date.now() });
+      return jsonResponse({
+        ok: true,
+        version: '2026-05-28-cafe24-admin-products',
+        cafe24ProductsEndpoint: '/api/v2/admin/products',
+        ts: Date.now(),
+      });
     }
 
     return jsonResponse({ ok: false, message: 'Not Found' }, 404);
@@ -338,7 +343,8 @@ async function handleCafe24Products(request, env) {
   }
 
   // 2단계: 상품 목록 조회
-  const prodRes = await fetch(`https://${mall_id}.cafe24api.com/api/v2/admin/products?limit=100&display=T&selling=T`, {
+  const cafe24ProductsUrl = `https://${mall_id}.cafe24api.com/api/v2/admin/products?limit=100&display=T&selling=T`;
+  const prodRes = await fetch(cafe24ProductsUrl, {
     headers: {
       'Authorization': `Bearer ${tokenData.access_token}`,
       'X-Cafe24-Api-Version': '2024-03-01',
@@ -347,7 +353,15 @@ async function handleCafe24Products(request, env) {
 
   const prodData = await prodRes.json();
   if (!prodRes.ok) {
-    return { ok: false, status: prodRes.status, message: `상품 조회 실패: ${JSON.stringify(prodData)}` };
+    return {
+      ok: false,
+      status: prodRes.status,
+      endpoint: cafe24ProductsUrl,
+      message: `상품 조회 실패 (${cafe24ProductsUrl}): ${JSON.stringify(prodData)}`,
+      guide: prodData?.error?.message?.includes('not an allowed client_id')
+        ? 'Cloudflare Worker가 최신 코드로 배포되지 않았거나, Cafe24 앱이 Admin Products API 사용 허용 상태가 아닙니다.'
+        : 'Cafe24 응답의 error code/message를 확인하세요.',
+    };
   }
 
   return {

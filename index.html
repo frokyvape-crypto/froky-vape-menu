@@ -285,7 +285,7 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
   </div>
   <div class="notice-banner-wrap"><img id="notice-banner-img" src="" alt="담배사업법 시행일 이전 재고제품 판매 안내"></div>
 </div>
-<div class="categories">
+<div class="categories" id="category-nav">
   <button class="cat-btn active" onclick="filterCat('all',this)">전체</button>
   <button class="cat-btn" onclick="filterCat('best',this)">🏆 베스트</button>
   <button class="cat-btn" onclick="filterCat('입호흡',this)">입호흡 액상</button>
@@ -388,15 +388,21 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 const PAY_URL='https://frokyvape.com/product/%EA%B0%9C%EC%9D%B8-%EA%B2%B0%EC%A0%9C%EC%B0%BD/1134/category/27/display/1/';
 const CAFE24_MALL='frokyvape';
 const REPO='frokyvape-crypto/froky-vape-menu';
-const DEFAULT_SITE_CONFIG={noticeMode:'stock',noticeBannerImgs:['images/notice-banner.svg'],noticeBannerImg:'images/notice-banner.svg',noticePopupEnabled:true,noticePopupImgs:['images/notice-popup.png'],noticePopupImg:'images/notice-popup.png'};
+const DEFAULT_SITE_CONFIG={noticeMode:'stock',noticeBannerImgs:['images/notice-banner.svg'],noticeBannerImg:'images/notice-banner.svg',noticePopupEnabled:true,noticePopupImgs:['images/notice-popup.png'],noticePopupImg:'images/notice-popup.png',categories:[{value:'best',label:'🏆 베스트'},{value:'입호흡',label:'입호흡 액상'},{value:'폐호흡',label:'폐호흡 액상'},{value:'고농도',label:'고농도 액상'},{value:'일회용',label:'일회용 기기'}]};
 let siteConfig={...DEFAULT_SITE_CONFIG};
 let P=[],cart=[],sp=null,sq=1;
 const fmt=n=>n.toLocaleString('ko-KR')+'원';
 function getImgs(p){if(Array.isArray(p.imgs)&&p.imgs.length)return p.imgs;if(p.img)return[p.img];return[''];}
 function getDetailImgs(p){if(Array.isArray(p.detailImgs)&&p.detailImgs.length)return p.detailImgs;if(p.detailImg)return[p.detailImg];return[];}
 function getNoticeImgs(key,fallback){const arr=Array.isArray(siteConfig[key+'s'])&&siteConfig[key+'s'].length?siteConfig[key+'s']:siteConfig[key]?[siteConfig[key]]:[fallback];return arr;}
+function normalizeCategories(list){const src=Array.isArray(list)&&list.length?list:DEFAULT_SITE_CONFIG.categories;const seen=new Set();return src.map(c=>typeof c==='string'?{value:c,label:c}:c).map(c=>({value:String(c.value||'').trim(),label:String(c.label||c.value||'').trim()})).filter(c=>c.value&&c.label&&!seen.has(c.value)&&seen.add(c.value));}
+function escAttr(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function categoryLabel(value){return normalizeCategories(siteConfig.categories).find(c=>c.value===value)?.label||value;}
+function renderCategoryNav(){const nav=document.getElementById('category-nav');if(!nav)return;const cats=normalizeCategories(siteConfig.categories);nav.innerHTML=`<button class="cat-btn active" onclick="filterCat('all',this)">전체</button>`+cats.map(c=>`<button class="cat-btn" onclick='filterCat(${JSON.stringify(c.value)},this)'>${escAttr(c.label)}</button>`).join('');}
 function applySiteConfig(cfg){
   siteConfig={...DEFAULT_SITE_CONFIG,...(cfg||{})};
+  siteConfig.categories=normalizeCategories(siteConfig.categories);
+  renderCategoryNav();
   document.body.setAttribute('data-notice-mode',siteConfig.noticeMode||'default');
   const bannerImgs=getNoticeImgs('noticeBannerImg',DEFAULT_SITE_CONFIG.noticeBannerImg);
   document.getElementById('notice-banner-img').src=bannerImgs[0]||DEFAULT_SITE_CONFIG.noticeBannerImg;
@@ -454,7 +460,7 @@ function startBestCarousel(){
   step();
 }
 function buildCarousel(){const best=P.filter(p=>p.cat==='best');const track=document.getElementById('carousel-track');track.innerHTML=best.map(p=>`<div class="best-card" onclick="openBestCard(${p.id})"><img src="${getImgs(p)[0]||''}" alt="${p.name}" loading="lazy" draggable="false"><div class="best-card-body"><div class="best-card-name">${p.name}${p.sale?'<span class="hot">SALE</span>':''}</div><div class="best-card-price">${fmt(p.price)}</div></div></div>`).join('');startBestCarousel();}
-function renderGrid(cat){const items=cat==='all'?P:P.filter(p=>p.cat===cat);document.getElementById('best-section').style.display=cat==='all'?'':'none';const lb={all:'전체 상품',best:'🏆 베스트',입호흡:'입호흡 액상',폐호흡:'폐호흡 액상',고농도:'고농도 액상',일회용:'일회용 기기'};document.getElementById('section-label').textContent=lb[cat]||cat;document.getElementById('product-grid').innerHTML=items.map(cardHTML).join('');}
+function renderGrid(cat){const items=cat==='all'?P:P.filter(p=>p.cat===cat);document.getElementById('best-section').style.display=cat==='all'?'':'none';document.getElementById('section-label').textContent=cat==='all'?'전체 상품':categoryLabel(cat);document.getElementById('product-grid').innerHTML=items.map(cardHTML).join('');}
 function filterCat(cat,el){document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderGrid(cat);}
 function onSearch(val){const q=val.trim();document.getElementById('search-clear').style.display=q?'block':'none';if(!q){document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');return;}document.getElementById('best-section').style.display='none';const res=P.filter(p=>p.name.includes(q)||p.flavor.includes(q));const lbl=document.getElementById('search-result-label');lbl.style.display='block';lbl.textContent=`"${q}" 검색 결과 ${res.length}개`;document.getElementById('section-label').textContent='검색 결과';document.getElementById('product-grid').innerHTML=res.length?res.map(cardHTML).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0">검색 결과가 없습니다 😢</div>';}
 function clearSearch(){document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');}

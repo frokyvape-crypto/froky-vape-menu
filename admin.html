@@ -213,6 +213,11 @@ tr:hover td{background:rgba(128,128,128,.06);}
         <div class="ac-title">공지 설정</div>
         <div class="ac-desc">메인 배너와 안내 팝업 전환</div>
       </div>
+      <div class="action-card" onclick="showSection('sec-categories')">
+        <div class="ac-icon">#</div>
+        <div class="ac-title">카테고리 추가</div>
+        <div class="ac-desc">상품 분류 버튼 추가/수정</div>
+      </div>
       <div class="action-card" data-deploy onclick="saveAndDeploy()">
         <div class="ac-icon">🚀</div>
         <div class="ac-title">저장 & 배포</div>
@@ -293,6 +298,27 @@ tr:hover td{background:rgba(128,128,128,.06);}
             </table>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="section" id="sec-categories" style="display:none">
+      <div class="section-head">
+        <h2># 카테고리 관리</h2>
+        <button class="btn btn-outline btn-xs" onclick="loadSiteConfig()">새로고침</button>
+      </div>
+      <div class="section-body">
+        <div class="filter-bar">
+          <input type="text" id="cat-label" placeholder="화면 표시 이름 (예: 신규 액상)">
+          <input type="text" id="cat-value" placeholder="분류 값 (예: 신규)" style="max-width:180px">
+          <button class="btn btn-g btn-xs" onclick="addCategory()">+ 추가</button>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>표시 이름</th><th>분류 값</th><th style="width:120px">액션</th></tr></thead>
+            <tbody id="cat-body"></tbody>
+          </table>
+        </div>
+        <button class="btn btn-g" id="btn-save-categories" onclick="saveSiteConfig()">카테고리 저장</button>
       </div>
     </div>
 
@@ -459,12 +485,20 @@ const DEFAULT_SITE_CONFIG = {
   noticePopupEnabled: true,
   noticePopupImgs: ['images/notice-popup.png'],
   noticePopupImg: 'images/notice-popup.png',
+  categories: [
+    { value: 'best', label: '🏆 베스트' },
+    { value: '입호흡', label: '입호흡 액상' },
+    { value: '폐호흡', label: '폐호흡 액상' },
+    { value: '고농도', label: '고농도 액상' },
+    { value: '일회용', label: '일회용 기기' },
+  ],
 };
 let TOKEN = '', fileSha = '', products = [];
 let siteConfig = {...DEFAULT_SITE_CONFIG}, siteConfigSha = '';
 let imgSlots = { main: [], detail: [] };
 let noticeImgSlots = { banner: [], popup: [] };
 let noticeModes = [...DEFAULT_SITE_CONFIG.noticeModes];
+let categories = [...DEFAULT_SITE_CONFIG.categories];
 let selectedNoticeMode = 'stock';
 let isSaving = false;
 const DEFAULT_WORKER_URL = 'https://froky-vape-admin.frokyvape.workers.dev';
@@ -540,7 +574,7 @@ function showSection(id) {
     if (products.length > 0) renderTable();   // 캐시 있으면 즉시 표시
     else loadProducts();                       // 없으면 GitHub에서 로드
   }
-  if (id === 'sec-notice') loadSiteConfig();
+  if (id === 'sec-notice' || id === 'sec-categories') loadSiteConfig();
 }
 
 async function ghApi(method, path, body) {
@@ -712,10 +746,81 @@ function removeNoticeMode(idx) {
   renderNoticeModes();
 }
 
+function normalizeCategories(list) {
+  const src = Array.isArray(list) && list.length ? list : DEFAULT_SITE_CONFIG.categories;
+  const seen = new Set();
+  return src
+    .map(c => typeof c === 'string' ? { value: c, label: c } : c)
+    .map(c => ({ value: String(c.value || '').trim(), label: String(c.label || c.value || '').trim() }))
+    .filter(c => c.value && c.label && !seen.has(c.value) && seen.add(c.value));
+}
+
+function categoryLabel(value) {
+  return (categories.find(c => c.value === value)?.label) || value;
+}
+
+function renderCategoryControls() {
+  categories = normalizeCategories(categories);
+  const filter = document.getElementById('flt-cat');
+  if (filter) {
+    const current = filter.value;
+    filter.innerHTML = '<option value="">전체</option>' + categories.map(c => `<option value="${escHtml(c.value)}">${escHtml(c.label)}</option>`).join('');
+    filter.value = categories.some(c => c.value === current) ? current : '';
+  }
+  const select = document.getElementById('f-cat');
+  if (select) {
+    const current = select.value;
+    select.innerHTML = categories.map(c => `<option value="${escHtml(c.value)}">${escHtml(c.label)}</option>`).join('');
+    select.value = categories.some(c => c.value === current) ? current : categories[0]?.value || '';
+  }
+  renderCategoryList();
+}
+
+function renderCategoryList() {
+  const body = document.getElementById('cat-body');
+  if (!body) return;
+  body.innerHTML = categories.map((c, i) => `
+    <tr>
+      <td><input class="field" value="${escHtml(c.label)}" onchange="updateCategory(${i}, 'label', this.value)"></td>
+      <td><input class="field" value="${escHtml(c.value)}" onchange="updateCategory(${i}, 'value', this.value)"></td>
+      <td><button class="btn btn-red btn-xs" onclick="removeCategory(${i})">삭제</button></td>
+    </tr>`).join('');
+}
+
+function addCategory() {
+  const labelEl = document.getElementById('cat-label');
+  const valueEl = document.getElementById('cat-value');
+  const label = labelEl.value.trim();
+  const value = (valueEl.value.trim() || label).replace(/\s+/g, '-');
+  if (!label || !value) { toast('카테고리 이름을 입력하세요', 'err'); return; }
+  if (categories.some(c => c.value === value)) { toast('이미 있는 카테고리입니다', 'err'); return; }
+  categories.push({ label, value });
+  labelEl.value = '';
+  valueEl.value = '';
+  renderCategoryControls();
+  toast('카테고리 추가됨 - 저장을 눌러 반영하세요', 'ok');
+}
+
+function updateCategory(idx, key, raw) {
+  const value = String(raw || '').trim();
+  if (!value) { renderCategoryControls(); return; }
+  categories[idx][key] = key === 'value' ? value.replace(/\s+/g, '-') : value;
+  categories = normalizeCategories(categories);
+  renderCategoryControls();
+}
+
+function removeCategory(idx) {
+  if (products.some(p => p.cat === categories[idx].value) && !confirm('이 카테고리를 사용하는 상품이 있습니다. 그래도 삭제할까요?')) return;
+  categories.splice(idx, 1);
+  renderCategoryControls();
+}
+
 function setNoticeForm() {
   noticeModes = Array.isArray(siteConfig.noticeModes) && siteConfig.noticeModes.length
     ? siteConfig.noticeModes
     : [...DEFAULT_SITE_CONFIG.noticeModes];
+  categories = normalizeCategories(siteConfig.categories);
+  renderCategoryControls();
   selectedNoticeMode = siteConfig.noticeMode || noticeModes[0]?.value || 'stock';
   renderNoticeModes();
   document.getElementById('notice-popup-enabled').checked = siteConfig.noticePopupEnabled !== false;
@@ -771,7 +876,9 @@ async function loadSiteConfig() {
 
 async function saveSiteConfig() {
   const btn = document.getElementById('btn-save-config');
+  const catBtn = document.getElementById('btn-save-categories');
   btn.disabled = true;
+  if (catBtn) catBtn.disabled = true;
   btn.innerHTML = '<span class="spin"></span>저장 중...';
   try {
     let currentSha = '';
@@ -801,6 +908,7 @@ async function saveSiteConfig() {
       noticePopupEnabled: document.getElementById('notice-popup-enabled').checked,
       noticePopupImgs: finalPopupImgs,
       noticePopupImg: finalPopupImgs[0],
+      categories: normalizeCategories(categories),
     };
     if (WORKER_URL && ADMIN_KEY) {
       const wr = await fetch(WORKER_URL + '/api/github/config', {
@@ -834,6 +942,7 @@ async function saveSiteConfig() {
     toast('공지 설정 저장 실패: ' + e.message, 'err');
   } finally {
     btn.disabled = false;
+    if (catBtn) catBtn.disabled = false;
     btn.innerHTML = '공지 설정 저장';
   }
 }
@@ -858,7 +967,7 @@ function renderTable() {
       ${getImgs(p).length > 1 ? `<div style="font-size:.68rem;color:var(--muted);margin-top:1px">📷 ${getImgs(p).length}장</div>` : ''}
     </td>
     <td style="white-space:nowrap">${fmt(p.price)}</td>
-    <td><span class="cat-tag c-${p.cat}">${p.cat}</span></td>
+    <td><span class="cat-tag c-${p.cat}">${categoryLabel(p.cat)}</span></td>
     <td style="font-size:.75rem;color:var(--muted)">${(p.options || []).join(', ') || '-'}</td>
     <td>${p.sale ? '<span class="sale-tag">SALE</span>' : ''}</td>
     <td><div class="td-btns">
@@ -1019,7 +1128,9 @@ function resetModal() {
   imgSlots = { main: [], detail: [] };
   renderImgGrid('main'); renderImgGrid('detail');
   ['f-id','f-name','f-price','f-flavor','f-opts'].forEach(id => document.getElementById(id).value = '');
+  renderCategoryControls();
   document.getElementById('f-cat').value = '입호흡';
+  document.getElementById('f-cat').value = categories[0]?.value || document.getElementById('f-cat').value;
   document.getElementById('f-sale').checked = false;
   document.getElementById('f-main-url').value = '';
   document.getElementById('f-detail-url').value = '';
@@ -1246,7 +1357,7 @@ async function fetchCafe24() {
         <td><img src="${img}" style="width:32px;height:32px;object-fit:cover;border-radius:5px;" onerror="this.src=''"></td>
         <td>${p.product_name}${isDupe ? ' <span style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">중복</span>' : ''}</td>
         <td style="white-space:nowrap">${Number(p.price).toLocaleString('ko-KR')}원</td>
-        <td><span class="cat-tag c-${CAT(p.product_name)}">${CAT(p.product_name)}</span></td>
+        <td><span class="cat-tag c-${CAT(p.product_name)}">${categoryLabel(CAT(p.product_name))}</span></td>
       </tr>`;
     }).join('');
     document.getElementById('c24-result').style.display = 'block';

@@ -26,5 +26,27 @@
   "noticePopupImgs": [
     "images/notice-popup.png"
   ],
-  "noticePopupImg": "images/notice-popup.png"
+  "noticePopupImg": "images/notice-popup.png",
+  "categories": [
+    {
+      "value": "best",
+      "label": "🏆 베스트"
+    },
+    {
+      "value": "입호흡",
+      "label": "입호흡 액상"
+    },
+    {
+      "value": "폐호흡",
+      "label": "폐호흡 액상"
+    },
+    {
+      "value": "고농도",
+      "label": "고농도 액상"
+    },
+    {
+      "value": "일회용",
+      "label": "일회용 기기"
+    }
+  ]
 }
