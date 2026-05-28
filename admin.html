@@ -1060,12 +1060,11 @@ function startCafe24Auth() {
   if (!cid) { toast('Client ID를 먼저 입력하세요', 'err'); return; }
   const state = Math.random().toString(36).slice(2);
   sessionStorage.setItem('c24-state', state);
-  // scope: 상품 읽기만 (최소 권한)
-  const scope = 'mall.read_product';
+  // Cafe24 Developers 앱에 등록된 권한을 사용합니다.
+  // scope를 URL에 직접 붙이면 앱 설정과 조금만 달라도 인증이 거부될 수 있습니다.
   const authUrl = `https://${CAFE24_MALL_ID}.cafe24api.com/api/v2/oauth/authorize`
     + `?response_type=code&client_id=${encodeURIComponent(cid)}`
-    + `&state=${state}&redirect_uri=${encodeURIComponent(CAFE24_CALLBACK)}`
-    + `&scope=${encodeURIComponent(scope)}`;
+    + `&state=${state}&redirect_uri=${encodeURIComponent(CAFE24_CALLBACK)}`;
 
   // postMessage 수신 대기
   window._c24AuthHandler = async (e) => {
@@ -1200,8 +1199,10 @@ function importSelected() {
     if (products.find(x => x.id === p.product_no)) { dupes++; return; }
     const toUrl = s => s && s.startsWith('/') ? 'https://frokyvape.cafe24.com' + s : (s || '');
     products.push({
-      id: p.product_no, name: p.product_name, price: parseInt(p.price) || 0,
+      id: p.product_no, product_no: p.product_no, name: p.product_name, price: parseInt(p.price) || 0,
+      imgs: [toUrl(p.list_image || p.detail_image)].filter(Boolean),
       img: toUrl(p.list_image || p.detail_image),
+      detailImgs: [toUrl(p.detail_image)].filter(Boolean),
       detailImg: toUrl(p.detail_image),
       cat: CAT(p.product_name), flavor: (p.summary_description || '').trim(),
       options: [], sale: !!p.price_content,
