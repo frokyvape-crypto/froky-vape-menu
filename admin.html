@@ -1313,63 +1313,36 @@ async function fetchCafe24() {
   try {
     let items = [];
 
-    if (WORKER_URL && ADMIN_KEY) {
-      // Worker 모드: 클라이언트에서 직접 offset 페이지네이션 (Worker 버전 무관)
-      const seenNos = new Set();
-      let offset = 0;
-      let curRt = rt;
-      while (true) {
-        const r = await fetch(WORKER_URL + '/api/cafe24/products', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
-          body: JSON.stringify({
-            client_id: cid, client_secret: sec, refresh_token: curRt, mall_id: 'frokyvape',
-            ...(searchName && { product_name: searchName }),
-            offset,
-          }),
-        });
-        const d = await r.json();
-        if (!r.ok || !d.ok) throw new Error(d.message || `오류 (${r.status})`);
-        if (d.new_refresh_token) {
-          curRt = d.new_refresh_token;
-          localStorage.setItem('fv-c24-rt', curRt);
-          document.getElementById('c24-rt').value = curRt;
-        }
-        const batch = d.products || [];
-        let newCount = 0;
-        for (const p of batch) {
-          if (!seenNos.has(p.product_no)) { seenNos.add(p.product_no); items.push(p); newCount++; }
-        }
-        if (batch.length < 100 || newCount === 0) break;
-        offset += 100;
-        btn.innerHTML = `<span class="spin"></span>불러오는 중... (${items.length}개)`;
-      }
-    } else {
-      // 직접 모드: corsproxy.io (페이지네이션 지원)
-      const proxy = 'https://corsproxy.io/?url=';
-      const tr = await fetch(proxy + encodeURIComponent('https://frokyvape.cafe24api.com/api/v2/oauth/token'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic ' + btoa(cid + ':' + sec) },
-        body: 'grant_type=refresh_token&refresh_token=' + encodeURIComponent(rt),
+    // 카페24 상품 불러오기: 항상 직접 페이지네이션 (Worker 배포 버전 무관하게 동작)
+    const proxy = 'https://corsproxy.io/?url=';
+    const tr = await fetch(proxy + encodeURIComponent('https://frokyvape.cafe24api.com/api/v2/oauth/token'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic ' + btoa(cid + ':' + sec) },
+      body: 'grant_type=refresh_token&refresh_token=' + encodeURIComponent(rt),
+    });
+    if (!tr.ok) throw new Error('카페24 서버 오류 ' + tr.status);
+    const td = await tr.json();
+    if (td.error) throw new Error(`[${td.error}] ${td.error_description || ''} — Refresh Token 만료`);
+    if (!td.access_token) throw new Error('액세스 토큰 없음');
+    if (td.refresh_token && td.refresh_token !== rt) {
+      localStorage.setItem('fv-c24-rt', td.refresh_token);
+      document.getElementById('c24-rt').value = td.refresh_token;
+      toast('Refresh Token 자동 갱신됨', 'info');
+    }
+    let offset = 0;
+    const limit = 100;
+    while (true) {
+      let apiUrl = `https://frokyvape.cafe24api.com/api/v2/admin/products?limit=${limit}&offset=${offset}&display=T&selling=T`;
+      if (searchName) apiUrl += `&product_name=${encodeURIComponent(searchName)}`;
+      const pr = await fetch(proxy + encodeURIComponent(apiUrl), {
+        headers: { 'Authorization': 'Bearer ' + td.access_token, 'X-Cafe24-Api-Version': '2026-03-01' },
       });
-      if (!tr.ok) throw new Error('카페24 서버 오류 ' + tr.status);
-      const td = await tr.json();
-      if (td.error) throw new Error(`[${td.error}] ${td.error_description || ''} — Refresh Token 만료`);
-      if (!td.access_token) throw new Error('액세스 토큰 없음');
-      let offset = 0;
-      const limit = 100;
-      while (true) {
-        let apiUrl = `https://frokyvape.cafe24api.com/api/v2/admin/products?limit=${limit}&offset=${offset}&display=T&selling=T`;
-        if (searchName) apiUrl += `&product_name=${encodeURIComponent(searchName)}`;
-        const pr = await fetch(proxy + encodeURIComponent(apiUrl), {
-          headers: { 'Authorization': 'Bearer ' + td.access_token, 'X-Cafe24-Api-Version': '2026-03-01' },
-        });
-        const batch = (await pr.json()).products || [];
-        items.push(...batch);
-        if (batch.length < limit) break;
-        offset += limit;
-        btn.innerHTML = `<span class="spin"></span>불러오는 중... (${items.length}개)`;
-      }
+      if (!pr.ok) throw new Error('카페24 상품 조회 실패: ' + pr.status);
+      const batch = (await pr.json()).products || [];
+      items.push(...batch);
+      if (batch.length < limit) break;
+      offset += limit;
+      btn.innerHTML = `<span class="spin"></span>불러오는 중... (${items.length}개)`;
     }
 
     // 클라이언트 사이드 검색 필터 (Worker 미배포 시 fallback)
