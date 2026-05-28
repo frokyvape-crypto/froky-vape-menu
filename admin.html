@@ -467,7 +467,8 @@ let noticeImgSlots = { banner: [], popup: [] };
 let noticeModes = [...DEFAULT_SITE_CONFIG.noticeModes];
 let selectedNoticeMode = 'stock';
 let isSaving = false;
-let WORKER_URL = localStorage.getItem('fv-worker-url') || '';
+const DEFAULT_WORKER_URL = 'https://froky-vape-admin.frokyvape.workers.dev';
+let WORKER_URL = localStorage.getItem('fv-worker-url') || DEFAULT_WORKER_URL;
 let ADMIN_KEY = localStorage.getItem('fv-admin-key') || '';
 
 // ── localStorage DB ────────────────────────────
