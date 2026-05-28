@@ -338,7 +338,7 @@ async function handleCafe24Products(request, env) {
   }
 
   // 2단계: 상품 목록 조회
-  const prodRes = await fetch(`https://${mall_id}.cafe24api.com/api/v2/products?limit=100&display=T&selling=T`, {
+  const prodRes = await fetch(`https://${mall_id}.cafe24api.com/api/v2/admin/products?limit=100&display=T&selling=T`, {
     headers: {
       'Authorization': `Bearer ${tokenData.access_token}`,
       'X-Cafe24-Api-Version': '2024-03-01',

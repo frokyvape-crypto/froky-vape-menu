@@ -50,7 +50,7 @@ all_products = []
 offset = 0
 while True:
     r = requests.get(
-        "https://frokyvape.cafe24api.com/api/v2/products",
+        "https://frokyvape.cafe24api.com/api/v2/admin/products",
         headers=headers,
         params={"limit": 100, "offset": offset, "display": "T", "selling": "T"},
     )
@@ -98,7 +98,7 @@ for p in all_products:
     if p.get("has_option") == "T":
         time.sleep(0.1)  # API rate limit 방지
         opt_r = requests.get(
-            f"https://frokyvape.cafe24api.com/api/v2/products/{pno}/options",
+            f"https://frokyvape.cafe24api.com/api/v2/admin/products/{pno}/options",
             headers=headers,
         )
         if opt_r.status_code == 200:
