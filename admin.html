@@ -232,6 +232,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
         <button class="btn btn-g btn-xs" onclick="openAddModal()">+ 추가</button>
         <button class="btn btn-outline btn-xs" onclick="selectAllProds()">전체선택</button>
         <button class="btn btn-outline btn-xs" onclick="deselectAllProds()">전체해제</button>
+        <button class="btn btn-g btn-xs" id="btn-cat-sel" style="display:none" onclick="focusBulkCategory()">선택 카테고리 변경</button>
         <button class="btn btn-red btn-xs" id="btn-del-sel" style="display:none" onclick="deleteSelected()">선택삭제</button>
       </div>
       <div class="section-body">
@@ -256,7 +257,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
             <option value="on">SALE 켜기</option>
             <option value="off">SALE 끄기</option>
           </select>
-          <button class="btn btn-g btn-xs" onclick="applyBulkEdit()">선택 수정</button>
+          <button class="btn btn-g btn-xs" onclick="applyBulkEdit()">선택 상품에 적용</button>
         </div>
         <div class="count-info" id="count-info"></div>
         <div class="tbl-wrap">
@@ -1434,6 +1435,8 @@ function updateDeleteBtn() {
   const total = document.querySelectorAll('.prod-check').length;
   const btn = document.getElementById('btn-del-sel');
   if (btn) btn.style.display = count > 0 ? '' : 'none';
+  const catBtn = document.getElementById('btn-cat-sel');
+  if (catBtn) catBtn.style.display = count > 0 ? '' : 'none';
   const bulkBar = document.getElementById('bulk-bar');
   if (bulkBar) bulkBar.style.display = count > 0 ? 'flex' : 'none';
   const countEl = document.getElementById('selected-count');
@@ -1442,6 +1445,15 @@ function updateDeleteBtn() {
   if (allChk) {
     allChk.checked = total > 0 && count === total;
     allChk.indeterminate = count > 0 && count < total;
+  }
+}
+function focusBulkCategory() {
+  const bulkBar = document.getElementById('bulk-bar');
+  if (bulkBar) bulkBar.style.display = 'flex';
+  const select = document.getElementById('bulk-cat');
+  if (select) {
+    select.focus();
+    select.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 }
 function applyBulkEdit() {
