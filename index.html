@@ -385,7 +385,9 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 <button class="kakao-float" onclick="window.open('http://pf.kakao.com/_MxhQqX','_blank')">카카오톡 문의</button>
 <div class="toast" id="toast"></div>
 <script>
-const PAY_URL='https://frokyvape.com/product/%EA%B0%9C%EC%9D%B8-%EA%B2%B0%EC%A0%9C%EC%B0%BD/1134/category/27/display/1/';
+const PAY_URL='https://frokyvape.cafe24.com/product/%EA%B0%9C%EC%9D%B8-%EA%B2%B0%EC%A0%9C%EC%B0%BD/1134/category/23/display/1/';
+const PERSONAL_PAY_PRODUCT_NO='1134';
+const PERSONAL_PAY_UNIT_PRICE=100;
 const CAFE24_MALL='frokyvape';
 const REPO='frokyvape-crypto/froky-vape-menu';
 const DEFAULT_SITE_CONFIG={noticeMode:'stock',noticeBannerImgs:['images/notice-banner.svg'],noticeBannerImg:'images/notice-banner.svg',noticePopupEnabled:true,noticePopupImgs:['images/notice-popup.png'],noticePopupImg:'images/notice-popup.png',categories:[{value:'best',label:'🏆 베스트'},{value:'입호흡',label:'입호흡 액상'},{value:'폐호흡',label:'폐호흡 액상'},{value:'고농도',label:'고농도 액상'},{value:'일회용',label:'일회용 기기'}]};
@@ -506,26 +508,37 @@ function closeSheetOut(e){if(e.target===document.getElementById('sheet-overlay')
 function sheetQty(d){sq=Math.max(1,sq+d);document.getElementById('s-qty').textContent=sq;updateTotal();}
 function updateTotal(){if(sp)document.getElementById('s-total').textContent='합계: '+fmt(sp.price*sq);}
 function sheetAddCart(){
-  if(sp.product_no){
-    window.open(`https://${CAFE24_MALL}.cafe24.com/exec/front/order/basket/?product_no=${sp.product_no}&quantity=${sq}`,'_blank');
-    closeSheet(); return;
-  }
   const opt=document.getElementById('s-option').value;
   if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}
   addToCart(sp,opt,sq);closeSheet();
 }
 function sheetBuyNow(){
-  if(sp.product_no){
-    window.open(`https://${CAFE24_MALL}.cafe24.com/product/detail.html?product_no=${sp.product_no}`,'_blank');
-    closeSheet(); return;
-  }
   const opt=document.getElementById('s-option').value;
   if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}
   addToCart(sp,opt,sq);closeSheet();openPayModal();
 }
 function openPayModal(){closeCart();const total=cart.reduce((s,c)=>s+c.price*c.qty,0);document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${c.name}</div><div class="order-row-opt">${c.option} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');document.getElementById('pm-total').textContent=fmt(total);document.getElementById('pay-modal-overlay').classList.add('open');}
 function closePayModal(){document.getElementById('pay-modal-overlay').classList.remove('open');}
-function goToPay(){window.open(PAY_URL,'_blank');closePayModal();}
+function buildOrderMemo(){const total=cart.reduce((s,c)=>s+c.price*c.qty,0);return [
+  '[FROKY VAPE 주문내역]',
+  ...cart.map((c,i)=>`${i+1}. ${c.name} / 옵션: ${c.option} / 수량: ${c.qty}개 / 금액: ${fmt(c.price*c.qty)}`),
+  `총 결제금액: ${fmt(total)}`
+].join('\n');}
+async function copyOrderMemo(){try{await navigator.clipboard.writeText(buildOrderMemo());showToast('주문내역이 복사되었습니다');}catch(e){}}
+function privatePayQuantity(total){
+  if(total<=0)return 0;
+  if(total%PERSONAL_PAY_UNIT_PRICE!==0)return 0;
+  return total/PERSONAL_PAY_UNIT_PRICE;
+}
+async function goToPay(){
+  const total=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const payQty=privatePayQuantity(total);
+  if(!payQty){showToast(`${fmt(total)}은 ${PERSONAL_PAY_UNIT_PRICE}원 단위 개인결제창으로 정확히 만들 수 없습니다`);return;}
+  await copyOrderMemo();
+  const basketUrl=`https://${CAFE24_MALL}.cafe24.com/exec/front/order/basket/?product_no=${PERSONAL_PAY_PRODUCT_NO}&quantity=${payQty}`;
+  window.open(basketUrl,'_blank');
+  closePayModal();
+}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
 async function loadProducts(){
   document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품을 불러오는 중... ⏳</div>';
