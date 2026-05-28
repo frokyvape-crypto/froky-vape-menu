@@ -515,8 +515,8 @@ function sheetAddCart(){
 function sheetBuyNow(){
   const total=sp.price*sq;
   const payQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
-  window.open(PAY_URL,'_blank');
-  showToast(`결제창 수량을 ${payQty.toLocaleString()}개로 설정하세요 (${fmt(total)})`);
+  window.open(`https://${CAFE24_MALL}.cafe24.com/exec/front/order/order/?product_no=${PERSONAL_PAY_PRODUCT_NO}&quantity=${payQty}`,'_blank');
+  showToast(`결제창 수량: ${payQty.toLocaleString()}개 (${fmt(total)})`);
   closeSheet();
 }
 function openPayModal(){closeCart();const total=cart.reduce((s,c)=>s+c.price*c.qty,0);document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${c.name}</div><div class="order-row-opt">${c.option} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');document.getElementById('pm-total').textContent=fmt(total);document.getElementById('pay-modal-overlay').classList.add('open');}
@@ -537,8 +537,8 @@ async function goToPay(){
   const payQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
   if(payQty<=0){showToast('결제할 상품이 없습니다');return;}
   await copyOrderMemo();
-  window.open(PAY_URL,'_blank');
-  showToast(`결제창 수량을 ${payQty.toLocaleString()}개로 설정하세요 (주문내역 복사됨)`);
+  window.open(`https://${CAFE24_MALL}.cafe24.com/exec/front/order/order/?product_no=${PERSONAL_PAY_PRODUCT_NO}&quantity=${payQty}`,'_blank');
+  showToast(`결제창 수량: ${payQty.toLocaleString()}개 (${fmt(total)}) — 주문내역 복사됨`);
   closePayModal();
 }
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
