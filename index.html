@@ -513,7 +513,10 @@ function sheetAddCart(){
   addToCart(sp,opt,sq);closeSheet();
 }
 function sheetBuyNow(){
-  window.open(PAY_URL,'_blank');
+  const total=sp.price*sq;
+  const payQty=privatePayQuantity(total);
+  if(!payQty){showToast(`${fmt(total)}은 ${PERSONAL_PAY_UNIT_PRICE}원 단위로 맞출 수 없습니다`);return;}
+  window.open(`https://${CAFE24_MALL}.cafe24.com/exec/front/order/basket/?product_no=${PERSONAL_PAY_PRODUCT_NO}&quantity=${payQty}`,'_blank');
   closeSheet();
 }
 function openPayModal(){closeCart();const total=cart.reduce((s,c)=>s+c.price*c.qty,0);document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${c.name}</div><div class="order-row-opt">${c.option} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');document.getElementById('pm-total').textContent=fmt(total);document.getElementById('pay-modal-overlay').classList.add('open');}
