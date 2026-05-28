@@ -557,8 +557,8 @@ function sheetAddCart(){
 function sheetBuyNow(){
   const total=sp.price*sq;
   _pmPayQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
-  _pmPayCopyText=`${sp.name}\n개인결제창 수량: ${_pmPayQty}개 (${fmt(total)})`;
-  _pmRealCopyText=`${sp.name}\n실제 주문수량: ${sq}개`;
+  _pmPayCopyText=String(_pmPayQty);
+  _pmRealCopyText=`${sp.name} × ${sq}개`;
   document.getElementById('pm-items').innerHTML=`<div class="order-row"><div><div class="order-row-name">${sp.name}</div><div class="order-row-opt">${sq}개</div></div><span class="order-row-price">${fmt(total)}</span></div>`;
   document.getElementById('pm-total').textContent=fmt(total);
   document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();
@@ -573,8 +573,8 @@ function openPayModal(){
   const total=cart.reduce((s,c)=>s+c.price*c.qty,0);
   const totalQty=cart.reduce((s,c)=>s+c.qty,0);
   _pmPayQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
-  _pmPayCopyText=`개인결제창 수량: ${_pmPayQty}개 (${fmt(total)})\n`+cart.map(c=>`${c.name} ${c.qty}개`).join(', ');
-  _pmRealCopyText=`주문내역:\n`+cart.map(c=>`${c.name} × ${c.qty}개 (${fmt(c.price*c.qty)})`).join('\n')+`\n총 ${totalQty}개 / ${fmt(total)}`;
+  _pmPayCopyText=String(_pmPayQty);
+  _pmRealCopyText=cart.map(c=>`${c.name} × ${c.qty}개`).join('\n');
   document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${c.name}</div><div class="order-row-opt">${c.option} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');
   document.getElementById('pm-total').textContent=fmt(total);
   document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();
@@ -599,13 +599,13 @@ async function goToPay(){
 }
 function copyPmPayQty(){
   navigator.clipboard.writeText(_pmPayCopyText).then(()=>{
-    showToast('결제창 수량 복사됨 — 결제창 수량칸에 붙여넣으세요');
-  }).catch(()=>showToast(`결제창 수량: ${_pmPayQty.toLocaleString()}개`));
+    showToast(`${_pmPayQty.toLocaleString()} 복사됨 — 결제창 수량칸에 붙여넣으세요`);
+  }).catch(()=>showToast(`결제창 수량: ${_pmPayQty.toLocaleString()}`));
 }
 function copyPmRealQty(){
   navigator.clipboard.writeText(_pmRealCopyText).then(()=>{
-    showToast('실제 주문수량 복사됨');
-  }).catch(()=>showToast(`실제 수량: ${document.getElementById('pm-real-qty').textContent}개`));
+    showToast('제품명+수량 복사됨');
+  }).catch(()=>showToast('복사 실패'));
 }
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
 async function loadProducts(){

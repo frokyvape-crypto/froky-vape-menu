@@ -1347,15 +1347,21 @@ async function fetchCafe24() {
         });
         const batch = (await pr.json()).products || [];
         items.push(...batch);
-        if (!getAll || batch.length < limit) break;
+        if (batch.length < limit) break;
         offset += limit;
         btn.innerHTML = `<span class="spin"></span>불러오는 중... (${items.length}개)`;
       }
     }
 
-    if (!items.length) { toast('불러온 상품 없음', 'info'); return; }
+    // 클라이언트 사이드 검색 필터 (Worker 미배포 시 fallback)
+    if (searchName) {
+      const q = searchName.toLowerCase();
+      items = items.filter(p => (p.product_name || '').toLowerCase().includes(q));
+    }
+
+    if (!items.length) { toast(searchName ? `"${searchName}" 검색 결과 없음` : '불러온 상품 없음', 'info'); return; }
     window._c24 = items;
-    document.getElementById('c24-count').textContent = items.length + '개 상품 불러옴';
+    document.getElementById('c24-count').textContent = items.length + '개 상품' + (searchName ? ` ("${searchName}" 검색결과)` : '') + ' 불러옴';
     const existingNos = new Set(products.map(p => p.product_no).filter(Boolean));
     document.getElementById('c24-tbody').innerHTML = items.map((p, i) => {
       const img = (p.list_image || p.detail_image || '').startsWith('/') ? 'https://frokyvape.cafe24.com' + (p.list_image || p.detail_image) : (p.list_image || p.detail_image || '');
