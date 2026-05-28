@@ -218,6 +218,17 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 .pay-btns{display:grid;grid-template-columns:1fr;gap:8px;}
 .go-pay-btn{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:14px;border-radius:12px;font-family:'Pretendard',sans-serif;font-size:1rem;font-weight:800;box-shadow:0 0 16px var(--g-glow);}
 .go-pay-btn:hover{opacity:.88;}
+.pm-guide{background:rgba(46,204,64,.07);border:1.5px solid rgba(46,204,64,.4);border-radius:12px;padding:14px 16px;margin-bottom:14px;}
+.pm-guide-title{font-size:.72rem;font-weight:800;color:var(--g);letter-spacing:.3px;margin-bottom:10px;}
+.pm-guide-row{display:flex;align-items:center;gap:16px;margin-bottom:8px;}
+.pm-guide-num{font-size:3rem;font-weight:900;color:var(--g);line-height:1;letter-spacing:-2px;}
+.pm-guide-unit{font-size:1rem;font-weight:700;color:var(--g);align-self:flex-end;padding-bottom:4px;}
+.pm-guide-meta{display:flex;flex-direction:column;gap:6px;}
+.pm-guide-amount{font-size:.9rem;font-weight:700;color:var(--y);}
+[data-theme="light"] .pm-guide-amount{color:#7a6e00;}
+.pm-guide-copy{background:rgba(46,204,64,.12);border:1.5px solid rgba(46,204,64,.5);color:var(--g);cursor:pointer;padding:6px 14px;border-radius:8px;font-size:.8rem;font-weight:800;font-family:'Pretendard',sans-serif;transition:background .15s;}
+.pm-guide-copy:hover{background:rgba(46,204,64,.25);}
+.pm-guide-hint{font-size:.71rem;color:var(--muted);line-height:1.9;}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--g);color:#fff;padding:10px 22px;border-radius:20px;font-size:.83rem;font-weight:700;z-index:500;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px var(--g-glow);}
 .toast.show{opacity:1;}
 .kakao-float{position:fixed;bottom:24px;right:16px;z-index:90;background:#fee500;color:#191919;border:none;cursor:pointer;min-width:118px;height:46px;padding:0 16px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:.88rem;font-weight:800;box-shadow:0 4px 16px rgba(0,0,0,.3);transition:transform .2s;}
@@ -376,8 +387,20 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
           <span class="order-total-val" id="pm-total">0원</span>
         </div>
       </div>
+      <div class="pm-guide">
+        <div class="pm-guide-title">📌 개인결제창에 입력할 수량</div>
+        <div class="pm-guide-row">
+          <div class="pm-guide-num" id="pm-pay-qty">0</div>
+          <div class="pm-guide-unit">개</div>
+          <div class="pm-guide-meta">
+            <div class="pm-guide-amount" id="pm-pay-amount">0원</div>
+            <button class="pm-guide-copy" onclick="copyPmQty()">📋 수량 복사</button>
+          </div>
+        </div>
+        <div class="pm-guide-hint">① 수량을 복사하세요 → ② 아래 버튼으로 결제창 열기 → ③ 수량칸에 붙여넣기 → ④ 결제</div>
+      </div>
       <div class="pay-btns">
-        <button class="go-pay-btn" onclick="goToPay()">결제 페이지로 이동 →</button>
+        <button class="go-pay-btn" onclick="goToPay()">결제창 열기 →</button>
       </div>
     </div>
   </div>
@@ -514,12 +537,16 @@ function sheetAddCart(){
 }
 function sheetBuyNow(){
   const total=sp.price*sq;
-  const payQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
-  window.open(`https://${CAFE24_MALL}.cafe24.com/exec/front/order/order/?product_no=${PERSONAL_PAY_PRODUCT_NO}&quantity=${payQty}`,'_blank');
-  showToast(`결제창 수량: ${payQty.toLocaleString()}개 (${fmt(total)})`);
+  _pmPayQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
+  document.getElementById('pm-items').innerHTML=`<div class="order-row"><div><div class="order-row-name">${sp.name}</div><div class="order-row-opt">${sq}개</div></div><span class="order-row-price">${fmt(total)}</span></div>`;
+  document.getElementById('pm-total').textContent=fmt(total);
+  document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();
+  document.getElementById('pm-pay-amount').textContent=fmt(total);
+  document.getElementById('pay-modal-overlay').classList.add('open');
   closeSheet();
 }
-function openPayModal(){closeCart();const total=cart.reduce((s,c)=>s+c.price*c.qty,0);document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${c.name}</div><div class="order-row-opt">${c.option} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');document.getElementById('pm-total').textContent=fmt(total);document.getElementById('pay-modal-overlay').classList.add('open');}
+let _pmPayQty=0;
+function openPayModal(){closeCart();const total=cart.reduce((s,c)=>s+c.price*c.qty,0);_pmPayQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${c.name}</div><div class="order-row-opt">${c.option} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');document.getElementById('pm-total').textContent=fmt(total);document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();document.getElementById('pm-pay-amount').textContent=fmt(total);document.getElementById('pay-modal-overlay').classList.add('open');}
 function closePayModal(){document.getElementById('pay-modal-overlay').classList.remove('open');}
 function buildOrderMemo(){const total=cart.reduce((s,c)=>s+c.price*c.qty,0);return [
   '[FROKY VAPE 주문내역]',
@@ -533,13 +560,14 @@ function privatePayQuantity(total){
   return total/PERSONAL_PAY_UNIT_PRICE;
 }
 async function goToPay(){
-  const total=cart.reduce((s,c)=>s+c.price*c.qty,0);
-  const payQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
-  if(payQty<=0){showToast('결제할 상품이 없습니다');return;}
-  await copyOrderMemo();
-  window.open(`https://${CAFE24_MALL}.cafe24.com/exec/front/order/order/?product_no=${PERSONAL_PAY_PRODUCT_NO}&quantity=${payQty}`,'_blank');
-  showToast(`결제창 수량: ${payQty.toLocaleString()}개 (${fmt(total)}) — 주문내역 복사됨`);
+  if(cart.length)await copyOrderMemo();
+  window.open(PAY_URL,'_blank');
   closePayModal();
+}
+function copyPmQty(){
+  navigator.clipboard.writeText(String(_pmPayQty)).then(()=>{
+    showToast(`수량 ${_pmPayQty.toLocaleString()}개 복사됨 — 결제창에 붙여넣으세요`);
+  }).catch(()=>showToast(`입력 수량: ${_pmPayQty.toLocaleString()}개`));
 }
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
 async function loadProducts(){
