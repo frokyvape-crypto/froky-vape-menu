@@ -230,6 +230,9 @@ tr:hover td{background:rgba(128,128,128,.06);}
         <h2>📋 상품 목록</h2>
         <button class="btn btn-outline btn-xs" onclick="loadProducts()">새로고침</button>
         <button class="btn btn-g btn-xs" onclick="openAddModal()">+ 추가</button>
+        <button class="btn btn-outline btn-xs" onclick="selectAllProds()">전체선택</button>
+        <button class="btn btn-outline btn-xs" onclick="deselectAllProds()">전체해제</button>
+        <button class="btn btn-red btn-xs" id="btn-del-sel" style="display:none" onclick="deleteSelected()">선택삭제</button>
       </div>
       <div class="section-body">
         <div class="filter-bar">
@@ -247,6 +250,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
         <div class="tbl-wrap">
           <table>
             <thead><tr>
+              <th style="width:34px"><input type="checkbox" id="chk-all" onchange="toggleSelectAll(this.checked)" style="width:14px;height:14px;accent-color:var(--g);cursor:pointer"></th>
               <th style="width:50px">이미지</th>
               <th>상품명</th>
               <th>가격</th>
@@ -255,7 +259,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
               <th>SALE</th>
               <th style="width:110px">액션</th>
             </tr></thead>
-            <tbody id="tbl-body"><tr><td colspan="7" class="empty-msg">상품 목록 카드를 클릭하면 불러옵니다</td></tr></tbody>
+            <tbody id="tbl-body"><tr><td colspan="8" class="empty-msg">상품 목록 카드를 클릭하면 불러옵니다</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -288,11 +292,14 @@ tr:hover td{background:rgba(128,128,128,.06);}
           </div>
         </div>
         <div id="c24-result" style="display:none;margin-top:14px;">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-            <strong id="c24-count" style="font-size:.83rem;"></strong>
-            <button class="btn btn-g btn-xs" onclick="importSelected()">선택 항목 추가</button>
-            <button class="btn btn-outline btn-xs" onclick="c24SelAll(true)">전체선택</button>
-            <button class="btn btn-outline btn-xs" onclick="c24SelAll(false)">전체해제</button>
+          <div style="margin-bottom:8px;">
+            <input id="c24-filter" type="text" placeholder="🔍 불러온 상품 내 검색..." oninput="filterC24()" style="width:100%;background:var(--card);border:1.5px solid var(--border);color:var(--text);padding:6px 10px;border-radius:8px;font-family:'Pretendard',sans-serif;font-size:.82rem;outline:none;margin-bottom:8px;">
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <strong id="c24-count" style="font-size:.83rem;"></strong>
+              <button class="btn btn-g btn-xs" onclick="importSelected()">선택 항목 추가</button>
+              <button class="btn btn-outline btn-xs" onclick="c24SelAll(true)">전체선택</button>
+              <button class="btn btn-outline btn-xs" onclick="c24SelAll(false)">전체해제</button>
+            </div>
           </div>
           <div class="import-tbl-wrap">
             <table>
@@ -687,7 +694,7 @@ function removeNoticeImg(slot, idx) {
 }
 
 async function loadProducts() {
-  document.getElementById('tbl-body').innerHTML = '<tr><td colspan="7" class="empty-msg"><span class="spin"></span>불러오는 중...</td></tr>';
+  document.getElementById('tbl-body').innerHTML = '<tr><td colspan="8" class="empty-msg"><span class="spin"></span>불러오는 중...</td></tr>';
   try {
     const r = await ghApi('GET', `/repos/${REPO}/contents/${FILE}?ref=main`);
     if (!r.ok) { products = []; fileSha = ''; renderTable(); toast('products.json 없음', 'info'); return; }
@@ -951,8 +958,9 @@ function renderTable() {
   document.getElementById('count-info').textContent = `총 ${list.length}개 표시 (전체 ${products.length}개)`;
   const fmt = n => Number(n).toLocaleString('ko-KR') + '원';
   const tb = document.getElementById('tbl-body');
-  if (!list.length) { tb.innerHTML = '<tr><td colspan="7" class="empty-msg">상품이 없습니다</td></tr>'; return; }
+  if (!list.length) { tb.innerHTML = '<tr><td colspan="8" class="empty-msg">상품이 없습니다</td></tr>'; return; }
   tb.innerHTML = list.map(p => `<tr>
+    <td><input type="checkbox" class="prod-check" data-id="${p.id}" onchange="updateDeleteBtn()" style="width:14px;height:14px;accent-color:var(--g);cursor:pointer"></td>
     <td><img class="prod-img" src="${getImgs(p)[0] || ''}" onerror="this.src=''" alt=""></td>
     <td>
       <div style="font-weight:700;margin-bottom:2px">${p.name}</div>
@@ -1361,19 +1369,10 @@ async function fetchCafe24() {
 
     if (!items.length) { toast(searchName ? `"${searchName}" 검색 결과 없음` : '불러온 상품 없음', 'info'); return; }
     window._c24 = items;
+    const filterEl = document.getElementById('c24-filter');
+    if (filterEl) filterEl.value = '';
     document.getElementById('c24-count').textContent = items.length + '개 상품' + (searchName ? ` ("${searchName}" 검색결과)` : '') + ' 불러옴';
-    const existingNos = new Set(products.map(p => p.product_no).filter(Boolean));
-    document.getElementById('c24-tbody').innerHTML = items.map((p, i) => {
-      const img = (p.list_image || p.detail_image || '').startsWith('/') ? 'https://frokyvape.cafe24.com' + (p.list_image || p.detail_image) : (p.list_image || p.detail_image || '');
-      const isDupe = existingNos.has(p.product_no);
-      return `<tr style="${isDupe ? 'opacity:.45' : ''}">
-        <td><input type="checkbox" class="import-check" data-i="${i}" ${isDupe ? '' : 'checked'}></td>
-        <td><img src="${img}" style="width:32px;height:32px;object-fit:cover;border-radius:5px;" onerror="this.src=''"></td>
-        <td>${p.product_name}${isDupe ? ' <span style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">중복</span>' : ''}</td>
-        <td style="white-space:nowrap">${Number(p.price).toLocaleString('ko-KR')}원</td>
-        <td><span class="cat-tag c-${CAT(p.product_name)}">${categoryLabel(CAT(p.product_name))}</span></td>
-      </tr>`;
-    }).join('');
+    filterC24();
     document.getElementById('c24-result').style.display = 'block';
     toast(items.length + '개 상품 불러옴', 'ok');
   } catch (e) { toast('오류: ' + e.message, 'err'); }
@@ -1382,18 +1381,93 @@ async function fetchCafe24() {
 
 function c24SelAll(v) { document.querySelectorAll('.import-check').forEach(cb => cb.checked = v); }
 
+function filterC24() {
+  const q = (document.getElementById('c24-filter')?.value || '').toLowerCase().trim();
+  if (!window._c24) return;
+  const existingNos = new Set(products.map(p => p.product_no).filter(Boolean));
+  const toImg = s => {
+    if (!s) return '';
+    if (s.startsWith('//')) return 'https:' + s;
+    if (s.startsWith('/')) return 'https://frokyvape.cafe24.com' + s;
+    return s;
+  };
+  const filtered = q ? window._c24.filter(p => (p.product_name || '').toLowerCase().includes(q)) : window._c24;
+  if (q) document.getElementById('c24-count').textContent = `${filtered.length}/${window._c24.length}개 표시`;
+  document.getElementById('c24-tbody').innerHTML = filtered.map(p => {
+    const origIdx = window._c24.indexOf(p);
+    const img = toImg(p.list_image || p.detail_image || '');
+    const isDupe = existingNos.has(p.product_no);
+    return `<tr style="${isDupe ? 'opacity:.45' : ''}">
+      <td><input type="checkbox" class="import-check" data-i="${origIdx}" ${isDupe ? '' : 'checked'}></td>
+      <td><img src="${img}" style="width:32px;height:32px;object-fit:cover;border-radius:5px;" onerror="this.src=''"></td>
+      <td>${p.product_name}${isDupe ? ' <span style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">중복</span>' : ''}</td>
+      <td style="white-space:nowrap">${Number(p.price).toLocaleString('ko-KR')}원</td>
+      <td><span class="cat-tag c-${CAT(p.product_name)}">${categoryLabel(CAT(p.product_name))}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function selectAllProds() {
+  document.querySelectorAll('.prod-check').forEach(cb => cb.checked = true);
+  const allChk = document.getElementById('chk-all');
+  if (allChk) allChk.checked = true;
+  updateDeleteBtn();
+}
+function deselectAllProds() {
+  document.querySelectorAll('.prod-check').forEach(cb => cb.checked = false);
+  const allChk = document.getElementById('chk-all');
+  if (allChk) { allChk.checked = false; allChk.indeterminate = false; }
+  updateDeleteBtn();
+}
+function toggleSelectAll(v) {
+  document.querySelectorAll('.prod-check').forEach(cb => cb.checked = v);
+  updateDeleteBtn();
+}
+function updateDeleteBtn() {
+  const count = document.querySelectorAll('.prod-check:checked').length;
+  const total = document.querySelectorAll('.prod-check').length;
+  const btn = document.getElementById('btn-del-sel');
+  if (btn) btn.style.display = count > 0 ? '' : 'none';
+  const allChk = document.getElementById('chk-all');
+  if (allChk) {
+    allChk.checked = total > 0 && count === total;
+    allChk.indeterminate = count > 0 && count < total;
+  }
+}
+function deleteSelected() {
+  const selectedIds = [...document.querySelectorAll('.prod-check:checked')].map(cb => +cb.dataset.id);
+  if (!selectedIds.length) return;
+  if (!confirm(`선택한 ${selectedIds.length}개를 삭제하시겠습니까?`)) return;
+  products = products.filter(p => !selectedIds.includes(p.id));
+  dbSave();
+  renderTable();
+  updateDeleteBtn();
+  toast(`${selectedIds.length}개 삭제됨 (로컬 저장) — 배포하려면 저장 & 배포 클릭`, 'ok');
+}
+
 function importSelected() {
   const sel = [...document.querySelectorAll('.import-check:checked')].map(cb => window._c24[+cb.dataset.i]);
   let added = 0, dupes = 0;
   sel.forEach(p => {
     if (products.find(x => x.id === p.product_no)) { dupes++; return; }
-    const toUrl = s => s && s.startsWith('/') ? 'https://frokyvape.cafe24.com' + s : (s || '');
+    const toUrl = s => {
+      if (!s) return '';
+      if (s.startsWith('//')) return 'https:' + s;
+      if (s.startsWith('/')) return 'https://frokyvape.cafe24.com' + s;
+      return s;
+    };
+    const mainImg = toUrl(p.list_image || p.detail_image || '');
+    const detailImg = toUrl(p.detail_image || '');
+    const extraImgs = Array.isArray(p.additional_images)
+      ? p.additional_images.map(img => toUrl(typeof img === 'string' ? img : (img.big || img.medium || img.url || img.small || ''))).filter(Boolean)
+      : [];
+    const allDetailImgs = [detailImg, ...extraImgs].filter(Boolean);
     products.push({
       id: p.product_no, product_no: p.product_no, name: p.product_name, price: parseInt(p.price) || 0,
-      imgs: [toUrl(p.list_image || p.detail_image)].filter(Boolean),
-      img: toUrl(p.list_image || p.detail_image),
-      detailImgs: [toUrl(p.detail_image)].filter(Boolean),
-      detailImg: toUrl(p.detail_image),
+      imgs: mainImg ? [mainImg] : [],
+      img: mainImg,
+      detailImgs: allDetailImgs,
+      detailImg: allDetailImgs[0] || '',
       cat: CAT(p.product_name), flavor: (p.summary_description || '').trim(),
       options: [], sale: !!p.price_content,
     });
