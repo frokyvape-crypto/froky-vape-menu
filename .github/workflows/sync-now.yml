@@ -42,7 +42,7 @@ import requests, json, os, time
 token = os.environ["ACCESS_TOKEN"]
 headers = {
     "Authorization": f"Bearer {token}",
-    "X-Cafe24-Api-Version": "2024-03-01",
+    "X-Cafe24-Api-Version": "2026-03-01",
 }
 
 # 1. 판매중+진열중 상품 전체 수집

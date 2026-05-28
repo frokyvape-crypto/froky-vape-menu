@@ -1329,7 +1329,7 @@ async function fetchCafe24() {
       if (td.error) throw new Error(`[${td.error}] ${td.error_description || ''} — Refresh Token 만료`);
       if (!td.access_token) throw new Error('액세스 토큰 없음');
       const pr = await fetch(proxy + encodeURIComponent('https://frokyvape.cafe24api.com/api/v2/admin/products?limit=100&display=T&selling=T'), {
-        headers: { 'Authorization': 'Bearer ' + td.access_token, 'X-Cafe24-Api-Version': '2024-03-01' },
+        headers: { 'Authorization': 'Bearer ' + td.access_token, 'X-Cafe24-Api-Version': '2026-03-01' },
       });
       items = (await pr.json()).products || [];
     }

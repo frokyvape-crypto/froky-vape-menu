@@ -347,7 +347,7 @@ async function handleCafe24Products(request, env) {
   const prodRes = await fetch(cafe24ProductsUrl, {
     headers: {
       'Authorization': `Bearer ${tokenData.access_token}`,
-      'X-Cafe24-Api-Version': '2024-03-01',
+      'X-Cafe24-Api-Version': '2026-03-01',
     },
   });
 
