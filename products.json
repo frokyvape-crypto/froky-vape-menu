@@ -1,7 +1,6 @@
 [
   {
     "id": 3169,
-    "product_no": 3169,
     "name": "[무니코틴] 월드베이프 로망 입호흡 액상 30ml",
     "price": 12000,
     "imgs": [
@@ -14,7 +13,11 @@
     "detailImg": "https://frokyvape.com/web/product/big/202605/7a5e234710d1e7c5e2825d5cdd573ca0.png",
     "cat": "입호흡",
     "flavor": "",
-    "options": [],
+    "options": [
+      "테스크",
+      "테스트",
+      "테스코"
+    ],
     "sale": false
   },
   {
