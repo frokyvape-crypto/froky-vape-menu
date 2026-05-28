@@ -375,7 +375,7 @@ async function handleCafe24Products(request, env) {
     const batch = prodData.products || [];
     allProducts.push(...batch);
 
-    if (!get_all || batch.length < limit) break;
+    if (batch.length < limit) break;
     offset += limit;
   }
 

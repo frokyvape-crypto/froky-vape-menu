@@ -272,11 +272,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
           <div class="form-row"><label>Refresh Token</label><input id="c24-rt" type="password" placeholder="Refresh Token" autocomplete="off"></div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
-          <input id="c24-search" type="text" placeholder="🔍 상품명으로 검색 (비우면 전체)" style="flex:1;min-width:180px;background:var(--card);border:1.5px solid var(--border);color:var(--text);padding:7px 12px;border-radius:8px;font-family:'Pretendard',sans-serif;font-size:.82rem;outline:none;">
-          <label style="display:flex;align-items:center;gap:6px;font-size:.82rem;white-space:nowrap;cursor:pointer;color:var(--muted);">
-            <input type="checkbox" id="c24-getall" style="width:15px;height:15px;accent-color:var(--g);">
-            <span>판매중 전체 불러오기</span>
-          </label>
+          <input id="c24-search" type="text" placeholder="🔍 상품명으로 검색 (비우면 판매중 전체)" style="flex:1;min-width:180px;background:var(--card);border:1.5px solid var(--border);color:var(--text);padding:7px 12px;border-radius:8px;font-family:'Pretendard',sans-serif;font-size:.82rem;outline:none;">
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
           <button class="btn btn-outline" id="btn-c24-auth" onclick="startCafe24Auth()">카페24 인증하기</button>
@@ -1297,7 +1293,7 @@ async function fetchCafe24() {
   const rt  = document.getElementById('c24-rt').value.trim();
   if (!cid || !sec || !rt) { toast('카페24 Client ID / Secret / Refresh Token을 모두 입력하세요', 'err'); return; }
   const searchName = document.getElementById('c24-search').value.trim();
-  const getAll = document.getElementById('c24-getall').checked;
+  const getAll = true;
   // 입력값 localStorage 저장
   localStorage.setItem('fv-c24-id', cid);
   localStorage.setItem('fv-c24-sec', sec);
