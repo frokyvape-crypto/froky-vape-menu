@@ -514,9 +514,9 @@ function sheetAddCart(){
 }
 function sheetBuyNow(){
   const total=sp.price*sq;
-  const payQty=privatePayQuantity(total);
-  if(!payQty){showToast(`${fmt(total)}은 ${PERSONAL_PAY_UNIT_PRICE}원 단위로 맞출 수 없습니다`);return;}
-  window.open(`https://${CAFE24_MALL}.cafe24.com/exec/front/order/basket/?product_no=${PERSONAL_PAY_PRODUCT_NO}&quantity=${payQty}`,'_blank');
+  const payQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
+  window.open(PAY_URL,'_blank');
+  showToast(`결제창 수량을 ${payQty.toLocaleString()}개로 설정하세요 (${fmt(total)})`);
   closeSheet();
 }
 function openPayModal(){closeCart();const total=cart.reduce((s,c)=>s+c.price*c.qty,0);document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${c.name}</div><div class="order-row-opt">${c.option} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');document.getElementById('pm-total').textContent=fmt(total);document.getElementById('pay-modal-overlay').classList.add('open');}
@@ -534,11 +534,11 @@ function privatePayQuantity(total){
 }
 async function goToPay(){
   const total=cart.reduce((s,c)=>s+c.price*c.qty,0);
-  const payQty=privatePayQuantity(total);
-  if(!payQty){showToast(`${fmt(total)}은 ${PERSONAL_PAY_UNIT_PRICE}원 단위 개인결제창으로 정확히 만들 수 없습니다`);return;}
+  const payQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
+  if(payQty<=0){showToast('결제할 상품이 없습니다');return;}
   await copyOrderMemo();
-  const basketUrl=`https://${CAFE24_MALL}.cafe24.com/exec/front/order/basket/?product_no=${PERSONAL_PAY_PRODUCT_NO}&quantity=${payQty}`;
-  window.open(basketUrl,'_blank');
+  window.open(PAY_URL,'_blank');
+  showToast(`결제창 수량을 ${payQty.toLocaleString()}개로 설정하세요 (주문내역 복사됨)`);
   closePayModal();
 }
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
