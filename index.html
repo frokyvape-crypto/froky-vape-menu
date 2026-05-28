@@ -513,9 +513,8 @@ function sheetAddCart(){
   addToCart(sp,opt,sq);closeSheet();
 }
 function sheetBuyNow(){
-  const opt=document.getElementById('s-option').value;
-  if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}
-  addToCart(sp,opt,sq);closeSheet();openPayModal();
+  window.open(PAY_URL,'_blank');
+  closeSheet();
 }
 function openPayModal(){closeCart();const total=cart.reduce((s,c)=>s+c.price*c.qty,0);document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${c.name}</div><div class="order-row-opt">${c.option} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');document.getElementById('pm-total').textContent=fmt(total);document.getElementById('pay-modal-overlay').classList.add('open');}
 function closePayModal(){document.getElementById('pay-modal-overlay').classList.remove('open');}
