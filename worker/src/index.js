@@ -53,8 +53,9 @@ export default {
     if (url.pathname === '/api/health' && request.method === 'GET') {
       return jsonResponse({
         ok: true,
-        version: '2026-05-28-cafe24-admin-products',
+        version: '2026-05-28-cafe24-all-products',
         cafe24ProductsEndpoint: '/api/v2/admin/products',
+        cafe24ProductsScope: 'all',
         ts: Date.now(),
       });
     }
@@ -343,7 +344,7 @@ async function handleCafe24Products(request, env) {
   }
 
   // 2단계: 상품 목록 조회
-  // offset이 명시적으로 전달되면 해당 페이지 1개만, 없으면 판매중 상품을 끝까지 수집
+  // offset이 명시적으로 전달되면 해당 페이지 1개만, 없으면 전체 상품을 끝까지 수집
   const limit = 100;
   const singlePage = typeof reqOffset === 'number';
   const startOffset = singlePage ? reqOffset : 0;
@@ -352,7 +353,7 @@ async function handleCafe24Products(request, env) {
 
   for (let page = 0; page < maxPages; page++) {
     const pageOffset = startOffset + page * limit;
-    let cafe24ProductsUrl = `https://${mall_id}.cafe24api.com/api/v2/admin/products?limit=${limit}&offset=${pageOffset}&display=T&selling=T`;
+    let cafe24ProductsUrl = `https://${mall_id}.cafe24api.com/api/v2/admin/products?limit=${limit}&offset=${pageOffset}`;
     if (product_name) cafe24ProductsUrl += `&product_name=${encodeURIComponent(product_name)}`;
 
     const prodRes = await fetch(cafe24ProductsUrl, {
