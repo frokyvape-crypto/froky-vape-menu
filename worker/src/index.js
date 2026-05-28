@@ -343,11 +343,11 @@ async function handleCafe24Products(request, env) {
   }
 
   // 2단계: 상품 목록 조회
-  // offset이 명시적으로 전달되면 해당 페이지 1개만, 없으면 전체 루프 (최대 2000개)
+  // offset이 명시적으로 전달되면 해당 페이지 1개만, 없으면 판매중 상품을 끝까지 수집
   const limit = 100;
   const singlePage = typeof reqOffset === 'number';
   const startOffset = singlePage ? reqOffset : 0;
-  const maxPages = singlePage ? 1 : 20;
+  const maxPages = singlePage ? 1 : 1000;
   const allProducts = [];
 
   for (let page = 0; page < maxPages; page++) {
