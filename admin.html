@@ -232,7 +232,6 @@ tr:hover td{background:rgba(128,128,128,.06);}
         <button class="btn btn-g btn-xs" onclick="openAddModal()">+ 추가</button>
         <button class="btn btn-outline btn-xs" onclick="selectAllProds()">전체선택</button>
         <button class="btn btn-outline btn-xs" onclick="deselectAllProds()">전체해제</button>
-        <button class="btn btn-g btn-xs" id="btn-cat-sel" style="display:none" onclick="focusBulkCategory()">선택 카테고리 변경</button>
         <button class="btn btn-red btn-xs" id="btn-del-sel" style="display:none" onclick="deleteSelected()">선택삭제</button>
       </div>
       <div class="section-body">
@@ -512,6 +511,7 @@ const DEFAULT_SITE_CONFIG = {
 };
 let TOKEN = '', fileSha = '', products = [];
 let siteConfig = {...DEFAULT_SITE_CONFIG}, siteConfigSha = '';
+let siteConfigLoaded = false;
 let imgSlots = { main: [], detail: [] };
 let noticeImgSlots = { banner: [], popup: [] };
 let noticeModes = [...DEFAULT_SITE_CONFIG.noticeModes];
@@ -584,14 +584,20 @@ function logout() {
   else if (WORKER_URL && ADMIN_KEY) { dbLoad(); showApp(); }
 })();
 
-function showSection(id) {
+async function ensureSiteConfigLoaded() {
+  if (!siteConfigLoaded) await loadSiteConfig();
+  else renderCategoryControls();
+}
+
+async function showSection(id) {
   document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
   document.getElementById(id).style.display = 'block';
   if (id === 'sec-products') {
+    await ensureSiteConfigLoaded();
     if (products.length > 0) renderTable();   // 캐시 있으면 즉시 표시
     else loadProducts();                       // 없으면 GitHub에서 로드
   }
-  if (id === 'sec-notice' || id === 'sec-categories') loadSiteConfig();
+  if (id === 'sec-notice' || id === 'sec-categories') await loadSiteConfig();
 }
 
 async function ghApi(method, path, body) {
@@ -863,12 +869,14 @@ async function loadSiteConfig() {
       if (!r.ok) {
         siteConfig = {...DEFAULT_SITE_CONFIG};
         siteConfigSha = '';
+        siteConfigLoaded = true;
         setNoticeForm();
         toast('공지 설정 파일 없음 - 기본값 표시', 'info');
         return;
       }
       siteConfig = {...DEFAULT_SITE_CONFIG, ...(await r.json())};
       siteConfigSha = '';
+      siteConfigLoaded = true;
       setNoticeForm();
       toast('공지 설정 로드 완료', 'ok');
       return;
@@ -877,6 +885,7 @@ async function loadSiteConfig() {
     if (!r.ok) {
       siteConfig = {...DEFAULT_SITE_CONFIG};
       siteConfigSha = '';
+      siteConfigLoaded = true;
       setNoticeForm();
       toast('공지 설정 파일 없음 - 기본값 표시', 'info');
       return;
@@ -885,10 +894,12 @@ async function loadSiteConfig() {
     siteConfigSha = data.sha || '';
     const decoded = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\s/g, '')))));
     siteConfig = {...DEFAULT_SITE_CONFIG, ...decoded};
+    siteConfigLoaded = true;
     setNoticeForm();
     toast('공지 설정 로드 완료', 'ok');
   } catch (e) {
     siteConfig = {...DEFAULT_SITE_CONFIG};
+    siteConfigLoaded = true;
     setNoticeForm();
     toast('공지 설정 로드 실패: ' + e.message, 'err');
   }
@@ -1435,8 +1446,6 @@ function updateDeleteBtn() {
   const total = document.querySelectorAll('.prod-check').length;
   const btn = document.getElementById('btn-del-sel');
   if (btn) btn.style.display = count > 0 ? '' : 'none';
-  const catBtn = document.getElementById('btn-cat-sel');
-  if (catBtn) catBtn.style.display = count > 0 ? '' : 'none';
   const bulkBar = document.getElementById('bulk-bar');
   if (bulkBar) bulkBar.style.display = count > 0 ? 'flex' : 'none';
   const countEl = document.getElementById('selected-count');
@@ -1445,15 +1454,6 @@ function updateDeleteBtn() {
   if (allChk) {
     allChk.checked = total > 0 && count === total;
     allChk.indeterminate = count > 0 && count < total;
-  }
-}
-function focusBulkCategory() {
-  const bulkBar = document.getElementById('bulk-bar');
-  if (bulkBar) bulkBar.style.display = 'flex';
-  const select = document.getElementById('bulk-cat');
-  if (select) {
-    select.focus();
-    select.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 }
 function applyBulkEdit() {

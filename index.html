@@ -518,13 +518,16 @@ function closeCart(){document.getElementById('overlay').classList.remove('open')
 function openSheet(id){
   sp=P.find(p=>p.id===id);sq=1;
   const imgs=getImgs(sp);
+  const options=Array.isArray(sp.options)?sp.options:[];
   document.getElementById('s-img').src=imgs[0]||'';
   document.getElementById('s-name').textContent=sp.name;
   document.getElementById('s-price').textContent=fmt(sp.price);
   document.getElementById('s-total').textContent='합계: '+fmt(sp.price);
   document.getElementById('s-tag').textContent=sp.flavor;
   document.getElementById('s-qty').textContent=1;
-  document.getElementById('s-option').innerHTML='<option value="">옵션 선택</option>'+(sp.options||[]).map(o=>`<option>${o}</option>`).join('');
+  const optionEl=document.getElementById('s-option');
+  optionEl.innerHTML=options.length?'<option value="">옵션 선택</option>'+options.map(o=>`<option>${o}</option>`).join(''):'<option value="옵션 없음">옵션 없음</option>';
+  optionEl.disabled=!options.length;
   document.getElementById('btn-sheet-detail').style.display=getDetailImgs(sp).length?'block':'none';
   const thumbs=document.getElementById('s-thumbs');
   if(imgs.length>1){
@@ -549,17 +552,24 @@ function closeDetailModalOut(e){if(e.target===document.getElementById('detail-mo
 function closeSheetOut(e){if(e.target===document.getElementById('sheet-overlay'))closeSheet();}
 function sheetQty(d){sq=Math.max(1,sq+d);document.getElementById('s-qty').textContent=sq;updateTotal();}
 function updateTotal(){if(sp)document.getElementById('s-total').textContent='합계: '+fmt(sp.price*sq);}
+function getSheetOption(){
+  const options=Array.isArray(sp?.options)?sp.options:[];
+  if(!options.length)return '옵션 없음';
+  return document.getElementById('s-option').value;
+}
 function sheetAddCart(){
-  const opt=document.getElementById('s-option').value;
+  const opt=getSheetOption();
   if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}
   addToCart(sp,opt,sq);closeSheet();
 }
 function sheetBuyNow(){
+  const opt=getSheetOption();
+  if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}
   const total=sp.price*sq;
   _pmPayQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
   _pmPayCopyText=String(_pmPayQty);
-  _pmRealCopyText=`${sp.name} × ${sq}개`;
-  document.getElementById('pm-items').innerHTML=`<div class="order-row"><div><div class="order-row-name">${sp.name}</div><div class="order-row-opt">${sq}개</div></div><span class="order-row-price">${fmt(total)}</span></div>`;
+  _pmRealCopyText=`${sp.name}${opt&&opt!=='옵션 없음'?` / ${opt}`:''} × ${sq}개`;
+  document.getElementById('pm-items').innerHTML=`<div class="order-row"><div><div class="order-row-name">${sp.name}</div><div class="order-row-opt">${opt&&opt!=='옵션 없음'?`${opt} × `:''}${sq}개</div></div><span class="order-row-price">${fmt(total)}</span></div>`;
   document.getElementById('pm-total').textContent=fmt(total);
   document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();
   document.getElementById('pm-pay-amount').textContent=fmt(total);
