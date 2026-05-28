@@ -318,7 +318,7 @@ async function handleCafe24Products(request, env) {
     return { ok: false, status: 400, message: 'Invalid JSON body' };
   }
 
-  const { client_id, client_secret, refresh_token, mall_id, product_name, get_all } = body;
+  const { client_id, client_secret, refresh_token, mall_id, product_name, offset: reqOffset } = body;
   if (!client_id || !client_secret || !refresh_token || !mall_id) {
     return { ok: false, status: 400, message: 'client_id, client_secret, refresh_token, mall_id가 필요합니다.' };
   }
@@ -342,14 +342,17 @@ async function handleCafe24Products(request, env) {
     };
   }
 
-  // 2단계: 상품 목록 조회 (페이지네이션, 상품명 검색 지원)
-  const allProducts = [];
+  // 2단계: 상품 목록 조회
+  // offset이 명시적으로 전달되면 해당 페이지 1개만, 없으면 전체 루프 (최대 2000개)
   const limit = 100;
-  let offset = 0;
-  const maxPages = 20; // 최대 2000개
+  const singlePage = typeof reqOffset === 'number';
+  const startOffset = singlePage ? reqOffset : 0;
+  const maxPages = singlePage ? 1 : 20;
+  const allProducts = [];
 
   for (let page = 0; page < maxPages; page++) {
-    let cafe24ProductsUrl = `https://${mall_id}.cafe24api.com/api/v2/admin/products?limit=${limit}&offset=${offset}&display=T&selling=T`;
+    const pageOffset = startOffset + page * limit;
+    let cafe24ProductsUrl = `https://${mall_id}.cafe24api.com/api/v2/admin/products?limit=${limit}&offset=${pageOffset}&display=T&selling=T`;
     if (product_name) cafe24ProductsUrl += `&product_name=${encodeURIComponent(product_name)}`;
 
     const prodRes = await fetch(cafe24ProductsUrl, {
@@ -376,7 +379,6 @@ async function handleCafe24Products(request, env) {
     allProducts.push(...batch);
 
     if (batch.length < limit) break;
-    offset += limit;
   }
 
   return {

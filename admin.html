@@ -1314,25 +1314,36 @@ async function fetchCafe24() {
     let items = [];
 
     if (WORKER_URL && ADMIN_KEY) {
-      // Worker 모드: CORS 없이 안정적으로 호출 (페이지네이션 지원)
-      const r = await fetch(WORKER_URL + '/api/cafe24/products', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
-        body: JSON.stringify({
-          client_id: cid, client_secret: sec, refresh_token: rt, mall_id: 'frokyvape',
-          ...(searchName && { product_name: searchName }),
-          get_all: getAll,
-        }),
-      });
-      const d = await r.json();
-      if (!r.ok || !d.ok) throw new Error(d.message || `오류 (${r.status})`);
-      // 새 refresh_token이 있으면 자동 갱신
-      if (d.new_refresh_token) {
-        localStorage.setItem('fv-c24-rt', d.new_refresh_token);
-        document.getElementById('c24-rt').value = d.new_refresh_token;
-        toast('Refresh Token 자동 갱신됨', 'info');
+      // Worker 모드: 클라이언트에서 직접 offset 페이지네이션 (Worker 버전 무관)
+      const seenNos = new Set();
+      let offset = 0;
+      let curRt = rt;
+      while (true) {
+        const r = await fetch(WORKER_URL + '/api/cafe24/products', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
+          body: JSON.stringify({
+            client_id: cid, client_secret: sec, refresh_token: curRt, mall_id: 'frokyvape',
+            ...(searchName && { product_name: searchName }),
+            offset,
+          }),
+        });
+        const d = await r.json();
+        if (!r.ok || !d.ok) throw new Error(d.message || `오류 (${r.status})`);
+        if (d.new_refresh_token) {
+          curRt = d.new_refresh_token;
+          localStorage.setItem('fv-c24-rt', curRt);
+          document.getElementById('c24-rt').value = curRt;
+        }
+        const batch = d.products || [];
+        let newCount = 0;
+        for (const p of batch) {
+          if (!seenNos.has(p.product_no)) { seenNos.add(p.product_no); items.push(p); newCount++; }
+        }
+        if (batch.length < 100 || newCount === 0) break;
+        offset += 100;
+        btn.innerHTML = `<span class="spin"></span>불러오는 중... (${items.length}개)`;
       }
-      items = d.products || [];
     } else {
       // 직접 모드: corsproxy.io (페이지네이션 지원)
       const proxy = 'https://corsproxy.io/?url=';
