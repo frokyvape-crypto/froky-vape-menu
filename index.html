@@ -245,8 +245,13 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 .pm-step-num{width:30px;height:30px;border-radius:50%;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.88rem;box-shadow:0 0 10px var(--g-glow);}
 .pm-step-text{font-size:.82rem;line-height:1.55;color:var(--text);font-weight:700;}
 .pm-step-sub{display:block;color:var(--muted);font-size:.74rem;font-weight:600;margin-top:2px;}
-.pm-visual{background:#fff;border:1px solid var(--border);border-radius:12px;padding:8px;margin-bottom:14px;box-shadow:0 6px 18px rgba(0,0,0,.15);}
-.pm-visual-img{display:block;width:100%;height:auto;border-radius:8px;}
+.pm-visual-btn{width:100%;background:#fff;color:#111;border:1.5px solid var(--border);cursor:pointer;border-radius:12px;padding:13px 14px;margin-bottom:14px;font-family:'Pretendard',sans-serif;font-size:.9rem;font-weight:900;box-shadow:0 6px 18px rgba(0,0,0,.12);}
+.pm-visual-btn:hover{border-color:var(--g);color:var(--g);}
+.pay-image-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:520;display:none;align-items:center;justify-content:center;padding:18px;}
+.pay-image-overlay.open{display:flex;}
+.pay-image-modal{position:relative;width:min(1120px,100%);max-height:94vh;overflow:auto;background:#fff;border-radius:14px;padding:10px;box-shadow:0 20px 60px rgba(0,0,0,.45);}
+.pay-image-modal img{display:block;width:100%;height:auto;border-radius:8px;}
+.pay-image-close{position:sticky;top:0;float:right;margin:0 0 -42px 0;background:#fff;color:#111;border:1px solid rgba(0,0,0,.2);cursor:pointer;border-radius:8px;padding:7px 12px;font-weight:900;z-index:1;box-shadow:0 4px 14px rgba(0,0,0,.18);}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--g);color:#fff;padding:10px 22px;border-radius:20px;font-size:.83rem;font-weight:700;z-index:500;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px var(--g-glow);}
 .toast.show{opacity:1;}
 .kakao-float{position:fixed;bottom:24px;right:16px;z-index:90;background:#fee500;color:#191919;border:none;cursor:pointer;min-width:118px;height:46px;padding:0 16px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:.88rem;font-weight:800;box-shadow:0 4px 16px rgba(0,0,0,.3);transition:transform .2s;}
@@ -420,9 +425,7 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
           <div class="pm-step-text">아래 <b>상품명 / 맛 / 수량</b>을 복사해서 입력칸에 붙여넣어 주세요.</div>
         </div>
       </div>
-      <div class="pm-visual">
-        <img class="pm-visual-img" src="images/payment-guide.jpg" alt="개인 결제창 입력 안내">
-      </div>
+      <button class="pm-visual-btn" onclick="openPayGuideImage()">🔎 결제창 입력 방법 사진 크게 보기</button>
       <div class="pm-guide">
         <div class="pm-guide-title">📌 개인결제창 입력 수량 (금액 기준)</div>
         <div class="pm-guide-row">
@@ -449,6 +452,12 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
         <button class="go-pay-btn" onclick="goToPay()">고객님이 결제하기 →</button>
       </div>
     </div>
+  </div>
+</div>
+<div class="pay-image-overlay" id="pay-image-overlay" onclick="closePayGuideImageOut(event)">
+  <div class="pay-image-modal">
+    <button class="pay-image-close" onclick="closePayGuideImage()">✕ 닫기</button>
+    <img src="images/payment-guide.jpg" alt="개인 결제창 입력 안내">
   </div>
 </div>
 <button class="kakao-float" onclick="window.open('http://pf.kakao.com/_MxhQqX','_blank')">카카오톡 문의</button>
@@ -620,6 +629,9 @@ function openPayModal(){
   document.getElementById('pay-modal-overlay').classList.add('open');
 }
 function closePayModal(){document.getElementById('pay-modal-overlay').classList.remove('open');}
+function openPayGuideImage(){document.getElementById('pay-image-overlay').classList.add('open');}
+function closePayGuideImage(){document.getElementById('pay-image-overlay').classList.remove('open');}
+function closePayGuideImageOut(e){if(e.target===document.getElementById('pay-image-overlay'))closePayGuideImage();}
 function buildOrderMemo(){const total=cart.reduce((s,c)=>s+c.price*c.qty,0);return [
   '[FROKY VAPE 주문내역]',
   ...cart.map((c,i)=>`${i+1}. ${c.name} / 옵션: ${c.option} / 수량: ${c.qty}개 / 금액: ${fmt(c.price*c.qty)}`),
