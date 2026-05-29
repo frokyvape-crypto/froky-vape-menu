@@ -245,18 +245,8 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 .pm-step-num{width:30px;height:30px;border-radius:50%;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.88rem;box-shadow:0 0 10px var(--g-glow);}
 .pm-step-text{font-size:.82rem;line-height:1.55;color:var(--text);font-weight:700;}
 .pm-step-sub{display:block;color:var(--muted);font-size:.74rem;font-weight:600;margin-top:2px;}
-.pm-visual{background:#f8f8f8;color:#111;border:1px solid #e0e0e0;border-radius:12px;padding:13px;margin-bottom:14px;box-shadow:0 6px 18px rgba(0,0,0,.15);}
-.pm-visual-title{text-align:center;font-size:1rem;font-weight:900;margin-bottom:4px;}
-.pm-visual-sub{text-align:center;font-size:.7rem;color:#777;margin-bottom:10px;}
-.pm-visual-line{height:1px;background:#ddd;margin:8px 0;}
-.pm-visual-row{display:grid;grid-template-columns:62px 1fr;gap:10px;align-items:center;font-size:.75rem;padding:5px 0;}
-.pm-visual-label{color:#777;font-weight:700;}
-.pm-visual-pill{display:inline-block;border:2px solid #e60000;background:#fff;padding:7px 10px;font-size:.75rem;font-weight:900;color:#111;}
-.pm-visual-box{background:#efefef;border-radius:9px;padding:10px;margin-top:8px;}
-.pm-visual-box-head{display:flex;justify-content:space-between;font-size:.74rem;font-weight:900;margin-bottom:8px;}
-.pm-visual-qty{display:inline-grid;grid-template-columns:28px 36px 28px;border:1px solid #ddd;background:#fff;text-align:center;line-height:30px;font-weight:800;margin-bottom:8px;}
-.pm-visual-input{border:2px solid #e60000;background:#fff;border-radius:5px;padding:8px;font-size:.72rem;font-weight:900;color:#111;}
-.pm-visual-caption{color:#e60000;font-size:.74rem;font-weight:900;line-height:1.45;margin-top:9px;}
+.pm-visual{background:#fff;border:1px solid var(--border);border-radius:12px;padding:8px;margin-bottom:14px;box-shadow:0 6px 18px rgba(0,0,0,.15);}
+.pm-visual-img{display:block;width:100%;height:auto;border-radius:8px;}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--g);color:#fff;padding:10px 22px;border-radius:20px;font-size:.83rem;font-weight:700;z-index:500;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px var(--g-glow);}
 .toast.show{opacity:1;}
 .kakao-float{position:fixed;bottom:24px;right:16px;z-index:90;background:#fee500;color:#191919;border:none;cursor:pointer;min-width:118px;height:46px;padding:0 16px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:.88rem;font-weight:800;box-shadow:0 4px 16px rgba(0,0,0,.3);transition:transform .2s;}
@@ -430,18 +420,8 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
           <div class="pm-step-text">아래 <b>상품명 / 맛 / 수량</b>을 복사해서 입력칸에 붙여넣어 주세요.</div>
         </div>
       </div>
-      <div class="pm-visual" aria-label="개인 결제창 입력 예시">
-        <div class="pm-visual-title">개인 결제창</div>
-        <div class="pm-visual-sub">고객센터에 문의 후 결제 부탁드립니다</div>
-        <div class="pm-visual-line"></div>
-        <div class="pm-visual-row"><span class="pm-visual-label">판매가</span><b>100원</b></div>
-        <div class="pm-visual-row"><span class="pm-visual-label">선택</span><span class="pm-visual-pill">상품명 &amp; 수량 필수 기입</span></div>
-        <div class="pm-visual-box">
-          <div class="pm-visual-box-head"><span>개인 결제창</span><span>100원</span></div>
-          <div class="pm-visual-qty"><span>-</span><span>1</span><span>+</span></div>
-          <div class="pm-visual-input">상품명 &amp; 수량 필수 기입 [필수]</div>
-        </div>
-        <div class="pm-visual-caption">1. 옵션 선택  2. 금액만큼 수량 수정  3. 상품명 / 맛 / 수량 입력</div>
+      <div class="pm-visual">
+        <img class="pm-visual-img" src="images/payment-guide.jpg" alt="개인 결제창 입력 안내">
       </div>
       <div class="pm-guide">
         <div class="pm-guide-title">📌 개인결제창 입력 수량 (금액 기준)</div>
