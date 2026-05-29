@@ -196,13 +196,16 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 .popup-dot.active{background:#fff;transform:scale(1.25);}
 .pay-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:400;display:none;align-items:center;justify-content:center;padding:20px;}
 .pay-modal-overlay.open{display:flex;}
-.pay-modal{background:var(--surface);border-radius:18px;width:min(460px,100%);border:1px solid rgba(46,204,64,.25);overflow:hidden;box-shadow:0 0 40px rgba(46,204,64,.15);max-height:90vh;display:flex;flex-direction:column;}
+.pay-modal{background:var(--surface);border-radius:18px;width:min(1180px,100%);border:1px solid rgba(46,204,64,.25);overflow:hidden;box-shadow:0 0 40px rgba(46,204,64,.15);max-height:90vh;display:flex;flex-direction:column;}
 .pay-modal-head{background:#fff;border-bottom:1px solid rgba(46,204,64,.3);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;}
 .pay-modal-head h2{font-family:'Pretendard',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:0;color:#111;}
 .pay-modal-head h2 .lg{font-size:1.1rem;-webkit-text-stroke:0;text-shadow:none;}
 .pay-modal-head h2 .ly{font-size:1.1rem;-webkit-text-stroke:0;text-shadow:none;}
 .pay-modal-close{background:rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.15);color:#333;cursor:pointer;border-radius:6px;padding:3px 10px;font-size:.9rem;}
-.pay-modal-body{padding:18px;overflow-y:auto;flex:1;}
+.pay-modal-body{padding:18px;overflow:hidden;flex:1;display:grid;grid-template-columns:minmax(360px,460px) minmax(420px,1fr);gap:18px;}
+.pay-modal-main,.pay-guide-side{min-height:0;max-height:calc(90vh - 76px);overflow-y:auto;}
+.pay-guide-side{background:#fff;border:1px solid var(--border);border-radius:14px;padding:10px;box-shadow:0 6px 18px rgba(0,0,0,.14);}
+.pay-guide-side img{display:block;width:100%;height:auto;border-radius:8px;}
 .order-summary{background:var(--bg);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden;}
 .order-summary-title{padding:9px 13px;font-size:.78rem;color:var(--g);font-weight:800;letter-spacing:.5px;border-bottom:1px solid var(--border);}
 .order-row{display:flex;justify-content:space-between;align-items:center;padding:9px 13px;border-bottom:1px solid var(--border);font-size:.88rem;}
@@ -245,18 +248,14 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 .pm-step-num{width:30px;height:30px;border-radius:50%;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.88rem;box-shadow:0 0 10px var(--g-glow);}
 .pm-step-text{font-size:.82rem;line-height:1.55;color:var(--text);font-weight:700;}
 .pm-step-sub{display:block;color:var(--muted);font-size:.74rem;font-weight:600;margin-top:2px;}
-.pm-visual-btn{width:100%;background:#fff;color:#111;border:1.5px solid var(--border);cursor:pointer;border-radius:12px;padding:13px 14px;margin-bottom:14px;font-family:'Pretendard',sans-serif;font-size:.9rem;font-weight:900;box-shadow:0 6px 18px rgba(0,0,0,.12);}
-.pm-visual-btn:hover{border-color:var(--g);color:var(--g);}
-.pay-image-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:520;display:none;align-items:center;justify-content:center;padding:18px;}
-.pay-image-overlay.open{display:flex;}
-.pay-image-modal{position:relative;width:min(1120px,100%);max-height:94vh;overflow:auto;background:#fff;border-radius:14px;padding:10px;box-shadow:0 20px 60px rgba(0,0,0,.45);}
-.pay-image-modal img{display:block;width:100%;height:auto;border-radius:8px;}
-.pay-image-close{position:sticky;top:0;float:right;margin:0 0 -42px 0;background:#fff;color:#111;border:1px solid rgba(0,0,0,.2);cursor:pointer;border-radius:8px;padding:7px 12px;font-weight:900;z-index:1;box-shadow:0 4px 14px rgba(0,0,0,.18);}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--g);color:#fff;padding:10px 22px;border-radius:20px;font-size:.83rem;font-weight:700;z-index:500;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px var(--g-glow);}
 .toast.show{opacity:1;}
 .kakao-float{position:fixed;bottom:24px;right:16px;z-index:90;background:#fee500;color:#191919;border:none;cursor:pointer;min-width:118px;height:46px;padding:0 16px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:.88rem;font-weight:800;box-shadow:0 4px 16px rgba(0,0,0,.3);transition:transform .2s;}
 .kakao-float:hover{transform:scale(1.08);}
 @media(max-width:480px){
+  .pay-modal{max-height:94vh;}
+  .pay-modal-body{grid-template-columns:1fr;overflow-y:auto;}
+  .pay-modal-main,.pay-guide-side{max-height:none;overflow:visible;}
   .hero{padding:22px 14px 18px;}
   .hero-title{letter-spacing:1px;}
   .hero-tags{gap:6px;}
@@ -402,62 +401,60 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
       <button class="pay-modal-close" onclick="closePayModal()">✕</button>
     </div>
     <div class="pay-modal-body">
-      <div class="order-summary">
-        <div class="order-summary-title">📦 주문 상품 내역</div>
-        <div id="pm-items"></div>
-        <div class="order-total-row">
-          <span class="order-total-label">총 결제금액</span>
-          <span class="order-total-val" id="pm-total">0원</span>
-        </div>
-      </div>
-      <div class="pm-steps">
-        <div class="pm-steps-title">카페24 결제창에서 이렇게 입력해 주세요</div>
-        <div class="pm-step">
-          <div class="pm-step-num">1</div>
-          <div class="pm-step-text">옵션에서 <b>상품명 &amp; 수량 필수 기입</b>을 클릭해 주세요.</div>
-        </div>
-        <div class="pm-step">
-          <div class="pm-step-num">2</div>
-          <div class="pm-step-text">아래 <b>개인결제창 입력 수량</b>만큼 수량을 수정해 주세요.<span class="pm-step-sub">카페24 개인결제창은 100원 단위 상품이라 금액에 맞춰 수량을 넣어야 합니다.</span></div>
-        </div>
-        <div class="pm-step">
-          <div class="pm-step-num">3</div>
-          <div class="pm-step-text">아래 <b>상품명 / 맛 / 수량</b>을 복사해서 입력칸에 붙여넣어 주세요.</div>
-        </div>
-      </div>
-      <button class="pm-visual-btn" onclick="openPayGuideImage()">🔎 결제창 입력 방법 사진 크게 보기</button>
-      <div class="pm-guide">
-        <div class="pm-guide-title">📌 개인결제창 입력 수량 (금액 기준)</div>
-        <div class="pm-guide-row">
-          <div class="pm-guide-num" id="pm-pay-qty">0</div>
-          <div class="pm-guide-unit">개</div>
-          <div class="pm-guide-meta">
-            <div class="pm-guide-amount" id="pm-pay-amount">0원</div>
-            <button class="pm-guide-copy" onclick="copyPmPayQty()">📋 복사</button>
+      <div class="pay-modal-main">
+        <div class="order-summary">
+          <div class="order-summary-title">📦 주문 상품 내역</div>
+          <div id="pm-items"></div>
+          <div class="order-total-row">
+            <span class="order-total-label">총 결제금액</span>
+            <span class="order-total-val" id="pm-total">0원</span>
           </div>
         </div>
-      </div>
-      <div class="pm-guide pm-guide-real">
-        <div class="pm-guide-title">📦 실제 주문 수량 (제품 기준)</div>
-        <div class="pm-guide-row">
-          <div class="pm-guide-num pm-real-num" id="pm-real-qty">0</div>
-          <div class="pm-guide-unit">개</div>
-          <div class="pm-guide-meta">
-            <button class="pm-guide-copy pm-guide-copy-y" onclick="copyPmRealQty()">📋 복사</button>
+        <div class="pm-steps">
+          <div class="pm-steps-title">카페24 결제창에서 이렇게 입력해 주세요</div>
+          <div class="pm-step">
+            <div class="pm-step-num">1</div>
+            <div class="pm-step-text">옵션에서 <b>상품명 &amp; 수량 필수 기입</b>을 클릭해 주세요.</div>
+          </div>
+          <div class="pm-step">
+            <div class="pm-step-num">2</div>
+            <div class="pm-step-text">아래 <b>개인결제창 입력 수량</b>만큼 수량을 수정해 주세요.<span class="pm-step-sub">카페24 개인결제창은 100원 단위 상품이라 금액에 맞춰 수량을 넣어야 합니다.</span></div>
+          </div>
+          <div class="pm-step">
+            <div class="pm-step-num">3</div>
+            <div class="pm-step-text">아래 <b>상품명 / 맛 / 수량</b>을 복사해서 입력칸에 붙여넣어 주세요.</div>
           </div>
         </div>
+        <div class="pm-guide">
+          <div class="pm-guide-title">📌 개인결제창 입력 수량 (금액 기준)</div>
+          <div class="pm-guide-row">
+            <div class="pm-guide-num" id="pm-pay-qty">0</div>
+            <div class="pm-guide-unit">개</div>
+            <div class="pm-guide-meta">
+              <div class="pm-guide-amount" id="pm-pay-amount">0원</div>
+              <button class="pm-guide-copy" onclick="copyPmPayQty()">📋 복사</button>
+            </div>
+          </div>
+        </div>
+        <div class="pm-guide pm-guide-real">
+          <div class="pm-guide-title">📦 실제 주문 수량 (제품 기준)</div>
+          <div class="pm-guide-row">
+            <div class="pm-guide-num pm-real-num" id="pm-real-qty">0</div>
+            <div class="pm-guide-unit">개</div>
+            <div class="pm-guide-meta">
+              <button class="pm-guide-copy pm-guide-copy-y" onclick="copyPmRealQty()">📋 복사</button>
+            </div>
+          </div>
+        </div>
+        <div class="pm-guide-hint">아래 버튼을 누르기 전까지 카페24 결제창으로 이동하지 않습니다.</div>
+        <div class="pay-btns">
+          <button class="go-pay-btn" onclick="goToPay()">고객님이 결제하기 →</button>
+        </div>
       </div>
-      <div class="pm-guide-hint">아래 버튼을 누르기 전까지 카페24 결제창으로 이동하지 않습니다.</div>
-      <div class="pay-btns">
-        <button class="go-pay-btn" onclick="goToPay()">고객님이 결제하기 →</button>
-      </div>
+      <aside class="pay-guide-side">
+        <img src="images/payment-guide.jpg" alt="개인 결제창 입력 안내">
+      </aside>
     </div>
-  </div>
-</div>
-<div class="pay-image-overlay" id="pay-image-overlay" onclick="closePayGuideImageOut(event)">
-  <div class="pay-image-modal">
-    <button class="pay-image-close" onclick="closePayGuideImage()">✕ 닫기</button>
-    <img src="images/payment-guide.jpg" alt="개인 결제창 입력 안내">
   </div>
 </div>
 <button class="kakao-float" onclick="window.open('http://pf.kakao.com/_MxhQqX','_blank')">카카오톡 문의</button>
@@ -629,9 +626,6 @@ function openPayModal(){
   document.getElementById('pay-modal-overlay').classList.add('open');
 }
 function closePayModal(){document.getElementById('pay-modal-overlay').classList.remove('open');}
-function openPayGuideImage(){document.getElementById('pay-image-overlay').classList.add('open');}
-function closePayGuideImage(){document.getElementById('pay-image-overlay').classList.remove('open');}
-function closePayGuideImageOut(e){if(e.target===document.getElementById('pay-image-overlay'))closePayGuideImage();}
 function buildOrderMemo(){const total=cart.reduce((s,c)=>s+c.price*c.qty,0);return [
   '[FROKY VAPE 주문내역]',
   ...cart.map((c,i)=>`${i+1}. ${c.name} / 옵션: ${c.option} / 수량: ${c.qty}개 / 금액: ${fmt(c.price*c.qty)}`),
