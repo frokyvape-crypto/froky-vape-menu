@@ -238,6 +238,13 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 .pm-guide-copy-y{background:rgba(245,220,0,.08);border-color:rgba(245,220,0,.5);color:var(--y);}
 [data-theme="light"] .pm-guide-copy-y{color:#7a6e00;}
 .pm-guide-copy-y:hover{background:rgba(245,220,0,.2);}
+.pm-steps{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:13px;margin-bottom:14px;}
+.pm-steps-title{font-size:.78rem;font-weight:900;color:var(--g);margin-bottom:10px;}
+.pm-step{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--border);}
+.pm-step:first-of-type{border-top:none;padding-top:0;}
+.pm-step-num{width:30px;height:30px;border-radius:50%;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.88rem;box-shadow:0 0 10px var(--g-glow);}
+.pm-step-text{font-size:.82rem;line-height:1.55;color:var(--text);font-weight:700;}
+.pm-step-sub{display:block;color:var(--muted);font-size:.74rem;font-weight:600;margin-top:2px;}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--g);color:#fff;padding:10px 22px;border-radius:20px;font-size:.83rem;font-weight:700;z-index:500;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px var(--g-glow);}
 .toast.show{opacity:1;}
 .kakao-float{position:fixed;bottom:24px;right:16px;z-index:90;background:#fee500;color:#191919;border:none;cursor:pointer;min-width:118px;height:46px;padding:0 16px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:.88rem;font-weight:800;box-shadow:0 4px 16px rgba(0,0,0,.3);transition:transform .2s;}
@@ -384,7 +391,7 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 <div class="pay-modal-overlay" id="pay-modal-overlay">
   <div class="pay-modal">
     <div class="pay-modal-head">
-      <h2><span class="lg">F</span><span class="ly">R</span><span class="lg">O</span><span class="ly">K</span><span class="lg">Y</span> 결제</h2>
+      <h2>개인 결제창 안내</h2>
       <button class="pay-modal-close" onclick="closePayModal()">✕</button>
     </div>
     <div class="pay-modal-body">
@@ -394,6 +401,21 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
         <div class="order-total-row">
           <span class="order-total-label">총 결제금액</span>
           <span class="order-total-val" id="pm-total">0원</span>
+        </div>
+      </div>
+      <div class="pm-steps">
+        <div class="pm-steps-title">카페24 결제창에서 이렇게 입력해 주세요</div>
+        <div class="pm-step">
+          <div class="pm-step-num">1</div>
+          <div class="pm-step-text">옵션에서 <b>상품명 &amp; 수량 필수 기입</b>을 클릭해 주세요.</div>
+        </div>
+        <div class="pm-step">
+          <div class="pm-step-num">2</div>
+          <div class="pm-step-text">아래 <b>개인결제창 입력 수량</b>만큼 수량을 수정해 주세요.<span class="pm-step-sub">카페24 개인결제창은 100원 단위 상품이라 금액에 맞춰 수량을 넣어야 합니다.</span></div>
+        </div>
+        <div class="pm-step">
+          <div class="pm-step-num">3</div>
+          <div class="pm-step-text">아래 <b>상품명 / 맛 / 수량</b>을 복사해서 입력칸에 붙여넣어 주세요.</div>
         </div>
       </div>
       <div class="pm-guide">
@@ -417,9 +439,9 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
           </div>
         </div>
       </div>
-      <div class="pm-guide-hint">① 개인결제창 수량 복사 → ② 결제창 열기 → ③ 결제창 수량칸에 붙여넣기 → ④ 결제</div>
+      <div class="pm-guide-hint">아래 버튼을 누르기 전까지 카페24 결제창으로 이동하지 않습니다.</div>
       <div class="pay-btns">
-        <button class="go-pay-btn" onclick="goToPay()">결제창 열기 →</button>
+        <button class="go-pay-btn" onclick="goToPay()">고객님이 결제하기 →</button>
       </div>
     </div>
   </div>
@@ -584,7 +606,7 @@ function openPayModal(){
   const totalQty=cart.reduce((s,c)=>s+c.qty,0);
   _pmPayQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
   _pmPayCopyText=String(_pmPayQty);
-  _pmRealCopyText=cart.map(c=>`${c.name} × ${c.qty}개`).join('\n');
+  _pmRealCopyText=cart.map(c=>`${c.name}${c.option&&c.option!=='옵션 없음'?` / ${c.option}`:''} × ${c.qty}개`).join('\n');
   document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${c.name}</div><div class="order-row-opt">${c.option} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');
   document.getElementById('pm-total').textContent=fmt(total);
   document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();
@@ -605,7 +627,7 @@ function privatePayQuantity(total){
   return total/PERSONAL_PAY_UNIT_PRICE;
 }
 async function goToPay(){
-  window.open(PAY_URL,'_blank');
+  window.location.href=PAY_URL;
 }
 function copyPmPayQty(){
   navigator.clipboard.writeText(_pmPayCopyText).then(()=>{
@@ -614,7 +636,7 @@ function copyPmPayQty(){
 }
 function copyPmRealQty(){
   navigator.clipboard.writeText(_pmRealCopyText).then(()=>{
-    showToast('제품명+수량 복사됨');
+    showToast('상품명/맛/수량 복사됨');
   }).catch(()=>showToast('복사 실패'));
 }
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
