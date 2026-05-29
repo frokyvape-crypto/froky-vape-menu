@@ -175,6 +175,9 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 .detail-modal-close{position:fixed;top:14px;right:14px;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.2);color:#fff;cursor:pointer;border-radius:50%;width:38px;height:38px;font-size:1.3rem;display:flex;align-items:center;justify-content:center;z-index:10;transition:background .2s;}
 .detail-modal-close:hover{background:rgba(255,0,0,.5);}
 .detail-modal img{width:100%;display:block;}
+.detail-html{background:#fff;color:#111;padding:0;overflow:hidden;}
+.detail-html img{max-width:100%;height:auto;display:block;margin:0 auto;}
+.detail-html table,.detail-html iframe,.detail-html video{max-width:100%;}
 .detail-no-img{color:var(--muted);text-align:center;padding:80px 20px;font-size:.9rem;}
 .sheet-thumbs{display:flex;gap:8px;overflow-x:auto;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .sheet-thumbs::-webkit-scrollbar{display:none;}
@@ -471,6 +474,7 @@ let P=[],cart=[],sp=null,sq=1;
 const fmt=n=>n.toLocaleString('ko-KR')+'원';
 function getImgs(p){if(Array.isArray(p.imgs)&&p.imgs.length)return p.imgs;if(p.img)return[p.img];return[''];}
 function getDetailImgs(p){if(Array.isArray(p.detailImgs)&&p.detailImgs.length)return p.detailImgs;if(p.detailImg)return[p.detailImg];return[];}
+function hasDetailContent(p){return getDetailImgs(p).length || String(p?.detailHtml || '').trim();}
 function getNoticeImgs(key,fallback){const arr=Array.isArray(siteConfig[key+'s'])&&siteConfig[key+'s'].length?siteConfig[key+'s']:siteConfig[key]?[siteConfig[key]]:[fallback];return arr;}
 function normalizeCategories(list){const src=Array.isArray(list)&&list.length?list:DEFAULT_SITE_CONFIG.categories;const seen=new Set();return src.map(c=>typeof c==='string'?{value:c,label:c}:c).map(c=>({value:String(c.value||'').trim(),label:String(c.label||c.value||'').trim()})).filter(c=>c.value&&c.label&&!seen.has(c.value)&&seen.add(c.value));}
 function escAttr(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -561,7 +565,7 @@ function openSheet(id){
   const optionEl=document.getElementById('s-option');
   optionEl.innerHTML=options.length?'<option value="">옵션 선택</option>'+options.map(o=>`<option>${o}</option>`).join(''):'<option value="옵션 없음">옵션 없음</option>';
   optionEl.disabled=!options.length;
-  document.getElementById('btn-sheet-detail').style.display=getDetailImgs(sp).length?'block':'none';
+  document.getElementById('btn-sheet-detail').style.display=hasDetailContent(sp)?'block':'none';
   const thumbs=document.getElementById('s-thumbs');
   if(imgs.length>1){
     thumbs.innerHTML=imgs.map((url,i)=>`<img class="s-thumb-mini${i===0?' active':''}" src="${url}" onclick="switchSheetImg(this)" data-url="${url.replace(/"/g,'&quot;')}" onerror="this.style.display='none'">`).join('');
@@ -574,10 +578,13 @@ function closeSheet(){document.getElementById('sheet-overlay').classList.remove(
 function openDetailModal(){
   if(!sp)return;
   const imgs=getDetailImgs(sp);
+  const html=String(sp.detailHtml||'').trim();
   const c=document.getElementById('detail-modal-content');
-  c.innerHTML=imgs.length
+  c.innerHTML=html
+    ?`<div class="detail-html">${html}</div>`
+    :(imgs.length
     ?imgs.map(url=>`<img src="${url}" alt="${sp.name} 상세이미지" style="width:100%;display:block;" onerror="this.style.display='none'">`).join('')
-    :'<div class="detail-no-img">등록된 상세 이미지가 없습니다</div>';
+    :'<div class="detail-no-img">등록된 상세 이미지가 없습니다</div>');
   document.getElementById('detail-modal-overlay').classList.add('open');
 }
 function closeDetailModal(){document.getElementById('detail-modal-overlay').classList.remove('open');}

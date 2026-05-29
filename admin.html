@@ -289,6 +289,10 @@ tr:hover td{background:rgba(128,128,128,.06);}
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
           <input id="c24-search" type="text" placeholder="🔍 상품명으로 검색 (비우면 전체 상품)" style="flex:1;min-width:180px;background:var(--card);border:1.5px solid var(--border);color:var(--text);padding:7px 12px;border-radius:8px;font-family:'Pretendard',sans-serif;font-size:.82rem;outline:none;">
+          <label style="display:flex;align-items:center;gap:6px;font-size:.78rem;font-weight:800;color:var(--muted);white-space:nowrap;">
+            <input id="c24-with-detail" type="checkbox" checked>
+            상세페이지도 함께 가져오기
+          </label>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
           <button class="btn btn-outline" id="btn-c24-auth" onclick="startCafe24Auth()">카페24 인증하기</button>
@@ -1317,6 +1321,7 @@ async function fetchCafe24() {
   const rt  = document.getElementById('c24-rt').value.trim();
   if (!cid || !sec || !rt) { toast('카페24 Client ID / Secret / Refresh Token을 모두 입력하세요', 'err'); return; }
   const searchName = document.getElementById('c24-search').value.trim();
+  const withDetail = !!document.getElementById('c24-with-detail')?.checked;
   // 입력값 localStorage 저장
   localStorage.setItem('fv-c24-id', cid);
   localStorage.setItem('fv-c24-sec', sec);
@@ -1367,6 +1372,9 @@ async function fetchCafe24() {
     }
 
     if (!items.length) { toast(searchName ? `"${searchName}" 검색 결과 없음` : '불러온 상품 없음', 'info'); return; }
+    if (withDetail) {
+      items = await enrichCafe24ProductDetails(items, td.access_token, proxy, btn);
+    }
     window._c24 = items;
     window._c24SellingFilter = '';
     updateC24SellingButtons();
@@ -1378,6 +1386,83 @@ async function fetchCafe24() {
     toast(items.length + '개 상품 불러옴', 'ok');
   } catch (e) { toast('오류: ' + e.message, 'err'); }
   finally { btn.disabled = false; btn.innerHTML = '카페24 상품 불러오기'; }
+}
+
+function cafe24AbsUrl(s) {
+  if (!s) return '';
+  s = String(s).trim();
+  if (!s) return '';
+  if (s.startsWith('//')) return 'https:' + s;
+  if (s.startsWith('/')) return 'https://frokyvape.cafe24.com' + s;
+  return s;
+}
+function sanitizeCafe24DetailHtml(html) {
+  return String(html || '')
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/\son\w+\s*=\s*"[^"]*"/gi, '')
+    .replace(/\son\w+\s*=\s*'[^']*'/gi, '')
+    .replace(/\son\w+\s*=\s*[^\s>]+/gi, '')
+    .replace(/(src|href)\s*=\s*"\/\/([^"]+)"/gi, '$1="https://$2"')
+    .replace(/(src|href)\s*=\s*'\/\/([^']+)'/gi, "$1='https://$2'")
+    .replace(/(src|href)\s*=\s*"\/([^"]+)"/gi, '$1="https://frokyvape.cafe24.com/$2"')
+    .replace(/(src|href)\s*=\s*'\/([^']+)'/gi, "$1='https://frokyvape.cafe24.com/$2'");
+}
+function pickCafe24DetailHtml(p) {
+  return sanitizeCafe24DetailHtml(
+    p?.description ||
+    p?.mobile_description ||
+    p?.product_description ||
+    p?.detail_description ||
+    p?.description_mobile ||
+    ''
+  );
+}
+function collectCafe24DetailImages(p) {
+  const urls = [];
+  const push = v => {
+    const url = cafe24AbsUrl(v);
+    if (url && !urls.includes(url)) urls.push(url);
+  };
+  push(p?.detail_image);
+  if (Array.isArray(p?.additional_images)) {
+    p.additional_images.forEach(img => {
+      if (typeof img === 'string') push(img);
+      else push(img?.big || img?.medium || img?.url || img?.small || img?.tiny);
+    });
+  }
+  return urls;
+}
+async function enrichCafe24ProductDetails(items, accessToken, proxy, btn) {
+  const enriched = [];
+  let failed = 0;
+  for (let i = 0; i < items.length; i++) {
+    const base = items[i];
+    btn.innerHTML = `<span class="spin"></span>상세페이지 확인 중... (${i + 1}/${items.length})`;
+    try {
+      const apiUrl = `https://frokyvape.cafe24api.com/api/v2/admin/products/${base.product_no}`;
+      const res = await fetch(proxy + encodeURIComponent(apiUrl), {
+        headers: { 'Authorization': 'Bearer ' + accessToken, 'X-Cafe24-Api-Version': '2026-03-01' },
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      const data = await res.json();
+      const detail = data.product || {};
+      enriched.push({
+        ...base,
+        ...detail,
+        detailHtml: pickCafe24DetailHtml(detail) || pickCafe24DetailHtml(base),
+        _detailImgs: collectCafe24DetailImages({ ...base, ...detail }),
+      });
+    } catch (e) {
+      failed++;
+      enriched.push({
+        ...base,
+        detailHtml: pickCafe24DetailHtml(base),
+        _detailImgs: collectCafe24DetailImages(base),
+      });
+    }
+  }
+  if (failed) toast(`상세페이지 ${items.length - failed}/${items.length}개 확인됨 (${failed}개는 기본 정보만 사용)`, 'info');
+  return enriched;
 }
 
 function c24SelAll(v) { document.querySelectorAll('.import-check').forEach(cb => cb.checked = v); }
@@ -1504,27 +1589,33 @@ function deleteSelected() {
 
 function importSelected() {
   const sel = [...document.querySelectorAll('.import-check:checked')].map(cb => window._c24[+cb.dataset.i]);
-  let added = 0, dupes = 0;
+  let added = 0, updated = 0;
   sel.forEach(p => {
-    if (products.find(x => x.id === p.product_no)) { dupes++; return; }
-    const toUrl = s => {
-      if (!s) return '';
-      if (s.startsWith('//')) return 'https:' + s;
-      if (s.startsWith('/')) return 'https://frokyvape.cafe24.com' + s;
-      return s;
-    };
+    const toUrl = cafe24AbsUrl;
     const mainImg = toUrl(p.list_image || p.detail_image || '');
     const detailImg = toUrl(p.detail_image || '');
     const extraImgs = Array.isArray(p.additional_images)
       ? p.additional_images.map(img => toUrl(typeof img === 'string' ? img : (img.big || img.medium || img.url || img.small || ''))).filter(Boolean)
       : [];
-    const allDetailImgs = [detailImg, ...extraImgs].filter(Boolean);
+    const allDetailImgs = [...(Array.isArray(p._detailImgs) ? p._detailImgs : []), detailImg, ...extraImgs].filter(Boolean)
+      .filter((url, idx, arr) => arr.indexOf(url) === idx);
+    const existing = products.find(x => x.id === p.product_no || x.product_no === p.product_no);
+    if (existing) {
+      existing.detailImgs = allDetailImgs.length ? allDetailImgs : (existing.detailImgs || []);
+      existing.detailImg = existing.detailImgs[0] || existing.detailImg || '';
+      existing.detailHtml = p.detailHtml || pickCafe24DetailHtml(p) || existing.detailHtml || '';
+      if (mainImg && (!existing.imgs || !existing.imgs.length)) existing.imgs = [mainImg];
+      if (mainImg && !existing.img) existing.img = mainImg;
+      updated++;
+      return;
+    }
     products.push({
       id: p.product_no, product_no: p.product_no, name: p.product_name, price: parseInt(p.price) || 0,
       imgs: mainImg ? [mainImg] : [],
       img: mainImg,
       detailImgs: allDetailImgs,
       detailImg: allDetailImgs[0] || '',
+      detailHtml: p.detailHtml || pickCafe24DetailHtml(p),
       cat: CAT(p.product_name), flavor: (p.summary_description || '').trim(),
       options: [], sale: !!p.price_content,
     });
@@ -1533,8 +1624,8 @@ function importSelected() {
   dbSave();
   document.getElementById('c24-result').style.display = 'none';
   showSection('sec-products');
-  const msg = added + '개 추가됨' + (dupes ? ` (중복 ${dupes}개 건너뜀)` : '') + ' — 저장 & 배포 필요';
-  toast(msg, added > 0 ? 'ok' : 'info');
+  const msg = `${added}개 추가됨` + (updated ? `, 기존 ${updated}개 상세정보 갱신됨` : '') + ' — 저장 & 배포 필요';
+  toast(msg, added || updated ? 'ok' : 'info');
 }
 
 let _tt;
