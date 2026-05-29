@@ -627,7 +627,7 @@ function privatePayQuantity(total){
   return total/PERSONAL_PAY_UNIT_PRICE;
 }
 async function goToPay(){
-  window.location.href=PAY_URL;
+  window.open(PAY_URL,'_blank','noopener');
 }
 function copyPmPayQty(){
   navigator.clipboard.writeText(_pmPayCopyText).then(()=>{
