@@ -1347,7 +1347,7 @@ async function fetchCafe24() {
     let offset = 0;
     const limit = 100;
     while (true) {
-      let apiUrl = `https://frokyvape.cafe24api.com/api/v2/admin/products?limit=${limit}&offset=${offset}&embed=additionalimages`;
+      let apiUrl = `https://frokyvape.cafe24api.com/api/v2/admin/products?limit=${limit}&offset=${offset}`;
       if (searchName) apiUrl += `&product_name=${encodeURIComponent(searchName)}`;
       const pr = await fetch(proxy + encodeURIComponent(apiUrl), {
         headers: { 'Authorization': 'Bearer ' + td.access_token, 'X-Cafe24-Api-Version': '2026-03-01' },
@@ -1382,54 +1382,6 @@ async function fetchCafe24() {
 
 function c24SelAll(v) { document.querySelectorAll('.import-check').forEach(cb => cb.checked = v); }
 
-function cafe24AbsUrl(s) {
-  if (!s) return '';
-  s = String(s).trim();
-  if (!s) return '';
-  if (s.startsWith('//')) return 'https:' + s;
-  if (s.startsWith('/')) return 'https://frokyvape.cafe24.com' + s;
-  return s;
-}
-function cafe24ImageFromObject(img) {
-  if (!img) return '';
-  if (typeof img === 'string') return cafe24AbsUrl(img);
-  return cafe24AbsUrl(
-    img.big ||
-    img.medium ||
-    img.small ||
-    img.tiny ||
-    img.url ||
-    img.path ||
-    img.image ||
-    img.image_url ||
-    img.additional_image ||
-    img.additional_image_url ||
-    img.detail_image ||
-    ''
-  );
-}
-function cafe24AdditionalImages(p) {
-  const urls = [];
-  const add = value => {
-    const url = cafe24ImageFromObject(value);
-    if (url && !urls.includes(url)) urls.push(url);
-  };
-  add(p.detail_image);
-  const groups = [
-    p.additional_images,
-    p.additionalimages,
-    p.additional_image,
-    p.additionalImages,
-    p.additionalimages?.additionalimage,
-    p.additionalimages?.additionalimages,
-  ];
-  groups.forEach(group => {
-    if (Array.isArray(group)) group.forEach(add);
-    else add(group);
-  });
-  return urls;
-}
-
 function isC24Selling(p) {
   const raw = String(p.selling ?? p.selling_status ?? p.product_selling ?? '').toUpperCase();
   return raw === 'T' || raw === 'Y' || raw === 'TRUE' || raw === '1';
@@ -1452,8 +1404,13 @@ function updateC24SellingButtons() {
 function filterC24() {
   const q = (document.getElementById('c24-filter')?.value || '').toLowerCase().trim();
   if (!window._c24) return;
-  const existingNos = new Set(products.flatMap(p => [p.product_no, p.id]).filter(Boolean).map(String));
-  const toImg = cafe24AbsUrl;
+  const existingNos = new Set(products.map(p => p.product_no).filter(Boolean));
+  const toImg = s => {
+    if (!s) return '';
+    if (s.startsWith('//')) return 'https:' + s;
+    if (s.startsWith('/')) return 'https://frokyvape.cafe24.com' + s;
+    return s;
+  };
   const statusFilter = window._c24SellingFilter || '';
   let filtered = window._c24;
   if (statusFilter === 'selling') filtered = filtered.filter(isC24Selling);
@@ -1465,15 +1422,13 @@ function filterC24() {
     `${filtered.length}/${window._c24.length}개 표시 · 판매중 ${sellingCount}개 · 판매안함 ${notSellingCount}개`;
   document.getElementById('c24-tbody').innerHTML = filtered.map(p => {
     const origIdx = window._c24.indexOf(p);
-    const productNo = p.product_no || p.id;
     const img = toImg(p.list_image || p.detail_image || '');
-    const isDupe = existingNos.has(String(productNo));
+    const isDupe = existingNos.has(p.product_no);
     const selling = isC24Selling(p);
-    const detailCount = cafe24AdditionalImages(p).length;
     return `<tr style="${isDupe ? 'opacity:.45' : ''}">
       <td><input type="checkbox" class="import-check" data-i="${origIdx}" ${isDupe ? '' : 'checked'}></td>
       <td><img src="${img}" style="width:32px;height:32px;object-fit:cover;border-radius:5px;" onerror="this.src=''"></td>
-      <td>${p.product_name}${isDupe ? ' <span style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">중복</span>' : ''}${detailCount ? ` <span style="font-size:.65rem;color:var(--g);font-weight:800;margin-left:4px">상세 ${detailCount}장</span>` : ''}</td>
+      <td>${p.product_name}${isDupe ? ' <span style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">중복</span>' : ''}</td>
       <td style="white-space:nowrap">${Number(p.price).toLocaleString('ko-KR')}원</td>
       <td><span style="display:inline-block;padding:2px 7px;border-radius:4px;font-size:.68rem;font-weight:800;background:${selling ? 'rgba(46,204,64,.16)' : 'rgba(229,57,53,.14)'};color:${selling ? 'var(--g)' : 'var(--red)'}">${c24SellingLabel(p)}</span></td>
       <td><span class="cat-tag c-${CAT(p.product_name)}">${categoryLabel(CAT(p.product_name))}</span></td>
@@ -1549,23 +1504,23 @@ function deleteSelected() {
 
 function importSelected() {
   const sel = [...document.querySelectorAll('.import-check:checked')].map(cb => window._c24[+cb.dataset.i]);
-  let added = 0, updated = 0;
+  let added = 0, dupes = 0;
   sel.forEach(p => {
-    const productNo = p.product_no || p.id;
-    const toUrl = cafe24AbsUrl;
+    if (products.find(x => x.id === p.product_no)) { dupes++; return; }
+    const toUrl = s => {
+      if (!s) return '';
+      if (s.startsWith('//')) return 'https:' + s;
+      if (s.startsWith('/')) return 'https://frokyvape.cafe24.com' + s;
+      return s;
+    };
     const mainImg = toUrl(p.list_image || p.detail_image || '');
-    const allDetailImgs = cafe24AdditionalImages(p);
-    const existing = products.find(x => String(x.id) === String(productNo) || String(x.product_no || '') === String(productNo));
-    if (existing) {
-      existing.detailImgs = allDetailImgs.length ? allDetailImgs : (existing.detailImgs || []);
-      existing.detailImg = existing.detailImgs[0] || existing.detailImg || '';
-      if (mainImg && (!existing.imgs || !existing.imgs.length)) existing.imgs = [mainImg];
-      if (mainImg && !existing.img) existing.img = mainImg;
-      updated++;
-      return;
-    }
+    const detailImg = toUrl(p.detail_image || '');
+    const extraImgs = Array.isArray(p.additional_images)
+      ? p.additional_images.map(img => toUrl(typeof img === 'string' ? img : (img.big || img.medium || img.url || img.small || ''))).filter(Boolean)
+      : [];
+    const allDetailImgs = [detailImg, ...extraImgs].filter(Boolean);
     products.push({
-      id: productNo, product_no: productNo, name: p.product_name, price: parseInt(p.price) || 0,
+      id: p.product_no, product_no: p.product_no, name: p.product_name, price: parseInt(p.price) || 0,
       imgs: mainImg ? [mainImg] : [],
       img: mainImg,
       detailImgs: allDetailImgs,
@@ -1578,8 +1533,8 @@ function importSelected() {
   dbSave();
   document.getElementById('c24-result').style.display = 'none';
   showSection('sec-products');
-  const msg = `${added}개 추가됨` + (updated ? `, 기존 ${updated}개 상세이미지 갱신됨` : '') + ' — 저장 & 배포 필요';
-  toast(msg, added || updated ? 'ok' : 'info');
+  const msg = added + '개 추가됨' + (dupes ? ` (중복 ${dupes}개 건너뜀)` : '') + ' — 저장 & 배포 필요';
+  toast(msg, added > 0 ? 'ok' : 'info');
 }
 
 let _tt;
