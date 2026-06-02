@@ -9402,7 +9402,7 @@
   {
     "id": 1912,
     "product_no": 1912,
-    "name": "[YV] 체리엇 입호흡 액상 30ml",
+    "name": "체리엇 입호흡 액상 30ml",
     "price": 13200,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202502/7f2a22de569fd90aa60dcd6c51839c3e.png"
@@ -9414,7 +9414,10 @@
     "detailImg": "https://frokyvape.com/web/product/big/202502/2dcc06c60b401c3f00ca714e0ce7bf4c.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "체리엇 더 오리지널",
+      "체리엇 더 오리지널 (아이스)"
+    ],
     "sale": false
   },
   {
