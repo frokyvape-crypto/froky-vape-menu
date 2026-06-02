@@ -91,53 +91,6 @@
     "sale": false
   },
   {
-    "id": 2395,
-    "product_no": 2395,
-    "name": "마샤 제로쿨 입호흡 액상 30ml 고농도",
-    "price": 21200,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202508/060c498d515bb8693a696d38663b455d.jpg"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202508/060c498d515bb8693a696d38663b455d.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202508/7d5432b713bba6904d37f7a67b090f6d.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202508/7d5432b713bba6904d37f7a67b090f6d.jpg",
-    "cat": "고농도",
-    "flavor": "1.8%",
-    "options": [
-      "제로쿨 샤인머스킷 (고농도)",
-      "제로쿨 딸기 (고농도)",
-      "제로쿨 유자 (고농도)"
-    ],
-    "sale": false
-  },
-  {
-    "id": 2394,
-    "product_no": 2394,
-    "name": "고농도 마샤 입호흡 액상 30ml",
-    "price": 21200,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202508/03262a223b13fbf4ee8d0a2a67f585c1.jpg"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202508/03262a223b13fbf4ee8d0a2a67f585c1.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202508/4315a9b72f74203217fe5757f660e1b5.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202508/4315a9b72f74203217fe5757f660e1b5.jpg",
-    "cat": "고농도",
-    "flavor": "1.8%",
-    "options": [
-      "리얼 레몬 (고농도)",
-      "브로콜리 (고농도)",
-      "발렌시가 (고농도)",
-      "유자 (고농도)",
-      "더블 샤인머스킷 (고농도)",
-      "블랙사파이어 (고농도)"
-    ],
-    "sale": false
-  },
-  {
     "id": 2295,
     "product_no": 2295,
     "name": "펠릭스 Strong Zero Rush 스트롱 제로 러쉬 입호흡 액상 30ml",
@@ -438,27 +391,6 @@
     "sale": false
   },
   {
-    "id": 1469,
-    "product_no": 1469,
-    "name": "펠릭스 토바코 시리즈 입호흡 액상 30ml",
-    "price": 15500,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202405/1b7a53eca8779388412cfd17fd322af7.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202405/1b7a53eca8779388412cfd17fd322af7.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202405/eeaa2bfa3616948d97406d1f445813ed.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202405/eeaa2bfa3616948d97406d1f445813ed.png",
-    "cat": "입호흡",
-    "flavor": "9.7mg",
-    "options": [
-      "올드패션드",
-      "애쉬트레이"
-    ],
-    "sale": false
-  },
-  {
     "id": 1419,
     "product_no": 1419,
     "name": "베이프바스켓 용용쥬스 입호흡 액상 30ml",
@@ -542,26 +474,6 @@
     "sale": false
   },
   {
-    "id": 1353,
-    "product_no": 1353,
-    "name": "마샤 구름여행쥬스 아임 파인 입호흡 액상 30ml",
-    "price": 18100,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202403/636958056cfb89ab51024154ea4d14a0.jpg"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202403/636958056cfb89ab51024154ea4d14a0.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202403/b8872a3ced5b8cdbbb78f9440d891029.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202403/b8872a3ced5b8cdbbb78f9440d891029.jpg",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [
-      "아임 파인"
-    ],
-    "sale": false
-  },
-  {
     "id": 1352,
     "product_no": 1352,
     "name": "마샤 바론식스 입호흡 액상 30ml",
@@ -610,32 +522,6 @@
       "피치",
       "멘솔",
       "시가"
-    ],
-    "sale": false
-  },
-  {
-    "id": 1350,
-    "product_no": 1350,
-    "name": "마샤 핵스터쥬스 입호흡 액상 30ml",
-    "price": 18100,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202403/da8e10f08f4550c63904005e37f24393.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202403/da8e10f08f4550c63904005e37f24393.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202403/98bac47be451b430a7b13d9ecd7d078d.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202403/98bac47be451b430a7b13d9ecd7d078d.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [
-      "피치업",
-      "유자슬러쉬",
-      "더 샤인",
-      "알로에베라",
-      "더 샤인 (노멘솔)",
-      "더 그레이프 (노멘솔)",
-      "도프시가 (노멘솔)"
     ],
     "sale": false
   },
