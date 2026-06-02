@@ -18483,24 +18483,6 @@
     "sale": false
   },
   {
-    "id": 1097,
-    "product_no": 1097,
-    "name": "[스위든] 폐호흡 액상 60ml",
-    "price": 22400,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202312/88a485631d272616e610f795af9b83ab.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202312/88a485631d272616e610f795af9b83ab.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202312/4615b6237cace2b54d1c165aa2403105.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202312/4615b6237cace2b54d1c165aa2403105.png",
-    "cat": "폐호흡",
-    "flavor": "3mg",
-    "options": [],
-    "sale": false
-  },
-  {
     "id": 1094,
     "product_no": 1094,
     "name": "[헤브코리아] 미스터링고 폐호흡 액상 60ml",
