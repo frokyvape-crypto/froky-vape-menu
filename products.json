@@ -12589,7 +12589,7 @@
   {
     "id": 1350,
     "product_no": 1350,
-    "name": "[마샤] 핵스터쥬스 입호흡 액상 30ml",
+    "name": "마샤 핵스터쥬스 입호흡 액상 30ml",
     "price": 18100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202403/da8e10f08f4550c63904005e37f24393.png"
@@ -12601,7 +12601,15 @@
     "detailImg": "https://frokyvape.com/web/product/big/202403/98bac47be451b430a7b13d9ecd7d078d.png",
     "cat": "입호흡",
     "flavor": "",
-    "options": [],
+    "options": [
+      "피치업",
+      "유자슬러쉬",
+      "더 샤인",
+      "알로에베라",
+      "더 샤인 (노멘솔)",
+      "더 그레이프 (노멘솔)",
+      "도프시가 (노멘솔)"
+    ],
     "sale": false
   },
   {
