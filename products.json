@@ -94,7 +94,7 @@
   {
     "id": 3029,
     "product_no": 3029,
-    "name": "♥한정 수량 초특가 할인♥ 펠릭스 라임시리즈 입호흡 액상 30ml",
+    "name": "펠릭스 라임시리즈 입호흡 액상 30ml",
     "price": 9900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202604/d557ac7bdcab56284f02fef4521fe495.png"
@@ -106,7 +106,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202604/c3df1b2498d1dcff5781a2bce66294ee.png",
     "cat": "입호흡",
     "flavor": "9.7mg",
-    "options": [],
+    "options": [
+      "라임 핑크레몬에이드"
+    ],
     "sale": false
   },
   {
