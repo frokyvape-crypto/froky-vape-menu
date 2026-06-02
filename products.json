@@ -4889,7 +4889,7 @@
   {
     "id": 2441,
     "product_no": 2441,
-    "name": "[YV] 아크드립 플레이버 입호흡 액상 30ml",
+    "name": "아크드립 플레이버 입호흡 액상 30ml",
     "price": 12600,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202509/7d660827c2e0471853de083989c89aea.jpg"
@@ -4901,7 +4901,10 @@
     "detailImg": "https://frokyvape.com/web/product/big/202509/a82712032bb37051d15c18d91d662a12.jpg",
     "cat": "입호흡",
     "flavor": "",
-    "options": [],
+    "options": [
+      "아크드립 수박",
+      "아크드립 소다"
+    ],
     "sale": false
   },
   {
