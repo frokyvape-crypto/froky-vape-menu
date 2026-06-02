@@ -2170,24 +2170,6 @@
     "sale": false
   },
   {
-    "id": 2742,
-    "product_no": 2742,
-    "name": "♥한정 수량 초특가 할인♥ 굿쥬스 입호흡 액상 30ml",
-    "price": 2900,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202602/1065bcda7fd08530a7264a9a21babe2d.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202602/1065bcda7fd08530a7264a9a21babe2d.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202602/bd0b712a74ad8d309a4bf379725ea03b.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202602/bd0b712a74ad8d309a4bf379725ea03b.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "sale": false
-  },
-  {
     "id": 2739,
     "product_no": 2739,
     "name": "♥한정 수량 초특가 할인♥ 저스트포그 코팝 입호흡 액상 30ml",
@@ -5367,7 +5349,7 @@
   {
     "id": 2399,
     "product_no": 2399,
-    "name": "[VL] 티엔 입호흡 액상 30ml",
+    "name": "티엔 입호흡 액상 30ml",
     "price": 10000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202508/8d829932d6a95fe439187d91582260bb.jpg"
@@ -5379,7 +5361,14 @@
     "detailImg": "https://frokyvape.com/web/product/big/202508/76ca21dc12d0c7ad2f6d5cd51f67a295.jpg",
     "cat": "입호흡",
     "flavor": "",
-    "options": [],
+    "options": [
+      "블랙 코크",
+      "딸바 스무디",
+      "보르도 그레이프",
+      "스프라이트 레몬",
+      "젤리 알로에",
+      "지저스 마르키사"
+    ],
     "sale": false
   },
   {
