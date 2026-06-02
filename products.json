@@ -17923,7 +17923,7 @@
   {
     "id": 1719,
     "product_no": 1719,
-    "name": "[모코리퀴드] 사워 시리즈 폐호흡 액상 60ml",
+    "name": "모코리퀴드 사워 시리즈 폐호흡 액상 60ml",
     "price": 18100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202409/d1fdc7a3854ee7512c01aca5894db784.png"
@@ -17934,8 +17934,10 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202409/e1a1bc2b18f632407a7ad48439a90e8a.png",
     "cat": "폐호흡",
-    "flavor": "",
-    "options": [],
+    "flavor": "3mg",
+    "options": [
+      "그레이프 사워"
+    ],
     "sale": false
   },
   {
