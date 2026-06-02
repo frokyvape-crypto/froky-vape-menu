@@ -12159,7 +12159,7 @@
   {
     "id": 1418,
     "product_no": 1418,
-    "name": "[베이프바스켓] 예스 시리즈 입호흡 액상 30ml",
+    "name": "베이프바스켓 예스 시리즈 입호흡 액상 30ml",
     "price": 12600,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202403/3208b5c9aaf62a8b2148e8ef1b5432bd.png"
@@ -12171,7 +12171,10 @@
     "detailImg": "https://frokyvape.com/web/product/big/202403/083f2bdbdd4e9bacf4ba76de19b90ece.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "파인애플 아이스",
+      "피치 망고 워터멜론"
+    ],
     "sale": false
   },
   {
