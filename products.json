@@ -18425,24 +18425,6 @@
     "sale": false
   },
   {
-    "id": 1424,
-    "product_no": 1424,
-    "name": "[저스코] 폐호흡 액상 60ml",
-    "price": 19000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202404/8001bc6970f6efde5069ea371db56e80.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202404/8001bc6970f6efde5069ea371db56e80.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202404/cfda63f2da2c42fcc613e13fe8c0d2d9.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202404/cfda63f2da2c42fcc613e13fe8c0d2d9.png",
-    "cat": "폐호흡",
-    "flavor": "",
-    "options": [],
-    "sale": false
-  },
-  {
     "id": 1354,
     "product_no": 1354,
     "name": "마샤 폐호흡 액상 60ml",
