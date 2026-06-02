@@ -10512,7 +10512,7 @@
   {
     "id": 1696,
     "product_no": 1696,
-    "name": "[펠릭스] 사와시리즈 입호흡 액상 30ml",
+    "name": "펠릭스 사와시리즈 입호흡 액상 30ml",
     "price": 16600,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202506/3f053988896b89efe19402838ef28ca4.png"
@@ -10523,8 +10523,15 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202506/94841c0b7b5c8b6528edacde81454df5.png",
     "cat": "입호흡",
-    "flavor": "9.7mg ★ 소다사와 신규 입고 ★",
-    "options": [],
+    "flavor": "9.7mg",
+    "options": [
+      "레몬 사와",
+      "유자 사와",
+      "자몽 사와",
+      "라임 사와",
+      "체리 사와",
+      "소다 사와"
+    ],
     "sale": false
   },
   {
