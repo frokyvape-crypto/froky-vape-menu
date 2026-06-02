@@ -18639,7 +18639,7 @@
   {
     "id": 1354,
     "product_no": 1354,
-    "name": "[마샤] 폐호흡 액상 60ml",
+    "name": "마샤 폐호흡 액상 60ml",
     "price": 22400,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202403/1d7312b93c435809085ba14f4a9a2a17.png"
@@ -18651,7 +18651,11 @@
     "detailImg": "https://frokyvape.com/web/product/big/202403/03533cd86430c0d630a4cd19aef86e02.png",
     "cat": "폐호흡",
     "flavor": "3mg",
-    "options": [],
+    "options": [
+      "유자",
+      "발렌시가",
+      "딸기"
+    ],
     "sale": false
   },
   {
