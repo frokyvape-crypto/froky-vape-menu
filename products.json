@@ -5502,7 +5502,7 @@
   {
     "id": 2388,
     "product_no": 2388,
-    "name": "[고농도] 펠릭스 라임시리즈 입호흡 액상 30ml",
+    "name": "펠릭스 라임시리즈 입호흡 액상 30ml (고농도)",
     "price": 18700,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202508/e83b63b4b3399258ee938f73b7bfc201.jpg"
@@ -5514,7 +5514,11 @@
     "detailImg": "https://frokyvape.com/web/product/big/202508/23d6c10609766d36ec8cf15d37d65048.jpg",
     "cat": "고농도",
     "flavor": "2%",
-    "options": [],
+    "options": [
+      "더블 라임 (고농도)",
+      "라임 알로에 (고농도)",
+      "더블 알로에 (고농도)"
+    ],
     "sale": false
   },
   {
