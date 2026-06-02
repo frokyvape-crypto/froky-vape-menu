@@ -19769,5 +19769,61 @@
       "자몽"
     ],
     "sale": false
+  },
+  {
+    "id": 1497,
+    "product_no": 1497,
+    "name": "언플러그 일회용 전자담배 카트리지 21ml  액상팟",
+    "price": 17300,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202406/1c3658ea90009a5997057028fe33d8fb.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202406/1c3658ea90009a5997057028fe33d8fb.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202406/0abcf6ebba62517b2fa373689f7b075c.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202406/0abcf6ebba62517b2fa373689f7b075c.png",
+    "cat": "일회용",
+    "flavor": "12,000퍼프 / 배터리 미포함",
+    "options": [
+      "야쿠르트 (액상 팟)",
+      "더블 그레이프 (액상 팟)",
+      "레몬 콜라 (액상 팟)",
+      "스트로베리 아이스크림 (액상 팟)",
+      "모던 멘솔 (액상 팟)",
+      "더블 파인애플 레몬 (액상 팟)",
+      "레드애플 알로에 (액상 팟)",
+      "[액상 팟] 블루레몬 셔벗",
+      "키위 시샤 (액상 팟)",
+      "스트로베리 레몬에이드 (액상 팟)",
+      "라임 아이스크림 (액상 팟)",
+      "베리 요거트 (액상 팟)",
+      "피치 베리 셔벗 (액상 팟)",
+      "버터 팝콘 (액상 팟)",
+      "초콜렛 오렌지 (액상 팟)",
+      "워터멜론 젤리 (액상 팟)",
+      "키위 패션후르츠 (액상 팟)",
+      "페어플레이 (액상 팟)",
+      "핑크레몬에이드 (액상 팟)"
+    ],
+    "sale": false
+  },
+  {
+    "id": 1496,
+    "product_no": 1496,
+    "name": "[B M ML] 언플러그 일회용 전자담배 스타터 키트 21ml",
+    "price": 23000,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202406/250e237d292e18813ecb62c9a232a552.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202406/250e237d292e18813ecb62c9a232a552.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202406/fc18f70e959eabb685d0caf72b8ff29e.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202406/fc18f70e959eabb685d0caf72b8ff29e.png",
+    "cat": "일회용",
+    "flavor": "12,000 퍼프 / 배터리 + 액상 팟",
+    "options": [],
+    "sale": false
   }
 ]
