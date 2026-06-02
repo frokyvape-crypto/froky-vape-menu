@@ -8562,7 +8562,7 @@
   {
     "id": 2017,
     "product_no": 2017,
-    "name": "[YV] 라드카페 플레이버 입호흡 액상 30ml",
+    "name": "라드카페 플레이버 입호흡 액상 30ml",
     "price": 12000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202503/c6d07b1cfb650c322c1da1b58160f9e1.png"
@@ -8574,7 +8574,12 @@
     "detailImg": "https://frokyvape.com/web/product/big/202503/091fb8c8e30932e47988f3a41c412d7b.png",
     "cat": "입호흡",
     "flavor": "",
-    "options": [],
+    "options": [
+      "자몽 & 히비스커스",
+      "아샷추",
+      "자스민 & 믹스베리",
+      "딸기 & 초코"
+    ],
     "sale": false
   },
   {
