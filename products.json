@@ -12180,7 +12180,7 @@
   {
     "id": 1416,
     "product_no": 1416,
-    "name": "♥ 5+1 ♥ 베이프바스켓 스탠다드시리즈 입호흡 액상 30ml",
+    "name": "베이프바스켓 스탠다드시리즈 입호흡 액상 30ml",
     "price": 18100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202403/f0d997b970c7ef02664878d20987c2a1.png"
@@ -12192,7 +12192,10 @@
     "detailImg": "https://frokyvape.com/web/product/big/202403/3c910ad427263c7d8a5f86f030354239.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "화이트 시가",
+      "아이스 머스켓"
+    ],
     "sale": false
   },
   {
