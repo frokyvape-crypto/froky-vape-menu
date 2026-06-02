@@ -13258,7 +13258,7 @@
   {
     "id": 1035,
     "product_no": 1035,
-    "name": "[펠릭스] 노네임 입호흡 액상 30ml",
+    "name": "펠릭스 노네임 입호흡 액상 30ml",
     "price": 13300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202407/7b5d6728b0b5ce0fef55ac1244ca6395.png"
@@ -13270,7 +13270,17 @@
     "detailImg": "https://frokyvape.com/web/product/big/202407/19bdf9584d675dc1abcffa735d830bf1.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "아쿠아",
+      "씨솔트 레몬",
+      "메리 퀸",
+      "피치 펀치",
+      "피치 라씨",
+      "레몬 타르트",
+      "버터 시가",
+      "슈퍼 샤인",
+      "애플 민트"
+    ],
     "sale": false
   },
   {
