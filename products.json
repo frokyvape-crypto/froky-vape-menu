@@ -9967,7 +9967,7 @@
   {
     "id": 1830,
     "product_no": 1830,
-    "name": "[K] 굿쥬스 입호흡 액상 30ml",
+    "name": "굿쥬스 입호흡 액상 30ml",
     "price": 7800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202501/10139b6cd42542f4c875cfcea5523c82.png"
@@ -9978,8 +9978,16 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202501/baf0ea2fcda18f1462b1339abb33d241.png",
     "cat": "입호흡",
-    "flavor": "1박스 (10병) 단위로 구매 가능 상품입니다",
-    "options": [],
+    "flavor": "9.8mg",
+    "options": [
+      "에이프리콧 체리",
+      "레몬 그린티",
+      "블랙사파이어",
+      "비비비",
+      "애플 베리",
+      "프레쉬 유자",
+      "스위트 멜론즈"
+    ],
     "sale": false
   },
   {
