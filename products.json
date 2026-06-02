@@ -5447,7 +5447,7 @@
   {
     "id": 2395,
     "product_no": 2395,
-    "name": "[고농도] 마샤 제로쿨 입호흡 액상 30ml",
+    "name": "마샤 제로쿨 입호흡 액상 30ml 고농도",
     "price": 21200,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202508/060c498d515bb8693a696d38663b455d.jpg"
@@ -5459,7 +5459,11 @@
     "detailImg": "https://frokyvape.com/web/product/big/202508/7d5432b713bba6904d37f7a67b090f6d.jpg",
     "cat": "고농도",
     "flavor": "1.8%",
-    "options": [],
+    "options": [
+      "제로쿨 샤인머스킷 (고농도)",
+      "제로쿨 딸기 (고농도)",
+      "제로쿨 유자 (고농도)"
+    ],
     "sale": false
   },
   {
