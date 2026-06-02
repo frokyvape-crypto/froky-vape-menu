@@ -18770,7 +18770,7 @@
   {
     "id": 813,
     "product_no": 813,
-    "name": "[모코리퀴드] 젤리샷 시리즈 폐호흡 액상 60ml",
+    "name": "모코리퀴드 젤리샷 시리즈 폐호흡 액상 60ml",
     "price": 21800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202312/1bfbdf37e77a80efcd22590f7cc7ee7a.png"
@@ -18782,7 +18782,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202312/fb6426e4335b41ee82dbb904878eae27.png",
     "cat": "폐호흡",
     "flavor": "3mg",
-    "options": [],
+    "options": [
+      "라임자몽"
+    ],
     "sale": false
   },
   {
