@@ -24,25 +24,6 @@
     "sale": false
   },
   {
-    "id": 2638,
-    "name": "방그레 알로에베라 입호흡 액상 30ml",
-    "price": 7700,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202512/559d2111be4f7f5b2a35c8a650cf46c7.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202512/559d2111be4f7f5b2a35c8a650cf46c7.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202512/d0e182333785bea43546d8d0d735fad8.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202512/d0e182333785bea43546d8d0d735fad8.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [
-      "알로에베라"
-    ],
-    "sale": false
-  },
-  {
     "id": 2467,
     "product_no": 2467,
     "name": "트로피카우! 플레이버 입호흡 액상 30ml",
