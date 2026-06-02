@@ -291,7 +291,7 @@
   },
   {
     "id": 1898,
-    "name": "모코리퀴드 모코 & 말레이시아 더블 시리즈 입호흡 액상 30ml",
+    "name": "모코리퀴드 더블 시리즈 입호흡 액상 30ml",
     "price": 19900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202604/7e65bb5ce5f63401dad9842737ad4c54.png"
@@ -304,7 +304,9 @@
     "cat": "입호흡",
     "flavor": "9.5mg",
     "options": [
-      "더블 레몬"
+      "더블 레몬",
+      "더블 샤인",
+      "더블 소다"
     ],
     "sale": false
   },
