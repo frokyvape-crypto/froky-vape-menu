@@ -10529,7 +10529,7 @@
   {
     "id": 1691,
     "product_no": 1691,
-    "name": "[VL] 제이씨컴퍼니 트럼프 입호흡 액상 30ml",
+    "name": "제이씨컴퍼니 트럼프 입호흡 액상 30ml",
     "price": 13300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202409/696320988f8751f3e2038de5d25fc53f.png"
@@ -10541,7 +10541,19 @@
     "detailImg": "https://frokyvape.com/web/product/big/202409/20044cf7d1cba6e2f7524dbdeb82b312.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "곰돌이젤리",
+      "레드 (연초)",
+      "리얼파인",
+      "베리퀸",
+      "쏘쿨",
+      "애플비치",
+      "쿨라임",
+      "쿨믹스",
+      "쿨민트",
+      "포도송이",
+      "피치 (노멘솔)"
+    ],
     "sale": false
   },
   {
