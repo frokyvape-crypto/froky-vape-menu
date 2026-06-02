@@ -12517,7 +12517,7 @@
   {
     "id": 1353,
     "product_no": 1353,
-    "name": "[마샤] 구름여행쥬스 아임 파인 입호흡 액상 30ml",
+    "name": "마샤 구름여행쥬스 아임 파인 입호흡 액상 30ml",
     "price": 18100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202403/636958056cfb89ab51024154ea4d14a0.jpg"
@@ -12529,7 +12529,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202403/b8872a3ced5b8cdbbb78f9440d891029.jpg",
     "cat": "입호흡",
     "flavor": "",
-    "options": [],
+    "options": [
+      "아임 파인"
+    ],
     "sale": false
   },
   {
