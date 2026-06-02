@@ -19718,5 +19718,27 @@
     "flavor": "3mg",
     "options": [],
     "sale": false
+  },
+  {
+    "id": 1911,
+    "product_no": 1911,
+    "name": "스피즈 입호흡 액상 30ml",
+    "price": 12600,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202502/c369750f2e00b6b662e9cbe8669fa43e.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202502/c369750f2e00b6b662e9cbe8669fa43e.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202502/ac8baab8d9cf7b6265aa7165a51a675d.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202502/ac8baab8d9cf7b6265aa7165a51a675d.png",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "레몬",
+      "오렌지",
+      "자몽"
+    ],
+    "sale": false
   }
 ]
