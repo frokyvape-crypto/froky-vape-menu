@@ -467,7 +467,7 @@ const CAFE24_MALL='frokyvape';
 const REPO='frokyvape-crypto/froky-vape-menu';
 const DEFAULT_SITE_CONFIG={noticeMode:'stock',noticeBannerImgs:['images/notice-banner.svg'],noticeBannerImg:'images/notice-banner.svg',noticePopupEnabled:true,noticePopupImgs:['images/notice-popup.png'],noticePopupImg:'images/notice-popup.png',categories:[{value:'best',label:'🏆 베스트'},{value:'입호흡',label:'입호흡 액상'},{value:'폐호흡',label:'폐호흡 액상'},{value:'고농도',label:'고농도 액상'},{value:'일회용',label:'일회용 기기'}]};
 let siteConfig={...DEFAULT_SITE_CONFIG};
-let P=[],cart=[],sp=null,sq=1;
+let P=[],cart=[],sp=null,sq=1,currentCat='all',productsHash='',siteConfigHash='',autoRefreshTimer=0;
 const fmt=n=>n.toLocaleString('ko-KR')+'원';
 function getImgs(p){if(Array.isArray(p.imgs)&&p.imgs.length)return p.imgs;if(p.img)return[p.img];return[''];}
 function getDetailImgs(p){if(Array.isArray(p.detailImgs)&&p.detailImgs.length)return p.detailImgs;if(p.detailImg)return[p.detailImg];return[];}
@@ -475,29 +475,41 @@ function getNoticeImgs(key,fallback){const arr=Array.isArray(siteConfig[key+'s']
 function normalizeCategories(list){const src=Array.isArray(list)&&list.length?list:DEFAULT_SITE_CONFIG.categories;const seen=new Set();return src.map(c=>typeof c==='string'?{value:c,label:c}:c).map(c=>({value:String(c.value||'').trim(),label:String(c.label||c.value||'').trim()})).filter(c=>c.value&&c.label&&!seen.has(c.value)&&seen.add(c.value));}
 function escAttr(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function categoryLabel(value){return normalizeCategories(siteConfig.categories).find(c=>c.value===value)?.label||value;}
-function renderCategoryNav(){const nav=document.getElementById('category-nav');if(!nav)return;const cats=normalizeCategories(siteConfig.categories);nav.innerHTML=`<button class="cat-btn active" onclick="filterCat('all',this)">전체</button>`+cats.map(c=>`<button class="cat-btn" onclick='filterCat(${JSON.stringify(c.value)},this)'>${escAttr(c.label)}</button>`).join('');}
-function applySiteConfig(cfg){
+function renderCategoryNav(){const nav=document.getElementById('category-nav');if(!nav)return;const cats=normalizeCategories(siteConfig.categories);nav.innerHTML=`<button class="cat-btn${currentCat==='all'?' active':''}" onclick="filterCat('all',this)">전체</button>`+cats.map(c=>`<button class="cat-btn${currentCat===c.value?' active':''}" onclick='filterCat(${JSON.stringify(c.value)},this)'>${escAttr(c.label)}</button>`).join('');}
+function applySiteConfig(cfg,{allowPopup=false}={}){
   siteConfig={...DEFAULT_SITE_CONFIG,...(cfg||{})};
   siteConfig.categories=normalizeCategories(siteConfig.categories);
   renderCategoryNav();
   document.body.setAttribute('data-notice-mode',siteConfig.noticeMode||'default');
   const bannerImgs=getNoticeImgs('noticeBannerImg',DEFAULT_SITE_CONFIG.noticeBannerImg);
   document.getElementById('notice-banner-img').src=bannerImgs[0]||DEFAULT_SITE_CONFIG.noticeBannerImg;
-  if(siteConfig.noticePopupEnabled)openNoticePopup();
+  if(allowPopup&&siteConfig.noticePopupEnabled)openNoticePopup();
 }
-async function loadSiteConfig(){
+async function loadSiteConfig({silent=false,allowPopup=true}={}){
   const t=Date.now();
   // GitHub API is not CDN-cached — always returns the latest committed file
   try{
     const r=await fetch(`https://api.github.com/repos/${REPO}/contents/site-config.json`,{headers:{'Accept':'application/vnd.github.v3.raw'},cache:'no-store'});
-    if(r.ok){applySiteConfig(await r.json());return;}
+    if(r.ok){
+      const cfg=await r.json();
+      siteConfigHash=JSON.stringify(cfg);
+      applySiteConfig(cfg,{allowPopup});
+      return cfg;
+    }
   }catch(e){}
   // Fallback: direct URL with cache-bust + no-store
   try{
     const r=await fetch(`site-config.json?t=${t}`,{cache:'no-store'});
-    if(r.ok){applySiteConfig(await r.json());return;}
+    if(r.ok){
+      const cfg=await r.json();
+      siteConfigHash=JSON.stringify(cfg);
+      applySiteConfig(cfg,{allowPopup});
+      return cfg;
+    }
   }catch(e){}
-  applySiteConfig(DEFAULT_SITE_CONFIG);
+  siteConfigHash=JSON.stringify(DEFAULT_SITE_CONFIG);
+  applySiteConfig(DEFAULT_SITE_CONFIG,{allowPopup});
+  return DEFAULT_SITE_CONFIG;
 }
 let _popupImgs=[],_popupIdx=0;
 function noticeTodayKey(){const imgs=getNoticeImgs('noticePopupImg',DEFAULT_SITE_CONFIG.noticePopupImg);const d=new Date();return`${imgs.join(',')}|${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
@@ -537,10 +549,13 @@ function startBestCarousel(){
   step();
 }
 function buildCarousel(){const best=P.filter(p=>p.cat==='best');const track=document.getElementById('carousel-track');track.innerHTML=best.map(p=>`<div class="best-card" onclick="openBestCard(${p.id})"><img src="${getImgs(p)[0]||''}" alt="${p.name}" loading="lazy" draggable="false"><div class="best-card-body"><div class="best-card-name">${p.name}${p.sale?'<span class="hot">SALE</span>':''}</div><div class="best-card-price">${fmt(p.price)}</div></div></div>`).join('');startBestCarousel();}
-function renderGrid(cat){const items=cat==='all'?P:P.filter(p=>p.cat===cat);document.getElementById('best-section').style.display=cat==='all'?'':'none';document.getElementById('section-label').textContent=cat==='all'?'전체 상품':categoryLabel(cat);document.getElementById('product-grid').innerHTML=items.map(cardHTML).join('');}
-function filterCat(cat,el){document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderGrid(cat);}
-function onSearch(val){const q=val.trim();document.getElementById('search-clear').style.display=q?'block':'none';if(!q){document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');return;}document.getElementById('best-section').style.display='none';const res=P.filter(p=>p.name.includes(q)||p.flavor.includes(q));const lbl=document.getElementById('search-result-label');lbl.style.display='block';lbl.textContent=`"${q}" 검색 결과 ${res.length}개`;document.getElementById('section-label').textContent='검색 결과';document.getElementById('product-grid').innerHTML=res.length?res.map(cardHTML).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0">검색 결과가 없습니다 😢</div>';}
+function renderGrid(cat){currentCat=cat;const items=cat==='all'?P:P.filter(p=>p.cat===cat);document.getElementById('best-section').style.display=cat==='all'?'':'none';document.getElementById('section-label').textContent=cat==='all'?'전체 상품':categoryLabel(cat);document.getElementById('product-grid').innerHTML=items.map(cardHTML).join('');}
+function filterCat(cat,el){currentCat=cat;document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');renderGrid(cat);}
+function onSearch(val){const q=val.trim();document.getElementById('search-clear').style.display=q?'block':'none';if(!q){document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');return;}document.getElementById('best-section').style.display='none';const res=P.filter(p=>(p.name||'').includes(q)||(p.flavor||'').includes(q));const lbl=document.getElementById('search-result-label');lbl.style.display='block';lbl.textContent=`"${q}" 검색 결과 ${res.length}개`;document.getElementById('section-label').textContent='검색 결과';document.getElementById('product-grid').innerHTML=res.length?res.map(cardHTML).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0">검색 결과가 없습니다 😢</div>';}
 function clearSearch(){document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');}
+function renderCurrentView(){const q=document.getElementById('search-input')?.value||'';buildCarousel();if(q.trim())onSearch(q);else renderGrid(currentCat||'all');}
+function syncOpenProductSheet(){if(!sp)return;const next=P.find(p=>p.id===sp.id);if(!next){closeSheet();sp=null;return;}const prevOpt=document.getElementById('s-option')?.value||'';sp=next;document.getElementById('s-name').textContent=sp.name;document.getElementById('s-price').textContent=fmt(sp.price);document.getElementById('s-tag').textContent=sp.flavor;const options=Array.isArray(sp.options)?sp.options:[];const optionEl=document.getElementById('s-option');optionEl.innerHTML=options.length?'<option value="">옵션 선택</option>'+options.map(o=>`<option>${o}</option>`).join(''):'<option value="옵션 없음">옵션 없음</option>';optionEl.disabled=!options.length;if(options.includes(prevOpt))optionEl.value=prevOpt;updateTotal();}
+function syncCartWithProducts(){cart=cart.map(c=>{const p=P.find(x=>x.id===c.id);return p?{...c,name:p.name,price:p.price,img:getImgs(p)[0]||c.img}:c;});updateCartUI();}
 function productDetailImages(p){return Array.isArray(p.detailImgs)&&p.detailImgs.length?p.detailImgs:(p.detailImg?[p.detailImg]:[]);}
 function addToCart(p,option,qty){const key=`${p.id}_${option}`;const ex=cart.find(c=>c.key===key);if(ex)ex.qty+=qty;else cart.push({key,id:p.id,name:p.name,option,price:p.price,qty,img:p.img});updateCartUI();showToast(`🛒 ${p.name} 담겼습니다`);}
 function updateCartUI(){const total=cart.reduce((s,c)=>s+c.price*c.qty,0);const count=cart.reduce((s,c)=>s+c.qty,0);document.getElementById('cart-count').textContent=count;document.getElementById('total-price').textContent=fmt(total);document.getElementById('checkout-btn').disabled=!cart.length;const el=document.getElementById('cart-items');if(!cart.length){el.innerHTML='<div class="cart-empty">장바구니가 비어있습니다 🛒</div>';return;}el.innerHTML=cart.map(c=>`<div class="cart-item"><img src="${c.img}" alt="${c.name}"><div><div class="ci-name">${c.name}</div><div class="ci-opt">${c.option}</div><div class="qty-ctrl"><button class="qty-btn" onclick="changeQty('${c.key}',-1)">−</button><span class="qty-val">${c.qty}</span><button class="qty-btn" onclick="changeQty('${c.key}',1)">+</button></div></div><div class="ci-right"><span class="ci-price">${fmt(c.price*c.qty)}</span><button class="ci-del" onclick="removeItem('${c.key}')">삭제</button></div></div>`).join('');}
@@ -651,19 +666,51 @@ function copyPmRealQty(){
   }).catch(()=>showToast('복사 실패'));
 }
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
-async function loadProducts(){
-  document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품을 불러오는 중... ⏳</div>';
+async function fetchProductsFresh(){
+  const res=await fetch('products.json?t='+Date.now(),{cache:'no-store'});
+  if(!res.ok)throw new Error();
+  return await res.json();
+}
+async function loadProducts({silent=false}={}){
+  if(!silent)document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품을 불러오는 중... ⏳</div>';
   try{
-    const res=await fetch('products.json?t='+Date.now());
-    if(!res.ok)throw new Error();
-    P=await res.json();
-    buildCarousel();
-    renderGrid('all');
+    const next=await fetchProductsFresh();
+    productsHash=JSON.stringify(next);
+    P=next;
+    renderCurrentView();
   }catch(e){
-    document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품 준비 중입니다 😊</div>';
+    if(!silent)document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품 준비 중입니다 😊</div>';
   }
 }
-async function initPage(){await loadSiteConfig();loadProducts();}
+async function refreshIfChanged(){
+  if(document.hidden)return;
+  try{
+    const next=await fetchProductsFresh();
+    const nextHash=JSON.stringify(next);
+    if(nextHash!==productsHash){
+      productsHash=nextHash;
+      P=next;
+      syncCartWithProducts();
+      syncOpenProductSheet();
+      renderCurrentView();
+      showToast('상품 정보가 업데이트되었습니다');
+    }
+  }catch(e){}
+  try{
+    const r=await fetch('site-config.json?t='+Date.now(),{cache:'no-store'});
+    if(r.ok){
+      const cfg=await r.json();
+      const nextHash=JSON.stringify(cfg);
+      if(nextHash!==siteConfigHash){
+        siteConfigHash=nextHash;
+        applySiteConfig(cfg,{allowPopup:false});
+        renderCurrentView();
+      }
+    }
+  }catch(e){}
+}
+function startAutoRefresh(){clearInterval(autoRefreshTimer);autoRefreshTimer=setInterval(refreshIfChanged,30000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshIfChanged();});}
+async function initPage(){await loadSiteConfig({allowPopup:true});await loadProducts();startAutoRefresh();}
 initPage();
 </script>
 </body>
