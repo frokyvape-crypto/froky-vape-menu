@@ -13968,43 +13968,6 @@
     "sale": false
   },
   {
-    "id": 802,
-    "product_no": 802,
-    "name": "[모코리퀴드] 프로티 시리즈 입호흡 액상 30ml",
-    "price": 14400,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202312/782eff66256ad3e2ef45d1ac3275d670.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202312/782eff66256ad3e2ef45d1ac3275d670.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202312/1c5c6dc1233106a36608d9f052705d16.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202312/1c5c6dc1233106a36608d9f052705d16.png",
-    "cat": "입호흡",
-    "flavor": "9mg",
-    "options": [],
-    "sale": false
-  },
-  {
-    "id": 801,
-    "name": "[모코리퀴드] 젤리샷 시리즈 입호흡 액상 30ml",
-    "price": 14400,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202312/ec73eade7f97a42209b017bf92a56dd7.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202312/ec73eade7f97a42209b017bf92a56dd7.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202312/6a830ecd9cc7bdf5f8755b0cb80c757f.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202312/6a830ecd9cc7bdf5f8755b0cb80c757f.png",
-    "cat": "입호흡",
-    "flavor": "9mg",
-    "options": [
-      "라임 자몽"
-    ],
-    "sale": false
-  },
-  {
     "id": 800,
     "name": "모코리퀴드 입호흡 액상 30ml",
     "price": 14400,
