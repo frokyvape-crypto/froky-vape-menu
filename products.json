@@ -12201,7 +12201,7 @@
   {
     "id": 1412,
     "product_no": 1412,
-    "name": "♥ 5+1 ♥ 베이프바스켓 달콤시리즈 입호흡 액상 30ml",
+    "name": "베이프바스켓 달콤시리즈 입호흡 액상 30ml",
     "price": 17000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202403/fbb2e9b9b789ec565224c9db2e4d6c24.png"
@@ -12213,7 +12213,10 @@
     "detailImg": "https://frokyvape.com/web/product/big/202403/8607277a59a33f93200385b6c0735667.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "젤리 하트",
+      "젤리 애플"
+    ],
     "sale": false
   },
   {
