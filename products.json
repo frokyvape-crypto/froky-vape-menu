@@ -18577,7 +18577,7 @@
   {
     "id": 1037,
     "product_no": 1037,
-    "name": "[펠릭스] HER057 폐호흡 액상 60ml",
+    "name": "펠릭스 HER057 폐호흡 액상 60ml",
     "price": 22500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202407/78db001d3fffad858baf806201a389a2.png"
@@ -18589,7 +18589,10 @@
     "detailImg": "https://frokyvape.com/web/product/big/202407/40204da2f8c10882cfd8bd319a2969f2.png",
     "cat": "폐호흡",
     "flavor": "3mg",
-    "options": [],
+    "options": [
+      "치즈 & 카라멜팝콘",
+      "코코넛 커스타드 케이크"
+    ],
     "sale": false
   },
   {
