@@ -17082,24 +17082,6 @@
     "sale": false
   },
   {
-    "id": 2939,
-    "product_no": 2939,
-    "name": "♥한정 수량 초특가 할인♥ FLEXX 플렉스엑스 폐호흡 액상 60ml",
-    "price": 4900,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202507/57c27da719a6792b91815ea7ee6a2e3e.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202507/57c27da719a6792b91815ea7ee6a2e3e.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202507/1924b0d1564328ab71563781836ecdff.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202507/1924b0d1564328ab71563781836ecdff.png",
-    "cat": "폐호흡",
-    "flavor": "3mg",
-    "options": [],
-    "sale": false
-  },
-  {
     "id": 2938,
     "product_no": 2938,
     "name": "♥한정 수량 초특가 할인♥ 크로닉 슈퍼쿨 폐호흡 액상 60ml",
@@ -18528,7 +18510,7 @@
   {
     "id": 1080,
     "product_no": 1080,
-    "name": "[KV IN] FLEXX 플렉스엑스 폐호흡 액상 60ml",
+    "name": "FLEXX 플렉스엑스 폐호흡 액상 60ml",
     "price": 22000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202507/57c27da719a6792b91815ea7ee6a2e3e.png"
@@ -18540,7 +18522,16 @@
     "detailImg": "https://frokyvape.com/web/product/big/202507/1924b0d1564328ab71563781836ecdff.png",
     "cat": "폐호흡",
     "flavor": "3mg",
-    "options": [],
+    "options": [
+      "피치 엔딩",
+      "망고 엔딩",
+      "포멜로 엔딩",
+      "오렌지 엔딩",
+      "딸기 엔딩",
+      "스피아민트 엔딩",
+      "애플 엔딩",
+      "머스캣 엔딩"
+    ],
     "sale": false
   },
   {
