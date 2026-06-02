@@ -11920,7 +11920,7 @@
   {
     "id": 1469,
     "product_no": 1469,
-    "name": "[펠릭스] 토바코 시리즈 입호흡 액상 30ml",
+    "name": "펠릭스 토바코 시리즈 입호흡 액상 30ml",
     "price": 15500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202405/1b7a53eca8779388412cfd17fd322af7.png"
@@ -11931,8 +11931,11 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202405/eeaa2bfa3616948d97406d1f445813ed.png",
     "cat": "입호흡",
-    "flavor": "",
-    "options": [],
+    "flavor": "9.7mg",
+    "options": [
+      "올드패션드",
+      "애쉬트레이"
+    ],
     "sale": false
   },
   {
