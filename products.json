@@ -63,26 +63,6 @@
     "sale": false
   },
   {
-    "id": 2611,
-    "product_no": 2611,
-    "name": "싸이쥬스 샤인머쓱캣 입호흡 액상 30ml",
-    "price": 6700,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202511/cad0a13281d95f72f618f9a9fa64bada.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202511/cad0a13281d95f72f618f9a9fa64bada.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202511/33cb21190d8147467e2f3d5fa2c58f15.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202511/33cb21190d8147467e2f3d5fa2c58f15.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [
-      "샤인머쓱캣"
-    ],
-    "sale": false
-  },
-  {
     "id": 2467,
     "product_no": 2467,
     "name": "트로피카우! 플레이버 입호흡 액상 30ml",
