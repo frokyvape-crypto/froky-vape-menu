@@ -18760,7 +18760,7 @@
   {
     "id": 825,
     "product_no": 825,
-    "name": "[펠릭스] 라임시리즈 폐호흡 액상 60ml",
+    "name": "펠릭스 라임시리즈 폐호흡 액상 60ml",
     "price": 21500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202406/ba5cfa8c7bafb0dcf7296102b9be7dee.png"
@@ -18772,7 +18772,14 @@
     "detailImg": "https://frokyvape.com/web/product/big/202406/003246e6a063c3cf6139cc0ef1cb872f.png",
     "cat": "폐호흡",
     "flavor": "3mg",
-    "options": [],
+    "options": [
+      "더블 라임",
+      "더블 알로에",
+      "라임 알로에",
+      "라임 라임",
+      "라임 핑크레몬에이드",
+      "라임 핑크레몬에이드"
+    ],
     "sale": false
   },
   {
