@@ -11414,24 +11414,6 @@
     "sale": false
   },
   {
-    "id": 1544,
-    "product_no": 1544,
-    "name": "[M] 개마시써 제로쿨 입호흡 액상 30ml",
-    "price": 10000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202407/9cc266982cca4d12439b2314ea706860.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202407/9cc266982cca4d12439b2314ea706860.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202407/012f959a05a021c71fb5c41fbe5577b5.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202407/012f959a05a021c71fb5c41fbe5577b5.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "sale": false
-  },
-  {
     "id": 1542,
     "product_no": 1542,
     "name": "개마시써 입호흡 액상  30ml",
@@ -18282,42 +18264,6 @@
     "detailImg": "https://frokyvape.com/web/product/big/202407/99ea47fbc44e429e56773e12e22f96c8.png",
     "cat": "폐호흡",
     "flavor": "3mg",
-    "options": [],
-    "sale": false
-  },
-  {
-    "id": 1543,
-    "product_no": 1543,
-    "name": "[M] 개마시써 저농도 폐호흡 액상 60ml",
-    "price": 15900,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202407/ebff721d9f75b6937369e1b393dc10af.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202407/ebff721d9f75b6937369e1b393dc10af.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202407/39ece141b8015952d0d8eaa4dd9ceb56.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202407/39ece141b8015952d0d8eaa4dd9ceb56.png",
-    "cat": "폐호흡",
-    "flavor": "3mg",
-    "options": [],
-    "sale": false
-  },
-  {
-    "id": 1539,
-    "product_no": 1539,
-    "name": "[M] 개마시써 고농도 폐호흡 액상 60ml",
-    "price": 17000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202407/8ab336c9494802c7446bfe50d70c3262.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202407/8ab336c9494802c7446bfe50d70c3262.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202407/7d2715f47524307fddc4d8b4034b5362.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202407/7d2715f47524307fddc4d8b4034b5362.png",
-    "cat": "폐호흡",
-    "flavor": "",
     "options": [],
     "sale": false
   },
