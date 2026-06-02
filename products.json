@@ -4601,7 +4601,7 @@
   {
     "id": 2467,
     "product_no": 2467,
-    "name": "[YV] 트로피카우! 플레이버 입호흡 액상 30ml",
+    "name": "트로피카우! 플레이버 입호흡 액상 30ml",
     "price": 13200,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202509/30518a760f09a1acaec4dbfbab9b9c29.jpg"
@@ -4613,7 +4613,10 @@
     "detailImg": "https://frokyvape.com/web/product/big/202509/5133cc39c5f063ee3b247260719bac79.jpg",
     "cat": "입호흡",
     "flavor": "",
-    "options": [],
+    "options": [
+      "선셋 크러쉬",
+      "망고 스틴"
+    ],
     "sale": false
   },
   {
