@@ -1628,24 +1628,6 @@
     "sale": false
   },
   {
-    "id": 2805,
-    "product_no": 2805,
-    "name": "♥한정 수량 초특가 할인♥ 베이프바스켓 달콤시리즈 입호흡 액상 30ml",
-    "price": 2900,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202403/fbb2e9b9b789ec565224c9db2e4d6c24.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202403/fbb2e9b9b789ec565224c9db2e4d6c24.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202403/8607277a59a33f93200385b6c0735667.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202403/8607277a59a33f93200385b6c0735667.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [],
-    "sale": false
-  },
-  {
     "id": 2804,
     "product_no": 2804,
     "name": "♥한정 수량 초특가 할인♥ 용용쥬스 입호흡 액상 30ml",
@@ -10517,24 +10499,6 @@
     "sale": false
   },
   {
-    "id": 1698,
-    "product_no": 1698,
-    "name": "[베이프바스켓] 파라솔 시리즈 입호흡 액상 30ml",
-    "price": 12600,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202409/dd4a4367e15507acfbaa5d20b5616cf6.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202409/dd4a4367e15507acfbaa5d20b5616cf6.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202409/90425c9eb6e63c4b269f441b0602220a.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202409/90425c9eb6e63c4b269f441b0602220a.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "sale": false
-  },
-  {
     "id": 1696,
     "product_no": 1696,
     "name": "[펠릭스] 사와시리즈 입호흡 액상 30ml",
@@ -12173,63 +12137,9 @@
     "sale": false
   },
   {
-    "id": 1422,
-    "product_no": 1422,
-    "name": "[베이프바스켓] 펭돌쥬스 입호흡 액상 30ml",
-    "price": 12600,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202403/79b72f4cd47aacdb2d1f08af02a51c4f.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202403/79b72f4cd47aacdb2d1f08af02a51c4f.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202403/2f30dac67ea8c0042673c5f34ebe882e.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202403/2f30dac67ea8c0042673c5f34ebe882e.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "sale": false
-  },
-  {
-    "id": 1421,
-    "product_no": 1421,
-    "name": "[베이프바스켓] 팝 시리즈 입호흡 액상 30ml",
-    "price": 12600,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202403/d7798a46afea50cdfd1eb40339cd3b86.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202403/d7798a46afea50cdfd1eb40339cd3b86.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202403/f1d0e874a9c4bd85cfeaa725cc17583c.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202403/f1d0e874a9c4bd85cfeaa725cc17583c.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [],
-    "sale": false
-  },
-  {
-    "id": 1420,
-    "product_no": 1420,
-    "name": "[베이프바스켓] 클래스파이드 입호흡 액상 30ml",
-    "price": 12600,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202403/d5a8a14d8b81e440cc0dd23143272032.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202403/d5a8a14d8b81e440cc0dd23143272032.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202403/dd3635f4f1d1070da161f7fb1645f3f5.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202403/dd3635f4f1d1070da161f7fb1645f3f5.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [],
-    "sale": false
-  },
-  {
     "id": 1419,
     "product_no": 1419,
-    "name": "[베이프바스켓] 용용쥬스 입호흡 액상 30ml",
+    "name": "베이프바스켓 용용쥬스 입호흡 액상 30ml",
     "price": 12600,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202403/e6a3c2e4111315b956a451bf884105d1.png"
@@ -12241,7 +12151,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202403/851a8d4a3326b040ffeac4c92d2919ae.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "청포도"
+    ],
     "sale": false
   },
   {
@@ -12257,24 +12169,6 @@
       "https://frokyvape.com/web/product/big/202403/083f2bdbdd4e9bacf4ba76de19b90ece.png"
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202403/083f2bdbdd4e9bacf4ba76de19b90ece.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [],
-    "sale": false
-  },
-  {
-    "id": 1417,
-    "product_no": 1417,
-    "name": "[베이프바스켓] 아이스 에이지 입호흡 액상 30ml",
-    "price": 12600,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202407/bebde1287f9b7c834bd3b911ff2356fb.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202407/bebde1287f9b7c834bd3b911ff2356fb.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202407/813338e0e6f7daaa920e00a269077183.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202407/813338e0e6f7daaa920e00a269077183.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [],
@@ -12299,42 +12193,6 @@
     "sale": false
   },
   {
-    "id": 1415,
-    "product_no": 1415,
-    "name": "[베이프바스켓] 석류밤 입호흡 액상 30ml",
-    "price": 18100,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202403/7127dc821fa690466d26401c50844080.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202403/7127dc821fa690466d26401c50844080.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202403/58ceea5a2a1c19577081c4868f7c8662.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202403/58ceea5a2a1c19577081c4868f7c8662.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [],
-    "sale": false
-  },
-  {
-    "id": 1414,
-    "product_no": 1414,
-    "name": "[베이프바스켓] 상상쥬스 입호흡 액상 30ml",
-    "price": 12600,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202403/f1f15898490a2c10c4b42d9be4a7449d.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202403/f1f15898490a2c10c4b42d9be4a7449d.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202403/886a3a6c6d3bd03be2fc65680741895c.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202403/886a3a6c6d3bd03be2fc65680741895c.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [],
-    "sale": false
-  },
-  {
     "id": 1412,
     "product_no": 1412,
     "name": "♥ 5+1 ♥ 베이프바스켓 달콤시리즈 입호흡 액상 30ml",
@@ -12347,60 +12205,6 @@
       "https://frokyvape.com/web/product/big/202403/8607277a59a33f93200385b6c0735667.png"
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202403/8607277a59a33f93200385b6c0735667.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [],
-    "sale": false
-  },
-  {
-    "id": 1411,
-    "product_no": 1411,
-    "name": "[베이프바스켓] 단비 멘솔 입호흡 액상 30ml",
-    "price": 12600,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202403/96ab247c2a0120eead84d64c33de7951.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202403/96ab247c2a0120eead84d64c33de7951.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202403/fcdcb29bd86e639de9d68927622bec7f.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202403/fcdcb29bd86e639de9d68927622bec7f.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [],
-    "sale": false
-  },
-  {
-    "id": 1410,
-    "product_no": 1410,
-    "name": "[베이프바스켓] 단비 노멘솔 입호흡 액상 30ml",
-    "price": 12600,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202403/b66cf88a28f8fcd84173002fd7d7c748.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202403/b66cf88a28f8fcd84173002fd7d7c748.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202403/402f609c5e3b12a49d25934ff269b4f0.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202403/402f609c5e3b12a49d25934ff269b4f0.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [],
-    "sale": false
-  },
-  {
-    "id": 1409,
-    "product_no": 1409,
-    "name": "[베이프바스켓] 눈보라 연구소 입호흡 액상 30ml",
-    "price": 12600,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202403/9dadbe112bd44e78216c35ed4d511fba.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202403/9dadbe112bd44e78216c35ed4d511fba.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202403/843252790c8c59815bacd0b4f210461c.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202403/843252790c8c59815bacd0b4f210461c.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [],
