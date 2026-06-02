@@ -12121,7 +12121,7 @@
   {
     "id": 1434,
     "product_no": 1434,
-    "name": "[펠릭스] S 라임시리즈 입호흡 액상 15ml",
+    "name": "펠릭스 S 라임시리즈 입호흡 액상 15ml",
     "price": 11700,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202404/52ff24284658a0cf95874f93df3e19cd.jpg"
@@ -12132,8 +12132,14 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202404/0b96c819a6ac5b48eba4db62394c020c.jpg",
     "cat": "입호흡",
-    "flavor": "",
-    "options": [],
+    "flavor": "9.9mg",
+    "options": [
+      "더블 라임 (15ml)",
+      "더블 알로에 (15ml)",
+      "라임 핑크 레몬에이드 (15ml)",
+      "라임 라임 (15ml)",
+      "라임 알로에 (15ml)"
+    ],
     "sale": false
   },
   {
