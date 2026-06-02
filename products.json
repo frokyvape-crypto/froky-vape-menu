@@ -13911,7 +13911,7 @@
   {
     "id": 805,
     "product_no": 805,
-    "name": "[모코리퀴드] 라임 석류 입호흡 액상 30ml",
+    "name": "모코리퀴드 라임 석류 입호흡 액상 30ml",
     "price": 14400,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202312/5e565476a8bff779915c1dfd9128727b.png"
@@ -13923,7 +13923,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202312/f4f88acaa4023fc07118ef61e8c3e1df.png",
     "cat": "입호흡",
     "flavor": "9mg",
-    "options": [],
+    "options": [
+      "라임자몽"
+    ],
     "sale": false
   },
   {
