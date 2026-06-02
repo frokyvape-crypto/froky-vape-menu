@@ -196,15 +196,15 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 .popup-dot.active{background:#fff;transform:scale(1.25);}
 .pay-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:400;display:none;align-items:center;justify-content:center;padding:20px;}
 .pay-modal-overlay.open{display:flex;}
-.pay-modal{background:var(--surface);border-radius:18px;width:min(1380px,98vw);border:1px solid rgba(46,204,64,.25);overflow:hidden;box-shadow:0 0 40px rgba(46,204,64,.15);max-height:92vh;display:flex;flex-direction:column;}
+.pay-modal{background:var(--surface);border-radius:18px;width:min(620px,98vw);border:1px solid rgba(46,204,64,.25);overflow:hidden;box-shadow:0 0 40px rgba(46,204,64,.15);max-height:92vh;display:flex;flex-direction:column;}
 .pay-modal-head{background:#fff;border-bottom:1px solid rgba(46,204,64,.3);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;}
 .pay-modal-head h2{font-family:'Pretendard',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:0;color:#111;}
 .pay-modal-head h2 .lg{font-size:1.1rem;-webkit-text-stroke:0;text-shadow:none;}
 .pay-modal-head h2 .ly{font-size:1.1rem;-webkit-text-stroke:0;text-shadow:none;}
 .pay-modal-close{background:rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.15);color:#333;cursor:pointer;border-radius:6px;padding:3px 10px;font-size:.9rem;}
-.pay-modal-body{padding:18px;overflow:hidden;flex:1;display:grid;grid-template-columns:minmax(330px,420px) minmax(640px,1fr);gap:18px;}
+.pay-modal-body{padding:18px;overflow-y:auto;flex:1;display:grid;grid-template-columns:minmax(0,1fr);gap:18px;}
 .pay-modal-main,.pay-guide-side{min-height:0;max-height:calc(92vh - 76px);overflow-y:auto;}
-.pay-guide-side{background:#fff;border:1px solid var(--border);border-radius:14px;padding:10px;box-shadow:0 6px 18px rgba(0,0,0,.14);display:flex;align-items:center;justify-content:center;}
+.pay-guide-side{display:none;}
 .pay-guide-side img{display:block;width:100%;height:100%;max-height:calc(92vh - 98px);object-fit:contain;border-radius:8px;}
 .order-summary{background:var(--bg);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden;}
 .order-summary-title{padding:9px 13px;font-size:.78rem;color:var(--g);font-weight:800;letter-spacing:.5px;border-bottom:1px solid var(--border);}
@@ -225,6 +225,13 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 .go-pay-btn.need-check{background:linear-gradient(135deg,#8a8a8a,#555);box-shadow:none;}
 .go-pay-btn{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:14px;border-radius:12px;font-family:'Pretendard',sans-serif;font-size:1rem;font-weight:800;box-shadow:0 0 16px var(--g-glow);}
 .go-pay-btn:hover{opacity:.88;}
+.payment-guide-lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:700;display:none;align-items:center;justify-content:center;padding:18px;}
+.payment-guide-lightbox.open{display:flex;}
+.payment-guide-panel{position:relative;width:min(1120px,96vw);max-height:92vh;background:#fff;border:2px solid rgba(46,204,64,.6);border-radius:16px;padding:12px;overflow:auto;box-shadow:0 0 42px rgba(46,204,64,.28);}
+.payment-guide-img{display:block;width:100%;max-height:84vh;object-fit:contain;border-radius:10px;cursor:zoom-in;transition:width .2s ease;}
+.payment-guide-img.zoomed{width:1380px;max-width:none;max-height:none;cursor:zoom-out;}
+.payment-guide-close{position:fixed;top:14px;right:14px;z-index:710;background:#fff;color:#111;border:3px solid var(--g);cursor:pointer;border-radius:12px;width:48px;height:48px;font-size:1.55rem;font-weight:900;line-height:1;box-shadow:0 0 22px rgba(46,204,64,.65);}
+.payment-guide-tip{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:710;background:rgba(0,0,0,.78);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:7px 13px;font-size:.78rem;font-weight:800;white-space:nowrap;}
 .pm-guide{background:rgba(46,204,64,.07);border:1.5px solid rgba(46,204,64,.4);border-radius:12px;padding:14px 16px;margin-bottom:14px;}
 .pm-guide-title{font-size:.72rem;font-weight:800;color:var(--g);letter-spacing:.3px;margin-bottom:10px;}
 .pm-guide-row{display:flex;align-items:center;gap:16px;margin-bottom:8px;}
@@ -285,6 +292,11 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
   .pay-modal-body{padding:14px;}
   .pay-required-check{font-size:.82rem;padding:11px 12px;}
   .go-pay-btn{padding:12px;font-size:.92rem;}
+  .payment-guide-lightbox{padding:10px;}
+  .payment-guide-panel{width:100%;max-height:88vh;padding:8px;border-radius:13px;}
+  .payment-guide-img{max-height:82vh;}
+  .payment-guide-img.zoomed{width:980px;}
+  .payment-guide-close{top:10px;right:10px;width:52px;height:52px;border-radius:14px;font-size:1.65rem;}
   .kakao-float{width:46px;height:46px;font-size:1.2rem;bottom:18px;right:12px;}
 }
 @media(max-width:360px){
@@ -460,11 +472,15 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
           <button class="go-pay-btn" id="go-pay-btn" onclick="goToPay()">고객님이 결제하기 →</button>
         </div>
       </div>
-      <aside class="pay-guide-side">
-        <img src="images/payment-guide.jpg?v=20260529-steps" alt="개인 결제창 입력 안내">
-      </aside>
     </div>
   </div>
+</div>
+<div class="payment-guide-lightbox" id="payment-guide-lightbox" onclick="closePaymentGuideLightboxOut(event)">
+  <button class="payment-guide-close" onclick="closePaymentGuideLightbox()" aria-label="안내 이미지 닫기">×</button>
+  <div class="payment-guide-panel">
+    <img class="payment-guide-img" id="payment-guide-img" src="images/payment-guide.jpg?v=20260529-steps" alt="개인 결제창 입력 안내" onclick="togglePaymentGuideZoom(event)">
+  </div>
+  <div class="payment-guide-tip">사진을 터치하면 확대/축소됩니다</div>
 </div>
 <button class="kakao-float" onclick="window.open('http://pf.kakao.com/_MxhQqX','_blank')">카카오톡 문의</button>
 <div class="toast" id="toast"></div>
@@ -664,7 +680,16 @@ function updatePayButtonState(){
   const ok=!!chk?.checked;
   btn.textContent=ok?'고객님이 결제하기 →':'고객님이 결제하기 →';
   btn.classList.toggle('need-check',!ok);
+  if(ok)openPaymentGuideLightbox();
 }
+function openPaymentGuideLightbox(){
+  const img=document.getElementById('payment-guide-img');
+  if(img)img.classList.remove('zoomed');
+  document.getElementById('payment-guide-lightbox')?.classList.add('open');
+}
+function closePaymentGuideLightbox(){document.getElementById('payment-guide-lightbox')?.classList.remove('open');}
+function closePaymentGuideLightboxOut(e){if(e.target===document.getElementById('payment-guide-lightbox'))closePaymentGuideLightbox();}
+function togglePaymentGuideZoom(e){e.stopPropagation();e.currentTarget.classList.toggle('zoomed');}
 function buildOrderMemo(){const total=cart.reduce((s,c)=>s+c.price*c.qty,0);return [
   '[FROKY VAPE 주문내역]',
   ...cart.map((c,i)=>`${i+1}. ${c.name} / 옵션: ${c.option} / 수량: ${c.qty}개 / 금액: ${fmt(c.price*c.qty)}`),
