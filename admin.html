@@ -1130,13 +1130,30 @@ async function saveAndDeploy() {
     toast('저장 중...', 'info');
     const useWorker = WORKER_URL && ADMIN_KEY;
     const res = useWorker ? await saveViaWorker() : await saveViaDirect();
-    dbSave();
-    document.getElementById('deploy-banner').classList.add('show');
-    setTimeout(() => document.getElementById('deploy-banner').classList.remove('show'), 70000);
-    toast('저장 & 배포 시작!' + (res?.commitUrl ? ' (커밋 생성됨)' : ''), 'ok');
+    markDeployStarted(res, '저장 & 배포 시작!');
   } catch (e) {
     toast('실패: ' + e.message, 'err');
     console.error('[saveAndDeploy]', e);
+  } finally {
+    setSavingUI(false);
+  }
+}
+
+function markDeployStarted(res, message) {
+  dbSave();
+  document.getElementById('deploy-banner').classList.add('show');
+  setTimeout(() => document.getElementById('deploy-banner').classList.remove('show'), 70000);
+  toast(message + (res?.commitUrl ? ' (커밋 생성됨)' : ''), 'ok');
+}
+
+async function saveProductsImmediately(message) {
+  if (isSaving) throw new Error('이미 저장 중입니다');
+  setSavingUI(true);
+  try {
+    const useWorker = WORKER_URL && ADMIN_KEY;
+    const res = useWorker ? await saveViaWorker() : await saveViaDirect();
+    markDeployStarted(res, message);
+    return res;
   } finally {
     setSavingUI(false);
   }
@@ -1217,7 +1234,7 @@ async function saveProduct() {
     else products.push(obj);
     dbSave();
     renderTable(); closeModal();
-    toast(editId !== null ? '수정됨 (로컬 저장)' : '추가됨 (로컬 저장) — 배포하려면 저장 & 배포 클릭', 'ok');
+    await saveProductsImmediately(editId !== null ? '상품 수정 저장 & 배포 시작!' : '상품 추가 저장 & 배포 시작!');
   } catch (e) { toast('실패: ' + e.message, 'err'); }
   finally { btn.disabled = false; btn.innerHTML = '저장'; }
 }
