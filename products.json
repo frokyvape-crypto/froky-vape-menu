@@ -14,7 +14,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202604/df571e049a0e5141259fb521abb95e48.png",
     "cat": "입호흡",
     "flavor": "",
-    "options": [],
+    "options": [
+      "테스"
+    ],
     "sale": false
   },
   {
