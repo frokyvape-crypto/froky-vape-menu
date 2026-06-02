@@ -18807,7 +18807,7 @@
   {
     "id": 811,
     "product_no": 811,
-    "name": "[모코리퀴드] 오리지널 폐호흡 액상 60ml",
+    "name": "모코리퀴드 오리지널 폐호흡 액상 60ml",
     "price": 21800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202312/0c57f993c151f4857f5151d3231c3eb3.png"
@@ -18819,7 +18819,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202312/deac0ce1cab924375e083bb8f25781d7.png",
     "cat": "폐호흡",
     "flavor": "3mg",
-    "options": [],
+    "options": [
+      "그린 몬스터"
+    ],
     "sale": false
   },
   {
