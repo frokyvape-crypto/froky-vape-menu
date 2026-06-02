@@ -1362,5 +1362,52 @@
       "페어플레이 (배터리 + 액상 팟)"
     ],
     "sale": false
+  },
+  {
+    "id": 2061,
+    "product_no": 2061,
+    "name": "[YV] 쿠모카시 바 플레이버 일회용 전자담배 20ml",
+    "price": 19200,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202505/13c49c224aa9f053e65fc6d3b08695d8.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202505/13c49c224aa9f053e65fc6d3b08695d8.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202505/120c1bd9e4bebecfaadb4dfef4cf2b3f.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202505/120c1bd9e4bebecfaadb4dfef4cf2b3f.png",
+    "cat": "일회용",
+    "flavor": "20,000 퍼프",
+    "options": [],
+    "sale": false
+  },
+  {
+    "id": 1913,
+    "product_no": 1913,
+    "name": "쿠모카시 입호흡 액상 30ml",
+    "price": 12000,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202509/4fe27c8a82f2464358a8bb3755fcdc53.jpg"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202509/4fe27c8a82f2464358a8bb3755fcdc53.jpg",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202509/55b30356071ca1ee011f587293e32a26.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202509/55b30356071ca1ee011f587293e32a26.jpg",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "후와후와 브루베리",
+      "미도리 애플",
+      "후루후루 파인",
+      "마지 멜론",
+      "아오이 소다",
+      "엔젤 스무디",
+      "쿄호 그레이프",
+      "아마이 모모",
+      "아카이 이치고",
+      "토레토레 도링크"
+    ],
+    "sale": false
   }
 ]
