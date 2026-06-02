@@ -9794,7 +9794,7 @@
   {
     "id": 1852,
     "product_no": 1852,
-    "name": "[DB SK] 스모지 입호흡 액상 30ml",
+    "name": "스모지 입호흡 액상 30ml",
     "price": 12000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202501/15e1e18a3faeef3d961fa4e04b97b835.png"
@@ -9806,7 +9806,18 @@
     "detailImg": "https://frokyvape.com/web/product/big/202501/89c5fc1dd2a328f436a905abc381e061.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "딥 블루베리",
+      "레몬 파인애플",
+      "민트",
+      "복분자 N 석류",
+      "복숭아 레몬에이드",
+      "블루라즈",
+      "알로에 그레이프",
+      "오렌지 소다",
+      "오렌지 파인애플",
+      "키위 패션후르츠"
+    ],
     "sale": false
   },
   {
