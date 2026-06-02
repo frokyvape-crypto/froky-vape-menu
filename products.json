@@ -13948,7 +13948,7 @@
   {
     "id": 803,
     "product_no": 803,
-    "name": "[모코리퀴드] 블라썸 시리즈 입호흡 액상 30ml",
+    "name": "모코리퀴드 블라썸 시리즈 입호흡 액상 30ml",
     "price": 14400,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202312/5f57d7696124cf0c63ae12d7663def77.png"
@@ -13960,7 +13960,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202312/c19f9abb2a180bdc29e00f12894d6060.png",
     "cat": "입호흡",
     "flavor": "9mg",
-    "options": [],
+    "options": [
+      "블루베리 블라썸"
+    ],
     "sale": false
   },
   {
