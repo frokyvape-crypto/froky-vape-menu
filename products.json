@@ -12963,7 +12963,7 @@
   {
     "id": 1112,
     "product_no": 1112,
-    "name": "[마샤] 입호흡 액상 30ml",
+    "name": "마샤 입호흡 액상 30ml",
     "price": 18100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202402/ecd5f6c8c80d2bd22c02bd24354d25f3.png"
@@ -12975,7 +12975,18 @@
     "detailImg": "https://frokyvape.com/web/product/big/202402/d085220e6f5d68fa648ad25afb0959cb.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "로띠번",
+      "멘솔",
+      "발렌시가",
+      "시가",
+      "아이스 블루",
+      "얼음",
+      "와일드 멘솔",
+      "쿨민트",
+      "브로콜리",
+      "지방시가"
+    ],
     "sale": false
   },
   {
