@@ -2927,7 +2927,7 @@
   },
   {
     "id": 2638,
-    "name": "[B] 방그레 알로에베라 입호흡 액상 30ml",
+    "name": "방그레 알로에베라 입호흡 액상 30ml",
     "price": 7700,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202512/559d2111be4f7f5b2a35c8a650cf46c7.png"
@@ -2938,7 +2938,7 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202512/d0e182333785bea43546d8d0d735fad8.png",
     "cat": "입호흡",
-    "flavor": "1박스 (10병) 단위로 구매 가능 상품입니다",
+    "flavor": "",
     "options": [
       "알로에베라"
     ],
@@ -17621,24 +17621,6 @@
     "detailImg": "https://frokyvape.com/web/product/big/202506/29c9d7ec310ccc9f0f4a284a9eb3db45.png",
     "cat": "폐호흡",
     "flavor": "",
-    "options": [],
-    "sale": false
-  },
-  {
-    "id": 2141,
-    "product_no": 2141,
-    "name": "[M] 리퀴드랩 마일드시가 폐호흡 액상 60ml",
-    "price": 12800,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202506/895ecb87719ee71cf4645751e8464cd3.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202506/895ecb87719ee71cf4645751e8464cd3.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202506/398464770164f11d9baf9e1c7e059974.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202506/398464770164f11d9baf9e1c7e059974.png",
-    "cat": "폐호흡",
-    "flavor": "3mg",
     "options": [],
     "sale": false
   },
