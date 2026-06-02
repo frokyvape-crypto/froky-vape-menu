@@ -11193,7 +11193,7 @@
   {
     "id": 1569,
     "product_no": 1569,
-    "name": "[YV] 텅 플레이버 입호흡 액상 30ml",
+    "name": "텅 플레이버 입호흡 액상 30ml",
     "price": 12000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202407/4f9ebc9d103f8f0ed2e6672958710f5a.png"
@@ -11205,7 +11205,10 @@
     "detailImg": "https://frokyvape.com/web/product/big/202407/960ade5ab4fc9d366a39fb9edf88aa10.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "키위 패션 키스",
+      "시트러스 만다린 키스"
+    ],
     "sale": false
   },
   {
