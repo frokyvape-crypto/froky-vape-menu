@@ -1366,7 +1366,7 @@
   {
     "id": 2061,
     "product_no": 2061,
-    "name": "[YV] 쿠모카시 바 플레이버 일회용 전자담배 20ml",
+    "name": "쿠모카시 바 플레이버 일회용 전자담배 20ml",
     "price": 19200,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202505/13c49c224aa9f053e65fc6d3b08695d8.png"
@@ -1378,7 +1378,15 @@
     "detailImg": "https://frokyvape.com/web/product/big/202505/120c1bd9e4bebecfaadb4dfef4cf2b3f.png",
     "cat": "일회용",
     "flavor": "20,000 퍼프",
-    "options": [],
+    "options": [
+      "쿠모카시 바 미도리 애플",
+      "쿠모카시 바 후루후루 파인",
+      "쿠모카시 바 마지 멜론",
+      "쿠모카시 바 아오이 소다",
+      "쿠모카시 바 엔젤 스무디",
+      "쿠모카시 바 쿄호 그레이프",
+      "쿠모카시 바 아마이 모모"
+    ],
     "sale": false
   },
   {
