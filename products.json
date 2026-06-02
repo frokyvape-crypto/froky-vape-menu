@@ -13004,7 +13004,11 @@
     "detailImg": "https://frokyvape.com/web/product/big/202312/3df5f37083c2425a7b27dd5ea9e7cfdf.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "더블 샤인",
+      "블랙 사파이어",
+      "제로쿨 샤인"
+    ],
     "sale": false
   },
   {
