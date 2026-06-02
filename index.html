@@ -219,6 +219,10 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 .order-total-val{color:var(--y);font-weight:900;font-size:1.1rem;}
 [data-theme="light"] .order-total-val{color:#7a6e00;}
 .pay-btns{display:grid;grid-template-columns:1fr;gap:8px;}
+.pay-required-check{display:flex;align-items:flex-start;gap:9px;background:rgba(46,204,64,.08);border:1.5px solid rgba(46,204,64,.35);border-radius:12px;padding:12px 13px;margin-bottom:10px;cursor:pointer;color:var(--text);font-size:.86rem;font-weight:900;line-height:1.45;}
+.pay-required-check input{width:18px;height:18px;margin-top:1px;accent-color:var(--g);flex:none;}
+.pay-required-check span{display:block;}
+.go-pay-btn.need-check{background:linear-gradient(135deg,#8a8a8a,#555);box-shadow:none;}
 .go-pay-btn{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:14px;border-radius:12px;font-family:'Pretendard',sans-serif;font-size:1rem;font-weight:800;box-shadow:0 0 16px var(--g-glow);}
 .go-pay-btn:hover{opacity:.88;}
 .pm-guide{background:rgba(46,204,64,.07);border:1.5px solid rgba(46,204,64,.4);border-radius:12px;padding:14px 16px;margin-bottom:14px;}
@@ -279,6 +283,7 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
   .btn-sheet-detail{padding:11px;font-size:.82rem;}
   .pay-modal-overlay{padding:12px;}
   .pay-modal-body{padding:14px;}
+  .pay-required-check{font-size:.82rem;padding:11px 12px;}
   .go-pay-btn{padding:12px;font-size:.92rem;}
   .kakao-float{width:46px;height:46px;font-size:1.2rem;bottom:18px;right:12px;}
 }
@@ -448,7 +453,11 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
         </div>
         <div class="pm-guide-hint">아래 버튼을 누르기 전까지 카페24 결제창으로 이동하지 않습니다.</div>
         <div class="pay-btns">
-          <button class="go-pay-btn" onclick="goToPay()">고객님이 결제하기 →</button>
+          <label class="pay-required-check">
+            <input type="checkbox" id="pay-required-check" onchange="updatePayButtonState()">
+            <span>※필독※ 구매하는 방법</span>
+          </label>
+          <button class="go-pay-btn" id="go-pay-btn" onclick="goToPay()">고객님이 결제하기 →</button>
         </div>
       </div>
       <aside class="pay-guide-side">
@@ -622,6 +631,7 @@ function sheetBuyNow(){
   document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();
   document.getElementById('pm-pay-amount').textContent=fmt(total);
   document.getElementById('pm-real-qty').textContent=sq.toLocaleString();
+  resetPayRequiredCheck();
   document.getElementById('pay-modal-overlay').classList.add('open');
   closeSheet();
 }
@@ -638,9 +648,23 @@ function openPayModal(){
   document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();
   document.getElementById('pm-pay-amount').textContent=fmt(total);
   document.getElementById('pm-real-qty').textContent=totalQty.toLocaleString();
+  resetPayRequiredCheck();
   document.getElementById('pay-modal-overlay').classList.add('open');
 }
 function closePayModal(){document.getElementById('pay-modal-overlay').classList.remove('open');}
+function resetPayRequiredCheck(){
+  const chk=document.getElementById('pay-required-check');
+  if(chk)chk.checked=false;
+  updatePayButtonState();
+}
+function updatePayButtonState(){
+  const chk=document.getElementById('pay-required-check');
+  const btn=document.getElementById('go-pay-btn');
+  if(!btn)return;
+  const ok=!!chk?.checked;
+  btn.textContent=ok?'고객님이 결제하기 →':'고객님이 결제하기 →';
+  btn.classList.toggle('need-check',!ok);
+}
 function buildOrderMemo(){const total=cart.reduce((s,c)=>s+c.price*c.qty,0);return [
   '[FROKY VAPE 주문내역]',
   ...cart.map((c,i)=>`${i+1}. ${c.name} / 옵션: ${c.option} / 수량: ${c.qty}개 / 금액: ${fmt(c.price*c.qty)}`),
@@ -653,6 +677,13 @@ function privatePayQuantity(total){
   return total/PERSONAL_PAY_UNIT_PRICE;
 }
 async function goToPay(){
+  const chk=document.getElementById('pay-required-check');
+  const btn=document.getElementById('go-pay-btn');
+  if(!chk?.checked){
+    if(btn)btn.textContent='필독의 체크박스를 확인해주세요!';
+    showToast('※필독※ 구매하는 방법을 확인해 주세요');
+    return;
+  }
   window.open(PAY_URL,'_blank','noopener');
 }
 function copyPmPayQty(){
