@@ -1507,17 +1507,16 @@ async function fetchCafe24ProductOptions(productNo, accessToken, proxy) {
 }
 async function enrichCafe24Options(items, accessToken, proxy, btn) {
   const enriched = [];
-  let optionProducts = 0, failed = 0;
+  let optionProducts = 0;
   for (let i = 0; i < items.length; i++) {
     const product = items[i];
     btn.innerHTML = `<span class="spin"></span>옵션명 확인 중... (${i + 1}/${items.length})`;
     const result = await fetchCafe24ProductOptions(product.product_no, accessToken, proxy);
     const options = result.options;
-    if (result.error) failed++;
     if (options.length) optionProducts++;
-    enriched.push({ ...product, _options: options, _optionError: result.error });
+    enriched.push({ ...product, _options: options });
   }
-  toast(`옵션명 ${optionProducts}/${items.length}개 상품에서 확인${failed ? `, 실패 ${failed}개` : ''}`, optionProducts ? 'ok' : 'info');
+  toast(`옵션명 ${optionProducts}/${items.length}개 상품에서 확인`, optionProducts ? 'ok' : 'info');
   return enriched;
 }
 
@@ -1570,9 +1569,7 @@ function filterC24() {
       : '';
     const optionStatus = optionCount
       ? ` <span style="font-size:.65rem;color:var(--g);font-weight:800;margin-left:4px">옵션 ${optionCount}개</span>${optionNames}`
-      : p._optionError
-        ? ` <span title="${String(p._optionError).replace(/"/g,'&quot;')}" style="font-size:.65rem;color:var(--red);font-weight:800;margin-left:4px">옵션 확인 실패</span>`
-        : '';
+      : '';
     return `<tr style="${isDupe ? 'opacity:.45' : ''}">
       <td><input type="checkbox" class="import-check" data-i="${origIdx}" ${isDupe ? '' : 'checked'}></td>
       <td><img src="${img}" style="width:32px;height:32px;object-fit:cover;border-radius:5px;" onerror="this.src=''"></td>
