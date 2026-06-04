@@ -3137,7 +3137,7 @@
   {
     "id": 71,
     "product_no": 71,
-    "name": "[O] 노보 by MS 입호흡 액상 30ml",
+    "name": "노보 by MS 입호흡 액상 30ml",
     "price": 11100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202306/01db2748afdd6db84fe592c9a201c5db.jpg"
@@ -3149,7 +3149,12 @@
     "detailImg": "https://frokyvape.com/web/product/big/202306/c4845b918b7cba7ea00a30688236c450.jpg",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "피치크러쉬",
+      "펜파인애플",
+      "샤이니머스켓",
+      "라이징베리"
+    ],
     "sale": false
   },
   {
