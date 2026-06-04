@@ -3229,7 +3229,7 @@
   {
     "id": 315,
     "product_no": 315,
-    "name": "[A] 마녀쥬스 입호흡 액상 30ml",
+    "name": "마녀쥬스 입호흡 액상 30ml",
     "price": 14400,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202309/e8202072ea632b0663f02f43182b2cf5.png"
@@ -3242,9 +3242,7 @@
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
-      "아이스버그",
-      "킹스베리",
-      "헤이즐아이"
+      "킹스베리"
     ],
     "sale": false
   },
