@@ -3606,48 +3606,6 @@
     "sale": false
   },
   {
-    "id": 2579,
-    "product_no": 2579,
-    "name": "[K] 파이브폰즈 캐슬롱리저브 리미티드에디션 폐호흡 액상 60ml",
-    "price": 35500,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202511/e7d715192737fde3cb06b80dd70ccb76.jpg"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202511/e7d715192737fde3cb06b80dd70ccb76.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202511/31f0bc434e4078e9e544e5859ecd6d0e.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202511/31f0bc434e4078e9e544e5859ecd6d0e.jpg",
-    "cat": "폐호흡",
-    "flavor": "",
-    "options": [
-      "초콜렛",
-      "커스터드"
-    ],
-    "sale": false
-  },
-  {
-    "id": 2578,
-    "product_no": 2578,
-    "name": "파이브폰즈 입호흡 액상 60ml",
-    "price": 42300,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202511/357f6a16c8c652ee63df73cbd8a9c2ca.jpg"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202511/357f6a16c8c652ee63df73cbd8a9c2ca.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202511/59e05690125dd8111dab997e1bd96c27.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202511/59e05690125dd8111dab997e1bd96c27.jpg",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [
-      "그랜드",
-      "마스터 캐슬롱"
-    ],
-    "sale": false
-  },
-  {
     "id": 384,
     "product_no": 384,
     "name": "비바체 입호흡 액상 30ml",
@@ -3718,6 +3676,52 @@
     "flavor": "3mg",
     "options": [
       "와이키키M (수박 메론 딸기)"
+    ],
+    "sale": false
+  },
+  {
+    "id": 630,
+    "product_no": 630,
+    "name": "[B M] 파이브폰즈 폐호흡 액상 60ml",
+    "price": 31300,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202310/fa1c9bda142733b91c2ea57af7001fca.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202310/fa1c9bda142733b91c2ea57af7001fca.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202310/284b07f29977dc60abc342b1d45f4e1e.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202310/284b07f29977dc60abc342b1d45f4e1e.png",
+    "cat": "폐호흡",
+    "flavor": "3mg",
+    "options": [
+      "그랜드 마스터",
+      "캐슬롱",
+      "갬빗",
+      "캐슬롱리저브 (한정판)",
+      "보우든메이트",
+      "블랙 플래그 리즌"
+    ],
+    "sale": false
+  },
+  {
+    "id": 552,
+    "product_no": 552,
+    "name": "[W B] 파이브폰즈 입호흡 액상 30ml",
+    "price": 25400,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202305/950e1a922cc164e212684779fb0cd564.jpg"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202305/950e1a922cc164e212684779fb0cd564.jpg",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202305/bc534b5a21aa2fe4dc13813ab1830f96.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202305/bc534b5a21aa2fe4dc13813ab1830f96.jpg",
+    "cat": "입호흡",
+    "flavor": "9.9mg",
+    "options": [
+      "그랜드마스터",
+      "캐슬롱"
     ],
     "sale": false
   }
