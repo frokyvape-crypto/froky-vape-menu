@@ -1263,5 +1263,20 @@
       "더블 알로에 (고농도)"
     ],
     "sale": false
+  },
+  {
+    "id": 1780535715496,
+    "name": "모코리퀴드 하와이 입호흡 액상 30ml",
+    "price": 137000,
+    "imgs": [],
+    "img": "",
+    "detailImgs": [],
+    "detailImg": "",
+    "cat": "best",
+    "flavor": "9.8mg",
+    "options": [
+      "하와이 (10병)"
+    ],
+    "sale": false
   }
 ]
