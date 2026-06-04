@@ -1416,11 +1416,17 @@ function cleanC24OptionText(value) {
   if (!text || text === '-' || /^[A-Z0-9]{8,}$/.test(text)) return '';
   return text;
 }
+function addC24OptionText(value, out) {
+  const text = cleanC24OptionText(value);
+  if (!text) return;
+  text.split(/\s*[,/]\s*|\s*\n\s*/).map(v => cleanC24OptionText(v)).filter(Boolean).forEach(v => {
+    if (!out.includes(v)) out.push(v);
+  });
+}
 function addC24OptionValue(value, out) {
   if (value == null) return;
   if (typeof value === 'string' || typeof value === 'number') {
-    const text = cleanC24OptionText(value);
-    if (text && !out.includes(text)) out.push(text);
+    addC24OptionText(value, out);
     return;
   }
   if (Array.isArray(value)) {
@@ -1434,8 +1440,20 @@ function addC24OptionValue(value, out) {
     else if ('text' in value) addC24OptionValue(value.text, out);
   }
 }
+function walkC24OptionNodes(node, out) {
+  if (!node) return;
+  if (Array.isArray(node)) { node.forEach(v => walkC24OptionNodes(v, out)); return; }
+  if (typeof node !== 'object') return;
+  ['option_text','option_value','option_values','value','values','text'].forEach(key => {
+    if (key in node) addC24OptionValue(node[key], out);
+  });
+  ['options','option','variants','variant'].forEach(key => {
+    if (key in node) walkC24OptionNodes(node[key], out);
+  });
+}
 function extractC24Options(data) {
   const out = [];
+  walkC24OptionNodes(data, out);
   const optionRoot = data?.option || data?.options || data;
   const optionGroups = [
     optionRoot?.options,
@@ -1459,31 +1477,47 @@ function extractC24Options(data) {
   });
   return out;
 }
-async function fetchCafe24Subresource(productNo, resource, accessToken, proxy) {
-  const apiUrl = `https://frokyvape.cafe24api.com/api/v2/admin/products/${productNo}/${resource}`;
+async function fetchCafe24OptionsUrl(apiUrl, accessToken, proxy) {
   const res = await fetch(proxy + encodeURIComponent(apiUrl), {
     headers: { 'Authorization': 'Bearer ' + accessToken, 'X-Cafe24-Api-Version': '2026-03-01' },
   });
-  if (!res.ok) return [];
+  if (!res.ok) {
+    let msg = '';
+    try { msg = JSON.stringify(await res.json()); } catch {}
+    throw new Error(`${res.status}${msg ? ` ${msg}` : ''}`);
+  }
   return extractC24Options(await res.json());
+}
+async function fetchCafe24ProductOptions(productNo, accessToken, proxy) {
+  const base = `https://frokyvape.cafe24api.com/api/v2/admin/products/${productNo}`;
+  let lastError = null;
+  for (const apiUrl of [
+    `${base}?embed=options,variants`,
+    `${base}/options`,
+    `${base}/variants`,
+  ]) {
+    try {
+      const options = await fetchCafe24OptionsUrl(apiUrl, accessToken, proxy);
+      if (options.length) return { options, error: null };
+    } catch (e) {
+      lastError = e;
+    }
+  }
+  return { options: [], error: lastError?.message || null };
 }
 async function enrichCafe24Options(items, accessToken, proxy, btn) {
   const enriched = [];
-  let optionProducts = 0;
+  let optionProducts = 0, failed = 0;
   for (let i = 0; i < items.length; i++) {
     const product = items[i];
     btn.innerHTML = `<span class="spin"></span>옵션명 확인 중... (${i + 1}/${items.length})`;
-    let options = [];
-    try {
-      options = await fetchCafe24Subresource(product.product_no, 'options', accessToken, proxy);
-      if (!options.length) options = await fetchCafe24Subresource(product.product_no, 'variants', accessToken, proxy);
-    } catch (e) {
-      options = [];
-    }
+    const result = await fetchCafe24ProductOptions(product.product_no, accessToken, proxy);
+    const options = result.options;
+    if (result.error) failed++;
     if (options.length) optionProducts++;
-    enriched.push({ ...product, _options: options });
+    enriched.push({ ...product, _options: options, _optionError: result.error });
   }
-  toast(`옵션명 ${optionProducts}/${items.length}개 상품에서 확인`, optionProducts ? 'ok' : 'info');
+  toast(`옵션명 ${optionProducts}/${items.length}개 상품에서 확인${failed ? `, 실패 ${failed}개` : ''}`, optionProducts ? 'ok' : 'info');
   return enriched;
 }
 
@@ -1531,10 +1565,15 @@ function filterC24() {
     const isDupe = existingNos.has(p.product_no);
     const selling = isC24Selling(p);
     const optionCount = Array.isArray(p._options) ? p._options.length : 0;
+    const optionStatus = optionCount
+      ? ` <span style="font-size:.65rem;color:var(--g);font-weight:800;margin-left:4px">옵션 ${optionCount}개</span>`
+      : p._optionError
+        ? ` <span title="${String(p._optionError).replace(/"/g,'&quot;')}" style="font-size:.65rem;color:var(--red);font-weight:800;margin-left:4px">옵션 확인 실패</span>`
+        : '';
     return `<tr style="${isDupe ? 'opacity:.45' : ''}">
       <td><input type="checkbox" class="import-check" data-i="${origIdx}" ${isDupe ? '' : 'checked'}></td>
       <td><img src="${img}" style="width:32px;height:32px;object-fit:cover;border-radius:5px;" onerror="this.src=''"></td>
-      <td>${p.product_name}${isDupe ? ' <span style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">중복</span>' : ''}${optionCount ? ` <span style="font-size:.65rem;color:var(--g);font-weight:800;margin-left:4px">옵션 ${optionCount}개</span>` : ''}</td>
+      <td>${p.product_name}${isDupe ? ' <span style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">중복</span>' : ''}${optionStatus}</td>
       <td style="white-space:nowrap">${Number(p.price).toLocaleString('ko-KR')}원</td>
       <td><span style="display:inline-block;padding:2px 7px;border-radius:4px;font-size:.68rem;font-weight:800;background:${selling ? 'rgba(46,204,64,.16)' : 'rgba(229,57,53,.14)'};color:${selling ? 'var(--g)' : 'var(--red)'}">${c24SellingLabel(p)}</span></td>
       <td><span class="cat-tag c-${CAT(p.product_name)}">${categoryLabel(CAT(p.product_name))}</span></td>
