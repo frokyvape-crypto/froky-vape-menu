@@ -3293,7 +3293,7 @@
   {
     "id": 365,
     "product_no": 365,
-    "name": "[A] 크로닉 입호흡 액상 30ml",
+    "name": "크로닉 입호흡 액상 30ml",
     "price": 15500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202507/b3e4c09edc72084d4cb81ba4fa4bb409.png"
@@ -3305,7 +3305,10 @@
     "detailImg": "https://frokyvape.com/web/product/big/202507/79a9a557b96574377a12897037ae632b.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "레드불",
+      "피치 망고"
+    ],
     "sale": false
   },
   {
