@@ -1008,26 +1008,6 @@
     "sale": false
   },
   {
-    "id": 813,
-    "product_no": 813,
-    "name": "모코리퀴드 젤리샷 시리즈 폐호흡 액상 60ml",
-    "price": 21800,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202312/1bfbdf37e77a80efcd22590f7cc7ee7a.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202312/1bfbdf37e77a80efcd22590f7cc7ee7a.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202312/fb6426e4335b41ee82dbb904878eae27.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202312/fb6426e4335b41ee82dbb904878eae27.png",
-    "cat": "폐호흡",
-    "flavor": "3mg",
-    "options": [
-      "라임자몽"
-    ],
-    "sale": false
-  },
-  {
     "id": 812,
     "product_no": 812,
     "name": "모코리퀴드 블라썸 시리즈 폐호흡 액상 60ml",
@@ -1068,26 +1048,6 @@
       "네온 그레이프",
       "스타 하와이",
       "하와이"
-    ],
-    "sale": false
-  },
-  {
-    "id": 810,
-    "product_no": 810,
-    "name": "모코리퀴드 뉴욕 레드벨벳 치즈케이크 폐호흡 액상 60ml",
-    "price": 21800,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202312/f76f9c9919aa63cb557f84c01da3c7ba.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202312/f76f9c9919aa63cb557f84c01da3c7ba.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202312/0805318adb74bb2b715717b09425da90.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202312/0805318adb74bb2b715717b09425da90.png",
-    "cat": "폐호흡",
-    "flavor": "3mg",
-    "options": [
-      "뉴욕치즈케이크"
     ],
     "sale": false
   },
