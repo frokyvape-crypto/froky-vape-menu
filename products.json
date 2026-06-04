@@ -3650,7 +3650,7 @@
   {
     "id": 384,
     "product_no": 384,
-    "name": "[A] 비바체 입호흡 액상 30ml",
+    "name": "비바체 입호흡 액상 30ml",
     "price": 15500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202309/ba923541654ba7247db6219649851e06.png"
@@ -3663,10 +3663,7 @@
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
-      "라즈베리",
-      "레이브",
-      "몰디브",
-      "카트리나"
+      "몰디브"
     ],
     "sale": false
   },
