@@ -3629,7 +3629,7 @@
   {
     "id": 2578,
     "product_no": 2578,
-    "name": "[K] 파이브폰즈 캐슬롱리저브 리미티드에디션 입호흡 액상 60ml",
+    "name": "파이브폰즈 입호흡 액상 60ml",
     "price": 42300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202511/357f6a16c8c652ee63df73cbd8a9c2ca.jpg"
@@ -3642,8 +3642,8 @@
     "cat": "입호흡",
     "flavor": "",
     "options": [
-      "초콜렛 60ml",
-      "커스터드 60ml"
+      "그랜드",
+      "마스터 캐슬롱"
     ],
     "sale": false
   },
