@@ -3101,7 +3101,7 @@
   {
     "id": 461,
     "product_no": 461,
-    "name": "[NB A] 시나롤 폐호흡 액상 60ml",
+    "name": "시나롤 폐호흡 액상 60ml",
     "price": 19200,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202310/06be00d47236179296ba3cfe47b57b5a.png"
@@ -3113,7 +3113,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202310/9d2775d24f4320ed1f720355d76aff8a.png",
     "cat": "폐호흡",
     "flavor": "3mg",
-    "options": [],
+    "options": [
+      "시나롤 폐호흡"
+    ],
     "sale": false
   },
   {
