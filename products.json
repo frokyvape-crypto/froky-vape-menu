@@ -2036,7 +2036,7 @@
   {
     "id": 2831,
     "product_no": 2831,
-    "name": "[O] 오르카 오르카원 40K 액상팟 22ml",
+    "name": "오르카 오르카원 40K 액상팟 22ml",
     "price": 18100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/7a69a68adae50b30c9588193628476d6.png"
@@ -2048,7 +2048,19 @@
     "detailImg": "https://frokyvape.com/web/product/big/202603/1ab6e946f30aa1a3cdd8715ce91c4101.png",
     "cat": "입호흡",
     "flavor": "40,000 퍼프",
-    "options": [],
+    "options": [
+      "샤인머스켓",
+      "스트로베리",
+      "콜라",
+      "그린애플",
+      "민트",
+      "오렌지",
+      "피치",
+      "파인애플",
+      "포카리",
+      "레드애플",
+      "레드 그레이프"
+    ],
     "sale": false
   },
   {
