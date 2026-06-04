@@ -3378,7 +3378,7 @@
   {
     "id": 306,
     "product_no": 306,
-    "name": "[A] 프라임 S 입호흡 액상 30ml",
+    "name": "프라임 S 입호흡 액상 30ml",
     "price": 12200,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202309/64b9b260016a7bcc0b5d215d16ce7135.png"
@@ -3389,23 +3389,12 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202309/394dd32ce5a334678d83608a0416e598.png",
     "cat": "입호흡",
-    "flavor": "9.8mg",
+    "flavor": "9.5mg",
     "options": [
-      "라이트",
-      "브리즈민트",
-      "블랙멘솔",
-      "아이스 그레이프",
-      "아이스 망고리치",
-      "아이스 알로에",
-      "아이스 애플",
+      "파워 멘솔",
+      "아이스 멘솔",
       "아이스 레몬",
-      "아이스 피치",
-      "알로에베라",
-      "츄파츕스 딸기",
-      "쿠반리프",
-      "쿨툰드라",
-      "파워멘솔",
-      "복숭아"
+      "쿨 툰드라"
     ],
     "sale": false
   },
