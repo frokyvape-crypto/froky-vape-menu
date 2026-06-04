@@ -3275,7 +3275,7 @@
   {
     "id": 431,
     "product_no": 431,
-    "name": "[A] 크로닉 폐호흡 액상 60ml",
+    "name": "크로닉 폐호흡 액상 60ml",
     "price": 21400,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202309/0e8983a9432c9a6242ccf80afd85adab.png"
@@ -3287,7 +3287,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202309/97fd8ebf3b35fadfb2a6ab1866b3c8f9.png",
     "cat": "폐호흡",
     "flavor": "3mg",
-    "options": [],
+    "options": [
+      "피치 망고"
+    ],
     "sale": false
   },
   {
