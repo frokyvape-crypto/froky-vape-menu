@@ -3311,7 +3311,7 @@
   {
     "id": 409,
     "product_no": 409,
-    "name": "[O M] S.T 긍정쥬스 폐호흡 액상 60ml",
+    "name": "S.T 긍정쥬스 폐호흡 액상 60ml",
     "price": 14800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202309/fdc28ca5759425276e222955b6ccab2e.jpg"
@@ -3324,9 +3324,8 @@
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
+      "레몬 피치",
       "그레이프",
-      "레몬피치",
-      "아이스딸바",
       "피치"
     ],
     "sale": false
