@@ -1565,8 +1565,11 @@ function filterC24() {
     const isDupe = existingNos.has(p.product_no);
     const selling = isC24Selling(p);
     const optionCount = Array.isArray(p._options) ? p._options.length : 0;
+    const optionNames = optionCount
+      ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:5px;max-width:520px">${p._options.map(opt => `<span title="${String(opt).replace(/"/g,'&quot;')}" style="display:inline-block;background:rgba(46,204,64,.1);border:1px solid rgba(46,204,64,.25);color:var(--g);border-radius:999px;padding:2px 7px;font-size:.66rem;font-weight:800;line-height:1.45">${escHtml(opt)}</span>`).join('')}</div>`
+      : '';
     const optionStatus = optionCount
-      ? ` <span style="font-size:.65rem;color:var(--g);font-weight:800;margin-left:4px">옵션 ${optionCount}개</span>`
+      ? ` <span style="font-size:.65rem;color:var(--g);font-weight:800;margin-left:4px">옵션 ${optionCount}개</span>${optionNames}`
       : p._optionError
         ? ` <span title="${String(p._optionError).replace(/"/g,'&quot;')}" style="font-size:.65rem;color:var(--red);font-weight:800;margin-left:4px">옵션 확인 실패</span>`
         : '';
