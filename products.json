@@ -1238,5 +1238,41 @@
       "하와이 (10병)"
     ],
     "sale": false
+  },
+  {
+    "id": 2702,
+    "product_no": 2702,
+    "name": "[ASDF] 인게이지 팟",
+    "price": 5500,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202601/f7326844dd21ea0718e7d71692e486eb.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202601/f7326844dd21ea0718e7d71692e486eb.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202601/c33115448f4fb2cceaadecd5e34618e1.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202601/c33115448f4fb2cceaadecd5e34618e1.png",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [],
+    "sale": false
+  },
+  {
+    "id": 2701,
+    "product_no": 2701,
+    "name": "[ASDF] 인게이지 전자담배",
+    "price": 68000,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202601/cca64bbaa4f1cd69c225721bc9186f36.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202601/cca64bbaa4f1cd69c225721bc9186f36.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202601/1ac0e385d50399eb21eb4a72a186b435.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202601/1ac0e385d50399eb21eb4a72a186b435.png",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [],
+    "sale": false
   }
 ]
