@@ -3334,7 +3334,7 @@
   {
     "id": 395,
     "product_no": 395,
-    "name": "[O M] S.T 긍정쥬스 입호흡 액상 30ml",
+    "name": "S.T 긍정쥬스 입호흡 액상 30ml",
     "price": 12200,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202309/31b0fedcf01760a114214a6bfc1c59a5.jpg"
@@ -3347,11 +3347,9 @@
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
-      "민트",
-      "블루베리",
-      "알로에베라",
-      "오리지널시가",
-      "피치망고"
+      "알로에 베라",
+      "피치 망고",
+      "오리지널 시가"
     ],
     "sale": false
   },
