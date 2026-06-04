@@ -289,6 +289,10 @@ tr:hover td{background:rgba(128,128,128,.06);}
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
           <input id="c24-search" type="text" placeholder="🔍 상품명으로 검색 (비우면 전체 상품)" style="flex:1;min-width:180px;background:var(--card);border:1.5px solid var(--border);color:var(--text);padding:7px 12px;border-radius:8px;font-family:'Pretendard',sans-serif;font-size:.82rem;outline:none;">
+          <label style="display:flex;align-items:center;gap:6px;font-size:.78rem;font-weight:800;color:var(--muted);white-space:nowrap;">
+            <input id="c24-with-options" type="checkbox" checked style="width:15px;height:15px;accent-color:var(--g);">
+            옵션명도 함께 가져오기
+          </label>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
           <button class="btn btn-outline" id="btn-c24-auth" onclick="startCafe24Auth()">카페24 인증하기</button>
@@ -1338,6 +1342,7 @@ async function fetchCafe24() {
   const rt  = document.getElementById('c24-rt').value.trim();
   if (!cid || !sec || !rt) { toast('카페24 Client ID / Secret / Refresh Token을 모두 입력하세요', 'err'); return; }
   const searchName = document.getElementById('c24-search').value.trim();
+  const withOptions = !!document.getElementById('c24-with-options')?.checked;
   // 입력값 localStorage 저장
   localStorage.setItem('fv-c24-id', cid);
   localStorage.setItem('fv-c24-sec', sec);
@@ -1388,6 +1393,9 @@ async function fetchCafe24() {
     }
 
     if (!items.length) { toast(searchName ? `"${searchName}" 검색 결과 없음` : '불러온 상품 없음', 'info'); return; }
+    if (withOptions) {
+      items = await enrichCafe24Options(items, td.access_token, proxy, btn);
+    }
     window._c24 = items;
     window._c24SellingFilter = '';
     updateC24SellingButtons();
@@ -1402,6 +1410,82 @@ async function fetchCafe24() {
 }
 
 function c24SelAll(v) { document.querySelectorAll('.import-check').forEach(cb => cb.checked = v); }
+
+function cleanC24OptionText(value) {
+  const text = String(value || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+  if (!text || text === '-' || /^[A-Z0-9]{8,}$/.test(text)) return '';
+  return text;
+}
+function addC24OptionValue(value, out) {
+  if (value == null) return;
+  if (typeof value === 'string' || typeof value === 'number') {
+    const text = cleanC24OptionText(value);
+    if (text && !out.includes(text)) out.push(text);
+    return;
+  }
+  if (Array.isArray(value)) {
+    value.forEach(v => addC24OptionValue(v, out));
+    return;
+  }
+  if (typeof value === 'object') {
+    if ('option_value' in value) addC24OptionValue(value.option_value, out);
+    else if ('option_text' in value) addC24OptionValue(value.option_text, out);
+    else if ('value' in value) addC24OptionValue(value.value, out);
+    else if ('text' in value) addC24OptionValue(value.text, out);
+  }
+}
+function extractC24Options(data) {
+  const out = [];
+  const optionRoot = data?.option || data?.options || data;
+  const optionGroups = [
+    optionRoot?.options,
+    optionRoot?.option,
+    data?.options,
+    data?.option?.options,
+  ];
+  optionGroups.forEach(group => {
+    if (Array.isArray(group)) {
+      group.forEach(item => {
+        if (item && typeof item === 'object') addC24OptionValue(item.option_value ?? item.option_values ?? item.values, out);
+        else addC24OptionValue(item, out);
+      });
+    } else if (group && typeof group === 'object') {
+      addC24OptionValue(group.option_value ?? group.option_values ?? group.values, out);
+    }
+  });
+  const variants = data?.variants || data?.variant || [];
+  (Array.isArray(variants) ? variants : [variants]).forEach(variant => {
+    addC24OptionValue(variant?.options ?? variant?.option, out);
+  });
+  return out;
+}
+async function fetchCafe24Subresource(productNo, resource, accessToken, proxy) {
+  const apiUrl = `https://frokyvape.cafe24api.com/api/v2/admin/products/${productNo}/${resource}`;
+  const res = await fetch(proxy + encodeURIComponent(apiUrl), {
+    headers: { 'Authorization': 'Bearer ' + accessToken, 'X-Cafe24-Api-Version': '2026-03-01' },
+  });
+  if (!res.ok) return [];
+  return extractC24Options(await res.json());
+}
+async function enrichCafe24Options(items, accessToken, proxy, btn) {
+  const enriched = [];
+  let optionProducts = 0;
+  for (let i = 0; i < items.length; i++) {
+    const product = items[i];
+    btn.innerHTML = `<span class="spin"></span>옵션명 확인 중... (${i + 1}/${items.length})`;
+    let options = [];
+    try {
+      options = await fetchCafe24Subresource(product.product_no, 'options', accessToken, proxy);
+      if (!options.length) options = await fetchCafe24Subresource(product.product_no, 'variants', accessToken, proxy);
+    } catch (e) {
+      options = [];
+    }
+    if (options.length) optionProducts++;
+    enriched.push({ ...product, _options: options });
+  }
+  toast(`옵션명 ${optionProducts}/${items.length}개 상품에서 확인`, optionProducts ? 'ok' : 'info');
+  return enriched;
+}
 
 function isC24Selling(p) {
   const raw = String(p.selling ?? p.selling_status ?? p.product_selling ?? '').toUpperCase();
@@ -1446,10 +1530,11 @@ function filterC24() {
     const img = toImg(p.list_image || p.detail_image || '');
     const isDupe = existingNos.has(p.product_no);
     const selling = isC24Selling(p);
+    const optionCount = Array.isArray(p._options) ? p._options.length : 0;
     return `<tr style="${isDupe ? 'opacity:.45' : ''}">
       <td><input type="checkbox" class="import-check" data-i="${origIdx}" ${isDupe ? '' : 'checked'}></td>
       <td><img src="${img}" style="width:32px;height:32px;object-fit:cover;border-radius:5px;" onerror="this.src=''"></td>
-      <td>${p.product_name}${isDupe ? ' <span style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">중복</span>' : ''}</td>
+      <td>${p.product_name}${isDupe ? ' <span style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">중복</span>' : ''}${optionCount ? ` <span style="font-size:.65rem;color:var(--g);font-weight:800;margin-left:4px">옵션 ${optionCount}개</span>` : ''}</td>
       <td style="white-space:nowrap">${Number(p.price).toLocaleString('ko-KR')}원</td>
       <td><span style="display:inline-block;padding:2px 7px;border-radius:4px;font-size:.68rem;font-weight:800;background:${selling ? 'rgba(46,204,64,.16)' : 'rgba(229,57,53,.14)'};color:${selling ? 'var(--g)' : 'var(--red)'}">${c24SellingLabel(p)}</span></td>
       <td><span class="cat-tag c-${CAT(p.product_name)}">${categoryLabel(CAT(p.product_name))}</span></td>
@@ -1525,9 +1610,9 @@ function deleteSelected() {
 
 function importSelected() {
   const sel = [...document.querySelectorAll('.import-check:checked')].map(cb => window._c24[+cb.dataset.i]);
-  let added = 0, dupes = 0;
+  let added = 0, updated = 0;
   sel.forEach(p => {
-    if (products.find(x => x.id === p.product_no)) { dupes++; return; }
+    const importedOptions = Array.isArray(p._options) ? p._options : [];
     const toUrl = s => {
       if (!s) return '';
       if (s.startsWith('//')) return 'https:' + s;
@@ -1540,6 +1625,14 @@ function importSelected() {
       ? p.additional_images.map(img => toUrl(typeof img === 'string' ? img : (img.big || img.medium || img.url || img.small || ''))).filter(Boolean)
       : [];
     const allDetailImgs = [detailImg, ...extraImgs].filter(Boolean);
+    const existing = products.find(x => x.id === p.product_no || x.product_no === p.product_no);
+    if (existing) {
+      if (importedOptions.length) {
+        existing.options = importedOptions;
+        updated++;
+      }
+      return;
+    }
     products.push({
       id: p.product_no, product_no: p.product_no, name: p.product_name, price: parseInt(p.price) || 0,
       imgs: mainImg ? [mainImg] : [],
@@ -1547,15 +1640,15 @@ function importSelected() {
       detailImgs: allDetailImgs,
       detailImg: allDetailImgs[0] || '',
       cat: CAT(p.product_name), flavor: (p.summary_description || '').trim(),
-      options: [], sale: !!p.price_content,
+      options: importedOptions, sale: !!p.price_content,
     });
     added++;
   });
   dbSave();
   document.getElementById('c24-result').style.display = 'none';
   showSection('sec-products');
-  const msg = added + '개 추가됨' + (dupes ? ` (중복 ${dupes}개 건너뜀)` : '') + ' — 저장 & 배포 필요';
-  toast(msg, added > 0 ? 'ok' : 'info');
+  const msg = `${added}개 추가됨` + (updated ? `, 기존 ${updated}개 옵션 갱신됨` : '') + ' — 저장 & 배포 필요';
+  toast(msg, added || updated ? 'ok' : 'info');
 }
 
 let _tt;
