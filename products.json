@@ -3044,7 +3044,7 @@
   {
     "id": 867,
     "product_no": 867,
-    "name": "[A] 크로닉쥬스 슈퍼쿨 입호흡 액상 30ml",
+    "name": "크로닉쥬스 슈퍼쿨 입호흡 액상 30ml",
     "price": 15500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202310/6c17cf1e037b8f5f9eee6f2a09486334.png"
@@ -3056,7 +3056,10 @@
     "detailImg": "https://frokyvape.com/web/product/big/202310/52a3a47aa73e1cddd85ba2ee9053414d.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "슈퍼쿨 레드불",
+      "슈퍼쿨 피치 망고"
+    ],
     "sale": false
   },
   {
