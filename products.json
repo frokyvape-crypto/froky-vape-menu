@@ -3121,7 +3121,7 @@
   {
     "id": 127,
     "product_no": 127,
-    "name": "[A] 시나롤 입호흡 액상 30ml",
+    "name": "시나롤 입호흡 액상 30ml",
     "price": 15500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202310/19846ae9b6542940f3d7fb170607399b.png"
@@ -3133,7 +3133,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202310/f5db1da1d26aa448680276be1d4bd810.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "시나롤"
+    ],
     "sale": false
   },
   {
