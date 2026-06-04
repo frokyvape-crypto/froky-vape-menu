@@ -2772,7 +2772,11 @@
     "detailImg": "https://frokyvape.com/web/product/big/202407/d2e832078a2fd274603de761ff6a1661.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "스프라이트",
+      "라임소다",
+      "콜라"
+    ],
     "sale": false
   },
   {
