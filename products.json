@@ -2750,7 +2750,11 @@
     "detailImg": "https://frokyvape.com/web/product/big/202407/39dc7036dd933ee243327f9cd7ecb96f.png",
     "cat": "폐호흡",
     "flavor": "3mg",
-    "options": [],
+    "options": [
+      "스프라이트",
+      "라임소다",
+      "콜라"
+    ],
     "sale": false
   },
   {
