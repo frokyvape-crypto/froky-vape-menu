@@ -3155,7 +3155,7 @@
   {
     "id": 597,
     "product_no": 597,
-    "name": "[A] 더 블랙 입호흡 액상 30ml",
+    "name": "더 블랙 입호흡 액상 30ml",
     "price": 14400,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202409/4b7cec2d6b62f8dfba38903ebf80ee91.png"
@@ -3167,7 +3167,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202409/237a8947a0ce2d74e622bdf6eda7244c.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "아몬드 카라멜"
+    ],
     "sale": false
   },
   {
