@@ -1310,7 +1310,7 @@
   {
     "id": 3174,
     "product_no": 3174,
-    "name": "[NEW 알케마스터] 폐호흡 액상 60ml",
+    "name": "NEW 알케마스터 폐호흡 액상 60ml",
     "price": 14800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202606/cf85131fe6c62cdc14a3da446b611f1e.png"
@@ -1321,7 +1321,7 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202606/f9c6e05981a26ecdcbc5a7f76f392adc.png",
     "cat": "폐호흡",
-    "flavor": "",
+    "flavor": "3mg",
     "options": [
       "그레이프",
       "레몬",
