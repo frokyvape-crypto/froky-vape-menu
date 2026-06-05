@@ -1292,7 +1292,19 @@
     "detailImg": "https://frokyvape.com/web/product/big/202606/cca03485dacdf6691474242e776ae1d3.png",
     "cat": "폐호흡",
     "flavor": "",
-    "options": [],
+    "options": [
+      "그레이프",
+      "레몬",
+      "리치",
+      "망고",
+      "멜론 아이스",
+      "블러드 오렌지",
+      "스노우 페어",
+      "스트로베리",
+      "워터멜론",
+      "자몽",
+      "피치 아이스"
+    ],
     "sale": false
   },
   {
@@ -1310,7 +1322,19 @@
     "detailImg": "https://frokyvape.com/web/product/big/202606/f9c6e05981a26ecdcbc5a7f76f392adc.png",
     "cat": "폐호흡",
     "flavor": "",
-    "options": [],
+    "options": [
+      "그레이프",
+      "레몬",
+      "리치",
+      "망고",
+      "멜론",
+      "블러드 오렌지",
+      "스노우 페어",
+      "스트로베리",
+      "워터멜론",
+      "자몽",
+      "피치 아이스"
+    ],
     "sale": false
   },
   {
