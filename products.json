@@ -2544,7 +2544,7 @@
   {
     "id": 2527,
     "product_no": 2527,
-    "name": "[M] 카디날 Quik 일회용 전자담배 2ml",
+    "name": "카디날 Quik 일회용 전자담배 2ml",
     "price": 10900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202510/66141ca0220e89c5818e95ad97e21f8f.jpg"
@@ -2556,7 +2556,12 @@
     "detailImg": "https://frokyvape.com/web/product/big/202510/129e75e531c8355d782b7a6afd500ece.jpg",
     "cat": "일회용",
     "flavor": "2,000 퍼프",
-    "options": [],
+    "options": [
+      "워터 멜론",
+      "그레이프",
+      "콜라 레몬",
+      "믹스 베리"
+    ],
     "sale": false
   },
   {
