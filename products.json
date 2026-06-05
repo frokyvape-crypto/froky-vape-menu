@@ -2835,7 +2835,7 @@
   {
     "id": 1445,
     "product_no": 1445,
-    "name": "[네스티] 네스티바 20,000 일회용 전자담배  20ml",
+    "name": "네스티바 20,000 일회용 전자담배  20ml",
     "price": 23000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202405/e8917303154e6c9b179f600a9a03c9f6.png"
@@ -2847,7 +2847,19 @@
     "detailImg": "https://frokyvape.com/web/product/big/202405/5187b1be72e14d89f780780aaf0ee80b.png",
     "cat": "일회용",
     "flavor": "20,000 퍼프",
-    "options": [],
+    "options": [
+      "슬로우 블로우",
+      "알로에 그레이프",
+      "피치 아이스",
+      "탕이 애플 스플래시",
+      "아틱 민트",
+      "라즈베리 트위스트",
+      "레드 에너지",
+      "워터멜론 아이스",
+      "판타지파인애플",
+      "트리플멜론",
+      "포카리"
+    ],
     "sale": false
   },
   {
