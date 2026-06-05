@@ -1399,7 +1399,7 @@
   {
     "id": 2791,
     "product_no": 2791,
-    "name": "♥2+1♥ 시그니처 입호흡 액상 30ml",
+    "name": "시그니처 입호흡 액상 30ml",
     "price": 8800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/be8b3d0d3d04eb6503a4c8ba36b98557.png"
@@ -1411,7 +1411,11 @@
     "detailImg": "https://frokyvape.com/web/product/big/202603/4a001255c87689839e422c4efb89164d.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "루비 로젤",
+      "시나노 골드애플",
+      "청자몽"
+    ],
     "sale": false
   },
   {
@@ -1727,24 +1731,6 @@
       "피치 블라썸",
       "피치 플럼"
     ],
-    "sale": false
-  },
-  {
-    "id": 2488,
-    "product_no": 2488,
-    "name": "♥2+1♥ 한입 입호흡 액상 30ml",
-    "price": 8800,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202509/5e2a241711982a7785cadfa80092ed05.jpg"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202509/5e2a241711982a7785cadfa80092ed05.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/abb5db1b47b4902259793298747dae61.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/abb5db1b47b4902259793298747dae61.jpg",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
     "sale": false
   },
   {
