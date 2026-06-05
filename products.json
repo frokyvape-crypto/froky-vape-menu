@@ -3858,5 +3858,29 @@
       "캐슬롱"
     ],
     "sale": false
+  },
+  {
+    "id": 2127,
+    "product_no": 2127,
+    "name": "카디날 Quik 6000 일회용 전자담배",
+    "price": 15900,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202505/6052acf58d9892cf64e9e26c13a9eee6.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202505/6052acf58d9892cf64e9e26c13a9eee6.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202505/8a92be1f53769cc49c6fe05148d10165.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202505/8a92be1f53769cc49c6fe05148d10165.png",
+    "cat": "일회용",
+    "flavor": "6,000 퍼프",
+    "options": [
+      "워터 멜론",
+      "콜라 레몬",
+      "미네랄",
+      "그레이프",
+      "스트로베리 아이스크림"
+    ],
+    "sale": false
   }
 ]
