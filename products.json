@@ -2476,7 +2476,7 @@
   {
     "id": 2670,
     "product_no": 2670,
-    "name": "[A] 옥스바 트리퓨전 일회용 전자담배 30ml",
+    "name": "옥스바 트리퓨전 일회용 전자담배 30ml",
     "price": 19200,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202511/5b209804231abeee94ae270ff0d36eb9.jpg"
@@ -2488,7 +2488,18 @@
     "detailImg": "https://frokyvape.com/web/product/big/202511/c0036ee62ab7085de2da59e03d59bdc7.jpg",
     "cat": "일회용",
     "flavor": "50,000 퍼프",
-    "options": [],
+    "options": [
+      "피치 & 망고",
+      "블루베리 & 라즈베리",
+      "사워 애플",
+      "교호 그레이프",
+      "포카리",
+      "파인애플 아이스",
+      "허니 자몽티",
+      "칸탈루프",
+      "민트",
+      "워터멜론"
+    ],
     "sale": false
   },
   {
