@@ -2312,7 +2312,7 @@
   {
     "id": 2566,
     "product_no": 2566,
-    "name": "[2%] 네스티 원 30K 액상팟 20ml",
+    "name": "네스티 원 30K 액상팟 20ml",
     "price": 17900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202510/5d0af748e7b5e8fe680c8e8457cf5be5.jpg"
@@ -2323,8 +2323,17 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202510/51d6e63545acc42c4a7b39faca71e58d.jpg",
     "cat": "입호흡",
-    "flavor": "",
-    "options": [],
+    "flavor": "*디바이스 미 포함* / 30,000퍼프",
+    "options": [
+      "알로에 그레이프 (2%)",
+      "프리즈 민트 (2%)",
+      "유자 아이스 (2%)",
+      "애플 레몬에이드 (2%)",
+      "모히또 (2%)",
+      "슬로우블로우 (2%)",
+      "레드에너지 (2%)",
+      "피치 아이스 (2%)"
+    ],
     "sale": false
   },
   {
