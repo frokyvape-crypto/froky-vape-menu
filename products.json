@@ -2186,24 +2186,6 @@
     "sale": false
   },
   {
-    "id": 2728,
-    "product_no": 2728,
-    "name": "[M] 이레즈미바 폐호흡 일회용 전자담배 30ml",
-    "price": 17700,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202602/24033c3a430abd5b8d375cb2ecf1fa3a.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202602/24033c3a430abd5b8d375cb2ecf1fa3a.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202602/5b2672a68feb7d13595f418fd45f53df.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202602/5b2672a68feb7d13595f418fd45f53df.png",
-    "cat": "폐호흡",
-    "flavor": "3mg / 20,000퍼프",
-    "options": [],
-    "sale": false
-  },
-  {
     "id": 2444,
     "product_no": 2444,
     "name": "솔솔 시리즈 입호흡 액상 30ml",
@@ -4036,6 +4018,30 @@
       "워터멜론",
       "클래식 토바코",
       "콜라 아이스"
+    ],
+    "sale": false
+  },
+  {
+    "id": 2728,
+    "product_no": 2728,
+    "name": "이레즈미바 폐호흡 일회용 전자담배 30ml",
+    "price": 17700,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202602/24033c3a430abd5b8d375cb2ecf1fa3a.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202602/24033c3a430abd5b8d375cb2ecf1fa3a.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202602/5b2672a68feb7d13595f418fd45f53df.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202602/5b2672a68feb7d13595f418fd45f53df.png",
+    "cat": "폐호흡",
+    "flavor": "3mg / 20,000퍼프",
+    "options": [
+      "알로에 그레이프",
+      "망고",
+      "피치 아이스",
+      "오렌지",
+      "스트로베리 키위"
     ],
     "sale": false
   }
