@@ -1574,7 +1574,7 @@
   {
     "id": 2932,
     "product_no": 2932,
-    "name": "[과일정류장] 제로쿨 입호흡 액상 30ml",
+    "name": "과일정류장 제로쿨 입호흡 액상 30ml",
     "price": 8800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202604/540ebfb682e5169db3ab0fad8d3e7b07.png"
@@ -1585,8 +1585,15 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202604/9ca5b422877a9d6bd40cf20cb5f05dc0.png",
     "cat": "입호흡",
-    "flavor": "",
-    "options": [],
+    "flavor": "9.8mg",
+    "options": [
+      "[제로쿨] 라즈베리행",
+      "[제로쿨] 애플행",
+      "[제로쿨] 오렌지행",
+      "[제로쿨] 체리행",
+      "[제로쿨] 키위행",
+      "[제로쿨] 파인애플행"
+    ],
     "sale": false
   },
   {
@@ -1766,24 +1773,6 @@
       "쿨 체리",
       "포도"
     ],
-    "sale": false
-  },
-  {
-    "id": 2668,
-    "product_no": 2668,
-    "name": "♥2+1♥ 과일정류장 입호흡 액상 30ml",
-    "price": 8800,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202512/b0bbbd609841fc896604bd8e83d2ec93.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202512/b0bbbd609841fc896604bd8e83d2ec93.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202512/683e27d3a9b4ab5ddc66cbc0ed9f048b.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202512/683e27d3a9b4ab5ddc66cbc0ed9f048b.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [],
     "sale": false
   },
   {
@@ -4260,6 +4249,31 @@
       "시트러스 망고",
       "체리 석류",
       "피치"
+    ],
+    "sale": false
+  },
+  {
+    "id": 2931,
+    "product_no": 2931,
+    "name": "[과일정류장] 슈퍼쿨 입호흡 액상 30ml",
+    "price": 8800,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202604/ddc4d22df2e68255caf015d41e0a6e88.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202604/ddc4d22df2e68255caf015d41e0a6e88.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202604/7344658fdcc238aea32d8bfaed4f1584.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202604/7344658fdcc238aea32d8bfaed4f1584.png",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "[슈퍼쿨] 라즈베리행",
+      "[슈퍼쿨] 애플행",
+      "[슈퍼쿨] 오렌지행",
+      "[슈퍼쿨] 체리행",
+      "[슈퍼쿨] 키위행",
+      "[슈퍼쿨] 파인애플행"
     ],
     "sale": false
   }
