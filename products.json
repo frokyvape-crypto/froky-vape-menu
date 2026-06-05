@@ -2582,7 +2582,7 @@
   {
     "id": 2714,
     "product_no": 2714,
-    "name": "[A] 노보 더 테이스티 입호흡 액상 30ml",
+    "name": "노보 더 테이스티 입호흡 액상 30ml",
     "price": 13300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202507/6a2a03afd091e07dcab2e1f8988ad1ed.png"
@@ -2594,7 +2594,14 @@
     "detailImg": "https://frokyvape.com/web/product/big/202507/9738efd60ea5295f1dfbe761ae1a4898.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "스트로베리",
+      "로즈베리",
+      "스피어민트",
+      "파인애플에이드",
+      "피어",
+      "알로에베리"
+    ],
     "sale": false
   },
   {
