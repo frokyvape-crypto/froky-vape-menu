@@ -2910,7 +2910,7 @@
   {
     "id": 683,
     "product_no": 683,
-    "name": "[O M] 카디날 입호흡 액상 30ml",
+    "name": "카디날 입호흡 액상 30ml",
     "price": 17700,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202310/5b01281a433cc7f79477f2e0a71d359d.png"
@@ -2922,7 +2922,13 @@
     "detailImg": "https://frokyvape.com/web/product/big/202310/01dff9734f92b0b69cc33ec24821fa8d.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "블랙",
+      "자바",
+      "다크",
+      "바닐라",
+      "씬"
+    ],
     "sale": false
   },
   {
