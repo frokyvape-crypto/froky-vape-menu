@@ -1664,7 +1664,7 @@
   {
     "id": 2699,
     "product_no": 2699,
-    "name": "♥2+1♥ 레인드롭 입호흡 액상 30ml",
+    "name": "레인드롭 입호흡 액상 30ml",
     "price": 8800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202601/3709f5daf15bc3b7770f0ed55ff7fa4a.png"
@@ -1676,7 +1676,12 @@
     "detailImg": "https://frokyvape.com/web/product/big/202601/3873b9348d05885e240a9f0fbe1a8507.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "레드 & 그린 애플",
+      "사워 그레이프",
+      "피치 블라썸",
+      "피치 플럼"
+    ],
     "sale": false
   },
   {
