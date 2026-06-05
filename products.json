@@ -2939,7 +2939,7 @@
   {
     "id": 691,
     "product_no": 691,
-    "name": "[A] 세븐코리아 포카리 입호흡 액상 30ml",
+    "name": "세븐코리아 포카리 입호흡 액상 30ml",
     "price": 16600,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202403/c6451c3b6d927e3ff3ecd6bd9594e266.png"
@@ -2951,7 +2951,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202403/bf2c227a351161006c7afbca5c50d384.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "포카리"
+    ],
     "sale": false
   },
   {
