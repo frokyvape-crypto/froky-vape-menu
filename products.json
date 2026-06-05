@@ -2527,7 +2527,7 @@
   {
     "id": 2601,
     "product_no": 2601,
-    "name": "[M VC] 포그라운드 펄스 입호흡 액상 30ml",
+    "name": "포그라운드 펄스 입호흡 액상 30ml",
     "price": 8800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202511/9e3176180c068a352c3370e446980f70.jpg"
@@ -2538,8 +2538,12 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202511/ad67be36d75fb529e7fd83bb34bd87b5.jpg",
     "cat": "입호흡",
-    "flavor": "",
-    "options": [],
+    "flavor": "9.8mg",
+    "options": [
+      "알로에이드",
+      "청포도에이드",
+      "포도에이드"
+    ],
     "sale": false
   },
   {
