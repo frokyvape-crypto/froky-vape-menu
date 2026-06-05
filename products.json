@@ -2746,7 +2746,7 @@
   {
     "id": 2026,
     "product_no": 2026,
-    "name": "[A] 테슬라 바 XT-26000 일회용 전자담배 20ml",
+    "name": "테슬라 바 XT-26000 일회용 전자담배 20ml",
     "price": 21000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202508/4bf9c32b37b2d89009db9b2efda476d1.png"
@@ -2758,7 +2758,11 @@
     "detailImg": "https://frokyvape.com/web/product/big/202508/a6032f6b9c205a7f82de6fb91fbbf094.png",
     "cat": "일회용",
     "flavor": "26,000 퍼프",
-    "options": [],
+    "options": [
+      "블루라즈 워터멜론 드래곤후르츠",
+      "스트로베리 키위",
+      "쥬시피치 아이스"
+    ],
     "sale": false
   },
   {
