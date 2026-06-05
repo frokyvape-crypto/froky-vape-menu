@@ -2096,7 +2096,7 @@
   {
     "id": 2763,
     "product_no": 2763,
-    "name": "[A] 델몽 입호흡 액상 30ml",
+    "name": "델몽 입호흡 액상 30ml",
     "price": 9500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202602/ffe89126808270d9efbc607f2aeedfaf.png"
@@ -2108,7 +2108,14 @@
     "detailImg": "https://frokyvape.com/web/product/big/202602/f6d0be94ad20519459d90557e409195b.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "블루라즈",
+      "샤인캣",
+      "체리수박",
+      "탠저린",
+      "플러미",
+      "허니멜론"
+    ],
     "sale": false
   },
   {
