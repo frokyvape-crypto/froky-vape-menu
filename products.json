@@ -2993,7 +2993,7 @@
   {
     "id": 807,
     "product_no": 807,
-    "name": "[A] 세븐코리아 이브 입호흡 액상 30ml",
+    "name": "세븐코리아 이브 입호흡 액상 30ml",
     "price": 16600,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202310/46e7f8656b78382ebc224a9cae906479.png"
@@ -3005,7 +3005,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202310/50e5e23eefe4f87e5c050eb014c7b593.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "이브"
+    ],
     "sale": false
   },
   {
