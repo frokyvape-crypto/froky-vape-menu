@@ -2907,7 +2907,7 @@
   {
     "id": 1237,
     "product_no": 1237,
-    "name": "[A] 네스티 리큐 S 입호흡 액상 30ml",
+    "name": "네스티 리큐 입호흡 액상 30ml",
     "price": 14400,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202402/dcb5869446ce73d4b9edcb44f26caa80.png"
@@ -2919,7 +2919,12 @@
     "detailImg": "https://frokyvape.com/web/product/big/202402/df20acd0b7d52b66b783c2160b9562a5.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "리큐 스피아민트",
+      "리큐 그레이프 아이스",
+      "리큐 레몬 아이스",
+      "리큐 바닐라 커스타드"
+    ],
     "sale": false
   },
   {
