@@ -2284,7 +2284,7 @@
   {
     "id": 2685,
     "product_no": 2685,
-    "name": "[M] 닥터베이퍼스 팬서 폐호흡 액상 60ml",
+    "name": "닥터베이퍼스 팬서 폐호흡 액상 60ml",
     "price": 22500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202601/609f8b9d55a2fc26487d64a74eea719b.png"
@@ -2296,7 +2296,10 @@
     "detailImg": "https://frokyvape.com/web/product/big/202601/012e75dbcafca0ead2290f76a98d0726.png",
     "cat": "폐호흡",
     "flavor": "3mg",
-    "options": [],
+    "options": [
+      "로스티드",
+      "블랙 2.0"
+    ],
     "sale": false
   },
   {
