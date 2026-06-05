@@ -3065,7 +3065,7 @@
   {
     "id": 2785,
     "product_no": 2785,
-    "name": "[낱개 주문] 노보 블랙 입호흡 액상 30ml",
+    "name": "노보 블랙 입호흡 액상 30ml",
     "price": 13300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202310/c1028ac280e18647b11640cf5876e1ae.png"
@@ -3077,7 +3077,13 @@
     "detailImg": "https://frokyvape.com/web/product/big/202310/37baeccdfdaf4691c40caacaa23ebbbf.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "엠에스 블랜드",
+      "데저트",
+      "타박 멘솔",
+      "블랙 멘솔",
+      "아메리카노"
+    ],
     "sale": false
   },
   {
