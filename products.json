@@ -2805,7 +2805,7 @@
   {
     "id": 1791,
     "product_no": 1791,
-    "name": "[B M VL] 엘럭스 사이버오버 일회용 전자담배 20ml",
+    "name": "엘럭스 사이버오버 일회용 전자담배 20ml",
     "price": 22000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202412/37e385e35d4c5c5896482dd29973d4c4.png"
@@ -2817,7 +2817,11 @@
     "detailImg": "https://frokyvape.com/web/product/big/202412/35653fba7f071433c307315825ee6744.png",
     "cat": "일회용",
     "flavor": "20,000 퍼프",
-    "options": [],
+    "options": [
+      "알로에 그레이프",
+      "마르키사 더블",
+      "피치 샤워"
+    ],
     "sale": false
   },
   {
