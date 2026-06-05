@@ -1428,24 +1428,6 @@
     "sale": false
   },
   {
-    "id": 1792,
-    "product_no": 1792,
-    "name": "[M] 링 일회용 전자담배 22ml",
-    "price": 22900,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202412/cbd69efa9ad1ae0813903e170d60bb4d.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202412/cbd69efa9ad1ae0813903e170d60bb4d.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202412/287cfa795a69e9bc6b901000737b2a07.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202412/287cfa795a69e9bc6b901000737b2a07.png",
-    "cat": "일회용",
-    "flavor": "20,000 퍼프",
-    "options": [],
-    "sale": false
-  },
-  {
     "id": 2925,
     "product_no": 2925,
     "name": "[한입] 슈퍼쿨 입호흡 액상 30ml",
@@ -1718,7 +1700,7 @@
   {
     "id": 2700,
     "product_no": 2700,
-    "name": "♥2+1♥ 드링크 프로젝트 입호흡 액상 30ml",
+    "name": "드링크 프로젝트 입호흡 액상 30ml",
     "price": 8800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202601/91c0295e87a68733765afa47f58984e7.png"
@@ -1730,7 +1712,14 @@
     "detailImg": "https://frokyvape.com/web/product/big/202601/454ab4d526e91bee804379d934dc303d.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "레드 윙스",
+      "제로 사이다",
+      "카보네이티드",
+      "콜라",
+      "판타지 오렌지",
+      "판타지 포도"
+    ],
     "sale": false
   },
   {
@@ -2000,7 +1989,11 @@
     "detailImg": "https://frokyvape.com/web/product/big/202509/81ac705632e48dffa9819a10e011f274.jpg",
     "cat": "입호흡",
     "flavor": "",
-    "options": [],
+    "options": [
+      "라임",
+      "알로에",
+      "소다"
+    ],
     "sale": false
   },
   {
