@@ -2733,7 +2733,7 @@
   {
     "id": 2003,
     "product_no": 2003,
-    "name": "[O] 디오리퀴드 퓨어 입호흡 액상 30ml",
+    "name": "디오리퀴드 퓨어 입호흡 액상 30ml",
     "price": 8900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202503/27cf736ee7cf52b87dc6d14548a76f65.png"
@@ -2745,7 +2745,13 @@
     "detailImg": "https://frokyvape.com/web/product/big/202503/bd05b4ad0dc84a13aa415afb927fba6d.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "히비스커스",
+      "블루워터",
+      "구아바",
+      "아이스 블랙티",
+      "타로"
+    ],
     "sale": false
   },
   {
