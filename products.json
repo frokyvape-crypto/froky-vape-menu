@@ -2871,7 +2871,7 @@
   {
     "id": 429,
     "product_no": 429,
-    "name": "[B M] 네스티 톡스 폐호흡 액상 60ml",
+    "name": "네스티 톡스 폐호흡 액상 60ml",
     "price": 22500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202402/054457b5c09172fe90ea94b7ca8d51ca.png"
@@ -2883,7 +2883,10 @@
     "detailImg": "https://frokyvape.com/web/product/big/202402/648c84266ef236c1ac0bacf8e5a66dbd.png",
     "cat": "폐호흡",
     "flavor": "3mg / 9mg",
-    "options": [],
+    "options": [
+      "알로에베라 (3MG / 연두색 병)",
+      "알로에베라 (9MG / 검은색 병)"
+    ],
     "sale": false
   },
   {
