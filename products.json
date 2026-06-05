@@ -2235,8 +2235,15 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202602/9e3e467f7f4fb93233f45ca1e8e0ee03.png",
     "cat": "입호흡",
-    "flavor": "",
-    "options": [],
+    "flavor": "2ml",
+    "options": [
+      "리치 망고",
+      "스트로베리 크러시",
+      "머스캣 그레이프",
+      "라임 스파클링",
+      "스트릿 시가",
+      "레몬 라임"
+    ],
     "sale": false
   },
   {
