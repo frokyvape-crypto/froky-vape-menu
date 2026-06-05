@@ -3922,5 +3922,18 @@
       "스트로베리 아이스크림"
     ],
     "sale": false
+  },
+  {
+    "id": 1780626218064,
+    "name": "옥스바 슬림 스틱 일회용 카트리지 2%",
+    "price": 55000,
+    "imgs": [],
+    "img": "",
+    "detailImgs": [],
+    "detailImg": "",
+    "cat": "best",
+    "flavor": "",
+    "options": [],
+    "sale": false
   }
 ]
