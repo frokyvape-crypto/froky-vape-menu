@@ -2132,7 +2132,7 @@
   {
     "id": 2709,
     "product_no": 2709,
-    "name": "[O NB] 골든파인애플 입호흡 액상 30ml",
+    "name": "골든파인애플 입호흡 액상 30ml",
     "price": 8400,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202601/9f9df5600f5c640488215db83e225628.png"
@@ -2144,7 +2144,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202601/c31c711e81bf08183658ca4a388c5e25.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "골든 파인애플"
+    ],
     "sale": false
   },
   {
