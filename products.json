@@ -2474,7 +2474,7 @@
   {
     "id": 2597,
     "product_no": 2597,
-    "name": "[A] 네스티 블라스트 입호흡 액상 30ml",
+    "name": "네스티 블라스트 입호흡 액상 30ml",
     "price": 12100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202511/413c4a08abe1d282a99eb832e9ac9cb7.jpg"
@@ -2485,8 +2485,20 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202511/9e1088f7ffa02239933a1e0664b23a77.jpg",
     "cat": "입호흡",
-    "flavor": "",
-    "options": [],
+    "flavor": "10mg",
+    "options": [
+      "레드 자몽",
+      "캐리비안 망고",
+      "레몬 체리",
+      "탕이 애플 스플래쉬",
+      "피치 아이스",
+      "레드 에너지",
+      "모히또",
+      "리치 아이스",
+      "피치 자몽",
+      "민트 프리즈",
+      "유자 아이스"
+    ],
     "sale": false
   },
   {
