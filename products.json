@@ -2921,7 +2921,7 @@
   {
     "id": 690,
     "product_no": 690,
-    "name": "[A] 세븐코리아 톡소다 입호흡 액상 30ml",
+    "name": "세븐코리아 톡소다 입호흡 액상 30ml",
     "price": 16600,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202310/b1ba8db4bc13e5bcef93e37b83728bb6.png"
@@ -2933,7 +2933,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202310/994e0b8dc94ce2aa9db4a543f2aa6417.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "톡 소다 up"
+    ],
     "sale": false
   },
   {
