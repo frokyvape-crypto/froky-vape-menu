@@ -2889,7 +2889,7 @@
   {
     "id": 356,
     "product_no": 356,
-    "name": "[B M] 네스티 톡스 입호흡 액상 30ml",
+    "name": "네스티 톡스 입호흡 액상 30ml",
     "price": 17700,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202402/730fe3a153c2931c4d641a8e804c9f56.png"
@@ -2901,7 +2901,11 @@
     "detailImg": "https://frokyvape.com/web/product/big/202402/0304adef07d00c8b5232bbd29f771dbf.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "알로에베라",
+      "핑크",
+      "로젤"
+    ],
     "sale": false
   },
   {
