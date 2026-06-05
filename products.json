@@ -1393,7 +1393,11 @@
     "detailImg": "https://frokyvape.com/web/product/big/202603/f96165ef7dc87a658607edd5fc89eafa.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "아인슈페너 100ml",
+      "카라멜마끼아또 100ml",
+      "토피넛라떼 100ml"
+    ],
     "sale": false
   },
   {
@@ -3690,7 +3694,7 @@
   {
     "id": 1734,
     "product_no": 1734,
-    "name": "[A] 프라임 저농도 입호흡 액상 30ml",
+    "name": "프라임 저농도 입호흡 액상 30ml",
     "price": 10600,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202411/27c2e661d85f3d1f439b9ea07d83c9a5.png"
