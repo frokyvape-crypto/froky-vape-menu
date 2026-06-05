@@ -1851,7 +1851,7 @@
   {
     "id": 2840,
     "product_no": 2840,
-    "name": "[O] 더스페셜 입호흡 액상 30ml",
+    "name": "더스페셜 입호흡 액상 30ml",
     "price": 8800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/95c7ea2c6c9a3c9f67ebc0b7b7c16910.png"
@@ -1863,7 +1863,14 @@
     "detailImg": "https://frokyvape.com/web/product/big/202603/bb593806d3d029c3b81f0febb7fdbd48.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "더블 그레이프",
+      "더블 라임",
+      "더블 포카리",
+      "더블 피치",
+      "라바 플로우",
+      "레몬 그린티"
+    ],
     "sale": false
   },
   {
