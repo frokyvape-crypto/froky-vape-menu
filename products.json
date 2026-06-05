@@ -2114,7 +2114,7 @@
   {
     "id": 2708,
     "product_no": 2708,
-    "name": "[O NB] 옥수수수염차 입호흡 액상 30ml",
+    "name": "옥수수수염차 입호흡 액상 30ml",
     "price": 8400,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202601/201a7d7b8208c46d966d988feaec182e.png"
@@ -2126,7 +2126,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202601/2fcaffc6f4b6776c302a812b3556161b.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "옥수수수염차"
+    ],
     "sale": false
   },
   {
