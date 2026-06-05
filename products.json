@@ -1725,7 +1725,7 @@
   {
     "id": 2789,
     "product_no": 2789,
-    "name": "♥2+1♥ 원퍼프 1PUFF 입호흡 액상 30ml",
+    "name": "원퍼프 1PUFF 입호흡 액상 30ml",
     "price": 8800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/3380544e7c0cf682a0f5368b9899fee2.png"
@@ -1737,7 +1737,17 @@
     "detailImg": "https://frokyvape.com/web/product/big/202603/6b5489e29cbca35648005af4f914fec1.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "더블 자몽",
+      "레몬 그린티",
+      "망고",
+      "샤인 페어",
+      "스윗 레몬",
+      "알로에",
+      "애플 라임",
+      "쿨 체리",
+      "포도"
+    ],
     "sale": false
   },
   {
