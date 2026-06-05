@@ -2764,7 +2764,7 @@
   {
     "id": 1835,
     "product_no": 1835,
-    "name": "[O] 에딕트 ADDICT 입호흡 액상 30ml",
+    "name": "에딕트 ADDICT 입호흡 액상 30ml",
     "price": 14400,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202502/6d478438b3b403f1fddd8622234aaefa.png"
@@ -2775,8 +2775,12 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202502/49cecc3344093ea651fbd811e61ea925.png",
     "cat": "입호흡",
-    "flavor": "9.8mg ★ 로젤 퍼플 신규 입고 ★",
-    "options": [],
+    "flavor": "9.8mg",
+    "options": [
+      "로젤하트 오리지널 (레드)",
+      "로젤 하트 (블루)",
+      "로젤 하트 (퍼플)"
+    ],
     "sale": false
   },
   {
