@@ -4366,5 +4366,28 @@
       "말차 라떼"
     ],
     "sale": false
+  },
+  {
+    "id": 2678,
+    "product_no": 2678,
+    "name": "로얄티 입호흡 액상 30ml",
+    "price": 7800,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202512/c62ae227fcb5e682909bd22c307e6ef0.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202512/c62ae227fcb5e682909bd22c307e6ef0.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202512/53422ccab7bd45d9b23d5d3792db7871.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202512/53422ccab7bd45d9b23d5d3792db7871.png",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "레몬그린티",
+      "자스민그린티",
+      "슈가페어",
+      "아이스티"
+    ],
+    "sale": false
   }
 ]
