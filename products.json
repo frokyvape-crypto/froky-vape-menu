@@ -2787,7 +2787,7 @@
   {
     "id": 1846,
     "product_no": 1846,
-    "name": "[O] 디오리퀴드 입호흡 액상 30ml",
+    "name": "디오리퀴드 입호흡 액상 30ml",
     "price": 8900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202501/4cd83e82a7b7aa34cff66711e13f57f7.png"
@@ -2799,7 +2799,15 @@
     "detailImg": "https://frokyvape.com/web/product/big/202501/166aa22b48bcd42c5dd5ad5c9bdf6fea.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "샤인머스켓",
+      "레몬 라임",
+      "타박 믹스",
+      "피치 망고",
+      "멜론",
+      "알로에 그레이프",
+      "피치 아이스"
+    ],
     "sale": false
   },
   {
