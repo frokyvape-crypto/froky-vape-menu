@@ -2017,7 +2017,7 @@
   {
     "id": 2826,
     "product_no": 2826,
-    "name": "[O] 오나나 입호흡 액상 30ml",
+    "name": "오나나 입호흡 액상 30ml",
     "price": 8800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/be523c520b4c0e3bedbbd4741e21ff3f.png"
@@ -2029,7 +2029,14 @@
     "detailImg": "https://frokyvape.com/web/product/big/202603/48043605179028b59e413018777ab9ce.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "딸기 바나나",
+      "말차 바나나",
+      "민트 초코 바나나",
+      "바나나",
+      "초코 바나나",
+      "카라멜 바나나"
+    ],
     "sale": false
   },
   {
