@@ -1833,7 +1833,7 @@
   {
     "id": 2788,
     "product_no": 2788,
-    "name": "♥2+1♥ 맥클란 21 입호흡 액상 30ml",
+    "name": "맥클란 21 입호흡 액상 30ml",
     "price": 8800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/ec28ce7da3073f01c848efad8225af76.png"
@@ -1845,7 +1845,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202603/79af4afe5d6c6574774f53e2b9077c2e.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "맥클란 21"
+    ],
     "sale": false
   },
   {
