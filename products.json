@@ -1356,24 +1356,6 @@
     "sale": false
   },
   {
-    "id": 2817,
-    "product_no": 2817,
-    "name": "퓨어 폐호흡 액상 100ml",
-    "price": 15700,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202603/0885157e1bdce91dcb76be18afc1cb25.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202603/0885157e1bdce91dcb76be18afc1cb25.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/ec0ab2c5ee99898f2fc3eb16c45d61d8.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/ec0ab2c5ee99898f2fc3eb16c45d61d8.png",
-    "cat": "폐호흡",
-    "flavor": "3mg",
-    "options": [],
-    "sale": false
-  },
-  {
     "id": 2818,
     "product_no": 2818,
     "name": "♥2+1♥ 포레스트 폐호흡 액상 100ml",
@@ -1484,7 +1466,7 @@
   {
     "id": 2923,
     "product_no": 2923,
-    "name": "[퓨어] 슈퍼쿨 입호흡 액상 30ml",
+    "name": "퓨어 슈퍼쿨 입호흡 액상 30ml",
     "price": 8800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202604/8fba16c0894d21580663e294f9962b51.png"
@@ -1495,8 +1477,13 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202604/eda1952abb8a9c233ce97997bf3d6963.png",
     "cat": "입호흡",
-    "flavor": "",
-    "options": [],
+    "flavor": "9.8mg",
+    "options": [
+      "[슈퍼쿨] 그레이프",
+      "[슈퍼쿨] 그린 그레이프",
+      "[슈퍼쿨] 라임",
+      "[슈퍼쿨] 멜론"
+    ],
     "sale": false
   },
   {
@@ -1568,7 +1555,12 @@
     "detailImg": "https://frokyvape.com/web/product/big/202604/d9933bccfa315497ffb50aaa76743926.png",
     "cat": "입호흡",
     "flavor": "",
-    "options": [],
+    "options": [
+      "[제로쿨] 그레이프",
+      "[제로쿨] 그린 그레이프",
+      "[제로쿨] 라임",
+      "[제로쿨] 멜론"
+    ],
     "sale": false
   },
   {
@@ -1773,24 +1765,6 @@
       "쿨 체리",
       "포도"
     ],
-    "sale": false
-  },
-  {
-    "id": 2445,
-    "product_no": 2445,
-    "name": "♥2+1♥ 퓨어 입호흡 액상 30ml",
-    "price": 8800,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202509/a8fb949f2dae4a14611cc270f9374a2d.jpg"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202509/a8fb949f2dae4a14611cc270f9374a2d.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/13843f111cb6719127bfeab003095560.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/13843f111cb6719127bfeab003095560.jpg",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
     "sale": false
   },
   {
