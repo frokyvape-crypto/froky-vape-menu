@@ -4060,5 +4060,34 @@
       "스트로베리 키위"
     ],
     "sale": false
+  },
+  {
+    "id": 2889,
+    "product_no": 2889,
+    "name": "닷 바 50K 일회용 전자담배 30ml",
+    "price": 21400,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202604/f33c813c0f1f76b2cf31b44d4464c14e.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202604/f33c813c0f1f76b2cf31b44d4464c14e.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202604/fcb684faf8ccd1a6a84b220277e4dc45.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202604/fcb684faf8ccd1a6a84b220277e4dc45.png",
+    "cat": "일회용",
+    "flavor": "50,000 퍼프",
+    "options": [
+      "망고 아이스",
+      "블루 라즈베리 아이스",
+      "스트로베리 아이스",
+      "스트로베리 키위 아이스",
+      "워터멜론 아이스",
+      "유자 아이스",
+      "파인애플 아이스",
+      "패션후르츠 키위 구아바",
+      "포카리 아이스",
+      "피치 아이스"
+    ],
+    "sale": false
   }
 ]
