@@ -2697,7 +2697,7 @@
   {
     "id": 2126,
     "product_no": 2126,
-    "name": "[[O] ] DIO 디오 800 일회용 교체 팟 1팩",
+    "name": "DIO 디오 800 일회용 교체 팟 1팩",
     "price": 11000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202505/60bff052fdd87508bc190511613d1d8a.png"
@@ -2708,26 +2708,15 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202505/c019daccf4251e5f2452bfe26c967d10.png",
     "cat": "일회용",
-    "flavor": "",
-    "options": [],
-    "sale": false
-  },
-  {
-    "id": 2124,
-    "product_no": 2124,
-    "name": "[D KV] DIO 디오 800 전자담배",
-    "price": 13000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202505/22ded1f526776150f6d7ae334a469500.png"
+    "flavor": "액상 팟 V2",
+    "options": [
+      "샤인머스켓",
+      "데저트",
+      "타박멘솔",
+      "알로에베라",
+      "레몬 라임",
+      "피타야"
     ],
-    "img": "https://frokyvape.com/web/product/medium/202505/22ded1f526776150f6d7ae334a469500.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202505/7ec4868d753e9fe80661c343383af51e.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202505/7ec4868d753e9fe80661c343383af51e.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
     "sale": false
   },
   {
