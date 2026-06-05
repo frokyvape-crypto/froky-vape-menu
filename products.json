@@ -2492,7 +2492,7 @@
   {
     "id": 2529,
     "product_no": 2529,
-    "name": "[O] 세븐코리아 비타 시리즈 입호흡 액상 30ml",
+    "name": "세븐코리아 비타 시리즈 입호흡 액상 30ml",
     "price": 16600,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202510/789a2886d6ecd397b0044d9736cfc316.jpg"
@@ -2503,8 +2503,12 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202510/6e70bc9b7cea133eaa0eb89aa31915ef.jpg",
     "cat": "입호흡",
-    "flavor": "",
-    "options": [],
+    "flavor": "9.8mg",
+    "options": [
+      "애플",
+      "알로에",
+      "레몬"
+    ],
     "sale": false
   },
   {
