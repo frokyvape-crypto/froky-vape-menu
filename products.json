@@ -2242,7 +2242,7 @@
   {
     "id": 2715,
     "product_no": 2715,
-    "name": "[ASDF] 크로마 디바이스",
+    "name": "크로마 디바이스",
     "price": 32000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202602/c4c6cd0736cf1df4185b4f381071bce4.png"
@@ -2254,7 +2254,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202602/e0fee3e8933f4ec40c1c916406127546.png",
     "cat": "입호흡",
     "flavor": "액상 팟 미 포힘",
-    "options": [],
+    "options": [
+      "블랙"
+    ],
     "sale": false
   },
   {
