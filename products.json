@@ -3927,13 +3927,28 @@
     "id": 1780626218064,
     "name": "옥스바 슬림 스틱 일회용 카트리지 5%",
     "price": 55000,
-    "imgs": [],
-    "img": "",
-    "detailImgs": [],
-    "detailImg": "",
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780626255577_2wlw.jpg"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780626255577_2wlw.jpg",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780626257254_hwth.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780626257254_hwth.jpg",
     "cat": "일회용",
     "flavor": "액상카트리지 10개 구매시 + 슬림 스틱 배터리 1개 증정",
-    "options": [],
+    "options": [
+      "라임 레몬",
+      "리치 아이스",
+      "멘토스 민트",
+      "민트",
+      "미드나잇 타바코",
+      "블랙 아이스 말보로 타바코",
+      "스트로베리 라즈베리 체리",
+      "워터멜론",
+      "클래식 토바코",
+      "콜라 아이스"
+    ],
     "sale": false
   }
 ]
