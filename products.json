@@ -5076,25 +5076,6 @@
     "sale": false
   },
   {
-    "id": 559,
-    "product_no": 559,
-    "name": "[W B] 월드베이프 깔끔 입호흡 액상 30ml",
-    "price": 8350,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202309/38b47064694916166a495a41e942a4e7.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202309/38b47064694916166a495a41e942a4e7.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202309/27b87c203b393bda5c2f760c29012582.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202309/27b87c203b393bda5c2f760c29012582.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 406,
     "product_no": 406,
     "name": "[A] 쉑컴퍼니 AVDR 폐호흡 액상 60ml",
@@ -5103,10 +5084,8 @@
       "https://frokyvape.com/web/product/medium/202309/31c5991cb8303871494d44576d6a5a7d.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202309/31c5991cb8303871494d44576d6a5a7d.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202309/8f5209ca1fab9554faf141bfdba78054.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202309/8f5209ca1fab9554faf141bfdba78054.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "6mg",
     "options": [],
