@@ -4903,5 +4903,31 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 1780898911734,
+    "name": "오레비 아이스 입호흡 액상 30ml",
+    "price": 9900,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898905063_4lj2.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898905063_4lj2.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898908033_si2z.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898908033_si2z.jpg",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "아이스 그레이프프루트",
+      "아이스 그린그레이프",
+      "아이스 레몬",
+      "아이스 애플",
+      "아이스 자스민",
+      "아이스 체리",
+      "아이스 플레인"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
