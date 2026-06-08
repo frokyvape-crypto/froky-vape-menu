@@ -445,17 +445,15 @@
       "https://frokyvape.com/web/product/medium/202403/fbb2e9b9b789ec565224c9db2e4d6c24.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202403/fbb2e9b9b789ec565224c9db2e4d6c24.png",
-    "detailImgs": [
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780885659971_1y64.png",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780885661739_myi2.png"
-    ],
-    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780885659971_1y64.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "젤리 하트",
       "젤리 애플"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
