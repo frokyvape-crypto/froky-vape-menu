@@ -2054,10 +2054,8 @@
       "https://frokyvape.com/web/product/medium/202603/7a69a68adae50b30c9588193628476d6.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/7a69a68adae50b30c9588193628476d6.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/1ab6e946f30aa1a3cdd8715ce91c4101.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/1ab6e946f30aa1a3cdd8715ce91c4101.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "40,000 퍼프",
     "options": [
@@ -2073,6 +2071,7 @@
       "레드애플",
       "레드 그레이프"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
