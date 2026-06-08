@@ -3070,15 +3070,14 @@
       "https://frokyvape.com/web/product/medium/202310/b1ba8db4bc13e5bcef93e37b83728bb6.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202310/b1ba8db4bc13e5bcef93e37b83728bb6.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202310/994e0b8dc94ce2aa9db4a543f2aa6417.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202310/994e0b8dc94ce2aa9db4a543f2aa6417.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "톡 소다 up"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
