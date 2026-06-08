@@ -2368,10 +2368,8 @@
       "https://frokyvape.com/web/product/medium/202512/aa9cb3f7c957a6878bfabaef288108c9.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202512/aa9cb3f7c957a6878bfabaef288108c9.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202512/22292b07efa926301dfdd18f04d118e7.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202512/22292b07efa926301dfdd18f04d118e7.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "30,000 퍼프 / 무연 일회용",
     "options": [
@@ -2384,6 +2382,7 @@
       "크리스탈 그레이프볼",
       "피즈 콜라"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
