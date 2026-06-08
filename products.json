@@ -3766,15 +3766,14 @@
       "https://frokyvape.com/web/product/medium/202309/ba923541654ba7247db6219649851e06.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202309/ba923541654ba7247db6219649851e06.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202309/273b1d3579233a3bfccf9e62108b58a1.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202309/273b1d3579233a3bfccf9e62108b58a1.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "몰디브"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
