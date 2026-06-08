@@ -4488,7 +4488,7 @@
     "id": 2326,
     "product_no": 2326,
     "name": "[M] 리퀴드랩 골든데저트 입호흡 액상 30ml",
-    "price": 6700,
+    "price": 77000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202508/7f56568515bceb2004b7d12720ee9d5d.png"
     ],
@@ -4498,10 +4498,11 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202508/a0d0253a4471bccc71daf76e2fac6050.png",
     "cat": "입호흡",
-    "flavor": "1박스 (10병) 단위로 구매 가능 상품입니다",
+    "flavor": "9.8mg / 10병단위 구매 가능",
     "options": [
-      "골든데저트"
+      "골든데저트 (10병)"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
