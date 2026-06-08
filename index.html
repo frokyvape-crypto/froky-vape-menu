@@ -499,6 +499,10 @@ function getDetailImgs(p){if(Array.isArray(p.detailImgs)&&p.detailImgs.length)re
 function getNoticeImgs(key,fallback){const arr=Array.isArray(siteConfig[key+'s'])&&siteConfig[key+'s'].length?siteConfig[key+'s']:siteConfig[key]?[siteConfig[key]]:[fallback];return arr;}
 function normalizeCategories(list){const src=Array.isArray(list)&&list.length?list:DEFAULT_SITE_CONFIG.categories;const seen=new Set();return src.map(c=>typeof c==='string'?{value:c,label:c}:c).map(c=>({value:String(c.value||'').trim(),label:String(c.label||c.value||'').trim()})).filter(c=>c.value&&c.label&&!seen.has(c.value)&&seen.add(c.value));}
 function escAttr(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function optionPrices(p){return p&&p.optionPrices&&typeof p.optionPrices==='object'&&!Array.isArray(p.optionPrices)?p.optionPrices:{};}
+function optionUnitPrice(p,opt){const prices=optionPrices(p);const n=Number(prices[opt]);return n>0?n:Number(p?.price||0);}
+function productDisplayPrice(p){const opts=Array.isArray(p.options)?p.options:[];const prices=opts.map(o=>optionUnitPrice(p,o)).filter(n=>n>0);if(!prices.length)return fmt(Number(p.price||0));const min=Math.min(...prices),max=Math.max(...prices);return min===max?fmt(min):fmt(min)+'~';}
+function optionLabel(p,opt){const unit=optionUnitPrice(p,opt);return unit!==Number(p.price||0)?`${opt} - ${fmt(unit)}`:opt;}
 function categoryLabel(value){return normalizeCategories(siteConfig.categories).find(c=>c.value===value)?.label||value;}
 function renderCategoryNav(){const nav=document.getElementById('category-nav');if(!nav)return;const cats=normalizeCategories(siteConfig.categories);nav.innerHTML=`<button class="cat-btn${currentCat==='all'?' active':''}" onclick="filterCat('all',this)">전체</button>`+cats.map(c=>`<button class="cat-btn${currentCat===c.value?' active':''}" onclick='filterCat(${JSON.stringify(c.value)},this)'>${escAttr(c.label)}</button>`).join('');}
 function applySiteConfig(cfg,{allowPopup=false}={}){
@@ -551,7 +555,7 @@ function cardHTML(p){
   const multi=imgs.length>1;
   const thumbs=multi?`<div class="card-thumbs">${imgs.map((u,i)=>`<img class="card-thumb${i===0?' active':''}" src="${u}" loading="lazy" onclick="event.stopPropagation();switchCardImg(this,'${u.replace(/'/g,"\\'")}',${p.id})" onerror="this.style.display='none'">`).join('')}</div>`:'';
   const count=multi?`<span class="card-img-count">📷 ${imgs.length}</span>`:'';
-  return`<div class="card" id="card-${p.id}"><div class="card-img-wrap"><img id="card-main-${p.id}" src="${img}" alt="${p.name}" loading="lazy">${p.sale?'<span class="card-badge">SALE</span>':''}${count}<button class="card-quick" onclick="openSheet(${p.id})">간단보기 👁</button></div>${thumbs}<div class="card-body"><div class="card-name">${p.name}</div><div class="card-flavor">${p.flavor}</div><div class="card-price">${fmt(p.price)}</div></div><div class="card-btns"><button class="btn-cart-card" onclick="openSheet(${p.id})">담기</button><button class="btn-buy-card" onclick="openSheet(${p.id})">구매하기</button></div></div>`;
+  return`<div class="card" id="card-${p.id}"><div class="card-img-wrap"><img id="card-main-${p.id}" src="${img}" alt="${p.name}" loading="lazy">${p.sale?'<span class="card-badge">SALE</span>':''}${count}<button class="card-quick" onclick="openSheet(${p.id})">간단보기 👁</button></div>${thumbs}<div class="card-body"><div class="card-name">${p.name}</div><div class="card-flavor">${p.flavor}</div><div class="card-price">${productDisplayPrice(p)}</div></div><div class="card-btns"><button class="btn-cart-card" onclick="openSheet(${p.id})">담기</button><button class="btn-buy-card" onclick="openSheet(${p.id})">구매하기</button></div></div>`;
 }
 function switchCardImg(el,url,pid){document.getElementById('card-main-'+pid).src=url;const card=document.getElementById('card-'+pid);card.querySelectorAll('.card-thumb').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
 let bestAutoRaf=0,bestPausedUntil=0,bestDragging=false,bestStartX=0,bestStartOffset=0,bestOffset=0,bestSuppressClick=false;
@@ -573,16 +577,17 @@ function startBestCarousel(){
   function step(){const b=bestBounds(wrap,track);if(!bestDragging&&Date.now()>bestPausedUntil){bestOffset-=.42;if(bestOffset<=b.min)bestOffset=b.max;applyBestOffset(track);}bestAutoRaf=requestAnimationFrame(step);}
   step();
 }
-function buildCarousel(){const best=P.filter(p=>p.cat==='best');const track=document.getElementById('carousel-track');track.innerHTML=best.map(p=>`<div class="best-card" onclick="openBestCard(${p.id})"><img src="${getImgs(p)[0]||''}" alt="${p.name}" loading="lazy" draggable="false"><div class="best-card-body"><div class="best-card-name">${p.name}${p.sale?'<span class="hot">SALE</span>':''}</div><div class="best-card-price">${fmt(p.price)}</div></div></div>`).join('');startBestCarousel();}
+function buildCarousel(){const best=P.filter(p=>p.cat==='best');const track=document.getElementById('carousel-track');track.innerHTML=best.map(p=>`<div class="best-card" onclick="openBestCard(${p.id})"><img src="${getImgs(p)[0]||''}" alt="${p.name}" loading="lazy" draggable="false"><div class="best-card-body"><div class="best-card-name">${p.name}${p.sale?'<span class="hot">SALE</span>':''}</div><div class="best-card-price">${productDisplayPrice(p)}</div></div></div>`).join('');startBestCarousel();}
 function renderGrid(cat){currentCat=cat;const items=cat==='all'?P:P.filter(p=>p.cat===cat);document.getElementById('best-section').style.display=cat==='all'?'':'none';document.getElementById('section-label').textContent=cat==='all'?'전체 상품':categoryLabel(cat);document.getElementById('product-grid').innerHTML=items.map(cardHTML).join('');}
 function filterCat(cat,el){currentCat=cat;document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');renderGrid(cat);}
 function onSearch(val){const q=val.trim();document.getElementById('search-clear').style.display=q?'block':'none';if(!q){document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');return;}document.getElementById('best-section').style.display='none';const res=P.filter(p=>(p.name||'').includes(q)||(p.flavor||'').includes(q));const lbl=document.getElementById('search-result-label');lbl.style.display='block';lbl.textContent=`"${q}" 검색 결과 ${res.length}개`;document.getElementById('section-label').textContent='검색 결과';document.getElementById('product-grid').innerHTML=res.length?res.map(cardHTML).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0">검색 결과가 없습니다 😢</div>';}
 function clearSearch(){document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');}
 function renderCurrentView(){const q=document.getElementById('search-input')?.value||'';buildCarousel();if(q.trim())onSearch(q);else renderGrid(currentCat||'all');}
-function syncOpenProductSheet(){if(!sp)return;const next=P.find(p=>p.id===sp.id);if(!next){closeSheet();sp=null;return;}const prevOpt=document.getElementById('s-option')?.value||'';sp=next;document.getElementById('s-name').textContent=sp.name;document.getElementById('s-price').textContent=fmt(sp.price);document.getElementById('s-tag').textContent=sp.flavor;const options=Array.isArray(sp.options)?sp.options:[];const optionEl=document.getElementById('s-option');optionEl.innerHTML=options.length?'<option value="">옵션 선택</option>'+options.map(o=>`<option>${o}</option>`).join(''):'<option value="옵션 없음">옵션 없음</option>';optionEl.disabled=!options.length;if(options.includes(prevOpt))optionEl.value=prevOpt;updateTotal();}
-function syncCartWithProducts(){cart=cart.map(c=>{const p=P.find(x=>x.id===c.id);return p?{...c,name:p.name,price:p.price,img:getImgs(p)[0]||c.img}:c;});updateCartUI();}
+function renderSheetOptions(p,selected=''){const options=Array.isArray(p.options)?p.options:[];const optionEl=document.getElementById('s-option');optionEl.innerHTML=options.length?'<option value="">옵션 선택</option>'+options.map(o=>`<option value="${escAttr(o)}">${escAttr(optionLabel(p,o))}</option>`).join(''):'<option value="옵션 없음">옵션 없음</option>';optionEl.disabled=!options.length;if(options.includes(selected))optionEl.value=selected;else if(!options.length)optionEl.value='옵션 없음';}
+function syncOpenProductSheet(){if(!sp)return;const next=P.find(p=>p.id===sp.id);if(!next){closeSheet();sp=null;return;}const prevOpt=document.getElementById('s-option')?.value||'';sp=next;document.getElementById('s-name').textContent=sp.name;document.getElementById('s-tag').textContent=sp.flavor;renderSheetOptions(sp,prevOpt);updateTotal();}
+function syncCartWithProducts(){cart=cart.map(c=>{const p=P.find(x=>x.id===c.id);return p?{...c,name:p.name,price:optionUnitPrice(p,c.option),img:getImgs(p)[0]||c.img}:c;});updateCartUI();}
 function productDetailImages(p){return Array.isArray(p.detailImgs)&&p.detailImgs.length?p.detailImgs:(p.detailImg?[p.detailImg]:[]);}
-function addToCart(p,option,qty){const key=`${p.id}_${option}`;const ex=cart.find(c=>c.key===key);if(ex)ex.qty+=qty;else cart.push({key,id:p.id,name:p.name,option,price:p.price,qty,img:p.img});updateCartUI();showToast(`🛒 ${p.name} 담겼습니다`);}
+function addToCart(p,option,qty){const key=`${p.id}_${option}`;const price=optionUnitPrice(p,option);const ex=cart.find(c=>c.key===key);if(ex)ex.qty+=qty;else cart.push({key,id:p.id,name:p.name,option,price,qty,img:p.img});updateCartUI();showToast(`🛒 ${p.name} 담겼습니다`);}
 function updateCartUI(){const total=cart.reduce((s,c)=>s+c.price*c.qty,0);const count=cart.reduce((s,c)=>s+c.qty,0);document.getElementById('cart-count').textContent=count;document.getElementById('total-price').textContent=fmt(total);document.getElementById('checkout-btn').disabled=!cart.length;const el=document.getElementById('cart-items');if(!cart.length){el.innerHTML='<div class="cart-empty">장바구니가 비어있습니다 🛒</div>';return;}el.innerHTML=cart.map(c=>`<div class="cart-item"><img src="${c.img}" alt="${c.name}"><div><div class="ci-name">${c.name}</div><div class="ci-opt">${c.option}</div><div class="qty-ctrl"><button class="qty-btn" onclick="changeQty('${c.key}',-1)">−</button><span class="qty-val">${c.qty}</span><button class="qty-btn" onclick="changeQty('${c.key}',1)">+</button></div></div><div class="ci-right"><span class="ci-price">${fmt(c.price*c.qty)}</span><button class="ci-del" onclick="removeItem('${c.key}')">삭제</button></div></div>`).join('');}
 function changeQty(k,d){const i=cart.find(c=>c.key===k);if(i)i.qty=Math.max(1,i.qty+d);updateCartUI();}
 function removeItem(k){cart=cart.filter(c=>c.key!==k);updateCartUI();}
@@ -598,9 +603,8 @@ function openSheet(id){
   document.getElementById('s-total').textContent='합계: '+fmt(sp.price);
   document.getElementById('s-tag').textContent=sp.flavor;
   document.getElementById('s-qty').textContent=1;
-  const optionEl=document.getElementById('s-option');
-  optionEl.innerHTML=options.length?'<option value="">옵션 선택</option>'+options.map(o=>`<option>${o}</option>`).join(''):'<option value="옵션 없음">옵션 없음</option>';
-  optionEl.disabled=!options.length;
+  renderSheetOptions(sp);
+  updateTotal();
   document.getElementById('btn-sheet-detail').style.display=getDetailImgs(sp).length?'block':'none';
   const thumbs=document.getElementById('s-thumbs');
   if(imgs.length>1){
@@ -624,7 +628,8 @@ function closeDetailModal(){document.getElementById('detail-modal-overlay').clas
 function closeDetailModalOut(e){if(e.target===document.getElementById('detail-modal-overlay'))closeDetailModal();}
 function closeSheetOut(e){if(e.target===document.getElementById('sheet-overlay'))closeSheet();}
 function sheetQty(d){sq=Math.max(1,sq+d);document.getElementById('s-qty').textContent=sq;updateTotal();}
-function updateTotal(){if(sp)document.getElementById('s-total').textContent='합계: '+fmt(sp.price*sq);}
+function currentSheetUnitPrice(){return sp?optionUnitPrice(sp,getSheetOption()):0;}
+function updateTotal(){if(!sp)return;const unit=currentSheetUnitPrice();document.getElementById('s-price').textContent=fmt(unit);document.getElementById('s-total').textContent='합계: '+fmt(unit*sq);}
 function getSheetOption(){
   const options=Array.isArray(sp?.options)?sp.options:[];
   if(!options.length)return '옵션 없음';
@@ -638,7 +643,8 @@ function sheetAddCart(){
 function sheetBuyNow(){
   const opt=getSheetOption();
   if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}
-  const total=sp.price*sq;
+  const unit=optionUnitPrice(sp,opt);
+  const total=unit*sq;
   _pmPayQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
   _pmPayCopyText=String(_pmPayQty);
   _pmRealCopyText=`${sp.name}${opt&&opt!=='옵션 없음'?` / ${opt}`:''} × ${sq}개`;

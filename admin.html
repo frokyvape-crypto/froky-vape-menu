@@ -69,6 +69,13 @@ body{background:var(--bg);color:var(--text);font-family:'Pretendard',-apple-syst
 .form-row label{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
 .form-row input,.form-row select{background:var(--bg);border:1.5px solid var(--border);color:var(--text);padding:9px 12px;border-radius:8px;font-family:'Pretendard',sans-serif;font-size:.87rem;outline:none;transition:border-color .2s;width:100%;}
 .form-row input:focus,.form-row select:focus{border-color:var(--g);}
+.option-price-list{display:flex;flex-direction:column;gap:7px;margin-top:4px;}
+.option-price-row{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:8px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:9px;padding:8px;}
+.option-price-name{font-size:.78rem;font-weight:800;line-height:1.35;word-break:break-word;}
+.option-price-row input{margin:0;background:var(--bg);}
+.option-price-empty{font-size:.75rem;color:var(--muted);background:var(--card);border:1px dashed var(--border);border-radius:9px;padding:10px 12px;}
+.option-price-help{font-size:.72rem;color:var(--muted);line-height:1.6;margin-top:6px;}
+@media(max-width:520px){.option-price-row{grid-template-columns:1fr;}}
 
 .toggle-wrap{display:flex;align-items:center;gap:8px;padding:8px 0;}
 .toggle{position:relative;width:42px;height:22px;cursor:pointer;flex-shrink:0;}
@@ -443,7 +450,12 @@ tr:hover td{background:rgba(128,128,128,.06);}
           </select>
         </div>
       </div>
-      <div class="form-row"><label>옵션 (쉼표 구분)</label><input id="f-opts" type="text" placeholder="3mg, 6mg, 12mg"></div>
+      <div class="form-row"><label>옵션 (쉼표 구분)</label><input id="f-opts" type="text" placeholder="애플, 그레이프 10병, 오렌지 5병" oninput="renderOptionPriceRows()"></div>
+      <div class="form-row">
+        <label>옵션별 가격 (비우면 기본 가격 적용)</label>
+        <div class="option-price-list" id="option-price-list"></div>
+        <div class="option-price-help">예: 애플은 15,000원, 그레이프 10병은 167,000원처럼 옵션마다 다른 가격을 넣을 수 있습니다.</div>
+      </div>
       <div class="toggle-wrap">
         <label class="toggle"><input type="checkbox" id="f-sale"><span class="slider"></span></label>
         <span style="font-size:.83rem;color:var(--muted)">SALE 뱃지 표시</span>
@@ -654,6 +666,55 @@ function getDetailImgs(p) {
   if (Array.isArray(p.detailImgs) && p.detailImgs.length) return p.detailImgs;
   if (p.detailImg) return [p.detailImg];
   return [];
+}
+
+function getModalOptions() {
+  const raw = document.getElementById('f-opts')?.value || '';
+  const seen = new Set();
+  return raw.split(',').map(s => s.trim()).filter(Boolean).filter(opt => !seen.has(opt) && seen.add(opt));
+}
+function normalizeOptionPrices(map, allowedOptions) {
+  const allowed = new Set(allowedOptions || []);
+  const out = {};
+  if (!map || typeof map !== 'object' || Array.isArray(map)) return out;
+  Object.entries(map).forEach(([option, value]) => {
+    const key = String(option || '').trim();
+    const price = parseInt(value, 10);
+    if (key && (!allowed.size || allowed.has(key)) && price > 0) out[key] = price;
+  });
+  return out;
+}
+function collectOptionPricesFromRows() {
+  const out = {};
+  document.querySelectorAll('#option-price-list input[data-option]').forEach(input => {
+    const option = input.dataset.option || '';
+    const price = parseInt(input.value, 10);
+    if (option && price > 0) out[option] = price;
+  });
+  return out;
+}
+function renderOptionPriceRows(seedMap) {
+  const el = document.getElementById('option-price-list');
+  if (!el) return;
+  const options = getModalOptions();
+  const current = normalizeOptionPrices(seedMap || collectOptionPricesFromRows(), options);
+  if (!options.length) {
+    el.innerHTML = '<div class="option-price-empty">옵션을 입력하면 옵션별 가격 입력칸이 표시됩니다.</div>';
+    return;
+  }
+  el.innerHTML = options.map(opt => {
+    const value = current[opt] || '';
+    return `<div class="option-price-row">
+      <div class="option-price-name">${escHtml(opt)}</div>
+      <input type="number" min="0" step="100" data-option="${escHtml(opt)}" value="${value}" placeholder="기본가 사용">
+    </div>`;
+  }).join('');
+}
+function adminOptionsText(p) {
+  const options = Array.isArray(p.options) ? p.options : [];
+  const prices = normalizeOptionPrices(p.optionPrices, options);
+  if (!options.length) return '-';
+  return options.map(opt => prices[opt] ? `${escHtml(opt)} (${Number(prices[opt]).toLocaleString('ko-KR')}원)` : escHtml(opt)).join(', ');
 }
 
 // ── 멀티 이미지 슬롯 ─────────────────────────────
@@ -990,7 +1051,7 @@ function renderTable() {
     </td>
     <td style="white-space:nowrap">${fmt(p.price)}</td>
     <td><span class="cat-tag c-${p.cat}">${categoryLabel(p.cat)}</span></td>
-    <td style="font-size:.75rem;color:var(--muted)">${(p.options || []).join(', ') || '-'}</td>
+    <td style="font-size:.75rem;color:var(--muted)">${adminOptionsText(p)}</td>
     <td>${p.sale ? '<span class="sale-tag">SALE</span>' : ''}</td>
     <td><div class="td-btns">
       <button class="btn btn-outline btn-xs" onclick="openEditModal(${p.id})">수정</button>
@@ -1168,6 +1229,7 @@ function resetModal() {
   imgSlots = { main: [], detail: [] };
   renderImgGrid('main'); renderImgGrid('detail');
   ['f-id','f-name','f-price','f-flavor','f-opts'].forEach(id => document.getElementById(id).value = '');
+  renderOptionPriceRows({});
   renderCategoryControls();
   document.getElementById('f-cat').value = '입호흡';
   document.getElementById('f-cat').value = categories[0]?.value || document.getElementById('f-cat').value;
@@ -1190,6 +1252,7 @@ function openEditModal(id) {
   document.getElementById('f-flavor').value = p.flavor || '';
   document.getElementById('f-cat').value = p.cat;
   document.getElementById('f-opts').value = (p.options || []).join(', ');
+  renderOptionPriceRows(p.optionPrices || {});
   document.getElementById('f-sale').checked = !!p.sale;
   imgSlots.main   = getImgs(p).map(url => ({ url, file: null, preview: url }));
   imgSlots.detail = getDetailImgs(p).map(url => ({ url, file: null, preview: url }));
@@ -1221,6 +1284,8 @@ async function saveProduct() {
       else if (item.url) finalDetailImgs.push(item.url);
     }
     const existing = editId !== null ? products.find(p => p.id === editId) : null;
+    const options = getModalOptions();
+    const optionPrices = normalizeOptionPrices(collectOptionPricesFromRows(), options);
     const obj = {
       id: editId !== null ? editId : Date.now(),
       product_no: existing?.product_no,
@@ -1231,7 +1296,8 @@ async function saveProduct() {
       detailImg: finalDetailImgs[0] || '',
       cat: document.getElementById('f-cat').value,
       flavor,
-      options: document.getElementById('f-opts').value.split(',').map(s => s.trim()).filter(Boolean),
+      options,
+      optionPrices,
       sale: document.getElementById('f-sale').checked,
     };
     if (editId !== null) { const i = products.findIndex(p => p.id === editId); if (i >= 0) products[i] = obj; }
@@ -1678,6 +1744,7 @@ function importSelected() {
     if (existing) {
       if (importedOptions.length) {
         existing.options = importedOptions;
+        existing.optionPrices = normalizeOptionPrices(existing.optionPrices, importedOptions);
         updated++;
       }
       return;
@@ -1689,7 +1756,7 @@ function importSelected() {
       detailImgs: allDetailImgs,
       detailImg: allDetailImgs[0] || '',
       cat: CAT(p.product_name), flavor: (p.summary_description || '').trim(),
-      options: importedOptions, sale: !!p.price_content,
+      options: importedOptions, optionPrices: {}, sale: !!p.price_content,
     });
     added++;
   });
