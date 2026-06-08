@@ -1718,10 +1718,8 @@
       "https://frokyvape.com/web/product/medium/202603/3380544e7c0cf682a0f5368b9899fee2.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/3380544e7c0cf682a0f5368b9899fee2.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/6b5489e29cbca35648005af4f914fec1.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/6b5489e29cbca35648005af4f914fec1.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -1735,6 +1733,7 @@
       "쿨 체리",
       "포도"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
