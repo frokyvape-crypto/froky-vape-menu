@@ -847,10 +847,8 @@
       "https://frokyvape.com/web/product/medium/202506/0d8301656db5894bc2aa0f13d365b8be.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202506/0d8301656db5894bc2aa0f13d365b8be.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202506/8403360da0309605d318c981510d12c8.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202506/8403360da0309605d318c981510d12c8.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
@@ -858,9 +856,9 @@
       "더블 알로에",
       "라임 알로에",
       "라임 라임",
-      "라임 핑크레몬에이드",
       "라임 핑크레몬에이드"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
