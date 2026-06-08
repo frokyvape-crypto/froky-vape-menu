@@ -983,15 +983,14 @@
       "https://frokyvape.com/web/product/medium/202312/719436c56aec997f04180567d5bc1ea7.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202312/719436c56aec997f04180567d5bc1ea7.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202312/ed52be67e27444f7070243b7a1179532.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202312/ed52be67e27444f7070243b7a1179532.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
       "블루베리 블라썸"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
