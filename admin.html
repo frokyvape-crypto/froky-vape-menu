@@ -622,8 +622,7 @@ async function showSection(id) {
   document.getElementById(id).style.display = 'block';
   if (id === 'sec-products') {
     await ensureSiteConfigLoaded();
-    if (products.length > 0) renderTable();   // 캐시 있으면 즉시 표시
-    else loadProducts();                       // 없으면 GitHub에서 로드
+    loadProducts();  // 항상 최신 데이터 로드
   }
   if (id === 'sec-notice' || id === 'sec-categories') await loadSiteConfig();
 }
@@ -1080,8 +1079,11 @@ function renderTable() {
     <td style="font-size:.75rem;color:var(--muted)">${adminOptionsText(p)}</td>
     <td>${p.sale ? '<span class="sale-tag">SALE</span>' : ''}</td>
     <td><div class="td-btns">
+      ${p.hidden ? '<span style="font-size:.7rem;background:#888;color:#fff;padding:1px 5px;border-radius:3px;margin-right:4px">숨김</span>' : ''}
       <button class="btn btn-outline btn-xs" onclick="openEditModal(${p.id})">수정</button>
-      <button class="btn btn-red btn-xs" onclick="delProduct(${p.id})">삭제</button>
+      ${p.hidden
+        ? `<button class="btn btn-xs" style="background:var(--g);color:#fff" onclick="restoreProduct(${p.id})">복원</button>`
+        : `<button class="btn btn-red btn-xs" onclick="delProduct(${p.id})">삭제</button>`}
     </div></td>
   </tr>`).join('');
   updateDeleteBtn();
@@ -1336,11 +1338,24 @@ async function saveProduct() {
 }
 
 function delProduct(id) {
-  if (!confirm('삭제하시겠습니까?')) return;
-  products = products.filter(p => p.id !== id);
+  if (!confirm('이 상품을 메뉴에서 숨기겠습니까?\n(카페24 동기화 후에도 숨김이 유지됩니다)')) return;
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  p.hidden = true;
   dbSave();
   renderTable();
-  toast('삭제됨 (로컬 저장) — 배포하려면 저장 & 배포 클릭', 'ok');
+  saveProductsImmediately('상품 숨김 처리').catch(e => toast('저장 실패: ' + e.message, 'err'));
+  toast('숨김 처리 중 — GitHub에 저장 중...', 'ok');
+}
+function restoreProduct(id) {
+  if (!confirm('이 상품을 메뉴에 다시 표시하겠습니까?')) return;
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  delete p.hidden;
+  dbSave();
+  renderTable();
+  saveProductsImmediately('상품 복원').catch(e => toast('저장 실패: ' + e.message, 'err'));
+  toast('복원 처리 중 — GitHub에 저장 중...', 'ok');
 }
 
 const CAT = name => {

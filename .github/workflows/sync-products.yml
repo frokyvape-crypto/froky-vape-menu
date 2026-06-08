@@ -81,6 +81,20 @@ def get_cat(name, tags):
             return cat
     return "입호흡"
 
+existing_cats = {}
+existing_option_prices = {}
+existing_hidden = set()
+try:
+    with open("products.json", encoding="utf-8") as f:
+        for ep in json.load(f):
+            existing_cats[ep["id"]] = ep["cat"]
+            if ep.get("optionPrices"):
+                existing_option_prices[ep["id"]] = ep["optionPrices"]
+            if ep.get("hidden"):
+                existing_hidden.add(ep["id"])
+except Exception:
+    pass
+
 result = []
 for p in all_products:
     img = p.get("list_image") or p.get("detail_image") or p.get("tiny_image") or ""
@@ -104,16 +118,20 @@ for p in all_products:
                     if v and v not in options:
                         options.append(v)
 
-    result.append({
+    item = {
         "id":      pno,
         "name":    name,
         "price":   int(float(p.get("price", 0))),
         "img":     img,
         "flavor":  (p.get("summary_description") or "").strip(),
-        "cat":     get_cat(name, p.get("tags", [])),
-        "sale":    bool(p.get("price_content")),
-        "options": options,
-    })
+        "cat":          existing_cats.get(pno, get_cat(name, p.get("tags", []))),
+        "sale":         bool(p.get("price_content")),
+        "options":      options,
+        "optionPrices": existing_option_prices.get(pno, {}),
+    }
+    if pno in existing_hidden:
+        item["hidden"] = True
+    result.append(item)
 
 with open("products.json", "w", encoding="utf-8") as f:
     json.dump(result, f, ensure_ascii=False, indent=2)
