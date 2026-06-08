@@ -613,10 +613,8 @@
       "https://frokyvape.com/web/product/medium/202312/a7f960b1c44f9103491fe49516860662.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202312/a7f960b1c44f9103491fe49516860662.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202312/6245e0ee90fdf47c48a6a9eb5220a770.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202312/6245e0ee90fdf47c48a6a9eb5220a770.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -644,6 +642,7 @@
       "블랙커피",
       "로얄피치"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
