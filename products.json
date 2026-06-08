@@ -3613,10 +3613,8 @@
       "https://frokyvape.com/web/product/medium/202310/548d34795eb7c481939b04026759d9c3.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202310/548d34795eb7c481939b04026759d9c3.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202310/16be23832585069638fd1c2b39d2a991.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202310/16be23832585069638fd1c2b39d2a991.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "0.98mg",
     "options": [
@@ -3629,6 +3627,7 @@
       "적포도 슬러시",
       "스톱 슬러시"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
