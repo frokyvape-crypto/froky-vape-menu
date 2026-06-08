@@ -3146,15 +3146,14 @@
       "https://frokyvape.com/web/product/medium/202310/46e7f8656b78382ebc224a9cae906479.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202310/46e7f8656b78382ebc224a9cae906479.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202310/50e5e23eefe4f87e5c050eb014c7b593.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202310/50e5e23eefe4f87e5c050eb014c7b593.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "이브"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
