@@ -7,10 +7,8 @@
       "https://frokyvape.com/web/product/medium/202309/f81713871d587c068288d7ab58e1aefd.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202309/f81713871d587c068288d7ab58e1aefd.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202309/5acf36398a775e0ab6d8d58497430609.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202309/5acf36398a775e0ab6d8d58497430609.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -21,6 +19,7 @@
       "아메리카노",
       "스오누아카시아"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
