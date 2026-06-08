@@ -3474,16 +3474,15 @@
       "https://frokyvape.com/web/product/medium/202507/b3e4c09edc72084d4cb81ba4fa4bb409.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202507/b3e4c09edc72084d4cb81ba4fa4bb409.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202507/79a9a557b96574377a12897037ae632b.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202507/79a9a557b96574377a12897037ae632b.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "레드불",
       "피치 망고"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
