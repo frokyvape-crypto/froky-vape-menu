@@ -4882,5 +4882,26 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 1780898825070,
+    "name": "차 시리즈 입호흡 액상 30ml",
+    "price": 9900,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898816176_ac0k.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898816176_ac0k.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898818810_x1ru.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898818810_x1ru.png",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "옥수수 수염차",
+      "현미 녹차"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
