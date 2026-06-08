@@ -778,15 +778,14 @@
       "https://frokyvape.com/web/product/medium/202312/5f57d7696124cf0c63ae12d7663def77.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202312/5f57d7696124cf0c63ae12d7663def77.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202312/c19f9abb2a180bdc29e00f12894d6060.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202312/c19f9abb2a180bdc29e00f12894d6060.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9mg",
     "options": [
       "블루베리 블라썸"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
