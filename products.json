@@ -1591,15 +1591,14 @@
       "https://frokyvape.com/web/product/medium/202604/bf5a187180335eebf4a732bd4d6daa82.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202604/bf5a187180335eebf4a732bd4d6daa82.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202604/b81e0d67b2fa19f823abfea8434972c7.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202604/b81e0d67b2fa19f823abfea8434972c7.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "야쿠르트"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
