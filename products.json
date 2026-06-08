@@ -4913,59 +4913,6 @@
     "sale": false
   },
   {
-    "id": 1902,
-    "product_no": 1902,
-    "name": "[BJ] 브로스 베이커 스토너 폐호흡 액상 60ml",
-    "price": 22400,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202503/a0af16948ba12f74a4398bbd0304930a.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202503/a0af16948ba12f74a4398bbd0304930a.png",
-    "detailImgs": [],
-    "detailImg": "",
-    "cat": "폐호흡",
-    "flavor": "3mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 1901,
-    "product_no": 1901,
-    "name": "[BJ] 브로스 스팀베이프 입호흡 액상 30ml",
-    "price": 14800,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202502/f5b495dd0cc0c12a6a13b9e04ea6927b.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202502/f5b495dd0cc0c12a6a13b9e04ea6927b.png",
-    "detailImgs": [],
-    "detailImg": "",
-    "cat": "입호흡",
-    "flavor": "9.9mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 1849,
-    "product_no": 1849,
-    "name": "[BJ] 브로스 베이커 스토너 입호흡 액상 30ml",
-    "price": 17000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202501/738e402ff13c926ba254ff1dcb4bd5bb.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202501/738e402ff13c926ba254ff1dcb4bd5bb.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202501/6160e97228059603bb46f5f138857d81.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202501/6160e97228059603bb46f5f138857d81.png",
-    "cat": "입호흡",
-    "flavor": "9.9mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 1694,
     "product_no": 1694,
     "name": "[9mg] 잽쥬스 마르키사 고농도 폐호흡 액상 60ml",
@@ -4974,10 +4921,8 @@
       "https://frokyvape.com/web/product/medium/202409/3f0f34fb97b2342847a8aa8eb66bb711.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202409/3f0f34fb97b2342847a8aa8eb66bb711.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202409/2c30edd717b41d88dc7a93ebfc843f9e.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202409/2c30edd717b41d88dc7a93ebfc843f9e.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "9mg",
     "options": [
