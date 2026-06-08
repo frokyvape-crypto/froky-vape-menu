@@ -4823,7 +4823,9 @@
     "detailImg": "https://frokyvape.com/web/product/big/202505/94e23dc0f0070dbd46d874a60a2af215.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "쬬니쬬니"
+    ],
     "sale": false
   },
   {
