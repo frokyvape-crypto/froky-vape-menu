@@ -154,9 +154,10 @@
     ],
     "img": "https://frokyvape.com/web/product/medium/202503/c6d07b1cfb650c322c1da1b58160f9e1.png",
     "detailImgs": [
-      "https://frokyvape.com/web/product/big/202503/091fb8c8e30932e47988f3a41c412d7b.png"
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780886576058_5zdk.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780886580628_3wwm.jpg"
     ],
-    "detailImg": "https://frokyvape.com/web/product/big/202503/091fb8c8e30932e47988f3a41c412d7b.png",
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780886576058_5zdk.png",
     "cat": "입호흡",
     "flavor": "",
     "options": [
