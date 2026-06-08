@@ -4969,5 +4969,27 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 1780899063979,
+    "name": "드랍 더 코크 입호흡 액상 30ml",
+    "price": 9900,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780899053452_z5z3.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780899053452_z5z3.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780899056994_lpbq.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780899056994_lpbq.png",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "레몬",
+      "체리",
+      "포도"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
