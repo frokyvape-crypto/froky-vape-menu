@@ -1393,10 +1393,8 @@
       "https://frokyvape.com/web/product/medium/202604/dc6710184134d274ff0e73137da8f47c.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202604/dc6710184134d274ff0e73137da8f47c.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202604/0605cb059b56be5de88b4dc4c8d3a671.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202604/0605cb059b56be5de88b4dc4c8d3a671.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -1405,6 +1403,7 @@
       "[슈퍼쿨] 백향과",
       "[슈퍼쿨] 적포도"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
