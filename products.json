@@ -3877,10 +3877,8 @@
       "https://frokyvape.com/web/product/medium/202505/6052acf58d9892cf64e9e26c13a9eee6.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202505/6052acf58d9892cf64e9e26c13a9eee6.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202505/8a92be1f53769cc49c6fe05148d10165.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202505/8a92be1f53769cc49c6fe05148d10165.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "6,000 퍼프",
     "options": [
@@ -3890,6 +3888,7 @@
       "그레이프",
       "스트로베리 아이스크림"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
