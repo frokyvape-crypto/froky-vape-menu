@@ -3203,16 +3203,15 @@
       "https://frokyvape.com/web/product/medium/202310/6c17cf1e037b8f5f9eee6f2a09486334.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202310/6c17cf1e037b8f5f9eee6f2a09486334.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202310/52a3a47aa73e1cddd85ba2ee9053414d.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202310/52a3a47aa73e1cddd85ba2ee9053414d.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "슈퍼쿨 레드불",
       "슈퍼쿨 피치 망고"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
