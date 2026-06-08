@@ -2145,15 +2145,14 @@
       "https://frokyvape.com/web/product/medium/202602/50adc6fab5596447e3cd7cc844786a48.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202602/50adc6fab5596447e3cd7cc844786a48.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202602/f87125bd5ce193b2672415bc6a4db928.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202602/f87125bd5ce193b2672415bc6a4db928.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "라임 유자"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
