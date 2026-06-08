@@ -4051,10 +4051,8 @@
       "https://frokyvape.com/web/product/medium/202512/65bbddc2820b0bd995666343eb564bd3.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202512/65bbddc2820b0bd995666343eb564bd3.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202512/bb9832be3e51011a188cb3191cfe622e.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202512/bb9832be3e51011a188cb3191cfe622e.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -4063,6 +4061,7 @@
       "피치 블라썸",
       "피치 플럼"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
