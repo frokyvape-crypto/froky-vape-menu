@@ -3429,7 +3429,7 @@
     "id": 2785,
     "product_no": 2785,
     "name": "노보 블랙 입호흡 액상 30ml",
-    "price": 13300,
+    "price": 61500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202310/c1028ac280e18647b11640cf5876e1ae.png"
     ],
@@ -3439,13 +3439,13 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202310/37baeccdfdaf4691c40caacaa23ebbbf.png",
     "cat": "입호흡",
-    "flavor": "9.8mg",
+    "flavor": "9.8mg / 5병단위 구매 가능",
     "options": [
-      "엠에스 블랜드",
-      "데저트",
-      "타박 멘솔",
-      "블랙 멘솔",
-      "아메리카노"
+      "블랙/엠에스블랜드 (5병)",
+      "블랙/데저트 (5병)",
+      "블랙/타박 멘솔 (5병)",
+      "블랙/블랙 멘솔 (5병)",
+      "블랙/아메리카노 (5병)"
     ],
     "sale": false
   },
