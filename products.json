@@ -2559,10 +2559,8 @@
       "https://frokyvape.com/web/product/medium/202511/413c4a08abe1d282a99eb832e9ac9cb7.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202511/413c4a08abe1d282a99eb832e9ac9cb7.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202511/9e1088f7ffa02239933a1e0664b23a77.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202511/9e1088f7ffa02239933a1e0664b23a77.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "10mg",
     "options": [
@@ -2578,6 +2576,7 @@
       "민트 프리즈",
       "유자 아이스"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
