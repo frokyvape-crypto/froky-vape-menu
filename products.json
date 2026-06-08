@@ -903,7 +903,7 @@
       "https://frokyvape.com/web/product/big/202409/e1a1bc2b18f632407a7ad48439a90e8a.png"
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202409/e1a1bc2b18f632407a7ad48439a90e8a.png",
-    "cat": "폐호흡",
+    "cat": "노멘솔",
     "flavor": "3mg",
     "options": [
       "그레이프 사워",
@@ -912,6 +912,7 @@
       "트로피칼 사워",
       "후르츠 사워"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
