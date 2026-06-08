@@ -1182,7 +1182,7 @@
       "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780886840465_gpep.jpg"
     ],
     "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780886718163_d5qy.jpg",
-    "cat": "일회용",
+    "cat": "폐호흡-고농도",
     "flavor": "20,000 퍼프",
     "options": [
       "쿠모카시 바 미도리 애플",
@@ -1193,6 +1193,7 @@
       "쿠모카시 바 쿄호 그레이프",
       "쿠모카시 바 아마이 모모"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
