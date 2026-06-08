@@ -4941,28 +4941,9 @@
     "sale": false
   },
   {
-    "id": 1562,
-    "product_no": 1562,
-    "name": "[AP AZA] 아자 과일멘솔 폐호흡 액상 60ml",
-    "price": 18100,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202407/d33f7c2bbd7633a5784c981269898d5b.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202407/d33f7c2bbd7633a5784c981269898d5b.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202407/c3269c1d5a3a831953ca12754ee71c0d.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202407/c3269c1d5a3a831953ca12754ee71c0d.png",
-    "cat": "폐호흡",
-    "flavor": "3mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 1180,
     "product_no": 1180,
-    "name": "[VK] 잽쥬스 마르키사 입호흡 액상 30ml",
+    "name": "잽쥬스 마르키사 입호흡 액상 30ml",
     "price": 22100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202502/aa5aeef1e9121a3dc6d240238908ac6d.png"
