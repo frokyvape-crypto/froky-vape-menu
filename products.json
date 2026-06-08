@@ -3744,10 +3744,8 @@
       "https://frokyvape.com/web/product/medium/202309/8f375d4ca0c8472d79b84e78c2f0dae7.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202309/8f375d4ca0c8472d79b84e78c2f0dae7.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202309/8426ac8c984ebd1ed8c52c9776e6a483.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202309/8426ac8c984ebd1ed8c52c9776e6a483.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -3756,6 +3754,7 @@
       "애플모히또",
       "슈퍼말보루"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
