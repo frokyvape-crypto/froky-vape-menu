@@ -1002,10 +1002,8 @@
       "https://frokyvape.com/web/product/medium/202312/0c57f993c151f4857f5151d3231c3eb3.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202312/0c57f993c151f4857f5151d3231c3eb3.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202312/deac0ce1cab924375e083bb8f25781d7.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202312/deac0ce1cab924375e083bb8f25781d7.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
@@ -1015,6 +1013,7 @@
       "스타 하와이",
       "하와이"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
