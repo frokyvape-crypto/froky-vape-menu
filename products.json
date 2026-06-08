@@ -3536,10 +3536,8 @@
       "https://frokyvape.com/web/product/medium/202411/27c2e661d85f3d1f439b9ea07d83c9a5.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202411/27c2e661d85f3d1f439b9ea07d83c9a5.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202411/4f2054382c48cbfeec3c6404b2c4378a.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202411/4f2054382c48cbfeec3c6404b2c4378a.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "0.1mg",
     "options": [
@@ -3549,6 +3547,7 @@
       "아이스 레몬",
       "쿨툰드라"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
