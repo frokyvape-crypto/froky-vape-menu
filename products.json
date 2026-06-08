@@ -4660,7 +4660,7 @@
   {
     "id": 2246,
     "product_no": 2246,
-    "name": "[M] 리퀴드랩 백도우롱차 입호흡 액상 30ml",
+    "name": "리퀴드랩 백도우롱차 입호흡 액상 30ml",
     "price": 6700,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202507/483d99886392d0c8bce5565e0ff39485.png"
@@ -4671,8 +4671,10 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202507/41752c5be3c2aa222c0f731a2a519d92.png",
     "cat": "입호흡",
-    "flavor": "1박스 (10병) 단위로 구매 가능 상품입니다",
-    "options": [],
+    "flavor": "9.8mg",
+    "options": [
+      "백도우롱차"
+    ],
     "sale": false
   },
   {
