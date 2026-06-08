@@ -4642,7 +4642,7 @@
   {
     "id": 2243,
     "product_no": 2243,
-    "name": "[M] 리퀴드랩 뉴 스프라이트X2 입호흡 액상 30ml",
+    "name": "리퀴드랩 뉴 스프라이트X2 입호흡 액상 30ml",
     "price": 6700,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202507/2ae0743da5831f0e60b3db3674bf4295.png"
@@ -4653,8 +4653,10 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202507/733e43251bdfd04909f4578c188fe62f.png",
     "cat": "입호흡",
-    "flavor": "1박스 (10병) 단위로 구매 가능 상품입니다",
-    "options": [],
+    "flavor": "9.8mg",
+    "options": [
+      "뉴 스프라이트 X2"
+    ],
     "sale": false
   },
   {
