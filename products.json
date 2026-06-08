@@ -3336,15 +3336,14 @@
       "https://frokyvape.com/web/product/medium/202409/4b7cec2d6b62f8dfba38903ebf80ee91.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202409/4b7cec2d6b62f8dfba38903ebf80ee91.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202409/237a8947a0ce2d74e622bdf6eda7244c.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202409/237a8947a0ce2d74e622bdf6eda7244c.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "아몬드 카라멜"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
