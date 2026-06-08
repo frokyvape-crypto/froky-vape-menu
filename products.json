@@ -3048,10 +3048,8 @@
       "https://frokyvape.com/web/product/medium/202402/dcb5869446ce73d4b9edcb44f26caa80.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202402/dcb5869446ce73d4b9edcb44f26caa80.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202402/df20acd0b7d52b66b783c2160b9562a5.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202402/df20acd0b7d52b66b783c2160b9562a5.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -3060,6 +3058,7 @@
       "리큐 레몬 아이스",
       "리큐 바닐라 커스타드"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
