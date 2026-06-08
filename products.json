@@ -100,7 +100,7 @@
   {
     "id": 2071,
     "name": "리퀴드랩 마일드시가 입호흡 액상 30ml",
-    "price": 77000,
+    "price": 25000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202505/5bfd7eef189301ac8589e12acdd453de.png"
     ],
@@ -110,9 +110,9 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202505/a8ea364cc6e691e4bd9d893cced0682b.png",
     "cat": "입호흡",
-    "flavor": "9.8mg / 10병단위 구매 가능",
+    "flavor": "9.8mg",
     "options": [
-      "마일드 시가 (10병)"
+      "마일드 시가"
     ],
     "sale": false
   },
@@ -4512,12 +4512,12 @@
     "cat": "입호흡",
     "flavor": "2mg / 5병 단위 구매 가능",
     "options": [
-      "그린 펀치 (5병)",
-      "데져트 (5병)",
-      "블랙 멘솔 (5병)",
-      "아메리카노 (5병)",
-      "엠에스 블랜드 (5병)",
-      "타박 멘솔 (5병)"
+      "그린 펀치",
+      "데져트",
+      "블랙 멘솔",
+      "아메리카노",
+      "엠에스 블랜드",
+      "타박 멘솔"
     ],
     "sale": false
   },
@@ -4586,7 +4586,7 @@
   {
     "id": 2326,
     "product_no": 2326,
-    "name": "[M] 리퀴드랩 골든데저트 입호흡 액상 30ml",
+    "name": "리퀴드랩 골든데저트 입호흡 액상 30ml",
     "price": 6700,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202508/7f56568515bceb2004b7d12720ee9d5d.png"
@@ -4597,7 +4597,7 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202508/a0d0253a4471bccc71daf76e2fac6050.png",
     "cat": "입호흡",
-    "flavor": "1박스 (10병) 단위로 구매 가능 상품입니다",
+    "flavor": "9.8mg",
     "options": [
       "골든데저트"
     ],
@@ -4606,7 +4606,7 @@
   {
     "id": 2273,
     "product_no": 2273,
-    "name": "[M] 리퀴드랩 흡혈자두 입호흡 액상 30ml",
+    "name": "리퀴드랩 흡혈자두 입호흡 액상 30ml",
     "price": 6700,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202507/575315e9ef114932ee6f9f8d336411c5.png"
@@ -4617,8 +4617,10 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202507/a645bfdc965e4fe0e43721b3f36fbdd1.png",
     "cat": "입호흡",
-    "flavor": "1박스 (10병) 단위로 구매 가능 상품입니다",
-    "options": [],
+    "flavor": "9.8mg",
+    "options": [
+      "흡혈 자두"
+    ],
     "sale": false
   },
   {
@@ -4886,7 +4888,7 @@
     "id": 2252,
     "product_no": 2252,
     "name": "리퀴드랩 세븐마일드 입호흡 액상 30ml",
-    "price": 77000,
+    "price": 6700,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202507/0348e8b18a8f7f2645d8defe1e8ee3cd.png"
     ],
@@ -4896,9 +4898,9 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202507/fdb1e51f24c28a2eb0a56dda455b4203.png",
     "cat": "입호흡",
-    "flavor": "9.8mg / 10병단위 구매 가능",
+    "flavor": "9.8mg",
     "options": [
-      "세븐마일드 (10병)"
+      "세븐마일드"
     ],
     "sale": false
   }
