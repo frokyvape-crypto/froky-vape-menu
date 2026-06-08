@@ -3923,10 +3923,8 @@
       "https://frokyvape.com/web/product/medium/202604/f33c813c0f1f76b2cf31b44d4464c14e.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202604/f33c813c0f1f76b2cf31b44d4464c14e.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202604/fcb684faf8ccd1a6a84b220277e4dc45.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202604/fcb684faf8ccd1a6a84b220277e4dc45.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "50,000 퍼프",
     "options": [
@@ -3941,6 +3939,7 @@
       "포카리 아이스",
       "피치 아이스"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
