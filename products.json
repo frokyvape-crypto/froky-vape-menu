@@ -386,15 +386,14 @@
       "https://frokyvape.com/web/product/medium/202403/e6a3c2e4111315b956a451bf884105d1.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202403/e6a3c2e4111315b956a451bf884105d1.png",
-    "detailImgs": [
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780885771100_216s.png"
-    ],
-    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780885771100_216s.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "청포도"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
