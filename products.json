@@ -2805,10 +2805,8 @@
       "https://frokyvape.com/web/product/medium/202508/4bf9c32b37b2d89009db9b2efda476d1.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202508/4bf9c32b37b2d89009db9b2efda476d1.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202508/a6032f6b9c205a7f82de6fb91fbbf094.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202508/a6032f6b9c205a7f82de6fb91fbbf094.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "26,000 퍼프",
     "options": [
@@ -2816,6 +2814,7 @@
       "스트로베리 키위",
       "쥬시피치 아이스"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
