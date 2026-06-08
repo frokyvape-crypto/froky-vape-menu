@@ -4678,7 +4678,7 @@
   {
     "id": 2134,
     "product_no": 2134,
-    "name": "[M] 리퀴드랩 리얼연초 시리즈  입호흡 액상 30ml",
+    "name": "리퀴드랩 리얼연초 시리즈  입호흡 액상 30ml",
     "price": 6700,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202506/4297c5329e4b281bed0a6da67a41031a.png"
@@ -4689,9 +4689,8 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202506/10eb9c8947637ea9961c793145eb6cbf.png",
     "cat": "입호흡",
-    "flavor": "1박스 (10병) 단위로 구매 가능 상품입니다",
+    "flavor": "9.8mg",
     "options": [
-      "말레드",
       "말라이트"
     ],
     "sale": false
