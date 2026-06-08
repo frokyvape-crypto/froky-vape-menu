@@ -2758,10 +2758,8 @@
       "https://frokyvape.com/web/product/medium/202509/26e69e983a81630621f489115bf514dc.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/26e69e983a81630621f489115bf514dc.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/6fb9f4ecacc8c594cc53347ae57652b9.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/6fb9f4ecacc8c594cc53347ae57652b9.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -2772,6 +2770,7 @@
       "리얼 자몽",
       "피치 파라다이스"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
