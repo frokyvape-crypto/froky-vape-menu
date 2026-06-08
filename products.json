@@ -4875,5 +4875,25 @@
       "알로에 포도 버블"
     ],
     "sale": false
+  },
+  {
+    "id": 2252,
+    "product_no": 2252,
+    "name": "리퀴드랩 세븐마일드 입호흡 액상 30ml",
+    "price": 6700,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202507/0348e8b18a8f7f2645d8defe1e8ee3cd.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202507/0348e8b18a8f7f2645d8defe1e8ee3cd.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202507/fdb1e51f24c28a2eb0a56dda455b4203.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202507/fdb1e51f24c28a2eb0a56dda455b4203.png",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "세븐마일드"
+    ],
+    "sale": false
   }
 ]
