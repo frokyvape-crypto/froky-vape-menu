@@ -3637,10 +3637,8 @@
       "https://frokyvape.com/web/product/medium/202309/9003d1b9802d233fd88ac7212876e116.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202309/9003d1b9802d233fd88ac7212876e116.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202309/612d4da9000f99d8dcff82c4b0f4bacf.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202309/612d4da9000f99d8dcff82c4b0f4bacf.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
@@ -3648,6 +3646,7 @@
       "쿠쉬맨 (3MG)",
       "아삽 그레이프(3MG)"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
