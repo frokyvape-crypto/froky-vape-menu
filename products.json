@@ -4666,7 +4666,7 @@
     "id": 2074,
     "product_no": 2074,
     "name": "리퀴드랩 크림오브타바코 입호흡 액상 30ml",
-    "price": 6700,
+    "price": 77000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202505/b397927904e0206b083da33f0ab171be.png"
     ],
@@ -4676,10 +4676,11 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202505/97a56bb5d24e5b49fb762af8b9dce4f1.png",
     "cat": "입호흡",
-    "flavor": "9.8mg",
+    "flavor": "9.8mg / 10병단위 구매 가능",
     "options": [
-      "크림오브타바코"
+      "크림오브타바코 (10병)"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
