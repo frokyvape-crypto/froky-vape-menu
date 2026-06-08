@@ -5656,25 +5656,6 @@
     "sale": false
   },
   {
-    "id": 1064,
-    "product_no": 1064,
-    "name": "[아이다] 스핀마이저 유리 경통",
-    "price": 4900,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202602/2e281e89cb45e4b8cdcd0b3bfefa369d.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202602/2e281e89cb45e4b8cdcd0b3bfefa369d.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202602/11289d96c960aa40a9f99f5fa87b7b90.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202602/11289d96c960aa40a9f99f5fa87b7b90.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 965,
     "product_no": 965,
     "name": "[B] 에어베이퍼 갱쥬스 폐호흡 액상 60ml",
