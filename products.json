@@ -741,15 +741,14 @@
       "https://frokyvape.com/web/product/medium/202312/5e565476a8bff779915c1dfd9128727b.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202312/5e565476a8bff779915c1dfd9128727b.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202312/f4f88acaa4023fc07118ef61e8c3e1df.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202312/f4f88acaa4023fc07118ef61e8c3e1df.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9mg",
     "options": [
       "라임자몽"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
