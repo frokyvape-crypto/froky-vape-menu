@@ -1571,7 +1571,7 @@
     "id": 2930,
     "product_no": 2930,
     "name": "[제로쿨] 포레스트 입호흡 액상 30ml",
-    "price": 8800,
+    "price": 9900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202604/9c811144ef6307c8332b629245c12ff4.png"
     ],
@@ -1588,6 +1588,7 @@
       "[제로쿨] 파인 레몬에이드",
       "[제로쿨] 패션후르츠"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
