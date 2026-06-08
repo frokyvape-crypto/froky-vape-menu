@@ -5326,8 +5326,8 @@
   {
     "id": 1694,
     "product_no": 1694,
-    "name": "[VK] 잽쥬스 마르키사 고농도 폐호흡 액상 60ml",
-    "price": 28500,
+    "name": "[9mg] 잽쥬스 마르키사 고농도 폐호흡 액상 60ml",
+    "price": 29500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202409/3f0f34fb97b2342847a8aa8eb66bb711.png"
     ],
@@ -5338,7 +5338,11 @@
     "detailImg": "https://frokyvape.com/web/product/big/202409/2c30edd717b41d88dc7a93ebfc843f9e.png",
     "cat": "폐호흡",
     "flavor": "9mg",
-    "options": [],
+    "options": [
+      "[9mg] 알로에베라",
+      "[9mg] 용과",
+      "[9mg] 파인애플"
+    ],
     "optionPrices": {},
     "sale": false
   },
