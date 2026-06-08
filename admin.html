@@ -252,6 +252,14 @@ tr:hover td{background:rgba(128,128,128,.06);}
             <option value="고농도">고농도</option>
             <option value="일회용">일회용</option>
           </select>
+          <select id="flt-sort" onchange="renderTable()" title="정렬">
+            <option value="newest">최신순</option>
+            <option value="oldest">과거순</option>
+            <option value="name-asc">이름 오름차순</option>
+            <option value="name-desc">이름 내림차순</option>
+            <option value="price-asc">가격 낮은순</option>
+            <option value="price-desc">가격 높은순</option>
+          </select>
         </div>
         <div class="filter-bar" id="bulk-bar" style="display:none">
           <span id="selected-count" style="font-size:.82rem;color:var(--muted);font-weight:700">선택 0개</span>
@@ -349,7 +357,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
         </div>
         <div class="tbl-wrap">
           <table>
-            <thead><tr><th>표시 이름</th><th style="width:120px">액션</th></tr></thead>
+            <thead><tr><th style="width:60px">순서</th><th>표시 이름</th><th style="width:80px">액션</th></tr></thead>
             <tbody id="cat-body"></tbody>
           </table>
         </div>
@@ -879,9 +887,20 @@ function renderCategoryList() {
   if (!body) return;
   body.innerHTML = categories.map((c, i) => `
     <tr>
+      <td style="text-align:center">
+        <button class="btn btn-outline btn-xs" onclick="moveCat(${i},-1)" ${i===0?'disabled':''} style="padding:3px 8px;font-size:.85rem">▲</button>
+        <button class="btn btn-outline btn-xs" onclick="moveCat(${i},1)" ${i===categories.length-1?'disabled':''} style="padding:3px 8px;font-size:.85rem">▼</button>
+      </td>
       <td><input class="field" value="${escHtml(c.label)}" onchange="updateCategory(${i}, 'label', this.value)"></td>
       <td><button class="btn btn-red btn-xs" onclick="removeCategory(${i})">삭제</button></td>
     </tr>`).join('');
+}
+function moveCat(idx, dir) {
+  const to = idx + dir;
+  if (to < 0 || to >= categories.length) return;
+  [categories[idx], categories[to]] = [categories[to], categories[idx]];
+  renderCategoryControls();
+  toast('순서 변경됨 - 저장을 눌러 반영하세요', 'ok');
 }
 
 function addCategory() {
@@ -1032,10 +1051,17 @@ async function saveSiteConfig() {
 function renderTable() {
   const q = (document.getElementById('flt-q').value || '').toLowerCase();
   const c = document.getElementById('flt-cat').value;
-  const list = products.filter(p =>
+  const sort = document.getElementById('flt-sort')?.value || 'newest';
+  let list = products.filter(p =>
     (!q || p.name.toLowerCase().includes(q) || (p.flavor || '').toLowerCase().includes(q)) &&
     (!c || p.cat === c)
   );
+  if (sort === 'newest') list = [...list].reverse();
+  else if (sort === 'oldest') { /* 기본 순서 */ }
+  else if (sort === 'name-asc') list.sort((a,b) => a.name.localeCompare(b.name, 'ko'));
+  else if (sort === 'name-desc') list.sort((a,b) => b.name.localeCompare(a.name, 'ko'));
+  else if (sort === 'price-asc') list.sort((a,b) => a.price - b.price);
+  else if (sort === 'price-desc') list.sort((a,b) => b.price - a.price);
   document.getElementById('count-info').textContent = `총 ${list.length}개 표시 (전체 ${products.length}개)`;
   const fmt = n => Number(n).toLocaleString('ko-KR') + '원';
   const tb = document.getElementById('tbl-body');
