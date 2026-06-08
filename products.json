@@ -3857,16 +3857,15 @@
       "https://frokyvape.com/web/product/medium/202305/950e1a922cc164e212684779fb0cd564.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202305/950e1a922cc164e212684779fb0cd564.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202305/bc534b5a21aa2fe4dc13813ab1830f96.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202305/bc534b5a21aa2fe4dc13813ab1830f96.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.9mg",
     "options": [
       "그랜드마스터",
       "캐슬롱"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
