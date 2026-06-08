@@ -1806,10 +1806,8 @@
       "https://frokyvape.com/web/product/medium/202603/95c7ea2c6c9a3c9f67ebc0b7b7c16910.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/95c7ea2c6c9a3c9f67ebc0b7b7c16910.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/bb593806d3d029c3b81f0febb7fdbd48.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/bb593806d3d029c3b81f0febb7fdbd48.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -1820,6 +1818,7 @@
       "라바 플로우",
       "레몬 그린티"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
