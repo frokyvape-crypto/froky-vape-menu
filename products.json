@@ -4606,7 +4606,7 @@
     "id": 2012,
     "product_no": 2012,
     "name": "리퀴드랩 ㅇㅋㄹㅌ 입호흡 액상 30ml",
-    "price": 6700,
+    "price": 77000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202503/2539f0203d10979c3cc33832c38c497c.png"
     ],
@@ -4616,10 +4616,11 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202503/3723d9acb0272e71ec95cdc002185975.png",
     "cat": "입호흡",
-    "flavor": "9.8mg",
+    "flavor": "9.8mg / 10병단위 구매 가능",
     "options": [
-      "ㅇㅋㄹㅌ"
+      "ㅇㅋㄹㅌ (10병)"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
