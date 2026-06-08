@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 250" width="2000" height="250" role="img" aria-label="담배사업법 시행일 이전 제조 및 수입 된 재고제품을 판매 중입니다.">
+  <rect width="2000" height="250" fill="#f7f6f2"/>
+  <rect x="5" y="5" width="1990" height="240" fill="none" stroke="#d7d3ca" stroke-width="8"/>
+  <rect x="18" y="18" width="1964" height="214" fill="none" stroke="#bfbab0" stroke-width="2"/>
+  <path d="M18 72 0 98V250h770L505 142Z" fill="#e6e5df"/>
+  <path d="M1982 72 2000 98V250h-770l265-108Z" fill="#e6e5df"/>
+  <text x="1000" y="98" text-anchor="middle" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif" font-size="54" font-weight="800" fill="#000">담배사업법 시행일 (26.4.24) 이전</text>
+  <text x="1000" y="155" text-anchor="middle" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif" font-size="54" font-weight="800" fill="#000">제조 및 수입 된 재고제품을 판매 중입니다.</text>
+  <line x1="610" y1="168" x2="1390" y2="168" stroke="#bfbab0" stroke-width="4"/>
+  <text x="1000" y="212" text-anchor="middle" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif" font-size="22" font-weight="800">
+    <tspan fill="#000">본 제품은 담배사업법 시행 이전에 </tspan>
+    <tspan fill="#f00">제조 또는 수입 신고된 제품</tspan>
+    <tspan fill="#000">으로 소비자기본법에 따라 고지합니다.</tspan>
+  </text>
+</svg>

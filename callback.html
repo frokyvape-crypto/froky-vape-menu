@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>FROKY VAPE - 카페24 인증</title>
+<style>
+body{font-family:'Pretendard',sans-serif;background:#0c0c0c;color:#f0f0f0;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;}
+.box{background:#141414;border:2px solid #2ecc40;border-radius:16px;padding:40px;max-width:480px;width:90%;text-align:center;box-shadow:0 0 40px rgba(46,204,64,.2);}
+h2{color:#2ecc40;margin-bottom:8px;}
+.code-box{background:#0c0c0c;border:1px solid #2ecc40;border-radius:8px;padding:16px;margin:20px 0;font-family:monospace;font-size:1rem;word-break:break-all;color:#f5dc00;}
+.copy-btn{background:#2ecc40;color:#fff;border:none;padding:12px 32px;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;}
+.error{color:#e33;}
+</style>
+</head>
+<body>
+<div class="box">
+  <h2>✅ 카페24 인증 코드</h2>
+  <p id="msg">아래 코드를 복사해서 GitHub Actions에 입력하세요.</p>
+  <div class="code-box" id="code-display">불러오는 중...</div>
+  <button class="copy-btn" onclick="copy()">📋 코드 복사</button>
+</div>
+<script>
+const params = new URLSearchParams(location.search);
+const code = params.get('code');
+const error = params.get('error');
+if(error){
+  document.getElementById('code-display').textContent = '인증 실패: ' + error;
+  document.getElementById('code-display').style.color = '#e33';
+} else if(code){
+  document.getElementById('code-display').textContent = code;
+} else {
+  document.getElementById('code-display').textContent = 'URL에 code 파라미터가 없습니다.';
+}
+function copy(){
+  navigator.clipboard.writeText(code || '').then(()=>alert('복사됐습니다!'));
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>카페24 인증 완료</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#0c0c0c;color:#f0f0f0;font-family:-apple-system,'Pretendard',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+.box{background:#141414;border:1px solid #252525;border-radius:20px;padding:40px 32px;width:100%;max-width:460px;text-align:center;}
+.logo{font-size:1.5rem;font-weight:900;color:#2ecc40;letter-spacing:2px;margin-bottom:6px;}
+.sub{color:#777;font-size:.82rem;margin-bottom:28px;}
+.status{font-size:1rem;font-weight:700;margin-bottom:20px;}
+.status.ok{color:#2ecc40;}
+.status.err{color:#e53935;}
+.status.loading{color:#f5dc00;}
+.info-box{background:#1c1c1c;border:1px solid #333;border-radius:12px;padding:16px;margin-bottom:16px;text-align:left;}
+.info-label{font-size:.68rem;color:#777;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.code-text{font-family:monospace;font-size:.78rem;word-break:break-all;color:#64b5f6;line-height:1.6;}
+.btn{display:inline-block;padding:12px 28px;border-radius:10px;font-size:.88rem;font-weight:800;cursor:pointer;border:none;font-family:inherit;transition:opacity .2s;}
+.btn-g{background:linear-gradient(135deg,#2ecc40,#1aa82e);color:#fff;}
+.btn-g:hover{opacity:.88;}
+.btn-outline{background:none;border:1.5px solid #333;color:#f0f0f0;margin-right:8px;}
+.btn-outline:hover{border-color:#2ecc40;color:#2ecc40;}
+.hint{font-size:.72rem;color:#555;margin-top:14px;line-height:1.7;}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#2ecc40;border-radius:50%;animation:rot .7s linear infinite;vertical-align:middle;margin-right:6px;}
+.countdown{font-size:.72rem;color:#555;margin-top:8px;}
+@keyframes rot{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="logo">FROKY VAPE</div>
+  <div class="sub">카페24 OAuth 인증</div>
+  <div class="status loading" id="status"><span class="spin"></span>인증 코드 처리 중...</div>
+  <div id="content"></div>
+</div>
+
+<script>
+(async function() {
+  const params = new URLSearchParams(location.search);
+  const code   = params.get('code');
+  const error  = params.get('error');
+  const statusEl  = document.getElementById('status');
+  const contentEl = document.getElementById('content');
+
+  if (error) {
+    statusEl.className = 'status err';
+    statusEl.textContent = '❌ 인증 실패: ' + (params.get('error_description') || error);
+    contentEl.innerHTML = '<div class="hint" style="color:#e53935;margin-top:8px">카페24 개발자센터에서 앱 API 권한을 확인하세요.</div>';
+    return;
+  }
+
+  if (!code) {
+    statusEl.className = 'status err';
+    statusEl.textContent = '❌ 인증 코드가 없습니다';
+    contentEl.innerHTML = '<div class="hint">잘못된 접근입니다. 관리자 페이지에서 인증을 시작하세요.</div>';
+    return;
+  }
+
+  // 부모 창(admin.html)으로 코드 전달 시도
+  if (window.opener) {
+    try {
+      window.opener.postMessage({ type: 'cafe24-auth-code', code }, '*');
+      statusEl.className = 'status ok';
+      statusEl.textContent = '✅ 인증 코드 전달 완료!';
+      contentEl.innerHTML = `
+        <div class="info-box">
+          <div class="info-label">인증 코드</div>
+          <div class="code-text" id="code-display">${code}</div>
+        </div>
+        <div class="hint">관리자 페이지에서 자동으로 처리 중입니다...<br>오류 발생 시 아래 코드를 복사하여 직접 입력하세요.</div>
+        <div style="margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+          <button class="btn btn-outline" onclick="copyCode()">📋 코드 복사</button>
+          <button class="btn btn-outline" onclick="window.close()">창 닫기</button>
+        </div>
+        <div class="countdown" id="countdown">8초 후 자동으로 닫힙니다</div>`;
+
+      // 카운트다운 표시
+      let remaining = 8;
+      const countdownEl = document.getElementById('countdown');
+      const timer = setInterval(() => {
+        remaining--;
+        if (remaining <= 0) {
+          clearInterval(timer);
+          window.close();
+        } else {
+          if (countdownEl) countdownEl.textContent = remaining + '초 후 자동으로 닫힙니다';
+        }
+      }, 1000);
+      return;
+    } catch(e) {}
+  }
+
+  // 팝업이 아닌 경우: 코드 직접 표시
+  statusEl.className = 'status ok';
+  statusEl.textContent = '✅ 인증 코드 발급 완료!';
+  contentEl.innerHTML = `
+    <div class="info-box">
+      <div class="info-label">인증 코드 (아래 복사 후 관리자에 입력)</div>
+      <div class="code-text" id="code-display">${code}</div>
+    </div>
+    <button class="btn btn-g" onclick="copyCode()">📋 코드 복사</button>
+    <div class="hint" style="margin-top:14px">이 코드를 관리자 페이지의 "인증 코드" 입력란에 붙여넣고<br>"토큰 발급" 버튼을 클릭하세요.</div>`;
+})();
+
+function copyCode() {
+  const text = document.getElementById('code-display').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = event.target;
+    btn.textContent = '✅ 복사됨!';
+    setTimeout(() => btn.textContent = '📋 코드 복사', 2000);
+  });
+}
+</script>
+</body>
+</html>
