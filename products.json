@@ -1745,15 +1745,14 @@
       "https://frokyvape.com/web/product/medium/202509/cb271c2b3d970c812dab951a9acdd761.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/cb271c2b3d970c812dab951a9acdd761.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/be800f059ab334d9fa0ff60cc19565c5.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/be800f059ab334d9fa0ff60cc19565c5.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "크오크"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
