@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FROKY VAPE</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g:#2ecc40;--g2:#1aa82e;--g-glow:rgba(46,204,64,.35);
+  --y:#f5dc00;--y2:#d4be00;
+  --bg:#0c0c0c;--surface:#141414;--card:#181818;--border:#242424;
+  --text:#f0f0f0;--muted:#666;--shadow:rgba(0,0,0,.7);
+}
+[data-theme="light"]{
+  --bg:#f0f4f0;--surface:#fff;--card:#fff;--border:#e0e8e0;
+  --text:#111;--muted:#888;--shadow:rgba(0,0,0,.1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Pretendard',-apple-system,sans-serif;min-height:100vh;transition:background .3s,color .3s;overflow-x:hidden;}
+header{position:sticky;top:0;z-index:100;background:rgba(12,12,12,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(46,204,64,.2);display:flex;align-items:center;justify-content:space-between;padding:0 16px;height:58px;transition:background .3s;}
+[data-theme="light"] header{background:rgba(255,255,255,.92);border-bottom:1px solid rgba(46,204,64,.3);}
+.logo{font-family:'Lilita One',cursive;font-size:1.6rem;letter-spacing:2px;display:flex;align-items:center;gap:0;}
+.lg{color:var(--g);-webkit-text-stroke:2px #0a4a10;text-shadow:0 0 12px var(--g-glow),2px 2px 0 #0a4a10;}
+.ly{color:var(--y);-webkit-text-stroke:2px #6b5e00;text-shadow:0 0 12px rgba(245,220,0,.3),2px 2px 0 #6b5e00;}
+.header-right{display:flex;align-items:center;gap:10px;}
+.theme-toggle{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:3px;gap:2px;}
+.th-btn{background:none;border:none;cursor:pointer;width:30px;height:26px;border-radius:14px;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.th-btn.active{background:var(--g);}
+.cart-btn{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:7px 16px;border-radius:20px;font-family:'Pretendard',sans-serif;font-size:.85rem;font-weight:700;display:flex;align-items:center;gap:6px;box-shadow:0 0 14px var(--g-glow);transition:box-shadow .2s,opacity .2s;}
+.cart-btn:hover{opacity:.88;box-shadow:0 0 22px var(--g-glow);}
+.cart-count{background:#fff;color:var(--g2);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:900;}
+.hero{position:relative;overflow:hidden;padding:36px 20px 32px;background:linear-gradient(160deg,#0c1a0e 0%,#0c0c0c 60%,#1a1500 100%);border-bottom:1px solid rgba(46,204,64,.15);}
+[data-theme="light"] .hero{background:linear-gradient(160deg,#e8f5e8 0%,#f0f4f0 60%,#f5f3e0 100%);}
+.hero-glow{position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:400px;height:200px;background:radial-gradient(ellipse,rgba(46,204,64,.18) 0%,transparent 70%);pointer-events:none;}
+.hero-title{font-family:'Lilita One',cursive;font-size:clamp(2rem,8vw,3.2rem);text-align:center;letter-spacing:clamp(1px,1vw,4px);line-height:1;margin-bottom:8px;position:relative;}
+.hero-title .lg{font-size:inherit;}
+.hero-title .ly{font-size:inherit;}
+.hero-sub{text-align:center;font-size:.85rem;color:var(--muted);font-weight:500;margin-bottom:20px;letter-spacing:.5px;}
+[data-theme="light"] .hero-sub{color:#666;}
+.hero-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;}
+.hero-tag{padding:5px 14px;border-radius:20px;font-size:.75rem;font-weight:700;border:1px solid;cursor:default;}
+.hero-tag.green{border-color:var(--g);color:var(--g);background:rgba(46,204,64,.08);}
+.hero-tag.yellow{border-color:var(--y);color:var(--y2);background:rgba(245,220,0,.08);}
+[data-theme="light"] .hero-tag.yellow{color:#8a7800;}
+.notice-banner-wrap{display:none;position:relative;z-index:1;width:100%;overflow:hidden;line-height:0;background:#f7f6f2;align-items:center;justify-content:center;padding:0;}
+.notice-banner-wrap img{display:block;width:100%;max-width:1546px;height:auto;object-fit:contain;object-position:center;margin:0 auto;border-radius:0;box-shadow:none;image-rendering:auto;}
+body[data-notice-mode="stock"] .hero{padding:0;background:#f7f6f2;border-bottom:1px solid rgba(0,0,0,.08);}
+body[data-notice-mode="stock"] .hero-glow,body[data-notice-mode="stock"] .hero-brand{display:none;}
+body[data-notice-mode="stock"] .notice-banner-wrap{display:flex;}
+body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .hero{padding:0;background:#f7f6f2;border-bottom:1px solid rgba(0,0,0,.08);}
+body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .hero-glow,body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .hero-brand{display:none;}
+body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-banner-wrap{display:flex;}
+.categories{display:flex;gap:8px;padding:12px 14px;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:58px;z-index:90;}
+.categories::-webkit-scrollbar{display:none;}
+.cat-btn{white-space:nowrap;padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:'Pretendard',sans-serif;font-size:.8rem;font-weight:600;transition:all .2s;}
+.cat-btn.active{border-color:var(--g);color:var(--g);background:rgba(46,204,64,.1);box-shadow:0 0 8px rgba(46,204,64,.15);}
+.cat-btn:hover:not(.active){border-color:var(--g);color:var(--g);}
+.search-bar{padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);}
+.search-wrap{position:relative;}
+.search-input{width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--text);padding:9px 38px 9px 14px;border-radius:10px;font-family:'Pretendard',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s,box-shadow .2s;}
+.search-input:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(46,204,64,.1);}
+.search-input::placeholder{color:var(--muted);}
+.search-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.1rem;display:none;}
+.search-result-label{font-size:.78rem;color:var(--muted);padding:8px 14px 0;}
+.best-section{padding:20px 0 0;}
+.best-header{display:flex;align-items:center;padding:0 14px 12px;gap:8px;}
+.best-header h2{font-size:1rem;font-weight:800;color:var(--text);}
+.best-badge{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;font-size:.62rem;padding:3px 10px;border-radius:10px;font-weight:700;box-shadow:0 0 8px var(--g-glow);}
+.carousel-wrap{overflow:hidden;position:relative;cursor:grab;touch-action:pan-y;}
+.carousel-wrap::-webkit-scrollbar{display:none;}
+.carousel-wrap.dragging{cursor:grabbing;}
+.carousel-wrap::before,.carousel-wrap::after{content:'';position:absolute;top:0;bottom:0;width:40px;z-index:1;pointer-events:none;}
+.carousel-wrap::before{left:0;background:linear-gradient(to right,var(--bg),transparent);}
+.carousel-wrap::after{right:0;background:linear-gradient(to left,var(--bg),transparent);}
+.carousel-track{display:flex;gap:10px;padding:4px 14px 16px;width:max-content;user-select:none;will-change:transform;}
+.best-card{width:130px;flex-shrink:0;background:var(--card);border:1px solid rgba(46,204,64,.2);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+.best-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(46,204,64,.2);}
+.best-card img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--surface);}
+.best-card-body{padding:8px 10px 10px;}
+.best-card-name{font-size:.75rem;font-weight:600;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.best-card-price{color:var(--y);font-size:.82rem;font-weight:800;}
+[data-theme="light"] .best-card-price{color:#7a6e00;}
+.hot{background:var(--g);color:#fff;font-size:.58rem;padding:1px 5px;border-radius:4px;margin-left:3px;font-weight:700;}
+.section-title{padding:20px 14px 12px;font-size:.82rem;font-weight:800;color:var(--g);text-transform:uppercase;letter-spacing:2px;display:flex;align-items:center;gap:10px;}
+.section-title::after{content:'';flex:1;height:1px;background:linear-gradient(to right,rgba(46,204,64,.4),transparent);}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(152px,1fr));gap:14px;padding:0 14px 120px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform .22s,box-shadow .22s,border-color .22s;box-shadow:0 2px 8px var(--shadow);}
+.card:hover{transform:translateY(-5px);border-color:rgba(46,204,64,.5);box-shadow:0 12px 32px rgba(46,204,64,.18);}
+.card-img-wrap{position:relative;overflow:hidden;}
+.card-img-wrap img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--surface);display:block;transition:transform .3s;}
+.card:hover .card-img-wrap img{transform:scale(1.05);}
+.card-img-count{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.6);color:#fff;font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:8px;pointer-events:none;}
+.card-thumbs{display:flex;gap:4px;padding:6px 8px 2px;overflow-x:auto;scrollbar-width:none;}
+.card-thumbs::-webkit-scrollbar{display:none;}
+.card-thumb{width:36px;height:36px;object-fit:cover;border-radius:5px;flex-shrink:0;border:1.5px solid transparent;cursor:pointer;opacity:.65;transition:border-color .15s,opacity .15s;}
+.card-thumb.active{border-color:var(--g);opacity:1;}
+.card-thumb:hover{opacity:1;}
+.card-badge{position:absolute;top:8px;left:8px;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;font-size:.62rem;font-weight:700;padding:3px 8px;border-radius:6px;box-shadow:0 0 8px var(--g-glow);}
+.card-quick{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5);backdrop-filter:blur(2px);color:#fff;font-size:.82rem;font-weight:700;font-family:'Pretendard',sans-serif;opacity:0;transition:opacity .2s;border:none;cursor:pointer;text-shadow:0 1px 4px rgba(0,0,0,.5);}
+.card:hover .card-quick{opacity:1;}
+.card-body{padding:11px 12px 4px;flex:1;}
+.card-name{font-size:.83rem;font-weight:700;line-height:1.4;margin-bottom:3px;}
+.card-flavor{font-size:.72rem;color:var(--muted);margin-bottom:6px;}
+.card-price{color:var(--y);font-weight:900;font-size:1rem;text-shadow:0 0 8px rgba(245,220,0,.2);}
+[data-theme="light"] .card-price{color:#7a6e00;text-shadow:none;}
+.card-btns{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px 10px 10px;}
+.btn-cart-card{background:rgba(46,204,64,.1);color:var(--g);border:1px solid rgba(46,204,64,.3);cursor:pointer;padding:8px;border-radius:8px;font-family:'Pretendard',sans-serif;font-size:.78rem;font-weight:700;transition:background .2s;}
+.btn-cart-card:hover{background:rgba(46,204,64,.2);}
+.btn-buy-card{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:8px;border-radius:8px;font-family:'Pretendard',sans-serif;font-size:.78rem;font-weight:700;box-shadow:0 0 10px var(--g-glow);transition:opacity .2s;}
+.btn-buy-card:hover{opacity:.85;}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:none;}
+.overlay.open{display:block;}
+.drawer{position:fixed;right:0;top:0;bottom:0;width:min(370px,100vw);background:var(--surface);z-index:201;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column;border-left:1px solid rgba(46,204,64,.2);}
+.drawer.open{transform:translateX(0);}
+.drawer-header{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.drawer-header h2{font-size:1rem;font-weight:800;color:var(--g);}
+.close-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.3rem;}
+.cart-items{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;}
+.cart-empty{text-align:center;color:var(--muted);padding:40px 0;font-size:.9rem;}
+.cart-item{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:10px;display:grid;grid-template-columns:50px 1fr auto;gap:10px;align-items:center;transition:border-color .2s;}
+.cart-item:hover{border-color:rgba(46,204,64,.3);}
+.cart-item img{width:50px;height:50px;object-fit:cover;border-radius:8px;background:var(--border);}
+.ci-name{font-size:.82rem;font-weight:600;margin-bottom:2px;}
+.ci-opt{font-size:.72rem;color:var(--muted);margin-bottom:6px;}
+.qty-ctrl{display:flex;align-items:center;gap:8px;}
+.qty-btn{background:var(--border);border:none;color:var(--text);cursor:pointer;width:24px;height:24px;border-radius:5px;font-size:.95rem;}
+.qty-val{font-size:.85rem;min-width:18px;text-align:center;font-weight:700;}
+.ci-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.ci-price{color:var(--y);font-weight:800;font-size:.85rem;white-space:nowrap;}
+[data-theme="light"] .ci-price{color:#7a6e00;}
+.ci-del{background:none;border:none;color:#e33;cursor:pointer;font-size:.78rem;}
+.drawer-footer{padding:14px 16px;border-top:1px solid rgba(46,204,64,.15);}
+.total-row{display:flex;justify-content:space-between;margin-bottom:12px;font-weight:700;}
+.total-price{color:var(--y);font-size:1.2rem;font-weight:900;}
+[data-theme="light"] .total-price{color:#7a6e00;}
+.checkout-btn{width:100%;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:14px;border-radius:12px;font-family:'Pretendard',sans-serif;font-size:.95rem;font-weight:800;box-shadow:0 0 16px var(--g-glow);transition:opacity .2s;}
+.checkout-btn:hover{opacity:.88;}
+.checkout-btn:disabled{background:var(--border);color:var(--muted);cursor:not-allowed;box-shadow:none;}
+.sheet-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;display:none;align-items:flex-end;justify-content:center;overflow-y:auto;}
+.sheet-overlay.open{display:flex;}
+.sheet{background:var(--surface);width:100%;max-width:520px;border-radius:22px 22px 0 0;border-top:2px solid rgba(46,204,64,.35);animation:slideUp .25s ease;flex-shrink:0;}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.sheet-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:12px auto 0;}
+.sheet-top{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);}
+.sheet-img-section{position:relative;background:var(--card);}
+.sheet-main-img{width:100%;height:260px;object-fit:contain;display:block;background:var(--card);}
+@media(max-width:480px){.sheet-main-img{height:200px;}}
+.sheet-thumb{width:66px;height:66px;object-fit:cover;border-radius:12px;border:2px solid rgba(46,204,64,.25);}
+.sheet-info{flex:1;}
+.sheet-name{font-size:.9rem;font-weight:700;line-height:1.4;margin-bottom:4px;}
+.sheet-price{color:var(--y);font-size:1.05rem;font-weight:900;}
+[data-theme="light"] .sheet-price{color:#7a6e00;}
+.sheet-total{font-size:.8rem;color:var(--muted);margin-top:2px;}
+.sheet-tag{display:inline-block;border:1px solid rgba(46,204,64,.4);color:var(--g);font-size:.68rem;padding:2px 9px;border-radius:10px;font-weight:600;margin-top:5px;}
+.sheet-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.5rem;align-self:flex-start;padding:2px;}
+.sheet-body{padding:16px;overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch;}
+.sheet-label{font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.sheet-select{width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--text);padding:10px 12px;border-radius:10px;font-family:'Pretendard',sans-serif;font-size:.88rem;outline:none;margin-bottom:14px;transition:border-color .2s,box-shadow .2s;}
+.sheet-select:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(46,204,64,.1);}
+.qty-wrap{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;width:fit-content;margin-bottom:16px;}
+.sq-btn{background:var(--bg);border:none;color:var(--text);cursor:pointer;width:42px;height:40px;font-size:1.2rem;display:flex;align-items:center;justify-content:center;font-family:'Pretendard',sans-serif;}
+.sq-val{min-width:60px;height:40px;display:flex;align-items:center;justify-content:center;font-size:.95rem;font-weight:700;border-left:1px solid var(--border);border-right:1px solid var(--border);}
+.sheet-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+.btn-sheet-cart{background:rgba(46,204,64,.1);color:var(--g);border:1.5px solid rgba(46,204,64,.35);cursor:pointer;padding:13px;border-radius:12px;font-family:'Pretendard',sans-serif;font-size:.9rem;font-weight:700;transition:background .2s;}
+.btn-sheet-cart:hover{background:rgba(46,204,64,.2);}
+.btn-sheet-buy{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:13px;border-radius:12px;font-family:'Pretendard',sans-serif;font-size:.9rem;font-weight:800;box-shadow:0 0 12px var(--g-glow);}
+.btn-sheet-buy:hover{opacity:.88;}
+.btn-sheet-detail{width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--muted);cursor:pointer;font-family:'Pretendard',sans-serif;font-size:.88rem;font-weight:600;padding:13px;border-radius:12px;transition:border-color .2s,color .2s;}
+.btn-sheet-detail:hover{border-color:var(--g);color:var(--g);}
+.detail-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:500;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:0;}
+.detail-modal-overlay.open{display:flex;}
+.detail-modal{width:100%;max-width:680px;margin:auto;position:relative;}
+.detail-modal-close{position:fixed;top:14px;right:14px;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.2);color:#fff;cursor:pointer;border-radius:50%;width:38px;height:38px;font-size:1.3rem;display:flex;align-items:center;justify-content:center;z-index:10;transition:background .2s;}
+.detail-modal-close:hover{background:rgba(255,0,0,.5);}
+.detail-modal img{width:100%;display:block;}
+.detail-no-img{color:var(--muted);text-align:center;padding:80px 20px;font-size:.9rem;}
+.sheet-thumbs{display:flex;gap:8px;overflow-x:auto;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.sheet-thumbs::-webkit-scrollbar{display:none;}
+.s-thumb-mini{width:64px;height:64px;object-fit:cover;border-radius:10px;border:2px solid transparent;cursor:pointer;flex-shrink:0;transition:border-color .15s,opacity .15s;opacity:.6;}
+.s-thumb-mini.active{border-color:var(--g);opacity:1;box-shadow:0 0 0 3px rgba(46,204,64,.2);}
+.notice-popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:650;display:none;align-items:center;justify-content:center;padding:16px;}
+.notice-popup-overlay.open{display:flex;}
+.notice-popup{position:relative;width:min(390px,calc(100vw - 32px));}
+.notice-popup-close{position:absolute;top:-12px;right:-12px;background:#fff;color:#0b2239;border:1px solid rgba(0,0,0,.16);cursor:pointer;border-radius:50%;width:34px;height:34px;font-size:1rem;font-weight:900;box-shadow:0 4px 14px rgba(0,0,0,.35);z-index:1;}
+.notice-popup-today{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;color:#fff;font-size:.9rem;font-weight:700;text-shadow:0 1px 6px rgba(0,0,0,.4);}
+.notice-popup-today input{width:18px;height:18px;accent-color:var(--g);cursor:pointer;}
+.popup-carousel-wrap{position:relative;cursor:pointer;border-radius:18px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.45);}
+.popup-carousel-img{display:block;width:100%;border-radius:0;}
+.popup-carousel-wrap .pc-tap{position:absolute;top:0;bottom:0;width:50%;opacity:0;}
+.popup-carousel-wrap .pc-tap-l{left:0;}
+.popup-carousel-wrap .pc-tap-r{right:0;}
+.popup-dots{display:flex;justify-content:center;gap:7px;margin-top:10px;}
+.popup-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);transition:background .2s,transform .2s;}
+.popup-dot.active{background:#fff;transform:scale(1.25);}
+.pay-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:400;display:none;align-items:center;justify-content:center;padding:20px;}
+.pay-modal-overlay.open{display:flex;}
+.pay-modal{background:var(--surface);border-radius:18px;width:min(620px,98vw);border:1px solid rgba(46,204,64,.25);overflow:hidden;box-shadow:0 0 40px rgba(46,204,64,.15);max-height:92vh;display:flex;flex-direction:column;}
+.pay-modal-head{background:#fff;border-bottom:1px solid rgba(46,204,64,.3);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;}
+.pay-modal-head h2{font-family:'Pretendard',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:0;color:#111;}
+.pay-modal-head h2 .lg{font-size:1.1rem;-webkit-text-stroke:0;text-shadow:none;}
+.pay-modal-head h2 .ly{font-size:1.1rem;-webkit-text-stroke:0;text-shadow:none;}
+.pay-modal-close{background:rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.15);color:#333;cursor:pointer;border-radius:6px;padding:3px 10px;font-size:.9rem;}
+.pay-modal-body{padding:18px;overflow-y:auto;flex:1;display:grid;grid-template-columns:minmax(0,1fr);gap:18px;}
+.pay-modal-main,.pay-guide-side{min-height:0;max-height:calc(92vh - 76px);overflow-y:auto;}
+.pay-guide-side{display:none;}
+.pay-guide-side img{display:block;width:100%;height:100%;max-height:calc(92vh - 98px);object-fit:contain;border-radius:8px;}
+.order-summary{background:var(--bg);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden;}
+.order-summary-title{padding:9px 13px;font-size:.78rem;color:var(--g);font-weight:800;letter-spacing:.5px;border-bottom:1px solid var(--border);}
+.order-row{display:flex;justify-content:space-between;align-items:center;padding:9px 13px;border-bottom:1px solid var(--border);font-size:.88rem;}
+.order-row:last-child{border-bottom:none;}
+.order-row-name{font-weight:700;color:var(--text);}
+.order-row-opt{font-size:.76rem;color:var(--muted);margin-top:2px;}
+.order-row-price{color:var(--y);font-weight:800;white-space:nowrap;font-size:.95rem;}
+[data-theme="light"] .order-row-price{color:#7a6e00;}
+.order-total-row{display:flex;justify-content:space-between;padding:12px 13px;border-top:1px solid rgba(46,204,64,.3);background:rgba(46,204,64,.05);}
+.order-total-label{font-weight:800;font-size:.95rem;color:var(--text);}
+.order-total-val{color:var(--y);font-weight:900;font-size:1.1rem;}
+[data-theme="light"] .order-total-val{color:#7a6e00;}
+.pay-btns{display:grid;grid-template-columns:1fr;gap:8px;}
+.pay-required-check{display:flex;align-items:flex-start;gap:9px;background:rgba(46,204,64,.08);border:1.5px solid rgba(46,204,64,.35);border-radius:12px;padding:12px 13px;margin-bottom:10px;cursor:pointer;color:var(--text);font-size:.86rem;font-weight:900;line-height:1.45;}
+.pay-required-check input{width:18px;height:18px;margin-top:1px;accent-color:var(--g);flex:none;}
+.pay-required-check span{display:block;}
+.go-pay-btn.need-check{background:linear-gradient(135deg,#8a8a8a,#555);box-shadow:none;}
+.go-pay-btn{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:14px;border-radius:12px;font-family:'Pretendard',sans-serif;font-size:1rem;font-weight:800;box-shadow:0 0 16px var(--g-glow);}
+.go-pay-btn:hover{opacity:.88;}
+.payment-guide-lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:700;display:none;align-items:center;justify-content:center;padding:18px;}
+.payment-guide-lightbox.open{display:flex;}
+.payment-guide-panel{position:relative;width:min(1120px,96vw);max-height:92vh;background:#fff;border:2px solid rgba(46,204,64,.6);border-radius:16px;padding:12px;overflow:auto;box-shadow:0 0 42px rgba(46,204,64,.28);}
+.payment-guide-img{display:block;width:100%;max-height:84vh;object-fit:contain;border-radius:10px;cursor:zoom-in;transition:width .2s ease;}
+.payment-guide-img.zoomed{width:1380px;max-width:none;max-height:none;cursor:zoom-out;}
+.payment-guide-close{position:fixed;top:14px;right:14px;z-index:710;background:#fff;color:#111;border:3px solid var(--g);cursor:pointer;border-radius:12px;width:48px;height:48px;font-size:1.55rem;font-weight:900;line-height:1;box-shadow:0 0 22px rgba(46,204,64,.65);}
+.payment-guide-tip{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:710;background:rgba(0,0,0,.78);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:7px 13px;font-size:.78rem;font-weight:800;white-space:nowrap;}
+.pm-guide{background:rgba(46,204,64,.07);border:1.5px solid rgba(46,204,64,.4);border-radius:12px;padding:14px 16px;margin-bottom:14px;}
+.pm-guide-title{font-size:.72rem;font-weight:800;color:var(--g);letter-spacing:.3px;margin-bottom:10px;}
+.pm-guide-row{display:flex;align-items:center;gap:16px;margin-bottom:8px;}
+.pm-guide-num{font-size:3rem;font-weight:900;color:var(--g);line-height:1;letter-spacing:-2px;}
+.pm-guide-unit{font-size:1rem;font-weight:700;color:var(--g);align-self:flex-end;padding-bottom:4px;}
+.pm-guide-meta{display:flex;flex-direction:column;gap:6px;}
+.pm-guide-amount{font-size:.9rem;font-weight:700;color:var(--y);}
+[data-theme="light"] .pm-guide-amount{color:#7a6e00;}
+.pm-guide-copy{background:rgba(46,204,64,.12);border:1.5px solid rgba(46,204,64,.5);color:var(--g);cursor:pointer;padding:6px 14px;border-radius:8px;font-size:.8rem;font-weight:800;font-family:'Pretendard',sans-serif;transition:background .15s;}
+.pm-guide-copy:hover{background:rgba(46,204,64,.25);}
+.pm-guide-hint{font-size:.71rem;color:var(--muted);line-height:1.9;padding:2px 2px;margin-bottom:14px;}
+.pm-guide-real{background:rgba(245,220,0,.06);border-color:rgba(245,220,0,.35);margin-top:8px;}
+.pm-guide-real .pm-guide-title{color:var(--y);}
+[data-theme="light"] .pm-guide-real .pm-guide-title{color:#7a6e00;}
+.pm-real-num{color:var(--y)!important;}
+.pm-guide-real .pm-guide-unit{color:var(--y);}
+[data-theme="light"] .pm-real-num,[data-theme="light"] .pm-guide-real .pm-guide-unit{color:#7a6e00!important;}
+.pm-guide-copy-y{background:rgba(245,220,0,.08);border-color:rgba(245,220,0,.5);color:var(--y);}
+[data-theme="light"] .pm-guide-copy-y{color:#7a6e00;}
+.pm-guide-copy-y:hover{background:rgba(245,220,0,.2);}
+.pm-steps{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:13px;margin-bottom:14px;}
+.pm-steps-title{font-size:.78rem;font-weight:900;color:var(--g);margin-bottom:10px;}
+.pm-step{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--border);}
+.pm-step:first-of-type{border-top:none;padding-top:0;}
+.pm-step-num{width:30px;height:30px;border-radius:50%;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.88rem;box-shadow:0 0 10px var(--g-glow);}
+.pm-step-text{font-size:.82rem;line-height:1.55;color:var(--text);font-weight:700;}
+.pm-step-sub{display:block;color:var(--muted);font-size:.74rem;font-weight:600;margin-top:2px;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--g);color:#fff;padding:10px 22px;border-radius:20px;font-size:.83rem;font-weight:700;z-index:500;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px var(--g-glow);}
+.toast.show{opacity:1;}
+.kakao-float{position:fixed;bottom:24px;right:16px;z-index:90;background:#fee500;color:#191919;border:none;cursor:pointer;min-width:118px;height:46px;padding:0 16px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:.88rem;font-weight:800;box-shadow:0 4px 16px rgba(0,0,0,.3);transition:transform .2s;}
+.kakao-float:hover{transform:scale(1.08);}
+@media(max-width:480px){
+  .pay-modal{max-height:94vh;}
+  .pay-modal-body{grid-template-columns:1fr;overflow-y:auto;}
+  .pay-modal-main,.pay-guide-side{max-height:none;overflow:visible;}
+  .hero{padding:22px 14px 18px;}
+  .hero-title{letter-spacing:1px;}
+  .hero-tags{gap:6px;}
+  .hero-tag{padding:4px 10px;font-size:.7rem;}
+  .grid{grid-template-columns:repeat(2,1fr);gap:10px;padding:0 10px 100px;}
+  .card-body{padding:9px 10px 2px;}
+  .card-name{font-size:.78rem;}
+  .card-price{font-size:.92rem;}
+  .card-btns{grid-template-columns:1fr 1fr;gap:5px;padding:6px 8px 8px;}
+  .btn-cart-card,.btn-buy-card{font-size:.72rem;padding:7px 4px;}
+  .th-btn{width:26px;height:24px;}
+  .logo{font-size:1.35rem;}
+  .cart-btn{padding:6px 12px;font-size:.8rem;}
+  .sheet-top{padding:10px 12px;gap:10px;}
+  .sheet-name{font-size:.85rem;}
+  .sheet-price{font-size:.98rem;}
+  .sheet-body{padding:12px;}
+  .sq-btn{width:38px;height:38px;}
+  .sq-val{min-width:50px;height:38px;}
+  .btn-sheet-cart,.btn-sheet-buy{padding:11px;font-size:.85rem;}
+  .btn-sheet-detail{padding:11px;font-size:.82rem;}
+  .pay-modal-overlay{padding:12px;}
+  .pay-modal-body{padding:14px;}
+  .pay-required-check{font-size:.82rem;padding:11px 12px;}
+  .go-pay-btn{padding:12px;font-size:.92rem;}
+  .payment-guide-lightbox{padding:10px;}
+  .payment-guide-panel{width:100%;max-height:88vh;padding:8px;border-radius:13px;}
+  .payment-guide-img{max-height:82vh;}
+  .payment-guide-img.zoomed{width:980px;}
+  .payment-guide-close{top:10px;right:10px;width:52px;height:52px;border-radius:14px;font-size:1.65rem;}
+  .kakao-float{width:46px;height:46px;font-size:1.2rem;bottom:18px;right:12px;}
+}
+@media(max-width:360px){
+  .grid{grid-template-columns:1fr 1fr;gap:8px;padding:0 8px 100px;}
+  .logo{font-size:1.15rem;}
+}
+@media(max-height:500px){
+  .sheet-main-img{max-height:120px;aspect-ratio:unset;}
+  .sheet-thumbs{padding:6px 10px;}
+  .s-thumb-mini{width:48px;height:48px;}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><span class="lg">F</span><span class="ly">R</span><span class="lg">O</span><span class="ly">K</span><span class="lg">Y</span>&nbsp;<span class="ly">V</span><span class="lg">A</span><span class="ly">P</span><span class="lg">E</span></div>
+  <div class="header-right">
+    <div class="theme-toggle">
+      <button class="th-btn active" id="btn-dark"  onclick="setTheme('dark')">🌙</button>
+      <button class="th-btn"        id="btn-light" onclick="setTheme('light')">☀️</button>
+    </div>
+    <button class="cart-btn" onclick="openCart()">🛒 <span class="cart-count" id="cart-count">0</span></button>
+  </div>
+</header>
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-brand">
+    <div class="hero-title"><span class="lg">F</span><span class="ly">R</span><span class="lg">O</span><span class="ly">K</span><span class="lg">Y</span>&nbsp;<span class="ly">V</span><span class="lg">A</span><span class="ly">P</span><span class="lg">E</span></div>
+    <div class="hero-sub">프리미엄 전자담배 & 액상 전문</div>
+    <div class="hero-tags">
+      <span class="hero-tag green">🌿 입호흡 액상</span>
+      <span class="hero-tag yellow">⚡ 고농도 솔트</span>
+      <span class="hero-tag green">💨 폐호흡 액상</span>
+      <span class="hero-tag yellow">🔋 일회용 기기</span>
+    </div>
+  </div>
+  <div class="notice-banner-wrap"><img id="notice-banner-img" src="" alt="담배사업법 시행일 이전 재고제품 판매 안내"></div>
+</div>
+<div class="categories" id="category-nav">
+  <button class="cat-btn active" onclick="filterCat('all',this)">전체</button>
+  <button class="cat-btn" onclick="filterCat('best',this)">🏆 베스트</button>
+  <button class="cat-btn" onclick="filterCat('입호흡',this)">입호흡 액상</button>
+  <button class="cat-btn" onclick="filterCat('폐호흡',this)">폐호흡 액상</button>
+  <button class="cat-btn" onclick="filterCat('고농도',this)">고농도 액상</button>
+  <button class="cat-btn" onclick="filterCat('일회용',this)">일회용 기기</button>
+</div>
+<div class="search-bar">
+  <div class="search-wrap">
+    <input class="search-input" id="search-input" type="text" placeholder="🔍  상품명을 검색하세요..." oninput="onSearch(this.value)" autocomplete="off">
+    <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
+  </div>
+</div>
+<div class="search-result-label" id="search-result-label" style="display:none"></div>
+<div class="best-section" id="best-section">
+  <div class="best-header"><h2>🏆 베스트 상품</h2><span class="best-badge">HOT</span></div>
+  <div class="carousel-wrap" id="carousel-wrap"><div class="carousel-track" id="carousel-track"></div></div>
+</div>
+<div class="section-title" id="section-label">전체 상품</div>
+<div class="grid" id="product-grid"></div>
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header"><h2>🛒 장바구니</h2><button class="close-btn" onclick="closeCart()">✕</button></div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="drawer-footer">
+    <div class="total-row"><span>합계</span><span class="total-price" id="total-price">0원</span></div>
+    <button class="checkout-btn" id="checkout-btn" onclick="openPayModal()" disabled>구매하기 →</button>
+  </div>
+</div>
+<div class="sheet-overlay" id="sheet-overlay" onclick="closeSheetOut(event)">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-img-section">
+      <img class="sheet-main-img" id="s-img" src="" alt="" onerror="this.style.background='var(--card)'">
+      <div class="sheet-thumbs" id="s-thumbs" style="display:none"></div>
+    </div>
+    <div class="sheet-top">
+      <div class="sheet-info">
+        <div class="sheet-name" id="s-name"></div>
+        <div class="sheet-price" id="s-price"></div>
+        <div class="sheet-total" id="s-total">합계: 0원</div>
+        <span class="sheet-tag" id="s-tag"></span>
+      </div>
+      <button class="sheet-close" onclick="closeSheet()">×</button>
+    </div>
+    <div class="sheet-body">
+      <div class="sheet-label">옵션 선택</div>
+      <select class="sheet-select" id="s-option" onchange="updateTotal()"><option value="">옵션 선택</option></select>
+      <div class="sheet-label">수량</div>
+      <div class="qty-wrap">
+        <button class="sq-btn" onclick="sheetQty(-1)">−</button>
+        <div class="sq-val" id="s-qty">1</div>
+        <button class="sq-btn" onclick="sheetQty(1)">+</button>
+      </div>
+      <div class="sheet-actions">
+        <button class="btn-sheet-cart" onclick="sheetAddCart()">장바구니 담기</button>
+        <button class="btn-sheet-buy"  onclick="sheetBuyNow()">구매하기</button>
+      </div>
+      <button class="btn-sheet-detail" id="btn-sheet-detail" onclick="openDetailModal()">🖼 상세 이미지 보기</button>
+    </div>
+  </div>
+</div>
+<div class="detail-modal-overlay" id="detail-modal-overlay" onclick="closeDetailModalOut(event)">
+  <div class="detail-modal" id="detail-modal">
+    <button class="detail-modal-close" onclick="closeDetailModal()">×</button>
+    <div id="detail-modal-content"></div>
+  </div>
+</div>
+<div class="notice-popup-overlay" id="notice-popup-overlay" onclick="closeNoticePopupOut(event)">
+  <div class="notice-popup">
+    <button class="notice-popup-close" onclick="closeNoticePopup()">×</button>
+    <div id="notice-popup-imgs"></div>
+    <label class="notice-popup-today"><input type="checkbox" id="notice-popup-today">오늘은 그만보기</label>
+  </div>
+</div>
+<div class="pay-modal-overlay" id="pay-modal-overlay">
+  <div class="pay-modal">
+    <div class="pay-modal-head">
+      <h2>개인 결제창 안내</h2>
+      <button class="pay-modal-close" onclick="closePayModal()">✕</button>
+    </div>
+    <div class="pay-modal-body">
+      <div class="pay-modal-main">
+        <div class="order-summary">
+          <div class="order-summary-title">📦 주문 상품 내역</div>
+          <div id="pm-items"></div>
+          <div class="order-total-row">
+            <span class="order-total-label">총 결제금액</span>
+            <span class="order-total-val" id="pm-total">0원</span>
+          </div>
+        </div>
+        <div class="pm-steps">
+          <div class="pm-steps-title">카페24 결제창에서 이렇게 입력해 주세요</div>
+          <div class="pm-step">
+            <div class="pm-step-num">1</div>
+            <div class="pm-step-text">옵션에서 <b>상품명 &amp; 수량 필수 기입</b>을 클릭해 주세요.</div>
+          </div>
+          <div class="pm-step">
+            <div class="pm-step-num">2</div>
+            <div class="pm-step-text">아래 <b>개인결제창 입력 수량</b>만큼 수량을 수정해 주세요.<span class="pm-step-sub">카페24 개인결제창은 100원 단위 상품이라 금액에 맞춰 수량을 넣어야 합니다.</span></div>
+          </div>
+          <div class="pm-step">
+            <div class="pm-step-num">3</div>
+            <div class="pm-step-text">아래 <b>상품명 / 맛 / 수량</b>을 복사해서 입력칸에 붙여넣어 주세요.</div>
+          </div>
+        </div>
+        <div class="pm-guide">
+          <div class="pm-guide-title">📌 개인결제창 입력 수량 (금액 기준)</div>
+          <div class="pm-guide-row">
+            <div class="pm-guide-num" id="pm-pay-qty">0</div>
+            <div class="pm-guide-unit">개</div>
+            <div class="pm-guide-meta">
+              <div class="pm-guide-amount" id="pm-pay-amount">0원</div>
+              <button class="pm-guide-copy" onclick="copyPmPayQty()">📋 복사</button>
+            </div>
+          </div>
+        </div>
+        <div class="pm-guide pm-guide-real">
+          <div class="pm-guide-title">📦 실제 주문 수량 (제품 기준)</div>
+          <div class="pm-guide-row">
+            <div class="pm-guide-num pm-real-num" id="pm-real-qty">0</div>
+            <div class="pm-guide-unit">개</div>
+            <div class="pm-guide-meta">
+              <button class="pm-guide-copy pm-guide-copy-y" onclick="copyPmRealQty()">📋 복사</button>
+            </div>
+          </div>
+        </div>
+        <div class="pm-guide-hint">아래 버튼을 누르기 전까지 카페24 결제창으로 이동하지 않습니다.</div>
+        <div class="pay-btns">
+          <label class="pay-required-check">
+            <input type="checkbox" id="pay-required-check" onchange="updatePayButtonState()">
+            <span>※필독※ 구매하는 방법</span>
+          </label>
+          <button class="go-pay-btn" id="go-pay-btn" onclick="goToPay()">고객님이 결제하기 →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="payment-guide-lightbox" id="payment-guide-lightbox" onclick="closePaymentGuideLightboxOut(event)">
+  <button class="payment-guide-close" onclick="closePaymentGuideLightbox()" aria-label="안내 이미지 닫기">×</button>
+  <div class="payment-guide-panel">
+    <img class="payment-guide-img" id="payment-guide-img" src="images/payment-guide.jpg?v=20260529-steps" alt="개인 결제창 입력 안내" onclick="togglePaymentGuideZoom(event)">
+  </div>
+  <div class="payment-guide-tip">사진을 터치하면 확대/축소됩니다</div>
+</div>
+<button class="kakao-float" onclick="window.open('http://pf.kakao.com/_MxhQqX','_blank')">카카오톡 문의</button>
+<div class="toast" id="toast"></div>
+<script>
+const PAY_URL='https://frokyvape.cafe24.com/product/%EA%B0%9C%EC%9D%B8-%EA%B2%B0%EC%A0%9C%EC%B0%BD/1134/category/23/display/1/';
+const PERSONAL_PAY_PRODUCT_NO='1134';
+const PERSONAL_PAY_UNIT_PRICE=100;
+const CAFE24_MALL='frokyvape';
+const REPO='frokyvape-crypto/froky-vape-menu';
+const DEFAULT_SITE_CONFIG={noticeMode:'stock',noticeBannerImgs:['images/notice-banner.svg'],noticeBannerImg:'images/notice-banner.svg',noticePopupEnabled:true,noticePopupImgs:['images/notice-popup.png'],noticePopupImg:'images/notice-popup.png',categories:[{value:'best',label:'🏆 베스트'},{value:'입호흡',label:'입호흡 액상'},{value:'폐호흡',label:'폐호흡 액상'},{value:'고농도',label:'고농도 액상'},{value:'일회용',label:'일회용 기기'}]};
+let siteConfig={...DEFAULT_SITE_CONFIG};
+let P=[],cart=[],sp=null,sq=1,currentCat='all',productsHash='',siteConfigHash='',autoRefreshTimer=0;
+const fmt=n=>n.toLocaleString('ko-KR')+'원';
+function getImgs(p){if(Array.isArray(p.imgs)&&p.imgs.length)return p.imgs;if(p.img)return[p.img];return[''];}
+function getDetailImgs(p){if(Array.isArray(p.detailImgs)&&p.detailImgs.length)return p.detailImgs;if(p.detailImg)return[p.detailImg];return[];}
+function getNoticeImgs(key,fallback){const arr=Array.isArray(siteConfig[key+'s'])&&siteConfig[key+'s'].length?siteConfig[key+'s']:siteConfig[key]?[siteConfig[key]]:[fallback];return arr;}
+function normalizeCategories(list){const src=Array.isArray(list)&&list.length?list:DEFAULT_SITE_CONFIG.categories;const seen=new Set();return src.map(c=>typeof c==='string'?{value:c,label:c}:c).map(c=>({value:String(c.value||'').trim(),label:String(c.label||c.value||'').trim()})).filter(c=>c.value&&c.label&&!seen.has(c.value)&&seen.add(c.value));}
+function escAttr(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function optionPrices(p){return p&&p.optionPrices&&typeof p.optionPrices==='object'&&!Array.isArray(p.optionPrices)?p.optionPrices:{};}
+function optionUnitPrice(p,opt){const prices=optionPrices(p);const n=Number(prices[opt]);return n>0?n:Number(p?.price||0);}
+function productDisplayPrice(p){const opts=Array.isArray(p.options)?p.options:[];const prices=opts.map(o=>optionUnitPrice(p,o)).filter(n=>n>0);if(!prices.length)return fmt(Number(p.price||0));const min=Math.min(...prices),max=Math.max(...prices);return min===max?fmt(min):fmt(min)+'~';}
+function optionLabel(p,opt){const unit=optionUnitPrice(p,opt);return unit!==Number(p.price||0)?`${opt} - ${fmt(unit)}`:opt;}
+function categoryLabel(value){return normalizeCategories(siteConfig.categories).find(c=>c.value===value)?.label||value;}
+function renderCategoryNav(){const nav=document.getElementById('category-nav');if(!nav)return;const cats=normalizeCategories(siteConfig.categories);nav.innerHTML=`<button class="cat-btn${currentCat==='all'?' active':''}" onclick="filterCat('all',this)">전체</button>`+cats.map(c=>`<button class="cat-btn${currentCat===c.value?' active':''}" onclick='filterCat(${JSON.stringify(c.value)},this)'>${escAttr(c.label)}</button>`).join('');}
+function applySiteConfig(cfg,{allowPopup=false}={}){
+  siteConfig={...DEFAULT_SITE_CONFIG,...(cfg||{})};
+  siteConfig.categories=normalizeCategories(siteConfig.categories);
+  renderCategoryNav();
+  document.body.setAttribute('data-notice-mode',siteConfig.noticeMode||'default');
+  const bannerImgs=getNoticeImgs('noticeBannerImg',DEFAULT_SITE_CONFIG.noticeBannerImg);
+  document.getElementById('notice-banner-img').src=bannerImgs[0]||DEFAULT_SITE_CONFIG.noticeBannerImg;
+  if(allowPopup&&siteConfig.noticePopupEnabled)openNoticePopup();
+}
+async function loadSiteConfig({silent=false,allowPopup=true}={}){
+  const t=Date.now();
+  // GitHub API is not CDN-cached — always returns the latest committed file
+  try{
+    const r=await fetch(`https://api.github.com/repos/${REPO}/contents/site-config.json`,{headers:{'Accept':'application/vnd.github.v3.raw'},cache:'no-store'});
+    if(r.ok){
+      const cfg=await r.json();
+      siteConfigHash=JSON.stringify(cfg);
+      applySiteConfig(cfg,{allowPopup});
+      return cfg;
+    }
+  }catch(e){}
+  // Fallback: direct URL with cache-bust + no-store
+  try{
+    const r=await fetch(`site-config.json?t=${t}`,{cache:'no-store'});
+    if(r.ok){
+      const cfg=await r.json();
+      siteConfigHash=JSON.stringify(cfg);
+      applySiteConfig(cfg,{allowPopup});
+      return cfg;
+    }
+  }catch(e){}
+  siteConfigHash=JSON.stringify(DEFAULT_SITE_CONFIG);
+  applySiteConfig(DEFAULT_SITE_CONFIG,{allowPopup});
+  return DEFAULT_SITE_CONFIG;
+}
+let _popupImgs=[],_popupIdx=0;
+function noticeTodayKey(){const imgs=getNoticeImgs('noticePopupImg',DEFAULT_SITE_CONFIG.noticePopupImg);const d=new Date();return`${imgs.join(',')}|${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function openNoticePopup(){try{if(localStorage.getItem('fv-notice-popup-hide-today')===noticeTodayKey())return;}catch(e){}_popupImgs=getNoticeImgs('noticePopupImg',DEFAULT_SITE_CONFIG.noticePopupImg);_popupIdx=0;renderPopupCarousel();document.getElementById('notice-popup-today').checked=false;document.getElementById('notice-popup-overlay').classList.add('open');}
+function renderPopupCarousel(){const total=_popupImgs.length;const src=_popupImgs[_popupIdx]||'';const dots=total>1?`<div class="popup-dots">${_popupImgs.map((_,i)=>`<span class="popup-dot${i===_popupIdx?' active':''}"></span>`).join('')}</div>`:'';document.getElementById('notice-popup-imgs').innerHTML=`<div class="popup-carousel-wrap" onclick="handlePopupTap(event)"><img class="popup-carousel-img" src="${src}" alt="공지 팝업 ${_popupIdx+1}" onerror="this.style.display='none'"><div class="pc-tap pc-tap-l"></div><div class="pc-tap pc-tap-r"></div></div>${dots}`;}
+function handlePopupTap(e){if(_popupImgs.length<=1)return;const rect=e.currentTarget.getBoundingClientRect();if(e.clientX>rect.left+rect.width/2)_popupIdx=Math.min(_popupImgs.length-1,_popupIdx+1);else _popupIdx=Math.max(0,_popupIdx-1);renderPopupCarousel();}
+function closeNoticePopup(){try{if(document.getElementById('notice-popup-today').checked)localStorage.setItem('fv-notice-popup-hide-today',noticeTodayKey());}catch(e){}document.getElementById('notice-popup-overlay').classList.remove('open');}
+function closeNoticePopupOut(e){if(e.target===document.getElementById('notice-popup-overlay'))closeNoticePopup();}
+function setTheme(t){document.documentElement.setAttribute('data-theme',t);document.getElementById('btn-dark').classList.toggle('active',t==='dark');document.getElementById('btn-light').classList.toggle('active',t==='light');localStorage.setItem('fv-theme',t);}
+(()=>{const s=localStorage.getItem('fv-theme');if(s)setTheme(s);})();
+function cardHTML(p){
+  const imgs=getImgs(p);
+  const img=imgs[0]||'';
+  const multi=imgs.length>1;
+  const thumbs=multi?`<div class="card-thumbs">${imgs.map((u,i)=>`<img class="card-thumb${i===0?' active':''}" src="${u}" loading="lazy" onclick="event.stopPropagation();switchCardImg(this,'${u.replace(/'/g,"\\'")}',${p.id})" onerror="this.style.display='none'">`).join('')}</div>`:'';
+  const count=multi?`<span class="card-img-count">📷 ${imgs.length}</span>`:'';
+  return`<div class="card" id="card-${p.id}"><div class="card-img-wrap"><img id="card-main-${p.id}" src="${img}" alt="${p.name}" loading="lazy">${p.sale?'<span class="card-badge">SALE</span>':''}${count}<button class="card-quick" onclick="openSheet(${p.id})">간단보기 👁</button></div>${thumbs}<div class="card-body"><div class="card-name">${p.name}</div><div class="card-flavor">${p.flavor}</div><div class="card-price">${productDisplayPrice(p)}</div></div><div class="card-btns"><button class="btn-cart-card" onclick="openSheet(${p.id})">담기</button><button class="btn-buy-card" onclick="openSheet(${p.id})">구매하기</button></div></div>`;
+}
+function switchCardImg(el,url,pid){document.getElementById('card-main-'+pid).src=url;const card=document.getElementById('card-'+pid);card.querySelectorAll('.card-thumb').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
+let bestAutoRaf=0,bestPausedUntil=0,bestDragging=false,bestStartX=0,bestStartOffset=0,bestOffset=0,bestSuppressClick=false;
+function openBestCard(id){if(bestSuppressClick){bestSuppressClick=false;return;}openSheet(id);}
+function pauseBestCarousel(ms=1800){bestPausedUntil=Date.now()+ms;}
+function bestBounds(wrap,track){return{min:-track.scrollWidth,max:wrap.clientWidth};}
+function applyBestOffset(track){track.style.transform=`translateX(${bestOffset}px)`;}
+function startBestCarousel(){
+  const wrap=document.getElementById('carousel-wrap'),track=document.getElementById('carousel-track');
+  if(!wrap||!track)return;
+  cancelAnimationFrame(bestAutoRaf);
+  bestOffset=0;applyBestOffset(track);
+  wrap.onpointerdown=e=>{bestDragging=true;bestSuppressClick=false;bestStartX=e.clientX;bestStartOffset=bestOffset;wrap.classList.add('dragging');pauseBestCarousel(2200);try{wrap.setPointerCapture(e.pointerId);}catch(err){}};
+  wrap.onpointermove=e=>{if(!bestDragging)return;const dx=e.clientX-bestStartX;if(Math.abs(dx)>4)bestSuppressClick=true;const b=bestBounds(wrap,track);bestOffset=Math.max(b.min,Math.min(b.max,bestStartOffset+dx));applyBestOffset(track);};
+  wrap.onpointerup=e=>{bestDragging=false;wrap.classList.remove('dragging');pauseBestCarousel(2200);try{wrap.releasePointerCapture(e.pointerId);}catch(err){}};
+  wrap.onpointercancel=()=>{bestDragging=false;wrap.classList.remove('dragging');pauseBestCarousel(2200);};
+  wrap.onmouseenter=()=>pauseBestCarousel(700);
+  wrap.onwheel=e=>{const delta=Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:(e.shiftKey?e.deltaY:0);if(!delta)return;e.preventDefault();const b=bestBounds(wrap,track);bestOffset=Math.max(b.min,Math.min(b.max,bestOffset-delta));applyBestOffset(track);pauseBestCarousel(1800);};
+  function step(){const b=bestBounds(wrap,track);if(!bestDragging&&Date.now()>bestPausedUntil){bestOffset-=.42;if(bestOffset<=b.min)bestOffset=b.max;applyBestOffset(track);}bestAutoRaf=requestAnimationFrame(step);}
+  step();
+}
+function buildCarousel(){const best=P.filter(p=>p.cat==='best');const track=document.getElementById('carousel-track');track.innerHTML=best.map(p=>`<div class="best-card" onclick="openBestCard(${p.id})"><img src="${getImgs(p)[0]||''}" alt="${p.name}" loading="lazy" draggable="false"><div class="best-card-body"><div class="best-card-name">${p.name}${p.sale?'<span class="hot">SALE</span>':''}</div><div class="best-card-price">${productDisplayPrice(p)}</div></div></div>`).join('');startBestCarousel();}
+function renderGrid(cat){currentCat=cat;const items=cat==='all'?P:P.filter(p=>p.cat===cat);document.getElementById('best-section').style.display=cat==='all'?'':'none';document.getElementById('section-label').textContent=cat==='all'?'전체 상품':categoryLabel(cat);document.getElementById('product-grid').innerHTML=items.map(cardHTML).join('');}
+function filterCat(cat,el){currentCat=cat;document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');renderGrid(cat);}
+function onSearch(val){const q=val.trim();document.getElementById('search-clear').style.display=q?'block':'none';if(!q){document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');return;}document.getElementById('best-section').style.display='none';const res=P.filter(p=>(p.name||'').includes(q)||(p.flavor||'').includes(q));const lbl=document.getElementById('search-result-label');lbl.style.display='block';lbl.textContent=`"${q}" 검색 결과 ${res.length}개`;document.getElementById('section-label').textContent='검색 결과';document.getElementById('product-grid').innerHTML=res.length?res.map(cardHTML).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0">검색 결과가 없습니다 😢</div>';}
+function clearSearch(){document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');}
+function renderCurrentView(){const q=document.getElementById('search-input')?.value||'';buildCarousel();if(q.trim())onSearch(q);else renderGrid(currentCat||'all');}
+function renderSheetOptions(p,selected=''){const options=Array.isArray(p.options)?p.options:[];const optionEl=document.getElementById('s-option');optionEl.innerHTML=options.length?'<option value="">옵션 선택</option>'+options.map(o=>`<option value="${escAttr(o)}">${escAttr(optionLabel(p,o))}</option>`).join(''):'<option value="옵션 없음">옵션 없음</option>';optionEl.disabled=!options.length;if(options.includes(selected))optionEl.value=selected;else if(!options.length)optionEl.value='옵션 없음';}
+function syncOpenProductSheet(){if(!sp)return;const next=P.find(p=>p.id===sp.id);if(!next){closeSheet();sp=null;return;}const prevOpt=document.getElementById('s-option')?.value||'';sp=next;document.getElementById('s-name').textContent=sp.name;document.getElementById('s-tag').textContent=sp.flavor;renderSheetOptions(sp,prevOpt);updateTotal();}
+function syncCartWithProducts(){cart=cart.map(c=>{const p=P.find(x=>x.id===c.id);return p?{...c,name:p.name,price:optionUnitPrice(p,c.option),img:getImgs(p)[0]||c.img}:c;});updateCartUI();}
+function productDetailImages(p){return Array.isArray(p.detailImgs)&&p.detailImgs.length?p.detailImgs:(p.detailImg?[p.detailImg]:[]);}
+function addToCart(p,option,qty){const key=`${p.id}_${option}`;const price=optionUnitPrice(p,option);const ex=cart.find(c=>c.key===key);if(ex)ex.qty+=qty;else cart.push({key,id:p.id,name:p.name,option,price,qty,img:p.img});updateCartUI();showToast(`🛒 ${p.name} 담겼습니다`);}
+function updateCartUI(){const total=cart.reduce((s,c)=>s+c.price*c.qty,0);const count=cart.reduce((s,c)=>s+c.qty,0);document.getElementById('cart-count').textContent=count;document.getElementById('total-price').textContent=fmt(total);document.getElementById('checkout-btn').disabled=!cart.length;const el=document.getElementById('cart-items');if(!cart.length){el.innerHTML='<div class="cart-empty">장바구니가 비어있습니다 🛒</div>';return;}el.innerHTML=cart.map(c=>`<div class="cart-item"><img src="${c.img}" alt="${c.name}"><div><div class="ci-name">${c.name}</div><div class="ci-opt">${c.option}</div><div class="qty-ctrl"><button class="qty-btn" onclick="changeQty('${c.key}',-1)">−</button><span class="qty-val">${c.qty}</span><button class="qty-btn" onclick="changeQty('${c.key}',1)">+</button></div></div><div class="ci-right"><span class="ci-price">${fmt(c.price*c.qty)}</span><button class="ci-del" onclick="removeItem('${c.key}')">삭제</button></div></div>`).join('');}
+function changeQty(k,d){const i=cart.find(c=>c.key===k);if(i)i.qty=Math.max(1,i.qty+d);updateCartUI();}
+function removeItem(k){cart=cart.filter(c=>c.key!==k);updateCartUI();}
+function openCart(){document.getElementById('overlay').classList.add('open');document.getElementById('drawer').classList.add('open');}
+function closeCart(){document.getElementById('overlay').classList.remove('open');document.getElementById('drawer').classList.remove('open');}
+function openSheet(id){
+  sp=P.find(p=>p.id===id);sq=1;
+  const imgs=getImgs(sp);
+  const options=Array.isArray(sp.options)?sp.options:[];
+  document.getElementById('s-img').src=imgs[0]||'';
+  document.getElementById('s-name').textContent=sp.name;
+  document.getElementById('s-price').textContent=fmt(sp.price);
+  document.getElementById('s-total').textContent='합계: '+fmt(sp.price);
+  document.getElementById('s-tag').textContent=sp.flavor;
+  document.getElementById('s-qty').textContent=1;
+  renderSheetOptions(sp);
+  updateTotal();
+  document.getElementById('btn-sheet-detail').style.display=getDetailImgs(sp).length?'block':'none';
+  const thumbs=document.getElementById('s-thumbs');
+  if(imgs.length>1){
+    thumbs.innerHTML=imgs.map((url,i)=>`<img class="s-thumb-mini${i===0?' active':''}" src="${url}" onclick="switchSheetImg(this)" data-url="${url.replace(/"/g,'&quot;')}" onerror="this.style.display='none'">`).join('');
+    thumbs.style.display='flex';
+  }else{thumbs.innerHTML='';thumbs.style.display='none';}
+  document.getElementById('sheet-overlay').classList.add('open');
+}
+function switchSheetImg(el){document.getElementById('s-img').src=el.dataset.url;document.querySelectorAll('.s-thumb-mini').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
+function closeSheet(){document.getElementById('sheet-overlay').classList.remove('open');}
+function openDetailModal(){
+  if(!sp)return;
+  const imgs=getDetailImgs(sp);
+  const c=document.getElementById('detail-modal-content');
+  c.innerHTML=imgs.length
+    ?imgs.map(url=>`<img src="${url}" alt="${sp.name} 상세이미지" style="width:100%;display:block;" onerror="this.style.display='none'">`).join('')
+    :'<div class="detail-no-img">등록된 상세 이미지가 없습니다</div>';
+  document.getElementById('detail-modal-overlay').classList.add('open');
+}
+function closeDetailModal(){document.getElementById('detail-modal-overlay').classList.remove('open');}
+function closeDetailModalOut(e){if(e.target===document.getElementById('detail-modal-overlay'))closeDetailModal();}
+function closeSheetOut(e){if(e.target===document.getElementById('sheet-overlay'))closeSheet();}
+function sheetQty(d){sq=Math.max(1,sq+d);document.getElementById('s-qty').textContent=sq;updateTotal();}
+function currentSheetUnitPrice(){return sp?optionUnitPrice(sp,getSheetOption()):0;}
+function updateTotal(){if(!sp)return;const unit=currentSheetUnitPrice();document.getElementById('s-price').textContent=fmt(unit);document.getElementById('s-total').textContent='합계: '+fmt(unit*sq);}
+function getSheetOption(){
+  const options=Array.isArray(sp?.options)?sp.options:[];
+  if(!options.length)return '옵션 없음';
+  return document.getElementById('s-option').value;
+}
+function sheetAddCart(){
+  const opt=getSheetOption();
+  if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}
+  addToCart(sp,opt,sq);closeSheet();
+}
+function sheetBuyNow(){
+  const opt=getSheetOption();
+  if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}
+  const unit=optionUnitPrice(sp,opt);
+  const total=unit*sq;
+  _pmPayQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
+  _pmPayCopyText=String(_pmPayQty);
+  _pmRealCopyText=`${sp.name}${opt&&opt!=='옵션 없음'?` / ${opt}`:''} × ${sq}개`;
+  document.getElementById('pm-items').innerHTML=`<div class="order-row"><div><div class="order-row-name">${sp.name}</div><div class="order-row-opt">${opt&&opt!=='옵션 없음'?`${opt} × `:''}${sq}개</div></div><span class="order-row-price">${fmt(total)}</span></div>`;
+  document.getElementById('pm-total').textContent=fmt(total);
+  document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();
+  document.getElementById('pm-pay-amount').textContent=fmt(total);
+  document.getElementById('pm-real-qty').textContent=sq.toLocaleString();
+  resetPayRequiredCheck();
+  document.getElementById('pay-modal-overlay').classList.add('open');
+  closeSheet();
+}
+let _pmPayQty=0,_pmPayCopyText='',_pmRealCopyText='';
+function openPayModal(){
+  closeCart();
+  const total=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const totalQty=cart.reduce((s,c)=>s+c.qty,0);
+  _pmPayQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
+  _pmPayCopyText=String(_pmPayQty);
+  _pmRealCopyText=cart.map(c=>`${c.name}${c.option&&c.option!=='옵션 없음'?` / ${c.option}`:''} × ${c.qty}개`).join('\n');
+  document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${c.name}</div><div class="order-row-opt">${c.option} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');
+  document.getElementById('pm-total').textContent=fmt(total);
+  document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();
+  document.getElementById('pm-pay-amount').textContent=fmt(total);
+  document.getElementById('pm-real-qty').textContent=totalQty.toLocaleString();
+  resetPayRequiredCheck();
+  document.getElementById('pay-modal-overlay').classList.add('open');
+}
+function closePayModal(){document.getElementById('pay-modal-overlay').classList.remove('open');}
+function resetPayRequiredCheck(){
+  const chk=document.getElementById('pay-required-check');
+  if(chk)chk.checked=false;
+  updatePayButtonState();
+}
+function updatePayButtonState(){
+  const chk=document.getElementById('pay-required-check');
+  const btn=document.getElementById('go-pay-btn');
+  if(!btn)return;
+  const ok=!!chk?.checked;
+  btn.textContent=ok?'고객님이 결제하기 →':'고객님이 결제하기 →';
+  btn.classList.toggle('need-check',!ok);
+  if(ok)openPaymentGuideLightbox();
+}
+function openPaymentGuideLightbox(){
+  const img=document.getElementById('payment-guide-img');
+  if(img)img.classList.remove('zoomed');
+  document.getElementById('payment-guide-lightbox')?.classList.add('open');
+}
+function closePaymentGuideLightbox(){document.getElementById('payment-guide-lightbox')?.classList.remove('open');}
+function closePaymentGuideLightboxOut(e){if(e.target===document.getElementById('payment-guide-lightbox'))closePaymentGuideLightbox();}
+function togglePaymentGuideZoom(e){e.stopPropagation();e.currentTarget.classList.toggle('zoomed');}
+function buildOrderMemo(){const total=cart.reduce((s,c)=>s+c.price*c.qty,0);return [
+  '[FROKY VAPE 주문내역]',
+  ...cart.map((c,i)=>`${i+1}. ${c.name} / 옵션: ${c.option} / 수량: ${c.qty}개 / 금액: ${fmt(c.price*c.qty)}`),
+  `총 결제금액: ${fmt(total)}`
+].join('\n');}
+async function copyOrderMemo(){try{await navigator.clipboard.writeText(buildOrderMemo());showToast('주문내역이 복사되었습니다');}catch(e){}}
+function privatePayQuantity(total){
+  if(total<=0)return 0;
+  if(total%PERSONAL_PAY_UNIT_PRICE!==0)return 0;
+  return total/PERSONAL_PAY_UNIT_PRICE;
+}
+async function goToPay(){
+  const chk=document.getElementById('pay-required-check');
+  const btn=document.getElementById('go-pay-btn');
+  if(!chk?.checked){
+    if(btn)btn.textContent='필독의 체크박스를 확인해주세요!';
+    showToast('※필독※ 구매하는 방법을 확인해 주세요');
+    return;
+  }
+  window.open(PAY_URL,'_blank','noopener');
+}
+function copyPmPayQty(){
+  navigator.clipboard.writeText(_pmPayCopyText).then(()=>{
+    showToast(`${_pmPayQty.toLocaleString()} 복사됨 — 결제창 수량칸에 붙여넣으세요`);
+  }).catch(()=>showToast(`결제창 수량: ${_pmPayQty.toLocaleString()}`));
+}
+function copyPmRealQty(){
+  navigator.clipboard.writeText(_pmRealCopyText).then(()=>{
+    showToast('상품명/맛/수량 복사됨');
+  }).catch(()=>showToast('복사 실패'));
+}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
+async function fetchProductsFresh(){
+  const res=await fetch('products.json?t='+Date.now(),{cache:'no-store'});
+  if(!res.ok)throw new Error();
+  return await res.json();
+}
+async function loadProducts({silent=false}={}){
+  if(!silent)document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품을 불러오는 중... ⏳</div>';
+  try{
+    const next=await fetchProductsFresh();
+    const visible=next.filter(p=>!p.hidden);
+    productsHash=JSON.stringify(visible);
+    P=visible;
+    renderCurrentView();
+  }catch(e){
+    if(!silent)document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품 준비 중입니다 😊</div>';
+  }
+}
+async function refreshIfChanged(){
+  if(document.hidden)return;
+  try{
+    const next=await fetchProductsFresh();
+    const nextHash=JSON.stringify(next);
+    if(nextHash!==productsHash){
+      productsHash=nextHash;
+      P=next;
+      syncCartWithProducts();
+      syncOpenProductSheet();
+      renderCurrentView();
+      showToast('상품 정보가 업데이트되었습니다');
+    }
+  }catch(e){}
+  try{
+    const r=await fetch('site-config.json?t='+Date.now(),{cache:'no-store'});
+    if(r.ok){
+      const cfg=await r.json();
+      const nextHash=JSON.stringify(cfg);
+      if(nextHash!==siteConfigHash){
+        siteConfigHash=nextHash;
+        applySiteConfig(cfg,{allowPopup:false});
+        renderCurrentView();
+      }
+    }
+  }catch(e){}
+}
+function startAutoRefresh(){clearInterval(autoRefreshTimer);autoRefreshTimer=setInterval(refreshIfChanged,30000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshIfChanged();});}
+async function initPage(){await loadSiteConfig({allowPopup:true});await loadProducts();startAutoRefresh();}
+initPage();
+</script>
+</body>
+</html>

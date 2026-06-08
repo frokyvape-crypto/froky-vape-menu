@@ -1,0 +1,64 @@
+{
+  "noticeMode": "stock",
+  "noticeModes": [
+    {
+      "label": "재고제품 고지 배너",
+      "value": "stock",
+      "bannerImgs": [
+        "images/notice-banner.svg"
+      ],
+      "popupImgs": [
+        "images/notice-popup.png"
+      ]
+    },
+    {
+      "label": "기본 FROKY 화면",
+      "value": "default",
+      "bannerImgs": [],
+      "popupImgs": []
+    }
+  ],
+  "noticeBannerImgs": [
+    "images/notice-banner.svg"
+  ],
+  "noticeBannerImg": "images/notice-banner.svg",
+  "noticePopupEnabled": true,
+  "noticePopupImgs": [
+    "images/notice-popup.png"
+  ],
+  "noticePopupImg": "images/notice-popup.png",
+  "categories": [
+    {
+      "value": "best",
+      "label": "🏆 베스트"
+    },
+    {
+      "value": "입호흡",
+      "label": "입호흡"
+    },
+    {
+      "value": "폐호흡",
+      "label": "폐호흡"
+    },
+    {
+      "value": "고농도",
+      "label": "고농도"
+    },
+    {
+      "value": "일회용",
+      "label": "일회용"
+    },
+    {
+      "value": "폐호흡-고농도",
+      "label": "폐호흡 고농도"
+    },
+    {
+      "value": "노멘솔",
+      "label": "노멘솔"
+    },
+    {
+      "value": "폐호흡고농도",
+      "label": "폐호흡 고농도 (구)"
+    }
+  ]
+}
