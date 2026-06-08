@@ -2691,10 +2691,8 @@
       "https://frokyvape.com/web/product/medium/202508/1a09db426be87aff5e9831e6d9288de3.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202508/1a09db426be87aff5e9831e6d9288de3.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202508/89e5c0c3a2eb9d31136e310b0e4fa0ba.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202508/89e5c0c3a2eb9d31136e310b0e4fa0ba.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "25,000 퍼프",
     "options": [
@@ -2704,6 +2702,7 @@
       "땡큐 베리",
       "아쌈보이"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
