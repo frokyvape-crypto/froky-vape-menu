@@ -4496,5 +4496,42 @@
       "탄산 포도"
     ],
     "sale": false
+  },
+  {
+    "id": 2784,
+    "product_no": 2784,
+    "name": "노보 입호흡 액상 30ml",
+    "price": 13300,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202407/ebfe41774df67cfa5f0a234e4be385e3.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202407/ebfe41774df67cfa5f0a234e4be385e3.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202407/79efcafdc7caf718a99288ec7f337c32.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202407/79efcafdc7caf718a99288ec7f337c32.png",
+    "cat": "입호흡",
+    "flavor": "2mg",
+    "options": [
+      "블랙멘솔",
+      "데져트",
+      "라임사이다",
+      "레몬펀치",
+      "멘솔",
+      "그린펀치",
+      "블루펀치",
+      "세븐펀치",
+      "아메리카노",
+      "아이스그린펀치",
+      "엠에스블랜드",
+      "옐로우펀치",
+      "코리아미니 (유통기한 4월23일)",
+      "코코넛커피",
+      "쿠바시가",
+      "쿨레몬",
+      "타박멘솔",
+      "화이트펀치"
+    ],
+    "sale": false
   }
 ]
