@@ -1573,7 +1573,7 @@
     "img": "https://frokyvape.com/web/product/medium/202604/540ebfb682e5169db3ab0fad8d3e7b07.png",
     "detailImgs": [],
     "detailImg": "",
-    "cat": "입호흡",
+    "cat": "노멘솔",
     "flavor": "9.8mg",
     "options": [
       "[제로쿨] 라즈베리행",
@@ -4992,23 +4992,6 @@
     "sale": false
   },
   {
-    "id": 810,
-    "product_no": 810,
-    "name": "모코리퀴드 뉴욕 레드벨벳 치즈케이크 폐호흡 액상 60ml",
-    "price": 21800,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202312/f76f9c9919aa63cb557f84c01da3c7ba.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202312/f76f9c9919aa63cb557f84c01da3c7ba.png",
-    "detailImgs": [],
-    "detailImg": "",
-    "cat": "폐호흡",
-    "flavor": "3mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 788,
     "product_no": 788,
     "name": "잽쥬스 아이수 폐호흡 액상 60ml",
@@ -5021,91 +5004,6 @@
     "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 406,
-    "product_no": 406,
-    "name": "쉑컴퍼니 AVDR 폐호흡 액상 60ml",
-    "price": 22500,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202309/31c5991cb8303871494d44576d6a5a7d.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202309/31c5991cb8303871494d44576d6a5a7d.png",
-    "detailImgs": [],
-    "detailImg": "",
-    "cat": "폐호흡",
-    "flavor": "6mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 369,
-    "product_no": 369,
-    "name": "쉑컴퍼니 AVDR 입호흡 액상 30ml",
-    "price": 16100,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202309/422875a750192ae76cbc18180176c23b.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202309/422875a750192ae76cbc18180176c23b.png",
-    "detailImgs": [],
-    "detailImg": "",
-    "cat": "입호흡",
-    "flavor": "9.9mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 360,
-    "product_no": 360,
-    "name": "쉑컴퍼니 버디 입호흡 액상 30ml",
-    "price": 14400,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202310/8f907aa4a607708d95abdd410ad211c5.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202310/8f907aa4a607708d95abdd410ad211c5.png",
-    "detailImgs": [],
-    "detailImg": "",
-    "cat": "입호흡",
-    "flavor": "9.9mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 284,
-    "product_no": 284,
-    "name": "쉑컴퍼니 AVDR 포카리 시리즈 입호흡 액상 30ml",
-    "price": 16100,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202309/d1056738b60ad53edf0c05687f61b0cb.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202309/d1056738b60ad53edf0c05687f61b0cb.png",
-    "detailImgs": [],
-    "detailImg": "",
-    "cat": "입호흡",
-    "flavor": "9.9mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 275,
-    "product_no": 275,
-    "name": "쉑컴퍼니 AVDR 디저트 입호흡 액상 30ml",
-    "price": 16100,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202310/d9716ea34739c8ade1a27cc7ac6f1f69.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202310/d9716ea34739c8ade1a27cc7ac6f1f69.png",
-    "detailImgs": [],
-    "detailImg": "",
-    "cat": "입호흡",
-    "flavor": "9.9mg",
     "options": [],
     "optionPrices": {},
     "sale": false
