@@ -542,10 +542,8 @@
       "https://frokyvape.com/web/product/medium/202402/ecd5f6c8c80d2bd22c02bd24354d25f3.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202402/ecd5f6c8c80d2bd22c02bd24354d25f3.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202402/d085220e6f5d68fa648ad25afb0959cb.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202402/d085220e6f5d68fa648ad25afb0959cb.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -560,6 +558,7 @@
       "브로콜리",
       "지방시가"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
