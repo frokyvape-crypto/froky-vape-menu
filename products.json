@@ -2531,10 +2531,8 @@
       "https://frokyvape.com/web/product/medium/202511/5b209804231abeee94ae270ff0d36eb9.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202511/5b209804231abeee94ae270ff0d36eb9.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202511/c0036ee62ab7085de2da59e03d59bdc7.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202511/c0036ee62ab7085de2da59e03d59bdc7.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "50,000 퍼프",
     "options": [
@@ -2549,6 +2547,7 @@
       "민트",
       "워터멜론"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
