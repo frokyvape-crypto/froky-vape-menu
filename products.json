@@ -465,10 +465,8 @@
       "https://frokyvape.com/web/product/medium/202403/f7eaa7f104a8c1aa05ab162a8e3e7cf6.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202403/f7eaa7f104a8c1aa05ab162a8e3e7cf6.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202403/2d256e5c110a1ff7ce5aa2b0efc39cac.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202403/2d256e5c110a1ff7ce5aa2b0efc39cac.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -483,6 +481,7 @@
       "러브 오션",
       "아이스 메론"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
