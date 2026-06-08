@@ -2631,10 +2631,8 @@
       "https://frokyvape.com/web/product/medium/202510/1f24733e2064627d1a0d75536849d20c.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202510/1f24733e2064627d1a0d75536849d20c.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202510/1c6f4e2d66b7e745827d0ca2227cfd1e.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202510/1c6f4e2d66b7e745827d0ca2227cfd1e.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "35,000 퍼프",
     "options": [
@@ -2649,6 +2647,7 @@
       "피치 다이브",
       "화이트 구미"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
