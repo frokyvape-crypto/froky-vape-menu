@@ -98,33 +98,6 @@
     "sale": false
   },
   {
-    "id": 2295,
-    "product_no": 2295,
-    "name": "펠릭스 Strong Zero Rush 스트롱 제로 러쉬 입호흡 액상 30ml",
-    "price": 13300,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202507/33b1cecc0538164d3ecef9e673e57130.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202507/33b1cecc0538164d3ecef9e673e57130.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202507/947215701ed31028d67b484a85a237d3.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202507/947215701ed31028d67b484a85a237d3.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [
-      "스피아 민트",
-      "레몬 스플래쉬",
-      "쥬시 피치",
-      "수박",
-      "자몽",
-      "스윗 머스켓",
-      "그레이프 피즈",
-      "프로스트 베리"
-    ],
-    "sale": false
-  },
-  {
     "id": 2071,
     "name": "리퀴드랩 마일드시가 입호흡 액상 30ml",
     "price": 6700,
@@ -261,7 +234,7 @@
     ],
     "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780886308962_98s4.jpg",
     "cat": "입호흡",
-    "flavor": "9.8mg",
+    "flavor": "9.8mg / 10병단위 구매 가능",
     "options": [
       "에이프리콧 체리 (10병)",
       "레몬 그린티 (10병)",
