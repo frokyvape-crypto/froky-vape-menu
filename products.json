@@ -4831,5 +4831,24 @@
       "비타민 C"
     ],
     "sale": false
+  },
+  {
+    "id": 1780897755860,
+    "name": "[대용량] VITA 비타 입호흡 액상 100ml",
+    "price": 19200,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780897749405_g9tk.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780897749405_g9tk.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780897751192_mlp1.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780897751192_mlp1.png",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "[100ml] 비타민 C"
+    ],
+    "sale": false
   }
 ]
