@@ -2609,10 +2609,8 @@
       "https://frokyvape.com/web/product/medium/202510/66141ca0220e89c5818e95ad97e21f8f.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202510/66141ca0220e89c5818e95ad97e21f8f.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202510/129e75e531c8355d782b7a6afd500ece.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202510/129e75e531c8355d782b7a6afd500ece.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "2,000 퍼프",
     "options": [
@@ -2621,6 +2619,7 @@
       "콜라 레몬",
       "믹스 베리"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
