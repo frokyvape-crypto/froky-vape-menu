@@ -178,10 +178,15 @@
     "options": [
       "더블 레몬",
       "더블 샤인",
-      "더블 소다",
       "더블 애플",
-      "더블 망고"
+      "더블 소다 (2병)",
+      "더블 망고 (10병)"
     ],
+    "optionPrices": {
+      "더블 애플": 1,
+      "더블 소다 (2병)": 31800,
+      "더블 망고 (10병)": 159000
+    },
     "sale": false
   },
   {
@@ -4848,34 +4853,6 @@
     "flavor": "",
     "options": [
       "[100ml] 비타민 C"
-    ],
-    "sale": false
-  },
-  {
-    "id": 1780898012598,
-    "name": "[대용량] 트로피칼 입호흡 액상 100ml",
-    "price": 19200,
-    "imgs": [
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780897995081_p6aw.png",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780897998035_izis.png",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898000156_9x8n.png",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898002255_2u4c.png",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898004575_o3mu.png",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898006694_uhc4.png"
-    ],
-    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780897995081_p6aw.png",
-    "detailImgs": [
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898008909_pct1.png"
-    ],
-    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898008909_pct1.png",
-    "cat": "best",
-    "flavor": "",
-    "options": [
-      "[100ml] 더블 망고",
-      "[100ml] 리치",
-      "[100ml] 마르키사",
-      "[100ml] 망고스틴",
-      "[100ml] 파인애플"
     ],
     "sale": false
   }
