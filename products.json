@@ -1415,10 +1415,8 @@
       "https://frokyvape.com/web/product/medium/202604/61f8266bda5d0adfecb4e71aa343aa4f.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202604/61f8266bda5d0adfecb4e71aa343aa4f.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202604/b3f6eba4c02386e775f15b0ba7a529ba.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202604/b3f6eba4c02386e775f15b0ba7a529ba.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -1426,6 +1424,7 @@
       "[슈퍼쿨] 소다 블라스트",
       "[슈퍼쿨] 알로에 베라"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
