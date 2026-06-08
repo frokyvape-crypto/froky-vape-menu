@@ -893,10 +893,8 @@
       "https://frokyvape.com/web/product/medium/202403/1d7312b93c435809085ba14f4a9a2a17.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202403/1d7312b93c435809085ba14f4a9a2a17.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202403/03533cd86430c0d630a4cd19aef86e02.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202403/03533cd86430c0d630a4cd19aef86e02.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
@@ -904,6 +902,7 @@
       "발렌시가",
       "딸기"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
