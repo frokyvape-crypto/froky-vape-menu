@@ -4157,10 +4157,8 @@
       "https://frokyvape.com/web/product/medium/202512/c62ae227fcb5e682909bd22c307e6ef0.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202512/c62ae227fcb5e682909bd22c307e6ef0.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202512/53422ccab7bd45d9b23d5d3792db7871.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202512/53422ccab7bd45d9b23d5d3792db7871.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -4169,6 +4167,7 @@
       "슈가페어",
       "아이스티"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
