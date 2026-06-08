@@ -4735,7 +4735,7 @@
   {
     "id": 2082,
     "product_no": 2082,
-    "name": "[M] 리퀴드랩 이탈리아 아메리카노 입호흡 액상 30ml",
+    "name": "리퀴드랩 이탈리아 아메리카노 입호흡 액상 30ml",
     "price": 6700,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202505/641ae0715bb3e28ce8a4a140dc59c278.png"
@@ -4746,8 +4746,10 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202505/03b423c97db885925e2e95c7397a6d6b.png",
     "cat": "입호흡",
-    "flavor": "1박스 (10병) 단위로 구매 가능 상품입니다",
-    "options": [],
+    "flavor": "9.8mg",
+    "options": [
+      "이탈리아 아메리카노"
+    ],
     "sale": false
   },
   {
