@@ -2510,10 +2510,8 @@
       "https://frokyvape.com/web/product/medium/202511/9e3176180c068a352c3370e446980f70.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202511/9e3176180c068a352c3370e446980f70.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202511/ad67be36d75fb529e7fd83bb34bd87b5.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202511/ad67be36d75fb529e7fd83bb34bd87b5.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -2521,6 +2519,7 @@
       "청포도에이드",
       "포도에이드"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
