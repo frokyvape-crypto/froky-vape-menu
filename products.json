@@ -4624,7 +4624,7 @@
   {
     "id": 2242,
     "product_no": 2242,
-    "name": "[M] 리퀴드랩 금실딸기 입호흡 액상 30ml",
+    "name": "리퀴드랩 금실딸기 입호흡 액상 30ml",
     "price": 6700,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202508/5c45e08174b9bec9d58e0608dafdc124.png"
@@ -4635,8 +4635,10 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202508/ca4339e414a84f02c55935056b83f045.png",
     "cat": "입호흡",
-    "flavor": "1박스 (10병) 단위로 구매 가능 상품입니다",
-    "options": [],
+    "flavor": "9.8mg",
+    "options": [
+      "금실딸기"
+    ],
     "sale": false
   },
   {
