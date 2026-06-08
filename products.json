@@ -1823,19 +1823,24 @@
   {
     "id": 2515,
     "product_no": 2515,
-    "name": "♥2+1♥ 베이크드 입호흡 액상 30ml",
+    "name": "베이크드 입호흡 액상 30ml",
     "price": 9900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202509/c5aec065d6f17a8164f8351b82dcd775.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/c5aec065d6f17a8164f8351b82dcd775.jpg",
     "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/c2f46db779bab80a99f01211e4f396cf.jpg"
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780901254917_a5w1.png"
     ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/c2f46db779bab80a99f01211e4f396cf.jpg",
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780901254917_a5w1.png",
     "cat": "입호흡",
-    "flavor": "",
-    "options": [],
+    "flavor": "9.8mg",
+    "options": [
+      "레몬 케이크",
+      "바나나 케이크",
+      "애플 파이"
+    ],
+    "optionPrices": {},
     "sale": false
   },
   {
@@ -3564,8 +3569,11 @@
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
-      "킹스베리"
+      "킹스베리",
+      "아이스버그",
+      "헤이즐 아이"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
@@ -5078,44 +5086,6 @@
     "sale": false
   },
   {
-    "id": 2838,
-    "product_no": 2838,
-    "name": "♥VIP♥ 말론 한글 에디션 꽃 전자담배",
-    "price": 78000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202603/c380c84ed016eb164a97d8496ec6e876.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202603/c380c84ed016eb164a97d8496ec6e876.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/568c77274792ebfc846a6a984075cc6b.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/568c77274792ebfc846a6a984075cc6b.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 2786,
-    "product_no": 2786,
-    "name": "[닷모드] 닷 팟 맥스 리플 전자담배",
-    "price": 69000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202603/4951a5395ff62ea32785296f63e678ad.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202603/4951a5395ff62ea32785296f63e678ad.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/dc5254ae68a4be47b606f538732daa35.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/dc5254ae68a4be47b606f538732daa35.png",
-    "cat": "폐호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 2682,
     "product_no": 2682,
     "name": "[VC] 멘솔 시리즈 입호흡 액상 30ml",
@@ -5154,25 +5124,6 @@
     "sale": false
   },
   {
-    "id": 2320,
-    "product_no": 2320,
-    "name": "[삼성 알트 플러스] S11 18350 전자담배 배터리",
-    "price": 9200,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202507/29ae46d3ecbc3daa1cd0adc2e2a79098.jpg"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202507/29ae46d3ecbc3daa1cd0adc2e2a79098.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202507/e76b33305714a7aac9ecf9004a3caa4b.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202507/e76b33305714a7aac9ecf9004a3caa4b.jpg",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 2231,
     "product_no": 2231,
     "name": "[VK] 잽쥬스 마르키사 야쿠자르트 입호흡 액상 30ml",
@@ -5185,82 +5136,6 @@
       "https://frokyvape.com/web/product/big/202507/abb4d2afeb2c092d963c82e25618a76f.png"
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202507/abb4d2afeb2c092d963c82e25618a76f.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 2126,
-    "product_no": 2126,
-    "name": "[[O] ] DIO 디오 800 일회용 교체 팟 1팩",
-    "price": 11000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202505/60bff052fdd87508bc190511613d1d8a.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202505/60bff052fdd87508bc190511613d1d8a.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202505/c019daccf4251e5f2452bfe26c967d10.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202505/c019daccf4251e5f2452bfe26c967d10.png",
-    "cat": "일회용",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 2066,
-    "product_no": 2066,
-    "name": "[NB] 요노 스퀘어 전자담배",
-    "price": 42000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202504/a23b6634ebed7bb313091cab55238235.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202504/a23b6634ebed7bb313091cab55238235.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202504/e11d52ca8eb681e2310287ebb7f0a86d.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202504/e11d52ca8eb681e2310287ebb7f0a86d.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 2062,
-    "product_no": 2062,
-    "name": "[EV] 아스파이어 고텍 S 전자담배",
-    "price": 25000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202504/9836e81c3119b15f3ecffdd566afb644.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202504/9836e81c3119b15f3ecffdd566afb644.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202504/460666d31bf6f80e8cd210a7920f3581.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202504/460666d31bf6f80e8cd210a7920f3581.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 1904,
-    "product_no": 1904,
-    "name": "[AB] 앰비언트 X 저스트포그 글렌트 전자담배",
-    "price": 45000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202502/b94a2641486e93ceabf489e8b366e998.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202502/b94a2641486e93ceabf489e8b366e998.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202502/5800b19215fbd960a2a238864fcbeff6.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202502/5800b19215fbd960a2a238864fcbeff6.png",
     "cat": "입호흡",
     "flavor": "",
     "options": [],
@@ -5409,63 +5284,6 @@
     "sale": false
   },
   {
-    "id": 1313,
-    "product_no": 1313,
-    "name": "[A] 엘프바 BC10000 일회용 전자담배 18ml",
-    "price": 19000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202402/505fb8f92320a855be174f956b00c28d.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202402/505fb8f92320a855be174f956b00c28d.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202402/a10d3c82b84dfc2bf180d0b3c76567b1.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202402/a10d3c82b84dfc2bf180d0b3c76567b1.png",
-    "cat": "일회용",
-    "flavor": "10,000 퍼프 / 단종 예정",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 1306,
-    "product_no": 1306,
-    "name": "[헬베이프] 데드래빗 MAX RDA (PCTG)",
-    "price": 30000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202402/517a8a254630822c68cd7d7ba2e1fdc0.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202402/517a8a254630822c68cd7d7ba2e1fdc0.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202402/9e1299a063668a1c1a52527b4e7aa40f.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202402/9e1299a063668a1c1a52527b4e7aa40f.png",
-    "cat": "폐호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 1206,
-    "product_no": 1206,
-    "name": "[KV] 베이핑라이더 입호흡 액상 30ml",
-    "price": 6500,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202401/d557020e5a2b38eb27b83a060ad655ff.jpg"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202401/d557020e5a2b38eb27b83a060ad655ff.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202401/b22ea1cedcf0a2a4fa129d3dd30fe8d4.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202401/b22ea1cedcf0a2a4fa129d3dd30fe8d4.jpg",
-    "cat": "입호흡",
-    "flavor": "1박스 (10병) 단위로 구매 가능 상품입니다",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 1180,
     "product_no": 1180,
     "name": "[VK] 잽쥬스 마르키사 입호흡 액상 30ml",
@@ -5480,63 +5298,6 @@
     "detailImg": "https://frokyvape.com/web/product/big/202502/1df35d41475fc5531b6e8efe9d7a9e99.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 1146,
-    "product_no": 1146,
-    "name": "[닷모드] 닷 AIO RBA",
-    "price": 42000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202312/10800c2ee4c9a77eab86e5635b12e378.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202312/10800c2ee4c9a77eab86e5635b12e378.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202312/285fc9118aeb7816fab0bd841ab9d7e6.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202312/285fc9118aeb7816fab0bd841ab9d7e6.png",
-    "cat": "폐호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 1130,
-    "product_no": 1130,
-    "name": "[닷모드] 닷 AIO V2 패널",
-    "price": 29000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202312/24e95fbbc5a768e24a5dfcee783d1b32.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202312/24e95fbbc5a768e24a5dfcee783d1b32.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202312/94485818a680576cc8821f445d860f44.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202312/94485818a680576cc8821f445d860f44.png",
-    "cat": "폐호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 965,
-    "product_no": 965,
-    "name": "[B] 에어베이퍼 갱쥬스 폐호흡 액상 60ml",
-    "price": 22500,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202310/da609e3e5124ed93bfcd97448411544a.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202310/da609e3e5124ed93bfcd97448411544a.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202310/6cc4c94e5bfea1a612ee29fd1c936e19.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202310/6cc4c94e5bfea1a612ee29fd1c936e19.png",
-    "cat": "폐호흡",
-    "flavor": "3mg",
     "options": [],
     "optionPrices": {},
     "sale": false
@@ -5573,25 +5334,6 @@
       "https://frokyvape.com/web/product/big/202502/64a532a1b2fb690805d0b1bcfeae9683.png"
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202502/64a532a1b2fb690805d0b1bcfeae9683.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 843,
-    "product_no": 843,
-    "name": "[YV K] EJUICE AWARD 베어헤드 시나롤 입호흡 액상 30ml",
-    "price": 11100,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202310/b8f95dc4aa109137d539ab041d5288a5.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202310/b8f95dc4aa109137d539ab041d5288a5.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202310/c2cad0aaa531cad301474d95a3d95ed7.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202310/c2cad0aaa531cad301474d95a3d95ed7.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [],
@@ -5651,25 +5393,6 @@
     "detailImg": "https://frokyvape.com/web/product/big/202309/27b87c203b393bda5c2f760c29012582.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 541,
-    "product_no": 541,
-    "name": "[W B] 월드베이프 심쿵플러스 입호흡 액상 30ml",
-    "price": 11700,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202310/a143ee5263947593d8c84e45cf870211.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202310/a143ee5263947593d8c84e45cf870211.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202310/ca5e7c5ae68530c7e7f06dbcbce68637.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202310/ca5e7c5ae68530c7e7f06dbcbce68637.png",
-    "cat": "입호흡",
-    "flavor": "",
     "options": [],
     "optionPrices": {},
     "sale": false
@@ -5766,258 +5489,6 @@
     "cat": "입호흡",
     "flavor": "9.9mg",
     "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 2695,
-    "product_no": 2695,
-    "name": "♥2+1♥ 오레비 입호흡 액상 30ml",
-    "price": 8800,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202601/511891d000b9c4ef5d95a255dbbbcee9.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202601/511891d000b9c4ef5d95a255dbbbcee9.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202601/aa9793bd3c611c42cbba9e978392f796.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202601/aa9793bd3c611c42cbba9e978392f796.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [
-      "그레이프프루트",
-      "그린그레이프",
-      "레몬",
-      "애플",
-      "자스민",
-      "체리",
-      "플레인"
-    ],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 2824,
-    "product_no": 2824,
-    "name": "[O] 반하나 입호흡 액상 30ml",
-    "price": 8800,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202603/b4562fc944b97d69f9d2d9a29a105818.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202603/b4562fc944b97d69f9d2d9a29a105818.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/f639d7321b5db98fb937bca8e191209f.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/f639d7321b5db98fb937bca8e191209f.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [
-      "딸기 반하나",
-      "말차 반하나",
-      "민트 초코 반하나",
-      "반하나",
-      "초코 반하나",
-      "카라멜 반하나"
-    ],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 2828,
-    "product_no": 2828,
-    "name": "♥2+1♥ 슈가캔디 입호흡 액상 30ml",
-    "price": 8800,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202603/27e26042301939b8c16db15a34406b25.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202603/27e26042301939b8c16db15a34406b25.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/8418662c5df2711fd13913b3139c2fba.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/8418662c5df2711fd13913b3139c2fba.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [
-      "딸기 캔디",
-      "레몬 캔디",
-      "리치 캔디",
-      "말차 캔디",
-      "프룻 믹스 캔디"
-    ],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 2725,
-    "product_no": 2725,
-    "name": "♥2+1♥ 넥사 쥬스 입호흡 액상 30ml",
-    "price": 9900,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202602/43e7448ff584bc5f5e03767286948cfb.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202602/43e7448ff584bc5f5e03767286948cfb.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202602/40ef8a066520d5cd69b2cc02df0c209d.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202602/40ef8a066520d5cd69b2cc02df0c209d.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [
-      "딸기",
-      "망고",
-      "민트",
-      "복숭아",
-      "블루라즈",
-      "시트러스",
-      "유자",
-      "청사과",
-      "트리플베리",
-      "퍼킹팹",
-      "포도"
-    ],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 1579,
-    "product_no": 1579,
-    "name": "[A] 베라 6mg 입호흡 액상 30ml",
-    "price": 18100,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202407/2c4463d649c09527a7921aa680ea9fae.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202407/2c4463d649c09527a7921aa680ea9fae.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202407/7cade3d66e01e78081d75314a3a49a71.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202407/7cade3d66e01e78081d75314a3a49a71.png",
-    "cat": "입호흡",
-    "flavor": "6mg",
-    "options": [
-      "그레이프에이드",
-      "그린애플",
-      "녹차",
-      "다크시가",
-      "딸기우유",
-      "레몬라임",
-      "레몬에이드",
-      "리치머스켓",
-      "마스터시가",
-      "마일드시가",
-      "민트",
-      "바나나",
-      "브라운시가",
-      "블랙시가",
-      "블루베리",
-      "스위트플라워",
-      "스트로베리",
-      "스피아민트",
-      "시베리안베리",
-      "시트러스 유자",
-      "아메리카노",
-      "아이스 라즈베리",
-      "아이스 망고 바나나",
-      "아이스 미도리샤워",
-      "아이스 믹스젤리",
-      "아이스 스네이크베리",
-      "아이스 그린그레이프",
-      "아이스 딸기쉐이크",
-      "아이스 레드베리",
-      "아이스 모히또",
-      "아이스 석류",
-      "아이스 크랜베리",
-      "아이스 툰드라쉐이크",
-      "아이스 피치",
-      "알로에 베라",
-      "얼박사",
-      "에스포레소",
-      "오렌지",
-      "울트라멘솔",
-      "울트라시가",
-      "워터멜론",
-      "자두",
-      "자몽앤쿨",
-      "체리에이드",
-      "체리콕",
-      "쿠바시가",
-      "텍사스시가",
-      "트리플베리",
-      "파인애플",
-      "프레쉬앤쿨",
-      "프리미엄시가",
-      "피치",
-      "피치망고"
-    ],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 1578,
-    "product_no": 1578,
-    "name": "[A] 베라 3mg 입호흡 액상 30ml",
-    "price": 15900,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202407/31527b786d9605d090d1d435899b370a.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202407/31527b786d9605d090d1d435899b370a.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202407/a5b913c3bf1db4f8d8e5f9f906019710.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202407/a5b913c3bf1db4f8d8e5f9f906019710.png",
-    "cat": "입호흡",
-    "flavor": "3mg",
-    "options": [
-      "그레이프에이드",
-      "그린애플",
-      "녹차",
-      "다크시가",
-      "딸기우유",
-      "레몬라임",
-      "레몬에이드",
-      "리치머스켓",
-      "마스터시가",
-      "마일드시가",
-      "민트",
-      "바나나",
-      "브라운시가",
-      "블루베리",
-      "스위트플라워",
-      "스트로베리",
-      "스피아민트",
-      "시베리안베리",
-      "아메리카노",
-      "아이스 라즈베리",
-      "아이스 망고 바나나",
-      "아이스 미도리샤워",
-      "아이스 믹스 젤리",
-      "아이스 스네이크베리",
-      "아이스 그린그레이프",
-      "아이스 딸바쉐이크",
-      "아이스 레드베리",
-      "아이스 석류",
-      "아이스 크랜베리",
-      "아이스 툰드라쉐이크",
-      "아이스 피치",
-      "알로에베라",
-      "얼박사",
-      "에스포레소",
-      "오렌지",
-      "울트라멘솔",
-      "울트라시가",
-      "워터멜론",
-      "프리미엄 시가",
-      "자두",
-      "자몽앤쿨",
-      "체리 에이드",
-      "체리콕",
-      "쿠바시가",
-      "텍사스시가",
-      "트리플베리",
-      "파인애플",
-      "프레쉬앤쿨",
-      "피치",
-      "피치망고"
-    ],
     "optionPrices": {},
     "sale": false
   }
