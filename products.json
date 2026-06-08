@@ -2001,10 +2001,8 @@
       "https://frokyvape.com/web/product/medium/202603/be523c520b4c0e3bedbbd4741e21ff3f.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/be523c520b4c0e3bedbbd4741e21ff3f.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/48043605179028b59e413018777ab9ce.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/48043605179028b59e413018777ab9ce.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -2015,6 +2013,7 @@
       "초코 바나나",
       "카라멜 바나나"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
