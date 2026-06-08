@@ -2782,10 +2782,8 @@
       "https://frokyvape.com/web/product/medium/202503/27cf736ee7cf52b87dc6d14548a76f65.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202503/27cf736ee7cf52b87dc6d14548a76f65.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202503/bd05b4ad0dc84a13aa415afb927fba6d.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202503/bd05b4ad0dc84a13aa415afb927fba6d.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -2795,6 +2793,7 @@
       "아이스 블랙티",
       "타로"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
