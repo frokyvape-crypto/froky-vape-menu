@@ -4508,7 +4508,7 @@
     "id": 2273,
     "product_no": 2273,
     "name": "[M] 리퀴드랩 흡혈자두 입호흡 액상 30ml",
-    "price": 6700,
+    "price": 77000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202507/575315e9ef114932ee6f9f8d336411c5.png"
     ],
@@ -4518,8 +4518,11 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202507/a645bfdc965e4fe0e43721b3f36fbdd1.png",
     "cat": "입호흡",
-    "flavor": "1박스 (10병) 단위로 구매 가능 상품입니다",
-    "options": [],
+    "flavor": "9.8mg / 10병단위 구매 가능",
+    "options": [
+      "흡혈 자두 (10병)"
+    ],
+    "optionPrices": {},
     "sale": false
   },
   {
