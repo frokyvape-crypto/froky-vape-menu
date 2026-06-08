@@ -2273,16 +2273,15 @@
       "https://frokyvape.com/web/product/medium/202601/609f8b9d55a2fc26487d64a74eea719b.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202601/609f8b9d55a2fc26487d64a74eea719b.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202601/012e75dbcafca0ead2290f76a98d0726.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202601/012e75dbcafca0ead2290f76a98d0726.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
       "로스티드",
       "블랙 2.0"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
