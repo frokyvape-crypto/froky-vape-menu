@@ -249,7 +249,7 @@
     "id": 1696,
     "product_no": 1696,
     "name": "펠릭스 사와시리즈 입호흡 액상 30ml",
-    "price": 17200,
+    "price": 16600,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202506/3f053988896b89efe19402838ef28ca4.png"
     ],
@@ -2902,31 +2902,6 @@
     "sale": false
   },
   {
-    "id": 2126,
-    "product_no": 2126,
-    "name": "DIO 디오 800 일회용 교체 팟 1팩",
-    "price": 11000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202505/60bff052fdd87508bc190511613d1d8a.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202505/60bff052fdd87508bc190511613d1d8a.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202505/c019daccf4251e5f2452bfe26c967d10.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202505/c019daccf4251e5f2452bfe26c967d10.png",
-    "cat": "일회용",
-    "flavor": "액상 팟 V2",
-    "options": [
-      "샤인머스켓",
-      "데저트",
-      "타박멘솔",
-      "알로에베라",
-      "레몬 라임",
-      "피타야"
-    ],
-    "sale": false
-  },
-  {
     "id": 2003,
     "product_no": 2003,
     "name": "디오리퀴드 퓨어 입호흡 액상 30ml",
@@ -4088,34 +4063,6 @@
       "미네랄",
       "그레이프",
       "스트로베리 아이스크림"
-    ],
-    "sale": false
-  },
-  {
-    "id": 1780626218064,
-    "name": "옥스바 슬림 스틱 일회용 카트리지 5%",
-    "price": 55000,
-    "imgs": [
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780626255577_2wlw.jpg"
-    ],
-    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780626255577_2wlw.jpg",
-    "detailImgs": [
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780626257254_hwth.jpg"
-    ],
-    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780626257254_hwth.jpg",
-    "cat": "일회용",
-    "flavor": "액상카트리지 10개 구매시 + 슬림 스틱 배터리 1개 증정",
-    "options": [
-      "라임 레몬",
-      "리치 아이스",
-      "멘토스 민트",
-      "민트",
-      "미드나잇 타바코",
-      "블랙 아이스 말보로 타바코",
-      "스트로베리 라즈베리 체리",
-      "워터멜론",
-      "클래식 토바코",
-      "콜라 아이스"
     ],
     "sale": false
   },
