@@ -951,7 +951,7 @@
       "https://frokyvape.com/web/product/big/202507/1924b0d1564328ab71563781836ecdff.png"
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202507/1924b0d1564328ab71563781836ecdff.png",
-    "cat": "폐호흡",
+    "cat": "노멘솔",
     "flavor": "3mg",
     "options": [
       "피치 엔딩",
@@ -963,6 +963,7 @@
       "애플 엔딩",
       "머스캣 엔딩"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
