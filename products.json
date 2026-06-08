@@ -1310,7 +1310,7 @@
   {
     "id": 1580,
     "product_no": 1580,
-    "name": "[A] 베라 9.9mg 입호흡 액상 30ml",
+    "name": "[9.9mg] 베라 입호흡 액상 30ml",
     "price": 18100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202407/246ef5b6f78519d5fb27e3d29f6cfe49.png"
@@ -4862,40 +4862,6 @@
       "[100ml] 파인 레몬 소다",
       "[100ml] 라임"
     ],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 2682,
-    "product_no": 2682,
-    "name": "[VC] 멘솔 시리즈 입호흡 액상 30ml",
-    "price": 9900,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202601/73ea72767dec8a110130b9d0de957624.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202601/73ea72767dec8a110130b9d0de957624.png",
-    "detailImgs": [],
-    "detailImg": "",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 2453,
-    "product_no": 2453,
-    "name": "[BJ] 브로스쥬스 폐호흡 액상 60ml",
-    "price": 20300,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202509/c5fc5f5adaddc549b2fa01fbb2b59d45.jpg"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202509/c5fc5f5adaddc549b2fa01fbb2b59d45.jpg",
-    "detailImgs": [],
-    "detailImg": "",
-    "cat": "폐호흡",
-    "flavor": "60ml 대용량 입호흡",
-    "options": [],
     "optionPrices": {},
     "sale": false
   },
