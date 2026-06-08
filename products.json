@@ -5387,8 +5387,8 @@
   {
     "id": 1593,
     "product_no": 1593,
-    "name": "[VK] 잽쥬스 아이수 고농도 폐호흡 액상 60ml",
-    "price": 31500,
+    "name": "[9mg] 잽쥬스 아이수 고농도 폐호흡 액상 60ml",
+    "price": 30500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202407/52328bbeae87f2381bd62abcf53d2701.png"
     ],
@@ -5399,7 +5399,11 @@
     "detailImg": "https://frokyvape.com/web/product/big/202407/0b95de6f66802d3fff9a528c984b5e6d.png",
     "cat": "폐호흡",
     "flavor": "9mg",
-    "options": [],
+    "options": [
+      "[9mg] 알로에베라",
+      "[9mg] 용과",
+      "[9mg] 파인애플"
+    ],
     "optionPrices": {},
     "sale": false
   },
