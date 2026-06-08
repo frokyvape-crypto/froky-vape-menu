@@ -4837,5 +4837,34 @@
       "[100ml] 비타민 C"
     ],
     "sale": false
+  },
+  {
+    "id": 1780898582656,
+    "name": "[대용량] 트로피칼 입호흡 액상 30ml",
+    "price": 19200,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898564101_wwo7.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898566954_0xrk.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898569393_02dr.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898571512_adsv.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898573870_8otp.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898576049_gv3t.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898564101_wwo7.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898578234_nbrp.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898578234_nbrp.png",
+    "cat": "best",
+    "flavor": "",
+    "options": [
+      "[100ml] 더블 망고",
+      "[100ml] 리치",
+      "[100ml] 마르키사",
+      "[100ml] 망고스틴",
+      "[100ml] 파인애플"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
