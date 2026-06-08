@@ -4203,10 +4203,8 @@
       "https://frokyvape.com/web/product/medium/202512/8694f52009ea697dc7165369a726589d.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202512/8694f52009ea697dc7165369a726589d.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202512/4a617a0b067ecf157ea0de11c873281c.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202512/4a617a0b067ecf157ea0de11c873281c.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -4217,6 +4215,7 @@
       "탄산 음료 카보네이트",
       "탄산 포도"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
