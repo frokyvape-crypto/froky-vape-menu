@@ -1312,13 +1312,12 @@
       "https://frokyvape.com/web/product/medium/202407/246ef5b6f78519d5fb27e3d29f6cfe49.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202407/246ef5b6f78519d5fb27e3d29f6cfe49.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202407/08e0a96f2e10d7c2b17b99ba4b2b91dc.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202407/08e0a96f2e10d7c2b17b99ba4b2b91dc.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.9mg",
     "options": [],
+    "optionPrices": {},
     "sale": false
   },
   {
