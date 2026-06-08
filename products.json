@@ -3951,10 +3951,8 @@
       "https://frokyvape.com/web/product/medium/202603/39315ff6d16adda18df877ec9a8b7e0d.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/39315ff6d16adda18df877ec9a8b7e0d.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/657ecd9ce9a4405a743bce347e432d01.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/657ecd9ce9a4405a743bce347e432d01.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -3964,6 +3962,7 @@
       "말차",
       "프룻 믹스"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
