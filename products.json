@@ -2342,10 +2342,8 @@
       "https://frokyvape.com/web/product/medium/202510/b60c57c130e34d5e24424bd7fff16ef5.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202510/b60c57c130e34d5e24424bd7fff16ef5.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202510/6c73787906fa2302e49438d35a99f5b6.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202510/6c73787906fa2302e49438d35a99f5b6.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "*디바이스 미 포함* / 30,000퍼프",
     "options": [
@@ -2358,6 +2356,7 @@
       "레드 에너지",
       "피치 아이스"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
