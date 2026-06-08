@@ -5409,25 +5409,6 @@
     "sale": false
   },
   {
-    "id": 1320,
-    "product_no": 1320,
-    "name": "[헬베이프] 슈레이스 오가닉 코튼",
-    "price": 6400,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202402/b15474748b322c213de090aa709c8ab4.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202402/b15474748b322c213de090aa709c8ab4.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202402/dff106f90aebf29e75a35cdf0e9212ae.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202402/dff106f90aebf29e75a35cdf0e9212ae.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 1313,
     "product_no": 1313,
     "name": "[A] 엘프바 BC10000 일회용 전자담배 18ml",
@@ -5447,25 +5428,6 @@
     "sale": false
   },
   {
-    "id": 1309,
-    "product_no": 1309,
-    "name": "[헬베이프] 헬비스트 2 P 코일",
-    "price": 2600,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202402/2c24e4f7e7dfb5e2a7b59d270de42350.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202402/2c24e4f7e7dfb5e2a7b59d270de42350.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202402/7c74ccc3ba08156b06873d7bc5007fe2.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202402/7c74ccc3ba08156b06873d7bc5007fe2.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 1306,
     "product_no": 1306,
     "name": "[헬베이프] 데드래빗 MAX RDA (PCTG)",
@@ -5479,63 +5441,6 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202402/9e1299a063668a1c1a52527b4e7aa40f.png",
     "cat": "폐호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 1298,
-    "product_no": 1298,
-    "name": "[헬베이프] 데드래빗 R 탱크 코일",
-    "price": 5900,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202402/2e0280a35704aef20b72a4b79b738965.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202402/2e0280a35704aef20b72a4b79b738965.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202402/cdaf93d6408bed2fb03697af0816ce56.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202402/cdaf93d6408bed2fb03697af0816ce56.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 1289,
-    "product_no": 1289,
-    "name": "[헬베이프] 데드래빗 SE KIT",
-    "price": 31500,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202402/b747a285509ddaee4e7fcb78df870af8.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202402/b747a285509ddaee4e7fcb78df870af8.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202402/b451906aa8bcb34b17da909c0b87ba03.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202402/b451906aa8bcb34b17da909c0b87ba03.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 1228,
-    "product_no": 1228,
-    "name": "[아스파이어] 페보 휘슬 510 드립팁",
-    "price": 4500,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202402/f1357fd1239753ee00e1a05ef22dfee4.jpg"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202402/f1357fd1239753ee00e1a05ef22dfee4.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202402/df5dbddc67f84430551a1ef74fe66c1a.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202402/df5dbddc67f84430551a1ef74fe66c1a.jpg",
-    "cat": "입호흡",
     "flavor": "",
     "options": [],
     "optionPrices": {},
@@ -5561,25 +5466,6 @@
     "sale": false
   },
   {
-    "id": 1194,
-    "product_no": 1194,
-    "name": "[부푸] PNP X 팟 탱크 MTL",
-    "price": 9900,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202602/45829b218f23c16b669a8ed1b26dad99.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202602/45829b218f23c16b669a8ed1b26dad99.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202602/a516a8fad63e79fc941335f897d60cdb.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202602/a516a8fad63e79fc941335f897d60cdb.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 1180,
     "product_no": 1180,
     "name": "[VK] 잽쥬스 마르키사 입호흡 액상 30ml",
@@ -5594,25 +5480,6 @@
     "detailImg": "https://frokyvape.com/web/product/big/202502/1df35d41475fc5531b6e8efe9d7a9e99.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 1171,
-    "product_no": 1171,
-    "name": "[베이포레소] i 탱크 2",
-    "price": 37000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202312/09c7b793e5cae2b67c3bf5545c860b66.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202312/09c7b793e5cae2b67c3bf5545c860b66.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202312/2acaa25fd5eb2adc52760e52f8307aa9.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202312/2acaa25fd5eb2adc52760e52f8307aa9.png",
-    "cat": "입호흡",
-    "flavor": "",
     "options": [],
     "optionPrices": {},
     "sale": false
