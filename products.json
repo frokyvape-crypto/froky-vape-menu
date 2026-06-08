@@ -4511,26 +4511,56 @@
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202407/79efcafdc7caf718a99288ec7f337c32.png",
     "cat": "입호흡",
-    "flavor": "2mg",
+    "flavor": "2mg / 5병 단위 구매 가능",
     "options": [
-      "블랙멘솔",
+      "그린 펀치",
       "데져트",
-      "라임사이다",
-      "레몬펀치",
-      "멘솔",
-      "그린펀치",
-      "블루펀치",
-      "세븐펀치",
+      "블랙 멘솔",
       "아메리카노",
-      "아이스그린펀치",
-      "엠에스블랜드",
-      "옐로우펀치",
-      "코리아미니 (유통기한 4월23일)",
-      "코코넛커피",
-      "쿠바시가",
-      "쿨레몬",
-      "타박멘솔",
-      "화이트펀치"
+      "엠에스 블랜드",
+      "타박 멘솔"
+    ],
+    "sale": false
+  },
+  {
+    "id": 2514,
+    "product_no": 2514,
+    "name": "♥2+1♥ 버킷 입호흡 액상 30ml",
+    "price": 8800,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202509/5c545fb11881c5368892ec85596d6c7d.jpg"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202509/5c545fb11881c5368892ec85596d6c7d.jpg",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202509/7722945ecbc84649b9aa36dbc1b3570b.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202509/7722945ecbc84649b9aa36dbc1b3570b.jpg",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "너티 크림",
+      "애플 마제스티",
+      "위즐"
+    ],
+    "sale": false
+  },
+  {
+    "id": 2451,
+    "product_no": 2451,
+    "name": "[M] 리퀴드랩 블루 스위트 입호흡 액상 30ml",
+    "price": 6700,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202509/c9a7f058e8e0c49985f4f4c3f57294bd.jpg"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202509/c9a7f058e8e0c49985f4f4c3f57294bd.jpg",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202509/0cf7f8021c2b53befc0e7c593225f1fe.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202509/0cf7f8021c2b53befc0e7c593225f1fe.jpg",
+    "cat": "입호흡",
+    "flavor": "1박스 (10병) 단위로 구매 가능 상품입니다",
+    "options": [
+      "블루 스위트"
     ],
     "sale": false
   }
