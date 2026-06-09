@@ -6357,16 +6357,14 @@
   {
     "id": 548,
     "product_no": 548,
-    "name": "[O 3 B] 쓰리탑스 체리행성 입호흡 액상 30ml",
+    "name": "쓰리탑스 체리행성 입호흡 액상 30ml",
     "price": 15500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202310/2cebf6ad682dd7a30d7fb95b262464b5.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202310/2cebf6ad682dd7a30d7fb95b262464b5.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202310/5a4d9ea42b13a71372fcab13b8a03bd4.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202310/5a4d9ea42b13a71372fcab13b8a03bd4.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
