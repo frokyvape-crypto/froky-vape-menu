@@ -2769,16 +2769,15 @@
       "https://frokyvape.com/web/product/medium/202408/35dc10cd45e40dfcb33566bf2c321fe4.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202408/35dc10cd45e40dfcb33566bf2c321fe4.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202408/40e656f461e036f184a4a24fdd75f246.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202408/40e656f461e036f184a4a24fdd75f246.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "레몬 토닉",
       "복자 (복숭아 + 자두)"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
