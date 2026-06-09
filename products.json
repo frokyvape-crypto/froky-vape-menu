@@ -3418,10 +3418,8 @@
       "https://frokyvape.com/web/product/medium/202310/d5375b2bdd33bf057e1f74232a38d46d.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202310/d5375b2bdd33bf057e1f74232a38d46d.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202310/cc1b435428d5e42f4930875c8c9a743c.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202310/cc1b435428d5e42f4930875c8c9a743c.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -3431,6 +3429,7 @@
       "아이스 콜라",
       "비타레몬"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
