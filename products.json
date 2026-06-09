@@ -5293,7 +5293,8 @@
     "flavor": "9.9mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 1849,
@@ -5416,7 +5417,8 @@
     "flavor": "10,000 퍼프 / 단종 예정",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 1206,
