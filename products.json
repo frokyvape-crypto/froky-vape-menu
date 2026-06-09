@@ -5309,7 +5309,8 @@
     "flavor": "8,500 퍼프",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 859,
