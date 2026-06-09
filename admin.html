@@ -558,6 +558,8 @@ let selectedNoticeMode = 'stock';
 let isSaving = false;
 let remoteHash = '';
 let remoteConfigHash = '';
+let lastSaveTime = 0;
+const SAVE_CDN_GRACE_MS = 130000; // GitHub Pages CDN 전파 여유 시간 (약 2분)
 let autoRefreshTimer = null;
 let pendingRemoteProducts = null;
 let pendingRemoteConfig = null;
@@ -1238,6 +1240,8 @@ async function checkRemoteChanges() {
     const hash = JSON.stringify(data);
     if (!remoteHash) remoteHash = hash;
     else if (hash !== remoteHash) {
+      // CDN 전파 대기 중: 저장 직후 CDN이 이전 캐시를 반환해 로컬 상태를 덮어쓰는 문제 방지
+      if (Date.now() - lastSaveTime < SAVE_CDN_GRACE_MS) return;
       remoteHash = hash;
       if (anyModalOpen) {
         pendingRemoteProducts = data;
@@ -1427,6 +1431,7 @@ async function saveAndDeploy() {
 }
 
 function markDeployStarted(res, message) {
+  lastSaveTime = Date.now();
   dbSave();
   remoteHash = JSON.stringify(products);
   const banner = document.getElementById('deploy-banner');
