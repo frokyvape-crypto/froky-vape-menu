@@ -546,6 +546,8 @@ let noticeModes = [...DEFAULT_SITE_CONFIG.noticeModes];
 let categories = [...DEFAULT_SITE_CONFIG.categories];
 let selectedNoticeMode = 'stock';
 let isSaving = false;
+let remoteHash = '';
+let autoRefreshTimer = null;
 const DEFAULT_WORKER_URL = 'https://froky-vape-admin.frokyvape.workers.dev';
 let WORKER_URL = localStorage.getItem('fv-worker-url') || DEFAULT_WORKER_URL;
 let ADMIN_KEY = localStorage.getItem('fv-admin-key') || '';
@@ -623,6 +625,9 @@ async function showSection(id) {
   if (id === 'sec-products') {
     await ensureSiteConfigLoaded();
     loadProducts();  // 항상 최신 데이터 로드
+    startAutoRefresh();
+  } else {
+    stopAutoRefresh();
   }
   if (id === 'sec-notice' || id === 'sec-categories') await loadSiteConfig();
 }
@@ -796,6 +801,7 @@ async function loadProducts() {
     if (!r.ok) { products = []; fileSha = ''; renderTable(); toast('products.json 없음', 'info'); return; }
     fileSha = '';
     products = await r.json();
+    remoteHash = JSON.stringify(products);
     dbSave();
     renderTable(); toast(`상품 ${products.length}개 로드`, 'ok');
   } catch (e) { toast('로드 실패: ' + e.message, 'err'); }
@@ -1087,6 +1093,36 @@ function renderTable() {
     </div></td>
   </tr>`).join('');
   updateDeleteBtn();
+}
+
+async function checkRemoteChanges() {
+  if (isSaving) return;
+  const anyModalOpen = !!document.querySelector('.modal.open');
+  try {
+    const r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${FILE}?t=${Date.now()}`, { cache: 'no-store' });
+    if (!r.ok) return;
+    const data = await r.json();
+    const hash = JSON.stringify(data);
+    if (!remoteHash) { remoteHash = hash; return; }
+    if (hash !== remoteHash) {
+      remoteHash = hash;
+      products = data;
+      dbSave();
+      if (!anyModalOpen) {
+        renderTable();
+        toast('🔄 다른 관리자의 변경사항이 반영되었습니다', 'ok');
+      } else {
+        toast('⚠️ 다른 관리자가 변경했습니다 — 모달을 닫으면 자동 적용됩니다', 'info');
+      }
+    }
+  } catch(e) {}
+}
+function startAutoRefresh() {
+  stopAutoRefresh();
+  autoRefreshTimer = setInterval(checkRemoteChanges, 30000);
+}
+function stopAutoRefresh() {
+  if (autoRefreshTimer) { clearInterval(autoRefreshTimer); autoRefreshTimer = null; }
 }
 
 function base64EncodeUtf8(str) {
