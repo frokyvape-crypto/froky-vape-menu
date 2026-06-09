@@ -599,10 +599,8 @@
       "https://frokyvape.com/web/product/medium/202312/b338126da901337ffea5f13b963fb8c2.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202312/b338126da901337ffea5f13b963fb8c2.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202312/8157383e8dabc584609e543f43881c8d.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202312/8157383e8dabc584609e543f43881c8d.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -612,6 +610,7 @@
       "블랙 사파이어",
       "샤인머스킷"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
