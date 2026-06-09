@@ -5061,6 +5061,26 @@
     "hidden": true
   },
   {
+    "id": 1904,
+    "product_no": 1904,
+    "name": "[AB] 앰비언트 X 저스트포그 글렌트 전자담배",
+    "price": 45000,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202502/b94a2641486e93ceabf489e8b366e998.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202502/b94a2641486e93ceabf489e8b366e998.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202502/5800b19215fbd960a2a238864fcbeff6.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202502/5800b19215fbd960a2a238864fcbeff6.png",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [],
+    "optionPrices": {},
+    "sale": false,
+    "hidden": true
+  },
+  {
     "id": 1902,
     "product_no": 1902,
     "name": "[BJ] 브로스 베이커 스토너 폐호흡 액상 60ml",
@@ -5312,26 +5332,6 @@
     "options": [],
     "optionPrices": {},
     "sale": false
-  },
-  {
-    "id": 843,
-    "product_no": 843,
-    "name": "[YV K] EJUICE AWARD 베어헤드 시나롤 입호흡 액상 30ml",
-    "price": 11100,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202310/b8f95dc4aa109137d539ab041d5288a5.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202310/b8f95dc4aa109137d539ab041d5288a5.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202310/c2cad0aaa531cad301474d95a3d95ed7.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202310/c2cad0aaa531cad301474d95a3d95ed7.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false,
-    "hidden": true
   },
   {
     "id": 810,
