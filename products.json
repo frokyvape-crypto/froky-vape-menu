@@ -528,8 +528,7 @@
       "시가"
     ],
     "optionPrices": {},
-    "sale": false,
-    "hidden": true
+    "sale": false
   },
   {
     "id": 1202,
@@ -5096,26 +5095,6 @@
     "detailImg": "https://frokyvape.com/web/product/big/202503/aba83d696b33c65d24c903c77d3c5427.png",
     "cat": "폐호흡",
     "flavor": "3mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false,
-    "hidden": true
-  },
-  {
-    "id": 1901,
-    "product_no": 1901,
-    "name": "[BJ] 브로스 스팀베이프 입호흡 액상 30ml",
-    "price": 14800,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202502/f5b495dd0cc0c12a6a13b9e04ea6927b.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202502/f5b495dd0cc0c12a6a13b9e04ea6927b.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202502/7095f7fc1dde10f1e8ae7b046ed69656.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202502/7095f7fc1dde10f1e8ae7b046ed69656.png",
-    "cat": "입호흡",
-    "flavor": "9.9mg",
     "options": [],
     "optionPrices": {},
     "sale": false,
