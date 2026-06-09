@@ -1668,10 +1668,8 @@
       "https://frokyvape.com/web/product/medium/202604/c0feaa82caa086b6c1b4a83393fe9ca0.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202604/c0feaa82caa086b6c1b4a83393fe9ca0.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202604/10ca60d4709bb602580dd938e45109f5.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202604/10ca60d4709bb602580dd938e45109f5.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -1681,6 +1679,7 @@
       "망고스틴",
       "파인애플"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
