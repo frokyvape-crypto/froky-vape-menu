@@ -816,7 +816,8 @@ async function loadProducts({ silent = false } = {}) {
   try {
     const latest = await fetchLatestProducts();
     fileSha = '';
-    products = latest;
+    const _delIds = new Set((siteConfig.deletedProductIds || []).map(Number));
+    products = _delIds.size ? latest.filter(p => !_delIds.has(Number(p.id))) : latest;
     remoteHash = JSON.stringify(products);
     dbSave();
     renderTable();
@@ -1159,7 +1160,9 @@ async function checkRemoteChanges() {
   if (isSaving) return;
   const anyModalOpen = !!document.querySelector('.modal.open');
   try {
-    const data = await fetchLatestProducts();
+    const rawData = await fetchLatestProducts();
+    const _cDelIds = new Set((siteConfig.deletedProductIds || []).map(Number));
+    const data = _cDelIds.size ? rawData.filter(p => !_cDelIds.has(Number(p.id))) : rawData;
     const hash = JSON.stringify(data);
     if (!remoteHash) remoteHash = hash;
     else if (hash !== remoteHash) {
