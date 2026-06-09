@@ -4626,15 +4626,14 @@
       "https://frokyvape.com/web/product/medium/202507/0348e8b18a8f7f2645d8defe1e8ee3cd.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202507/0348e8b18a8f7f2645d8defe1e8ee3cd.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202507/fdb1e51f24c28a2eb0a56dda455b4203.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202507/fdb1e51f24c28a2eb0a56dda455b4203.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg / 10병단위 구매 가능",
     "options": [
       "세븐마일드 (10병)"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
