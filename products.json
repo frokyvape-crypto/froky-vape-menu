@@ -5827,16 +5827,14 @@
   {
     "id": 2958,
     "product_no": 2958,
-    "name": "[수오논] 도넛바 일회용 전자담배 20ml",
+    "name": "수오논 도넛바 일회용 전자담배 20ml",
     "price": 20300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202604/7441ca3f8ac5003a5140eb85e72c7663.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202604/7441ca3f8ac5003a5140eb85e72c7663.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202604/2598f0a167aa0961e2de1748b05d120c.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202604/2598f0a167aa0961e2de1748b05d120c.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "",
     "options": [
