@@ -609,11 +609,12 @@
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
-      "복숭아",
-      "망고",
-      "딸기",
-      "블랙 사파이어",
-      "샤인머스킷"
+      "[제로쿨] 유자",
+      "[제로쿨] 복숭아",
+      "[제로쿨] 망고",
+      "[제로쿨] 딸기",
+      "[제로쿨] 블랙 사파이어",
+      "[제로쿨] 샤인머스킷"
     ],
     "optionPrices": {},
     "sale": false
@@ -4711,7 +4712,7 @@
       "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898752235_islx.png"
     ],
     "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780898752235_islx.png",
-    "cat": "입호흡",
+    "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
       "[100ml] 치즈 칩"
@@ -6265,7 +6266,7 @@
   {
     "id": 2368,
     "product_no": 2368,
-    "name": "[고농도] 프라임 체크 입호흡 액상 30ml",
+    "name": "[1.98%] 프라임 체크 입호흡 액상 30ml",
     "price": 17100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202508/5a1dcdb3d399915f52918536016521e5.jpg"
@@ -6278,9 +6279,9 @@
     "cat": "고농도",
     "flavor": "1.98%",
     "options": [
-      "[고농도] 아이스 레몬",
-      "[고농도] 쿨툰드라",
-      "[고농도] 파워멘솔"
+      "[1.98%] 아이스 레몬",
+      "[1.98%] 쿨툰드라",
+      "[1.98%] 파워멘솔"
     ],
     "optionPrices": {},
     "sale": false
@@ -6348,9 +6349,9 @@
     ],
     "img": "https://frokyvape.com/web/product/medium/202310/4a9df51978b6c6f2828001eb8ac05c78.png",
     "detailImgs": [
-      "https://frokyvape.com/web/product/big/202310/c2826d3b6689a629d6d0f229cc8bc1a9.png"
+      "https://store.img11.co.kr/37273654/745df4af-9fc6-4366-bc4d-ef9dec4f3229_1657598454783.jpg"
     ],
-    "detailImg": "https://frokyvape.com/web/product/big/202310/c2826d3b6689a629d6d0f229cc8bc1a9.png",
+    "detailImg": "https://store.img11.co.kr/37273654/745df4af-9fc6-4366-bc4d-ef9dec4f3229_1657598454783.jpg",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
@@ -6387,16 +6388,16 @@
   {
     "id": 355,
     "product_no": 355,
-    "name": "[O  CD] 메즈 입호흡 액상 30ml",
+    "name": "메즈 입호흡 액상 30ml",
     "price": 16600,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202309/146131ea79d52bac77dd30499f8942ce.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202309/146131ea79d52bac77dd30499f8942ce.png",
     "detailImgs": [
-      "https://frokyvape.com/web/product/big/202309/97e38baa943cae50a284e9224849747e.png"
+      "https://store.img11.co.kr/37273654/6fad21da-d1ae-456f-8caf-0711ff1598f1_1664504705910.jpg"
     ],
-    "detailImg": "https://frokyvape.com/web/product/big/202309/97e38baa943cae50a284e9224849747e.png",
+    "detailImg": "https://store.img11.co.kr/37273654/6fad21da-d1ae-456f-8caf-0711ff1598f1_1664504705910.jpg",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -6419,9 +6420,9 @@
     ],
     "img": "https://frokyvape.com/web/product/medium/202309/a7a4804d198b58c3c1eda66b5f9e048c.png",
     "detailImgs": [
-      "https://frokyvape.com/web/product/big/202309/7fbd3e560ecb906e1b95ff80edf75cbe.png"
+      "https://store.img11.co.kr/37273654/691dbef5-a2fe-4148-841b-cde9539b1cd7_1663317359495.jpg"
     ],
-    "detailImg": "https://frokyvape.com/web/product/big/202309/7fbd3e560ecb906e1b95ff80edf75cbe.png",
+    "detailImg": "https://store.img11.co.kr/37273654/691dbef5-a2fe-4148-841b-cde9539b1cd7_1663317359495.jpg",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -6435,16 +6436,16 @@
   {
     "id": 53,
     "product_no": 53,
-    "name": "[O  CD] 메즈 하이민트 입호흡 액상 30ml",
+    "name": "메즈 하이민트 입호흡 액상 30ml",
     "price": 16600,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202504/c0b46edaf355441a2f97f9c394bb68be.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202504/c0b46edaf355441a2f97f9c394bb68be.png",
     "detailImgs": [
-      "https://frokyvape.com/web/product/big/202504/d0fa3e8f112c3a27afc1f2f33aa7f6b0.png"
+      "https://store.img11.co.kr/37273654/745df4af-9fc6-4366-bc4d-ef9dec4f3229_1657598454783.jpg"
     ],
-    "detailImg": "https://frokyvape.com/web/product/big/202504/d0fa3e8f112c3a27afc1f2f33aa7f6b0.png",
+    "detailImg": "https://store.img11.co.kr/37273654/745df4af-9fc6-4366-bc4d-ef9dec4f3229_1657598454783.jpg",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -6458,17 +6459,17 @@
   {
     "id": 1736,
     "product_no": 1736,
-    "name": "[A] 파이 고농도 입호흡 액상 30ml",
+    "name": "파이 입호흡 액상 30ml",
     "price": 15500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202310/f3d631da767baba8803379a3aa2c9417.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202310/f3d631da767baba8803379a3aa2c9417.png",
     "detailImgs": [
-      "https://frokyvape.com/web/product/big/202310/49098de28508ed3dfac9f57601d65fe0.png"
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973516093_91qa.jpg"
     ],
-    "detailImg": "https://frokyvape.com/web/product/big/202310/49098de28508ed3dfac9f57601d65fe0.png",
-    "cat": "고농도",
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973516093_91qa.jpg",
+    "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "ST 베리",
@@ -6486,6 +6487,51 @@
       "토트",
       "팔팔",
       "홍 T"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 1426,
+    "product_no": 1426,
+    "name": "리트머스 화이트라벨 입호흡 액상 30ml",
+    "price": 15500,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202404/d4e6bc2ff6593d5ec3ecff99e9afb5bb.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202404/d4e6bc2ff6593d5ec3ecff99e9afb5bb.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780972820857_to2c.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780972823103_7165.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780972825202_vk1o.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780972827569_9x73.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780972829388_pr5s.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780972820857_to2c.jpg",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "스피아 민트",
+      "아이스 블라스터",
+      "후라보노",
+      "G.그레이프 스톰",
+      "그린티",
+      "레몬 그린티",
+      "리얼 그레이프",
+      "박하사탕 (민트 캔디)",
+      "샤인머스캣",
+      "석류",
+      "시카고",
+      "아이스 딸기",
+      "아이스 샤인머스캣",
+      "아이스 콜라",
+      "아이스 타바코",
+      "알로에",
+      "유자 에이드",
+      "쿨 라임",
+      "쿨 스톤",
+      "토르크",
+      "파인 쿨"
     ],
     "optionPrices": {},
     "sale": false

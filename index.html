@@ -549,13 +549,14 @@ function closeNoticePopup(){try{if(document.getElementById('notice-popup-today')
 function closeNoticePopupOut(e){if(e.target===document.getElementById('notice-popup-overlay'))closeNoticePopup();}
 function setTheme(t){document.documentElement.setAttribute('data-theme',t);document.getElementById('btn-dark').classList.toggle('active',t==='dark');document.getElementById('btn-light').classList.toggle('active',t==='light');localStorage.setItem('fv-theme',t);}
 (()=>{const s=localStorage.getItem('fv-theme');if(s)setTheme(s);})();
+function escH(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function cardHTML(p){
   const imgs=getImgs(p);
   const img=imgs[0]||'';
   const multi=imgs.length>1;
   const thumbs=multi?`<div class="card-thumbs">${imgs.map((u,i)=>`<img class="card-thumb${i===0?' active':''}" src="${u}" loading="lazy" onclick="event.stopPropagation();switchCardImg(this,'${u.replace(/'/g,"\\'")}',${p.id})" onerror="this.style.display='none'">`).join('')}</div>`:'';
   const count=multi?`<span class="card-img-count">📷 ${imgs.length}</span>`:'';
-  return`<div class="card" id="card-${p.id}"><div class="card-img-wrap"><img id="card-main-${p.id}" src="${img}" alt="${p.name}" loading="lazy">${p.sale?'<span class="card-badge">SALE</span>':''}${count}<button class="card-quick" onclick="openSheet(${p.id})">간단보기 👁</button></div>${thumbs}<div class="card-body"><div class="card-name">${p.name}</div><div class="card-flavor">${p.flavor}</div><div class="card-price">${productDisplayPrice(p)}</div></div><div class="card-btns"><button class="btn-cart-card" onclick="openSheet(${p.id})">담기</button><button class="btn-buy-card" onclick="openSheet(${p.id})">구매하기</button></div></div>`;
+  return`<div class="card" id="card-${p.id}"><div class="card-img-wrap"><img id="card-main-${p.id}" src="${img}" alt="${escH(p.name)}" loading="lazy">${p.sale?'<span class="card-badge">SALE</span>':''}${count}<button class="card-quick" onclick="openSheet(${p.id})">간단보기 👁</button></div>${thumbs}<div class="card-body"><div class="card-name">${escH(p.name)}</div><div class="card-flavor">${escH(p.flavor||'')}</div><div class="card-price">${productDisplayPrice(p)}</div></div><div class="card-btns"><button class="btn-cart-card" onclick="openSheet(${p.id})">담기</button><button class="btn-buy-card" onclick="openSheet(${p.id})">구매하기</button></div></div>`;
 }
 function switchCardImg(el,url,pid){document.getElementById('card-main-'+pid).src=url;const card=document.getElementById('card-'+pid);card.querySelectorAll('.card-thumb').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
 let bestAutoRaf=0,bestPausedUntil=0,bestDragging=false,bestStartX=0,bestStartOffset=0,bestOffset=0,bestSuppressClick=false;
@@ -648,7 +649,7 @@ function sheetBuyNow(){
   _pmPayQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
   _pmPayCopyText=String(_pmPayQty);
   _pmRealCopyText=`${sp.name}${opt&&opt!=='옵션 없음'?` / ${opt}`:''} × ${sq}개`;
-  document.getElementById('pm-items').innerHTML=`<div class="order-row"><div><div class="order-row-name">${sp.name}</div><div class="order-row-opt">${opt&&opt!=='옵션 없음'?`${opt} × `:''}${sq}개</div></div><span class="order-row-price">${fmt(total)}</span></div>`;
+  document.getElementById('pm-items').innerHTML=`<div class="order-row"><div><div class="order-row-name">${escH(sp.name)}</div><div class="order-row-opt">${opt&&opt!=='옵션 없음'?`${escH(opt)} × `:''}${sq}개</div></div><span class="order-row-price">${fmt(total)}</span></div>`;
   document.getElementById('pm-total').textContent=fmt(total);
   document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();
   document.getElementById('pm-pay-amount').textContent=fmt(total);
@@ -665,7 +666,7 @@ function openPayModal(){
   _pmPayQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
   _pmPayCopyText=String(_pmPayQty);
   _pmRealCopyText=cart.map(c=>`${c.name}${c.option&&c.option!=='옵션 없음'?` / ${c.option}`:''} × ${c.qty}개`).join('\n');
-  document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${c.name}</div><div class="order-row-opt">${c.option} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');
+  document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${escH(c.name)}</div><div class="order-row-opt">${escH(c.option)} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');
   document.getElementById('pm-total').textContent=fmt(total);
   document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();
   document.getElementById('pm-pay-amount').textContent=fmt(total);
@@ -739,9 +740,16 @@ async function loadProducts({silent=false}={}){
     const next=await fetchProductsFresh();
     productsHash=JSON.stringify(next);
     P=next;
+    try{localStorage.setItem('fv-products-cache',JSON.stringify(next));}catch(e){}
     renderCurrentView();
   }catch(e){
-    if(!silent)document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품 준비 중입니다 😊</div>';
+    try{
+      const cached=localStorage.getItem('fv-products-cache');
+      if(cached){P=JSON.parse(cached);productsHash=JSON.stringify(P);renderCurrentView();if(!silent)showToast('네트워크 오류 — 캐시된 상품 표시 중');}
+      else if(!silent)document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품 준비 중입니다 😊</div>';
+    }catch(ce){
+      if(!silent)document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품 준비 중입니다 😊</div>';
+    }
   }
 }
 async function refreshIfChanged(){
