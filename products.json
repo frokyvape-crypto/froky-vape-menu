@@ -2966,16 +2966,15 @@
       "https://frokyvape.com/web/product/medium/202407/5a3ecc2d66957e21886c56e8083c9f4d.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202407/5a3ecc2d66957e21886c56e8083c9f4d.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202407/b0c4690d0a9128b41a945dfb4bfd7001.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202407/b0c4690d0a9128b41a945dfb4bfd7001.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "솔티 리치",
       "솔티 알로에베라"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
