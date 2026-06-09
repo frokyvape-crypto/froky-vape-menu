@@ -6184,16 +6184,14 @@
   {
     "id": 99,
     "product_no": 99,
-    "name": "[A] 레인보우리퀴드 레인보우 입호흡 액상 30ml",
+    "name": "레인보우리퀴드 레인보우 입호흡 액상 30ml",
     "price": 12800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202309/ae5e18f6e37f88a47874d7a736851f06.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202309/ae5e18f6e37f88a47874d7a736851f06.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202309/6e83ec232c6274aa36651445b808ff8c.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202309/6e83ec232c6274aa36651445b808ff8c.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.5mg",
     "options": [
