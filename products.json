@@ -5795,16 +5795,14 @@
   {
     "id": 2792,
     "product_no": 2792,
-    "name": "[O] 보졸 매직 플렉스 일회용 전자담배 25ml",
+    "name": "보졸 매직 플렉스 일회용 전자담배 25ml",
     "price": 22500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/9f17cffb16344cb0b5541d4438b841f1.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/9f17cffb16344cb0b5541d4438b841f1.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/2fcd1abd63c3442cc619edd268209301.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/2fcd1abd63c3442cc619edd268209301.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "40,000 퍼프",
     "options": [
