@@ -573,22 +573,8 @@
       "https://frokyvape.com/web/product/medium/202312/5b4091334f62a4be0294ffe48fb73949.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202312/5b4091334f62a4be0294ffe48fb73949.png",
-    "detailImgs": [
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971337953_v9kg.jpg",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971339213_l2w5.jpg",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971340396_33zt.jpg",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971341640_p03h.jpg",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971342871_suvc.jpg",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971344111_ro8z.jpg",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971345465_ea0t.jpg",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971346672_6hit.png",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971347932_h6g0.jpg",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971349165_hcqu.jpg",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971350396_uwwo.jpg",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971351605_a9t0.jpg",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971352660_rn8k.jpg"
-    ],
-    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971337953_v9kg.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -6272,6 +6258,59 @@
     "options": [
       "퍼플 드링크",
       "파워 드링크"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2368,
+    "product_no": 2368,
+    "name": "[고농도] 프라임 체크 입호흡 액상 30ml",
+    "price": 17100,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202508/5a1dcdb3d399915f52918536016521e5.jpg"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202508/5a1dcdb3d399915f52918536016521e5.jpg",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202508/445aaad561b3e19f563cdd328c5a7f7e.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202508/445aaad561b3e19f563cdd328c5a7f7e.jpg",
+    "cat": "고농도",
+    "flavor": "1.98%",
+    "options": [
+      "[고농도] 아이스 레몬",
+      "[고농도] 쿨툰드라",
+      "[고농도] 파워멘솔"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 1819,
+    "product_no": 1819,
+    "name": "[O B] 프라임 앗! 차가! 입호흡 액상 30ml",
+    "price": 11500,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202412/c18a1cb81f6965b3c74ddcadeecdf7dd.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202412/c18a1cb81f6965b3c74ddcadeecdf7dd.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202412/84f4f654cc520405bd02fbf3a47c0ef4.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202412/84f4f654cc520405bd02fbf3a47c0ef4.png",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "그레이프",
+      "애플",
+      "멜론",
+      "워터멜론",
+      "체리",
+      "피치",
+      "소다",
+      "히비스알로",
+      "스트로베리",
+      "바나나"
     ],
     "optionPrices": {},
     "sale": false
