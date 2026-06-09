@@ -3196,15 +3196,14 @@
       "https://frokyvape.com/web/product/medium/202310/be0f25db4dde76b0fb7dd838149d1cc5.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202310/be0f25db4dde76b0fb7dd838149d1cc5.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202310/2fcb243e801401bc130f391020a2f3fa.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202310/2fcb243e801401bc130f391020a2f3fa.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
       "더블 슬로우 블로우"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
