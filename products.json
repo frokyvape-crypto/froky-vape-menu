@@ -697,10 +697,8 @@
       "https://frokyvape.com/web/product/medium/202407/7b5d6728b0b5ce0fef55ac1244ca6395.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202407/7b5d6728b0b5ce0fef55ac1244ca6395.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202407/19bdf9584d675dc1abcffa735d830bf1.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202407/19bdf9584d675dc1abcffa735d830bf1.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -714,6 +712,7 @@
       "슈퍼 샤인",
       "애플 민트"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
