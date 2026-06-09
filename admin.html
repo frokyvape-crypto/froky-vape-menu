@@ -2000,7 +2000,10 @@ async function importSelected() {
       return next;
     }, `카페24 상품 ${sel.length}개 반영`);
     document.getElementById('c24-result').style.display = 'none';
-    await showSection('sec-products');
+    // GitHub CDN 캐시 문제로 showSection 재로드 생략 — persistProductsMutation이 이미 저장+렌더링 완료
+    document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+    document.getElementById('sec-products').style.display = 'block';
+    startAutoRefresh();
     toast(`${added}개 추가됨${updated ? `, 기존 ${updated}개 옵션 갱신됨` : ''}`, added || updated ? 'ok' : 'info');
   } catch (e) {
     toast('카페24 상품 반영 실패: ' + e.message, 'err');
