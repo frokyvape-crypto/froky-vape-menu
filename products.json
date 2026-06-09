@@ -5533,16 +5533,14 @@
   {
     "id": 2695,
     "product_no": 2695,
-    "name": "♥2+1♥ 오레비 입호흡 액상 30ml",
+    "name": "오레비 입호흡 액상 30ml",
     "price": 8800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202601/511891d000b9c4ef5d95a255dbbbcee9.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202601/511891d000b9c4ef5d95a255dbbbcee9.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202601/aa9793bd3c611c42cbba9e978392f796.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202601/aa9793bd3c611c42cbba9e978392f796.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
