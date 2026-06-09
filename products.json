@@ -6312,16 +6312,14 @@
   {
     "id": 558,
     "product_no": 558,
-    "name": "[O 3 B] 쓰리탑스 아이스버그 피치 폐호흡 액상 60ml",
+    "name": "쓰리탑스 아이스버그 피치 폐호흡 액상 60ml",
     "price": 22500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202309/69f1340c1de83b1a4883847d28975bb0.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202309/69f1340c1de83b1a4883847d28975bb0.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202309/b9a79857859e1e7ed6ace8f6774e79f3.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202309/b9a79857859e1e7ed6ace8f6774e79f3.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
