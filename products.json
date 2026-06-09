@@ -968,11 +968,9 @@
       "https://frokyvape.com/web/product/medium/202406/ba5cfa8c7bafb0dcf7296102b9be7dee.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202406/ba5cfa8c7bafb0dcf7296102b9be7dee.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202406/003246e6a063c3cf6139cc0ef1cb872f.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202406/003246e6a063c3cf6139cc0ef1cb872f.png",
-    "cat": "노멘솔",
+    "detailImgs": [],
+    "detailImg": "",
+    "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
       "더블 라임",
