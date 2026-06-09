@@ -604,8 +604,22 @@
       "https://frokyvape.com/web/product/medium/202312/b338126da901337ffea5f13b963fb8c2.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202312/b338126da901337ffea5f13b963fb8c2.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973054609_sl8n.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973056273_wxxu.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973057890_0uya.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973059486_xw1v.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973061101_5y41.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973063425_qzlh.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973066606_zq2b.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973068129_y1b6.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973069816_6upl.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973071846_s6gu.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973073908_h1kh.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973075476_yla2.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973077107_2m37.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973054609_sl8n.jpg",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -6458,7 +6472,7 @@
   {
     "id": 1736,
     "product_no": 1736,
-    "name": "[A] 파이 고농도 입호흡 액상 30ml",
+    "name": "파이 입호흡 액상 30ml",
     "price": 15500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202310/f3d631da767baba8803379a3aa2c9417.png"
@@ -6493,53 +6507,44 @@
   {
     "id": 1426,
     "product_no": 1426,
-    "name": "[O] 리트머스 화이트라벨 입호흡 액상 30ml",
+    "name": "리트머스 화이트라벨 입호흡 액상 30ml",
     "price": 15500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202404/d4e6bc2ff6593d5ec3ecff99e9afb5bb.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202404/d4e6bc2ff6593d5ec3ecff99e9afb5bb.png",
     "detailImgs": [
-      "https://frokyvape.com/web/product/big/202404/49fb0139da466a124e9009b3bbe26bf3.png"
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780972820857_to2c.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780972823103_7165.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780972825202_vk1o.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780972827569_9x73.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780972829388_pr5s.jpg"
     ],
-    "detailImg": "https://frokyvape.com/web/product/big/202404/49fb0139da466a124e9009b3bbe26bf3.png",
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780972820857_to2c.jpg",
     "cat": "입호흡",
-    "flavor": "",
+    "flavor": "9.8mg",
     "options": [
-      "G. 그레이프 스톰",
+      "스피아 민트",
+      "아이스 블라스터",
+      "후라보노",
+      "G.그레이프 스톰",
       "그린티",
       "레몬 그린티",
       "리얼 그레이프",
-      "멜론",
-      "민트",
-      "박하사탕",
-      "샤인머스켓",
+      "박하사탕 (민트 캔디)",
+      "샤인머스캣",
       "석류",
       "시카고",
       "아이스 딸기",
-      "아이스 망고",
-      "아이스 멜론",
-      "아이스 샤인머스켓",
-      "아이스 수박",
-      "아이스 체리",
+      "아이스 샤인머스캣",
       "아이스 콜라",
-      "아이스 키위",
       "아이스 타바코",
       "알로에",
-      "애플 키스",
       "유자 에이드",
-      "자몽 에이드",
       "쿨 라임",
       "쿨 스톤",
-      "퀸스 톰",
       "토르크",
-      "파인 쿨",
-      "피치 그린티",
-      "카페라떼",
-      "후라보노 (신규)",
-      "아이스 블라스터 (신규)",
-      "허니 우롱티 (신규)",
-      "스피아 민트 (신규)"
+      "파인 쿨"
     ],
     "optionPrices": {},
     "sale": false
