@@ -4124,16 +4124,15 @@
       "https://frokyvape.com/web/product/medium/202512/1785ad68f56695bc3afdc6e02674ab3b.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202512/1785ad68f56695bc3afdc6e02674ab3b.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202512/2c86655f25176d467b88cc669eba52ec.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202512/2c86655f25176d467b88cc669eba52ec.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "딸기 사과 빙수",
       "애플 망고 빙수"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
