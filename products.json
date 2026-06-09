@@ -1629,16 +1629,15 @@
       "https://frokyvape.com/web/product/medium/202604/c74cc64925a0cf7b8bc696abbfabef5a.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202604/c74cc64925a0cf7b8bc696abbfabef5a.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202604/26689a9d97200ae728faf3102a7ab7a7.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202604/26689a9d97200ae728faf3102a7ab7a7.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "라임",
       "파인 레몬 소다"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
