@@ -363,10 +363,8 @@
       "https://frokyvape.com/web/product/medium/202407/623673045d15a70b38d747208ba6f59d.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202407/623673045d15a70b38d747208ba6f59d.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202407/093dbf32b85309ec1d980d00db6d04f9.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202407/093dbf32b85309ec1d980d00db6d04f9.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -377,6 +375,7 @@
       "아이스 레몬",
       "TNT 시가"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
