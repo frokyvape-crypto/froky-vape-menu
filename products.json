@@ -3158,15 +3158,14 @@
       "https://frokyvape.com/web/product/medium/202312/b802084b9152766d7bdc9086d10f4793.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202312/b802084b9152766d7bdc9086d10f4793.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202312/3fedbfdfc1bf2694b744c8e369db2bc6.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202312/3fedbfdfc1bf2694b744c8e369db2bc6.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "마세"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
