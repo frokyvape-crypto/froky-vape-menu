@@ -3058,10 +3058,8 @@
       "https://frokyvape.com/web/product/medium/202402/730fe3a153c2931c4d641a8e804c9f56.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202402/730fe3a153c2931c4d641a8e804c9f56.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202402/0304adef07d00c8b5232bbd29f771dbf.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202402/0304adef07d00c8b5232bbd29f771dbf.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -3069,6 +3067,7 @@
       "핑크",
       "로젤"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
