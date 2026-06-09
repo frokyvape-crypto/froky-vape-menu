@@ -500,10 +500,8 @@
       "https://frokyvape.com/web/product/medium/202403/657f37ca8fd1bbb0b9a1ce9a9751913f.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202403/657f37ca8fd1bbb0b9a1ce9a9751913f.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202403/9c3b9df5f9e00d9788cf4e64f976771b.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202403/9c3b9df5f9e00d9788cf4e64f976771b.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -512,6 +510,7 @@
       "멘솔",
       "시가"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
