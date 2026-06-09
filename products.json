@@ -3215,15 +3215,14 @@
       "https://frokyvape.com/web/product/medium/202309/7c934ccf8a19a0d391d27ad67c2d4c9c.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202309/7c934ccf8a19a0d391d27ad67c2d4c9c.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202309/c040fbd14147701e08d852bcd9beda6e.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202309/c040fbd14147701e08d852bcd9beda6e.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "더블 슬로우 블로우"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
