@@ -573,8 +573,22 @@
       "https://frokyvape.com/web/product/medium/202312/5b4091334f62a4be0294ffe48fb73949.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202312/5b4091334f62a4be0294ffe48fb73949.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971297152_xk75.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971298474_jwhb.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971299782_mghi.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971301308_yv8j.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971302508_s22f.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971304215_tntq.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971305440_831o.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971306615_hsjs.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971307822_bdmq.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971309080_j1wy.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971310391_cqzc.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971311641_hhjv.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971312794_0ssj.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780971297152_xk75.jpg",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -5042,6 +5056,26 @@
     "detailImg": "https://frokyvape.com/web/product/big/202402/a10d3c82b84dfc2bf180d0b3c76567b1.png",
     "cat": "일회용",
     "flavor": "10,000 퍼프 / 단종 예정",
+    "options": [],
+    "optionPrices": {},
+    "sale": false,
+    "hidden": true
+  },
+  {
+    "id": 1206,
+    "product_no": 1206,
+    "name": "[KV] 베이핑라이더 입호흡 액상 30ml",
+    "price": 6500,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202401/d557020e5a2b38eb27b83a060ad655ff.jpg"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202401/d557020e5a2b38eb27b83a060ad655ff.jpg",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202401/b22ea1cedcf0a2a4fa129d3dd30fe8d4.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202401/b22ea1cedcf0a2a4fa129d3dd30fe8d4.jpg",
+    "cat": "입호흡",
+    "flavor": "1박스 (10병) 단위로 구매 가능 상품입니다",
     "options": [],
     "optionPrices": {},
     "sale": false,
