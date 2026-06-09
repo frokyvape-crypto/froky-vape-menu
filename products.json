@@ -1971,10 +1971,8 @@
       "https://frokyvape.com/web/product/medium/202509/3e9f48aa2e10df2013d7b920ed5969f8.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/3e9f48aa2e10df2013d7b920ed5969f8.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/81ac705632e48dffa9819a10e011f274.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/81ac705632e48dffa9819a10e011f274.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -1982,6 +1980,7 @@
       "알로에",
       "소다"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
