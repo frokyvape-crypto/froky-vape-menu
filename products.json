@@ -3814,10 +3814,8 @@
       "https://frokyvape.com/web/product/medium/202407/ebfe41774df67cfa5f0a234e4be385e3.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202407/ebfe41774df67cfa5f0a234e4be385e3.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202407/79efcafdc7caf718a99288ec7f337c32.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202407/79efcafdc7caf718a99288ec7f337c32.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg / 5병단위 구매 가능",
     "options": [
@@ -3837,6 +3835,7 @@
       "타박멘솔 (5병)",
       "화이트펀치 (5병)"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
