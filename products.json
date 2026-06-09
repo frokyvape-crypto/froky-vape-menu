@@ -1060,11 +1060,9 @@
       "https://frokyvape.com/web/product/medium/202406/1c3658ea90009a5997057028fe33d8fb.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202406/1c3658ea90009a5997057028fe33d8fb.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202406/0abcf6ebba62517b2fa373689f7b075c.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202406/0abcf6ebba62517b2fa373689f7b075c.png",
-    "cat": "폐호흡-고농도",
+    "detailImgs": [],
+    "detailImg": "",
+    "cat": "일회용",
     "flavor": "12,000퍼프 / 배터리 미포함",
     "options": [
       "야쿠르트 (액상 팟)",
