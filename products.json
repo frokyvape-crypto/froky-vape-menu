@@ -3460,10 +3460,8 @@
       "https://frokyvape.com/web/product/medium/202504/1c44ed6064f78627d8ec045a754f7714.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202504/1c44ed6064f78627d8ec045a754f7714.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202504/e74b15212d95945133e463b2173bf251.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202504/e74b15212d95945133e463b2173bf251.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -3474,6 +3472,7 @@
       "스카디 레인보우",
       "스카디 퍼플"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
