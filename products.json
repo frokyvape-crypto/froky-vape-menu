@@ -5662,7 +5662,8 @@
     "flavor": "9.9mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 360,
@@ -5681,7 +5682,8 @@
     "flavor": "9.9mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 284,
