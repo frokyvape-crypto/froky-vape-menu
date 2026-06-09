@@ -5123,7 +5123,8 @@
     "flavor": "",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 2453,
@@ -5142,7 +5143,8 @@
     "flavor": "60ml 대용량 입호흡",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 2320,
