@@ -5993,16 +5993,14 @@
   {
     "id": 1718,
     "product_no": 1718,
-    "name": "[긱베이프] 긱바 펄스 일회용 전자담배 16ml",
+    "name": "긱베이프 긱바 펄스 일회용 전자담배 16ml",
     "price": 15900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202601/39a40d9c02f55d43e55c27939aa2d0b3.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202601/39a40d9c02f55d43e55c27939aa2d0b3.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202601/39c6dffce2f26d41eeb4e7e61d2dc0e1.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202601/39c6dffce2f26d41eeb4e7e61d2dc0e1.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "15,000 퍼프",
     "options": [],
