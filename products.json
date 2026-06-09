@@ -2690,10 +2690,8 @@
       "https://frokyvape.com/web/product/medium/202507/c39a5a5987accdba0d3cab1e673cf0d6.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202507/c39a5a5987accdba0d3cab1e673cf0d6.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202507/e235985f0d66a39f42a7baa3141ac5a9.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202507/e235985f0d66a39f42a7baa3141ac5a9.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "30,000 퍼프",
     "options": [
@@ -2712,6 +2710,7 @@
       "멜론 머스크 (2%)",
       "빔토볼 (2%)"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
