@@ -544,8 +544,10 @@
       "https://frokyvape.com/web/product/medium/202402/ecd5f6c8c80d2bd22c02bd24354d25f3.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202402/ecd5f6c8c80d2bd22c02bd24354d25f3.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202402/d085220e6f5d68fa648ad25afb0959cb.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202402/d085220e6f5d68fa648ad25afb0959cb.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -560,8 +562,7 @@
       "브로콜리",
       "지방시가"
     ],
-    "sale": false,
-    "optionPrices": {}
+    "sale": false
   },
   {
     "id": 1111,
@@ -1324,7 +1325,7 @@
   {
     "id": 1580,
     "product_no": 1580,
-    "name": "[A] 베라 9.9mg 입호흡 액상 30ml",
+    "name": "[9.9mg] 베라 입호흡 액상 30ml",
     "price": 18100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202407/246ef5b6f78519d5fb27e3d29f6cfe49.png"
@@ -1332,7 +1333,7 @@
     "img": "https://frokyvape.com/web/product/medium/202407/246ef5b6f78519d5fb27e3d29f6cfe49.png",
     "detailImgs": [],
     "detailImg": "",
-    "cat": "고농도",
+    "cat": "입호흡",
     "flavor": "9.9mg",
     "options": [],
     "optionPrices": {},
