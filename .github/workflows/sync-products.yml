@@ -83,15 +83,18 @@ def get_cat(name, tags):
 
 existing_cats = {}
 existing_option_prices = {}
-existing_hidden = set()
+deleted_product_ids = set()
 try:
     with open("products.json", encoding="utf-8") as f:
         for ep in json.load(f):
             existing_cats[ep["id"]] = ep["cat"]
             if ep.get("optionPrices"):
                 existing_option_prices[ep["id"]] = ep["optionPrices"]
-            if ep.get("hidden"):
-                existing_hidden.add(ep["id"])
+except Exception:
+    pass
+try:
+    with open("site-config.json", encoding="utf-8") as f:
+        deleted_product_ids = {int(v) for v in json.load(f).get("deletedProductIds", [])}
 except Exception:
     pass
 
@@ -103,6 +106,8 @@ for p in all_products:
 
     name = p.get("product_name", "")
     pno = p["product_no"]
+    if pno in deleted_product_ids:
+        continue
 
     options = []
     if p.get("has_option") == "T":
@@ -129,8 +134,6 @@ for p in all_products:
         "options":      options,
         "optionPrices": existing_option_prices.get(pno, {}),
     }
-    if pno in existing_hidden:
-        item["hidden"] = True
     result.append(item)
 
 with open("products.json", "w", encoding="utf-8") as f:

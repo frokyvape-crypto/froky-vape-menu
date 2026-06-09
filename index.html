@@ -737,9 +737,8 @@ async function loadProducts({silent=false}={}){
   if(!silent)document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품을 불러오는 중... ⏳</div>';
   try{
     const next=await fetchProductsFresh();
-    const visible=next.filter(p=>!p.hidden);
-    productsHash=JSON.stringify(visible);
-    P=visible;
+    productsHash=JSON.stringify(next);
+    P=next;
     renderCurrentView();
   }catch(e){
     if(!silent)document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품 준비 중입니다 😊</div>';

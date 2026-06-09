@@ -227,8 +227,8 @@ tr:hover td{background:rgba(128,128,128,.06);}
       </div>
       <div class="action-card" data-deploy onclick="saveAndDeploy()">
         <div class="ac-icon">🚀</div>
-        <div class="ac-title">저장 & 배포</div>
-        <div class="ac-desc">변경사항 즉시 사이트에 반영</div>
+        <div class="ac-title">새로고침 & 동기화</div>
+        <div class="ac-desc">모든 관리자의 최신 상태 확인</div>
       </div>
     </div>
 
@@ -361,7 +361,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
             <tbody id="cat-body"></tbody>
           </table>
         </div>
-        <button class="btn btn-g" id="btn-save-categories" onclick="saveSiteConfig()">카테고리 저장</button>
+        <button class="btn btn-g" id="btn-save-categories" onclick="saveSiteConfig('categories')">카테고리 저장</button>
       </div>
     </div>
 
@@ -403,10 +403,10 @@ tr:hover td{background:rgba(128,128,128,.06);}
           </div>
         </div>
         <div class="toggle-wrap">
-          <label class="toggle"><input type="checkbox" id="notice-popup-enabled"><span class="slider"></span></label>
+          <label class="toggle"><input type="checkbox" id="notice-popup-enabled" onchange="markConfigDirty()"><span class="slider"></span></label>
           <span style="font-size:.83rem;color:var(--muted)">메인 페이지 접속 시 안내 팝업 표시</span>
         </div>
-        <button class="btn btn-g" id="btn-save-config" onclick="saveSiteConfig()">공지 설정 저장</button>
+        <button class="btn btn-g" id="btn-save-config" onclick="saveSiteConfig('notice')">공지 설정 저장</button>
       </div>
     </div>
   </div>
@@ -547,7 +547,11 @@ let categories = [...DEFAULT_SITE_CONFIG.categories];
 let selectedNoticeMode = 'stock';
 let isSaving = false;
 let remoteHash = '';
+let remoteConfigHash = '';
 let autoRefreshTimer = null;
+let pendingRemoteProducts = null;
+let pendingRemoteConfig = null;
+let configDirty = false;
 const DEFAULT_WORKER_URL = 'https://froky-vape-admin.frokyvape.workers.dev';
 let WORKER_URL = localStorage.getItem('fv-worker-url') || DEFAULT_WORKER_URL;
 let ADMIN_KEY = localStorage.getItem('fv-admin-key') || '';
@@ -585,6 +589,8 @@ function showApp() {
   document.getElementById('page-login').style.display = 'none';
   document.getElementById('page-app').style.display = 'flex';
   updateTopbar();
+  startAutoRefresh();
+  refreshAdminData({ silent: true });
 }
 function doLogin() {
   const t = (document.getElementById('inp-token').value || '').trim();
@@ -596,6 +602,7 @@ function doLogin() {
   toast('로그인 완료' + (products.length ? ` (캐시 ${products.length}개 복원)` : ''), 'ok');
 }
 function logout() {
+  stopAutoRefresh();
   TOKEN = '';
   localStorage.removeItem('fv-adm');
   products = []; fileSha = '';
@@ -620,14 +627,13 @@ async function ensureSiteConfigLoaded() {
 }
 
 async function showSection(id) {
+  const leavingConfigEditor = id !== 'sec-notice' && id !== 'sec-categories' && pendingRemoteConfig;
+  if (leavingConfigEditor) applyRemoteConfig(pendingRemoteConfig);
   document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
   document.getElementById(id).style.display = 'block';
   if (id === 'sec-products') {
     await ensureSiteConfigLoaded();
-    loadProducts();  // 항상 최신 데이터 로드
-    startAutoRefresh();
-  } else {
-    stopAutoRefresh();
+    await loadProducts();
   }
   if (id === 'sec-notice' || id === 'sec-categories') await loadSiteConfig();
 }
@@ -779,6 +785,7 @@ function addNoticeImg(slot) {
   noticeImgSlots[slot].push({ url, file: null, preview: url });
   inp.value = '';
   renderNoticeImgGrid(slot);
+  markConfigDirty();
 }
 function addNoticeImgFiles(input, slot) {
   [...input.files].forEach(file => {
@@ -787,24 +794,36 @@ function addNoticeImgFiles(input, slot) {
   });
   input.value = '';
   renderNoticeImgGrid(slot);
+  markConfigDirty();
 }
 function removeNoticeImg(slot, idx) {
   noticeImgSlots[slot].splice(idx, 1);
   renderNoticeImgGrid(slot);
+  markConfigDirty();
 }
 
-async function loadProducts() {
-  document.getElementById('tbl-body').innerHTML = '<tr><td colspan="8" class="empty-msg"><span class="spin"></span>불러오는 중...</td></tr>';
+async function fetchLatestProducts() {
+  let r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${FILE}?t=${Date.now()}`, { cache: 'no-store' });
+  if (!r.ok) r = await fetch(`${FILE}?t=${Date.now()}`, { cache: 'no-store' });
+  if (!r.ok) throw new Error(`products.json 조회 실패 (${r.status})`);
+  const data = await r.json();
+  if (!Array.isArray(data)) throw new Error('products.json 형식이 올바르지 않습니다');
+  return data;
+}
+
+async function loadProducts({ silent = false } = {}) {
+  if (!silent) document.getElementById('tbl-body').innerHTML = '<tr><td colspan="8" class="empty-msg"><span class="spin"></span>불러오는 중...</td></tr>';
   try {
-    let r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${FILE}?t=${Date.now()}`, { cache: 'no-store' });
-    if (!r.ok) r = await fetch(`${FILE}?t=${Date.now()}`, { cache: 'no-store' });
-    if (!r.ok) { products = []; fileSha = ''; renderTable(); toast('products.json 없음', 'info'); return; }
+    const latest = await fetchLatestProducts();
     fileSha = '';
-    products = await r.json();
+    products = latest;
     remoteHash = JSON.stringify(products);
     dbSave();
-    renderTable(); toast(`상품 ${products.length}개 로드`, 'ok');
-  } catch (e) { toast('로드 실패: ' + e.message, 'err'); }
+    renderTable();
+    if (!silent) toast(`상품 ${products.length}개 로드`, 'ok');
+  } catch (e) {
+    if (!silent) toast('로드 실패: ' + e.message, 'err');
+  }
 }
 
 function renderNoticeModes() {
@@ -826,6 +845,7 @@ function renderNoticeModes() {
 function selectNoticeMode(value) {
   selectedNoticeMode = value;
   renderNoticeModes();
+  markConfigDirty();
 }
 
 function addNoticeMode() {
@@ -840,6 +860,7 @@ function addNoticeMode() {
   labelEl.value = '';
   valueEl.value = '';
   renderNoticeModes();
+  markConfigDirty();
 }
 
 function removeNoticeMode(idx) {
@@ -849,6 +870,7 @@ function removeNoticeMode(idx) {
     selectedNoticeMode = noticeModes[0]?.value || '';
   }
   renderNoticeModes();
+  markConfigDirty();
 }
 
 function normalizeCategories(list) {
@@ -905,6 +927,7 @@ function moveCat(idx, dir) {
   if (to < 0 || to >= categories.length) return;
   [categories[idx], categories[to]] = [categories[to], categories[idx]];
   renderCategoryControls();
+  markConfigDirty();
   toast('순서 변경됨 - 저장을 눌러 반영하세요', 'ok');
 }
 
@@ -917,6 +940,7 @@ function addCategory() {
   categories.push({ label, value });
   labelEl.value = '';
   renderCategoryControls();
+  markConfigDirty();
   toast('카테고리 추가됨 - 저장을 눌러 반영하세요', 'ok');
 }
 
@@ -926,12 +950,28 @@ function updateCategory(idx, key, raw) {
   categories[idx][key] = key === 'value' ? value.replace(/\s+/g, '-') : value;
   categories = normalizeCategories(categories);
   renderCategoryControls();
+  markConfigDirty();
 }
 
 function removeCategory(idx) {
   if (products.some(p => p.cat === categories[idx].value) && !confirm('이 카테고리를 사용하는 상품이 있습니다. 그래도 삭제할까요?')) return;
   categories.splice(idx, 1);
   renderCategoryControls();
+  markConfigDirty();
+}
+
+function markConfigDirty() {
+  configDirty = true;
+}
+
+function applyRemoteConfig(nextConfig) {
+  siteConfig = {...DEFAULT_SITE_CONFIG, ...(nextConfig || {})};
+  siteConfigLoaded = true;
+  remoteConfigHash = JSON.stringify(siteConfig);
+  pendingRemoteConfig = null;
+  configDirty = false;
+  setNoticeForm();
+  renderTable();
 }
 
 function setNoticeForm() {
@@ -955,101 +995,124 @@ function setNoticeForm() {
   renderNoticeImgGrid('popup');
 }
 
-async function loadSiteConfig() {
+async function fetchLatestSiteConfig() {
+  let r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${CONFIG_FILE}?t=${Date.now()}`, { cache: 'no-store' });
+  if (!r.ok) r = await fetch(`${CONFIG_FILE}?t=${Date.now()}`, { cache: 'no-store' });
+  if (!r.ok) throw new Error(`site-config.json 조회 실패 (${r.status})`);
+  return {...DEFAULT_SITE_CONFIG, ...(await r.json())};
+}
+
+async function loadSiteConfig({ silent = false } = {}) {
   try {
-    let r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${CONFIG_FILE}?t=${Date.now()}`, { cache: 'no-store' });
-    if (!r.ok) r = await fetch(`${CONFIG_FILE}?t=${Date.now()}`, { cache: 'no-store' });
-    if (!r.ok) {
-      siteConfig = {...DEFAULT_SITE_CONFIG};
-      siteConfigSha = '';
-      siteConfigLoaded = true;
-      setNoticeForm();
-      toast('공지 설정 파일 없음 - 기본값 표시', 'info');
-      return;
-    }
-    siteConfig = {...DEFAULT_SITE_CONFIG, ...(await r.json())};
+    siteConfig = await fetchLatestSiteConfig();
     siteConfigSha = '';
     siteConfigLoaded = true;
+    remoteConfigHash = JSON.stringify(siteConfig);
+    configDirty = false;
+    pendingRemoteConfig = null;
     setNoticeForm();
-    toast('공지 설정 로드 완료', 'ok');
+    if (!silent) toast('공지 설정 로드 완료', 'ok');
   } catch (e) {
     siteConfig = {...DEFAULT_SITE_CONFIG};
     siteConfigLoaded = true;
     setNoticeForm();
-    toast('공지 설정 로드 실패: ' + e.message, 'err');
+    if (!silent) toast('공지 설정 로드 실패: ' + e.message, 'err');
   }
 }
 
-async function saveSiteConfig() {
+async function saveSiteConfig(scope = 'notice') {
   const btn = document.getElementById('btn-save-config');
   const catBtn = document.getElementById('btn-save-categories');
   btn.disabled = true;
   if (catBtn) catBtn.disabled = true;
-  btn.innerHTML = '<span class="spin"></span>저장 중...';
+  const activeBtn = scope === 'categories' ? catBtn : btn;
+  const originalLabel = activeBtn?.textContent || '저장';
+  if (activeBtn) activeBtn.innerHTML = '<span class="spin"></span>저장 중...';
   try {
-    let currentSha = '';
-    if (!(WORKER_URL && ADMIN_KEY)) {
-      const latest = await ghApi('GET', `/repos/${REPO}/contents/${CONFIG_FILE}?ref=main`);
-      if (latest.ok) currentSha = (await latest.json()).sha;
-      else if (latest.status !== 404) throw new Error(`설정 SHA 조회 실패 (${latest.status})`);
+    let finalBannerImgs = null;
+    let finalPopupImgs = null;
+    if (scope === 'notice') {
+      finalBannerImgs = [];
+      for (const item of noticeImgSlots.banner) {
+        if (item.file) { toast('배너 이미지 업로드 중...', 'info'); finalBannerImgs.push(await uploadImg(item.file)); }
+        else if (item.url) finalBannerImgs.push(item.url);
+      }
+      finalPopupImgs = [];
+      for (const item of noticeImgSlots.popup) {
+        if (item.file) { toast('팝업 이미지 업로드 중...', 'info'); finalPopupImgs.push(await uploadImg(item.file)); }
+        else if (item.url) finalPopupImgs.push(item.url);
+      }
+      if (!finalBannerImgs.length) finalBannerImgs.push(DEFAULT_SITE_CONFIG.noticeBannerImg);
+      if (!finalPopupImgs.length) finalPopupImgs.push(DEFAULT_SITE_CONFIG.noticePopupImg);
     }
 
-    const finalBannerImgs = [];
-    for (const item of noticeImgSlots.banner) {
-      if (item.file) { toast('배너 이미지 업로드 중...', 'info'); finalBannerImgs.push(await uploadImg(item.file)); }
-      else if (item.url) finalBannerImgs.push(item.url);
+    let savedConfig = null;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const latestConfig = await fetchLatestSiteConfig().catch(() => ({...DEFAULT_SITE_CONFIG}));
+      const nextConfig = scope === 'categories'
+        ? {...latestConfig, categories: normalizeCategories(categories)}
+        : {
+            ...latestConfig,
+            noticeMode: selectedNoticeMode || noticeModes[0]?.value || 'stock',
+            noticeModes: noticeModes,
+            noticeBannerImgs: finalBannerImgs,
+            noticeBannerImg: finalBannerImgs[0],
+            noticePopupEnabled: document.getElementById('notice-popup-enabled').checked,
+            noticePopupImgs: finalPopupImgs,
+            noticePopupImg: finalPopupImgs[0],
+          };
+
+      let status = 0;
+      let contentSha = '';
+      if (WORKER_URL && ADMIN_KEY) {
+        const wr = await fetch(WORKER_URL + '/api/github/config', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
+          body: JSON.stringify({ config: nextConfig }),
+        });
+        const wd = await wr.json();
+        status = wd.status || wr.status;
+        if (wr.ok && wd.ok) contentSha = wd.contentSha || '';
+        else if (attempt === 0 && (status === 409 || status === 422)) continue;
+        else throw Object.assign(new Error(wd.message || `Worker config ${wr.status}`), { status });
+      } else {
+        const latest = await ghApi('GET', `/repos/${REPO}/contents/${CONFIG_FILE}?ref=main`);
+        let currentSha = '';
+        if (latest.ok) currentSha = (await latest.json()).sha;
+        else if (latest.status !== 404) throw new Error(`설정 SHA 조회 실패 (${latest.status})`);
+        const body = {
+          message: `chore: ${scope === 'categories' ? '카테고리' : '공지 설정'} 업데이트 ${new Date().toLocaleString('ko-KR')}`,
+          content: base64EncodeUtf8(JSON.stringify(nextConfig, null, 2) + '\n'),
+          branch: 'main',
+        };
+        if (currentSha) body.sha = currentSha;
+        const r = await ghApi('PUT', `/repos/${REPO}/contents/${CONFIG_FILE}`, body);
+        status = r.status;
+        if (!r.ok) {
+          if (attempt === 0 && (status === 409 || status === 422)) continue;
+          let e = {}; try { e = await r.json(); } catch {}
+          throw Object.assign(new Error(e.message || `HTTP ${status}`), { status });
+        }
+        const saved = await r.json();
+        contentSha = saved.content?.sha || '';
+      }
+      savedConfig = nextConfig;
+      siteConfigSha = contentSha;
+      break;
     }
-    const finalPopupImgs = [];
-    for (const item of noticeImgSlots.popup) {
-      if (item.file) { toast('팝업 이미지 업로드 중...', 'info'); finalPopupImgs.push(await uploadImg(item.file)); }
-      else if (item.url) finalPopupImgs.push(item.url);
-    }
-    if (!finalBannerImgs.length) finalBannerImgs.push(DEFAULT_SITE_CONFIG.noticeBannerImg);
-    if (!finalPopupImgs.length)  finalPopupImgs.push(DEFAULT_SITE_CONFIG.noticePopupImg);
-    const nextConfig = {
-      noticeMode: selectedNoticeMode || noticeModes[0]?.value || 'stock',
-      noticeModes: noticeModes,
-      noticeBannerImgs: finalBannerImgs,
-      noticeBannerImg: finalBannerImgs[0],
-      noticePopupEnabled: document.getElementById('notice-popup-enabled').checked,
-      noticePopupImgs: finalPopupImgs,
-      noticePopupImg: finalPopupImgs[0],
-      categories: normalizeCategories(categories),
-    };
-    if (WORKER_URL && ADMIN_KEY) {
-      const wr = await fetch(WORKER_URL + '/api/github/config', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
-        body: JSON.stringify({ config: nextConfig }),
-      });
-      const wd = await wr.json();
-      if (!wr.ok || !wd.ok) throw new Error(wd.message || `Worker config ${wr.status}`);
-      siteConfig = nextConfig;
-      siteConfigSha = wd.contentSha || '';
-      toast('공지 설정 저장 완료', 'ok');
-      return;
-    }
-    const body = {
-      message: `chore: 공지 설정 업데이트 ${new Date().toLocaleString('ko-KR')}`,
-      content: base64EncodeUtf8(JSON.stringify(nextConfig, null, 2) + '\n'),
-      branch: 'main',
-    };
-    if (currentSha) body.sha = currentSha;
-    const r = await ghApi('PUT', `/repos/${REPO}/contents/${CONFIG_FILE}`, body);
-    if (!r.ok) {
-      let e = {}; try { e = await r.json(); } catch {}
-      throw new Error(e.message || `HTTP ${r.status}`);
-    }
-    const saved = await r.json();
-    siteConfig = nextConfig;
-    siteConfigSha = saved.content?.sha || '';
-    toast('공지 설정 저장 완료', 'ok');
+    if (!savedConfig) throw new Error('다른 관리자의 저장과 충돌했습니다. 다시 시도해 주세요.');
+    siteConfig = savedConfig;
+    remoteConfigHash = JSON.stringify(savedConfig);
+    configDirty = false;
+    pendingRemoteConfig = null;
+    setNoticeForm();
+    toast(scope === 'categories' ? '카테고리 저장 완료' : '공지 설정 저장 완료', 'ok');
   } catch (e) {
-    toast('공지 설정 저장 실패: ' + e.message, 'err');
+    toast((scope === 'categories' ? '카테고리' : '공지 설정') + ' 저장 실패: ' + e.message, 'err');
   } finally {
     btn.disabled = false;
     if (catBtn) catBtn.disabled = false;
-    btn.innerHTML = '공지 설정 저장';
+    if (activeBtn) activeBtn.textContent = originalLabel;
   }
 }
 
@@ -1085,11 +1148,8 @@ function renderTable() {
     <td style="font-size:.75rem;color:var(--muted)">${adminOptionsText(p)}</td>
     <td>${p.sale ? '<span class="sale-tag">SALE</span>' : ''}</td>
     <td><div class="td-btns">
-      ${p.hidden ? '<span style="font-size:.7rem;background:#888;color:#fff;padding:1px 5px;border-radius:3px;margin-right:4px">숨김</span>' : ''}
       <button class="btn btn-outline btn-xs" onclick="openEditModal(${p.id})">수정</button>
-      ${p.hidden
-        ? `<button class="btn btn-xs" style="background:var(--g);color:#fff" onclick="restoreProduct(${p.id})">복원</button>`
-        : `<button class="btn btn-red btn-xs" onclick="delProduct(${p.id})">삭제</button>`}
+      <button class="btn btn-red btn-xs" onclick="delProduct(${p.id})">삭제</button>
     </div></td>
   </tr>`).join('');
   updateDeleteBtn();
@@ -1099,31 +1159,62 @@ async function checkRemoteChanges() {
   if (isSaving) return;
   const anyModalOpen = !!document.querySelector('.modal.open');
   try {
-    const r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${FILE}?t=${Date.now()}`, { cache: 'no-store' });
-    if (!r.ok) return;
-    const data = await r.json();
+    const data = await fetchLatestProducts();
     const hash = JSON.stringify(data);
-    if (!remoteHash) { remoteHash = hash; return; }
-    if (hash !== remoteHash) {
+    if (!remoteHash) remoteHash = hash;
+    else if (hash !== remoteHash) {
       remoteHash = hash;
-      products = data;
-      dbSave();
-      if (!anyModalOpen) {
-        renderTable();
-        toast('🔄 다른 관리자의 변경사항이 반영되었습니다', 'ok');
+      if (anyModalOpen) {
+        pendingRemoteProducts = data;
+        toast('다른 관리자가 상품을 변경했습니다. 편집창을 닫으면 반영됩니다.', 'info');
       } else {
-        toast('⚠️ 다른 관리자가 변경했습니다 — 모달을 닫으면 자동 적용됩니다', 'info');
+        products = data;
+        pendingRemoteProducts = null;
+        dbSave();
+        renderTable();
+        toast('다른 관리자의 상품 변경사항이 반영되었습니다', 'ok');
+      }
+    }
+  } catch(e) {}
+
+  try {
+    const nextConfig = await fetchLatestSiteConfig();
+    const hash = JSON.stringify(nextConfig);
+    if (!remoteConfigHash) {
+      remoteConfigHash = hash;
+    } else if (hash !== remoteConfigHash) {
+      remoteConfigHash = hash;
+      const editingConfig = configDirty && (
+        document.getElementById('sec-categories').style.display !== 'none' ||
+        document.getElementById('sec-notice').style.display !== 'none'
+      );
+      if (editingConfig) {
+        pendingRemoteConfig = nextConfig;
+        toast('다른 관리자가 카테고리/공지를 변경했습니다. 저장 전 새로고침해 확인해 주세요.', 'info');
+      } else {
+        applyRemoteConfig(nextConfig);
+        toast('다른 관리자의 카테고리/공지 변경사항이 반영되었습니다', 'ok');
       }
     }
   } catch(e) {}
 }
 function startAutoRefresh() {
   stopAutoRefresh();
-  autoRefreshTimer = setInterval(checkRemoteChanges, 30000);
+  autoRefreshTimer = setInterval(checkRemoteChanges, 5000);
 }
 function stopAutoRefresh() {
   if (autoRefreshTimer) { clearInterval(autoRefreshTimer); autoRefreshTimer = null; }
 }
+async function refreshAdminData({ silent = false } = {}) {
+  await Promise.all([
+    loadProducts({ silent }),
+    loadSiteConfig({ silent }),
+  ]);
+  renderTable();
+}
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) checkRemoteChanges();
+});
 
 function base64EncodeUtf8(str) {
   const bytes = new TextEncoder().encode(str);
@@ -1175,13 +1266,13 @@ function clearWorker() {
   toast('Worker 설정 초기화', 'info');
 }
 
-async function saveViaWorker() {
+async function saveViaWorker(nextProducts = products) {
   const url = WORKER_URL + '/api/github/products';
   console.log('[saveAndDeploy] Worker mode:', url);
   const r = await fetch(url, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
-    body: JSON.stringify({ products }),
+    body: JSON.stringify({ products: nextProducts }),
   });
   let data;
   try { data = await r.json(); } catch { data = { message: 'Invalid JSON response' }; }
@@ -1193,13 +1284,13 @@ async function saveViaWorker() {
       status: data.status || r.status,
       message: data.message || 'Unknown',
     });
-    throw new Error(data.message || `HTTP ${r.status}`);
+    throw Object.assign(new Error(data.message || `HTTP ${r.status}`), { status: data.status || r.status });
   }
   console.log('[saveAndDeploy] Worker OK', data);
   return data;
 }
 
-async function saveViaDirect() {
+async function saveViaDirect(nextProducts = products) {
   console.log('[saveAndDeploy] Direct mode');
   const check = await ghApi('GET', `/repos/${REPO}/contents/${FILE}?ref=main`);
   let currentSha = '';
@@ -1222,7 +1313,7 @@ async function saveViaDirect() {
     throw new Error(`SHA 조회 실패 (HTTP ${check.status})`);
   }
 
-  const content = base64EncodeUtf8(JSON.stringify(products, null, 2));
+  const content = base64EncodeUtf8(JSON.stringify(nextProducts, null, 2));
   const body = {
     message: `chore: 상품 업데이트 (관리자) ${new Date().toLocaleString('ko-KR')}`,
     content, branch: 'main',
@@ -1244,7 +1335,7 @@ async function saveViaDirect() {
          : 'PAT의 repo 스코프 또는 fine-grained Contents:write 권한 확인.',
       status: r.status, message: e.message || 'Unknown',
     });
-    throw new Error(`PUT ${r.status}: ${e.message || ''}`);
+    throw Object.assign(new Error(`PUT ${r.status}: ${e.message || ''}`), { status: r.status });
   }
   const rj = await r.json();
   fileSha = rj.content.sha;
@@ -1253,39 +1344,96 @@ async function saveViaDirect() {
 
 async function saveAndDeploy() {
   if (isSaving) { toast('이미 저장 중...', 'info'); return; }
-  if (!confirm('변경사항을 저장하고 사이트에 배포하시겠습니까?')) return;
-  setSavingUI(true);
-  try {
-    toast('저장 중...', 'info');
-    const useWorker = WORKER_URL && ADMIN_KEY;
-    const res = useWorker ? await saveViaWorker() : await saveViaDirect();
-    markDeployStarted(res, '저장 & 배포 시작!');
-  } catch (e) {
-    toast('실패: ' + e.message, 'err');
-    console.error('[saveAndDeploy]', e);
-  } finally {
-    setSavingUI(false);
-  }
+  await refreshAdminData({ silent: true });
+  toast('상품·카테고리 최신 상태 확인 완료 — 각 수정은 저장 즉시 배포됩니다', 'ok');
 }
 
 function markDeployStarted(res, message) {
   dbSave();
+  remoteHash = JSON.stringify(products);
   document.getElementById('deploy-banner').classList.add('show');
   setTimeout(() => document.getElementById('deploy-banner').classList.remove('show'), 70000);
   toast(message + (res?.commitUrl ? ' (커밋 생성됨)' : ''), 'ok');
 }
 
-async function saveProductsImmediately(message) {
+async function persistProductsMutation(mutator, message) {
   if (isSaving) throw new Error('이미 저장 중입니다');
   setSavingUI(true);
   try {
-    const useWorker = WORKER_URL && ADMIN_KEY;
-    const res = useWorker ? await saveViaWorker() : await saveViaDirect();
-    markDeployStarted(res, message);
-    return res;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const latest = await fetchLatestProducts();
+      const nextProducts = mutator(latest.map(p => ({...p})));
+      if (!Array.isArray(nextProducts)) throw new Error('상품 변경 결과가 올바르지 않습니다');
+      try {
+        const useWorker = WORKER_URL && ADMIN_KEY;
+        const res = useWorker ? await saveViaWorker(nextProducts) : await saveViaDirect(nextProducts);
+        products = nextProducts;
+        pendingRemoteProducts = null;
+        remoteHash = JSON.stringify(products);
+        markDeployStarted(res, message);
+        renderTable();
+        return res;
+      } catch (e) {
+        if (attempt === 0 && (e.status === 409 || e.status === 422)) continue;
+        throw e;
+      }
+    }
+    throw new Error('다른 관리자의 저장과 충돌했습니다. 다시 시도해 주세요.');
   } finally {
     setSavingUI(false);
   }
+}
+
+async function persistDeletedProductIds({ add = [], remove = [] } = {}) {
+  const addSet = new Set(add.map(Number).filter(Number.isFinite));
+  const removeSet = new Set(remove.map(Number).filter(Number.isFinite));
+  if (!addSet.size && !removeSet.size) return;
+
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const latestConfig = await fetchLatestSiteConfig().catch(() => ({...DEFAULT_SITE_CONFIG}));
+    const deleted = new Set((latestConfig.deletedProductIds || []).map(Number).filter(Number.isFinite));
+    addSet.forEach(id => deleted.add(id));
+    removeSet.forEach(id => deleted.delete(id));
+    const nextConfig = {...latestConfig, deletedProductIds: [...deleted].sort((a, b) => a - b)};
+
+    let status = 0;
+    if (WORKER_URL && ADMIN_KEY) {
+      const wr = await fetch(WORKER_URL + '/api/github/config', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
+        body: JSON.stringify({ config: nextConfig }),
+      });
+      const data = await wr.json();
+      status = data.status || wr.status;
+      if (!wr.ok || !data.ok) {
+        if (attempt === 0 && (status === 409 || status === 422)) continue;
+        throw Object.assign(new Error(data.message || `삭제 목록 저장 실패 (${wr.status})`), { status });
+      }
+    } else {
+      const latest = await ghApi('GET', `/repos/${REPO}/contents/${CONFIG_FILE}?ref=main`);
+      let currentSha = '';
+      if (latest.ok) currentSha = (await latest.json()).sha;
+      else if (latest.status !== 404) throw new Error(`설정 SHA 조회 실패 (${latest.status})`);
+      const body = {
+        message: `chore: 삭제 상품 목록 업데이트 ${new Date().toLocaleString('ko-KR')}`,
+        content: base64EncodeUtf8(JSON.stringify(nextConfig, null, 2) + '\n'),
+        branch: 'main',
+      };
+      if (currentSha) body.sha = currentSha;
+      const r = await ghApi('PUT', `/repos/${REPO}/contents/${CONFIG_FILE}`, body);
+      status = r.status;
+      if (!r.ok) {
+        if (attempt === 0 && (status === 409 || status === 422)) continue;
+        let data = {}; try { data = await r.json(); } catch {}
+        throw Object.assign(new Error(data.message || `삭제 목록 저장 실패 (${status})`), { status });
+      }
+    }
+
+    siteConfig = nextConfig;
+    remoteConfigHash = JSON.stringify(nextConfig);
+    return;
+  }
+  throw new Error('다른 관리자의 설정 저장과 충돌했습니다. 다시 시도해 주세요.');
 }
 
 let editId = null;
@@ -1323,7 +1471,17 @@ function openEditModal(id) {
   renderImgGrid('main'); renderImgGrid('detail');
   document.getElementById('prod-modal').classList.add('open');
 }
-function closeModal() { document.getElementById('prod-modal').classList.remove('open'); }
+function applyPendingRemoteProducts() {
+  if (!pendingRemoteProducts) return;
+  products = pendingRemoteProducts;
+  pendingRemoteProducts = null;
+  dbSave();
+  renderTable();
+}
+function closeModal() {
+  document.getElementById('prod-modal').classList.remove('open');
+  applyPendingRemoteProducts();
+}
 document.getElementById('prod-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
 document.getElementById('err-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeErrModal(); });
 document.getElementById('worker-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeWorkerModal(); });
@@ -1352,7 +1510,7 @@ async function saveProduct() {
     const optionPrices = normalizeOptionPrices(collectOptionPricesFromRows(), options);
     const obj = {
       id: editId !== null ? editId : Date.now(),
-      product_no: existing?.product_no,
+      ...(existing?.product_no != null ? { product_no: existing.product_no } : {}),
       name, price,
       imgs: finalImgs,
       img: finalImgs[0] || '',
@@ -1364,34 +1522,26 @@ async function saveProduct() {
       optionPrices,
       sale: document.getElementById('f-sale').checked,
     };
-    if (editId !== null) { const i = products.findIndex(p => p.id === editId); if (i >= 0) products[i] = obj; }
-    else products.push(obj);
-    dbSave();
-    renderTable(); closeModal();
-    await saveProductsImmediately(editId !== null ? '상품 수정 저장 & 배포 시작!' : '상품 추가 저장 & 배포 시작!');
+    await persistProductsMutation(latest => {
+      if (editId === null) {
+        return latest.some(p => p.id === obj.id) ? latest : [...latest, obj];
+      }
+      return latest.map(p => p.id === editId ? {...p, ...obj} : p);
+    }, editId !== null ? '상품 수정 저장 & 배포 시작!' : '상품 추가 저장 & 배포 시작!');
+    closeModal();
   } catch (e) { toast('실패: ' + e.message, 'err'); }
   finally { btn.disabled = false; btn.innerHTML = '저장'; }
 }
 
-function delProduct(id) {
-  if (!confirm('이 상품을 메뉴에서 숨기겠습니까?\n(카페24 동기화 후에도 숨김이 유지됩니다)')) return;
-  const p = products.find(x => x.id === id);
-  if (!p) return;
-  p.hidden = true;
-  dbSave();
-  renderTable();
-  saveProductsImmediately('상품 숨김 처리').catch(e => toast('저장 실패: ' + e.message, 'err'));
-  toast('숨김 처리 중 — GitHub에 저장 중...', 'ok');
-}
-function restoreProduct(id) {
-  if (!confirm('이 상품을 메뉴에 다시 표시하겠습니까?')) return;
-  const p = products.find(x => x.id === id);
-  if (!p) return;
-  delete p.hidden;
-  dbSave();
-  renderTable();
-  saveProductsImmediately('상품 복원').catch(e => toast('저장 실패: ' + e.message, 'err'));
-  toast('복원 처리 중 — GitHub에 저장 중...', 'ok');
+async function delProduct(id) {
+  if (!confirm('이 상품을 완전히 삭제하시겠습니까?')) return;
+  try {
+    await persistDeletedProductIds({ add: [id] });
+    await persistProductsMutation(
+      latest => latest.filter(p => p.id !== id),
+      '상품 삭제'
+    );
+  } catch (e) { toast('저장 실패: ' + e.message, 'err'); }
 }
 
 const CAT = name => {
@@ -1768,80 +1918,90 @@ function updateDeleteBtn() {
     allChk.indeterminate = count > 0 && count < total;
   }
 }
-function applyBulkEdit() {
+async function applyBulkEdit() {
   const selectedIds = selectedProductIds();
   if (!selectedIds.length) { toast('수정할 상품을 선택하세요', 'err'); return; }
   const nextCat = document.getElementById('bulk-cat').value;
   const nextSale = document.getElementById('bulk-sale').value;
   if (!nextCat && !nextSale) { toast('변경할 항목을 선택하세요', 'err'); return; }
   if (!confirm(`선택한 ${selectedIds.length}개 상품을 일괄 수정할까요?`)) return;
-  products = products.map(p => {
-    if (!selectedIds.includes(p.id)) return p;
-    return {
-      ...p,
-      ...(nextCat ? { cat: nextCat } : {}),
-      ...(nextSale ? { sale: nextSale === 'on' } : {}),
-    };
-  });
-  dbSave();
-  renderTable();
-  document.getElementById('bulk-cat').value = '';
-  document.getElementById('bulk-sale').value = '';
-  toast(`${selectedIds.length}개 수정됨 (로컬 저장) — 배포하려면 저장 & 배포 클릭`, 'ok');
+  try {
+    await persistProductsMutation(latest => latest.map(p => {
+      if (!selectedIds.includes(p.id)) return p;
+      return {
+        ...p,
+        ...(nextCat ? { cat: nextCat } : {}),
+        ...(nextSale ? { sale: nextSale === 'on' } : {}),
+      };
+    }), `선택 상품 ${selectedIds.length}개 수정`);
+    document.getElementById('bulk-cat').value = '';
+    document.getElementById('bulk-sale').value = '';
+  } catch (e) { toast('일괄 수정 실패: ' + e.message, 'err'); }
 }
-function deleteSelected() {
+async function deleteSelected() {
   const selectedIds = selectedProductIds();
   if (!selectedIds.length) return;
-  if (!confirm(`선택한 ${selectedIds.length}개를 삭제하시겠습니까?`)) return;
-  products = products.filter(p => !selectedIds.includes(p.id));
-  dbSave();
-  renderTable();
-  updateDeleteBtn();
-  toast(`${selectedIds.length}개 삭제됨 (로컬 저장) — 배포하려면 저장 & 배포 클릭`, 'ok');
+  if (!confirm(`선택한 ${selectedIds.length}개 상품을 완전히 삭제하시겠습니까?`)) return;
+  try {
+    await persistDeletedProductIds({ add: selectedIds });
+    await persistProductsMutation(
+      latest => latest.filter(p => !selectedIds.includes(p.id)),
+      `선택 상품 ${selectedIds.length}개 삭제`
+    );
+    updateDeleteBtn();
+  } catch (e) { toast('선택 삭제 실패: ' + e.message, 'err'); }
 }
 
-function importSelected() {
+async function importSelected() {
   const sel = [...document.querySelectorAll('.import-check:checked')].map(cb => window._c24[+cb.dataset.i]);
   let added = 0, updated = 0;
-  sel.forEach(p => {
-    const importedOptions = Array.isArray(p._options) ? p._options : [];
-    const toUrl = s => {
-      if (!s) return '';
-      if (s.startsWith('//')) return 'https:' + s;
-      if (s.startsWith('/')) return 'https://frokyvape.cafe24.com' + s;
-      return s;
-    };
-    const mainImg = toUrl(p.list_image || p.detail_image || '');
-    const detailImg = toUrl(p.detail_image || '');
-    const extraImgs = Array.isArray(p.additional_images)
-      ? p.additional_images.map(img => toUrl(typeof img === 'string' ? img : (img.big || img.medium || img.url || img.small || ''))).filter(Boolean)
-      : [];
-    const allDetailImgs = [detailImg, ...extraImgs].filter(Boolean);
-    const existing = products.find(x => x.id === p.product_no || x.product_no === p.product_no);
-    if (existing) {
-      if (importedOptions.length) {
-        existing.options = importedOptions;
-        existing.optionPrices = normalizeOptionPrices(existing.optionPrices, importedOptions);
-        updated++;
-      }
-      return;
-    }
-    products.push({
-      id: p.product_no, product_no: p.product_no, name: p.product_name, price: parseInt(p.price) || 0,
-      imgs: mainImg ? [mainImg] : [],
-      img: mainImg,
-      detailImgs: allDetailImgs,
-      detailImg: allDetailImgs[0] || '',
-      cat: CAT(p.product_name), flavor: (p.summary_description || '').trim(),
-      options: importedOptions, optionPrices: {}, sale: !!p.price_content,
-    });
-    added++;
-  });
-  dbSave();
-  document.getElementById('c24-result').style.display = 'none';
-  showSection('sec-products');
-  const msg = `${added}개 추가됨` + (updated ? `, 기존 ${updated}개 옵션 갱신됨` : '') + ' — 저장 & 배포 필요';
-  toast(msg, added || updated ? 'ok' : 'info');
+  if (!sel.length) { toast('추가할 상품을 선택하세요', 'err'); return; }
+  try {
+    await persistDeletedProductIds({ remove: sel.map(p => p.product_no) });
+    await persistProductsMutation(latest => {
+      const next = latest.map(p => ({...p}));
+      sel.forEach(p => {
+        const importedOptions = Array.isArray(p._options) ? p._options : [];
+        const toUrl = s => {
+          if (!s) return '';
+          if (s.startsWith('//')) return 'https:' + s;
+          if (s.startsWith('/')) return 'https://frokyvape.cafe24.com' + s;
+          return s;
+        };
+        const mainImg = toUrl(p.list_image || p.detail_image || '');
+        const detailImg = toUrl(p.detail_image || '');
+        const extraImgs = Array.isArray(p.additional_images)
+          ? p.additional_images.map(img => toUrl(typeof img === 'string' ? img : (img.big || img.medium || img.url || img.small || ''))).filter(Boolean)
+          : [];
+        const allDetailImgs = [detailImg, ...extraImgs].filter(Boolean);
+        const existing = next.find(x => x.id === p.product_no || x.product_no === p.product_no);
+        if (existing) {
+          if (importedOptions.length) {
+            existing.options = importedOptions;
+            existing.optionPrices = normalizeOptionPrices(existing.optionPrices, importedOptions);
+            updated++;
+          }
+          return;
+        }
+        next.push({
+          id: p.product_no, product_no: p.product_no, name: p.product_name, price: parseInt(p.price) || 0,
+          imgs: mainImg ? [mainImg] : [],
+          img: mainImg,
+          detailImgs: allDetailImgs,
+          detailImg: allDetailImgs[0] || '',
+          cat: CAT(p.product_name), flavor: (p.summary_description || '').trim(),
+          options: importedOptions, optionPrices: {}, sale: !!p.price_content,
+        });
+        added++;
+      });
+      return next;
+    }, `카페24 상품 ${sel.length}개 반영`);
+    document.getElementById('c24-result').style.display = 'none';
+    await showSection('sec-products');
+    toast(`${added}개 추가됨${updated ? `, 기존 ${updated}개 옵션 갱신됨` : ''}`, added || updated ? 'ok' : 'info');
+  } catch (e) {
+    toast('카페24 상품 반영 실패: ' + e.message, 'err');
+  }
 }
 
 let _tt;
