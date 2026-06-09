@@ -5546,16 +5546,14 @@
   {
     "id": 2824,
     "product_no": 2824,
-    "name": "[O] 반하나 입호흡 액상 30ml",
+    "name": "반하나 입호흡 액상 30ml",
     "price": 8800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/b4562fc944b97d69f9d2d9a29a105818.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/b4562fc944b97d69f9d2d9a29a105818.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/f639d7321b5db98fb937bca8e191209f.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/f639d7321b5db98fb937bca8e191209f.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
