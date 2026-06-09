@@ -559,7 +559,7 @@ let isSaving = false;
 let remoteHash = '';
 let remoteConfigHash = '';
 let lastSaveTime = 0;
-const SAVE_CDN_GRACE_MS = 130000; // GitHub Pages CDN 전파 여유 시간 (약 2분)
+let preSaveHash = ''; // 저장 직전 remoteHash — CDN 구버전 구별용
 let autoRefreshTimer = null;
 let pendingRemoteProducts = null;
 let pendingRemoteConfig = null;
@@ -1240,8 +1240,8 @@ async function checkRemoteChanges() {
     const hash = JSON.stringify(data);
     if (!remoteHash) remoteHash = hash;
     else if (hash !== remoteHash) {
-      // CDN 전파 대기 중: 저장 직후 CDN이 이전 캐시를 반환해 로컬 상태를 덮어쓰는 문제 방지
-      if (Date.now() - lastSaveTime < SAVE_CDN_GRACE_MS) return;
+      // CDN이 저장 전 구버전을 아직 반환하는 경우 무시 (다른 관리자 변경과 구별)
+      if (preSaveHash && hash === preSaveHash) return;
       remoteHash = hash;
       if (anyModalOpen) {
         pendingRemoteProducts = data;
@@ -1431,7 +1431,6 @@ async function saveAndDeploy() {
 }
 
 function markDeployStarted(res, message) {
-  lastSaveTime = Date.now();
   dbSave();
   remoteHash = JSON.stringify(products);
   const banner = document.getElementById('deploy-banner');
@@ -1451,6 +1450,7 @@ async function persistProductsMutation(mutator, message) {
   try {
     for (let attempt = 0; attempt < 2; attempt++) {
       const latest = await fetchLatestProducts();
+      preSaveHash = JSON.stringify(latest); // CDN 구버전 감지를 위해 저장 전 해시 기록
       const nextProducts = mutator(latest.map(p => ({...p})));
       if (!Array.isArray(nextProducts)) throw new Error('상품 변경 결과가 올바르지 않습니다');
       try {
