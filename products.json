@@ -5021,6 +5021,26 @@
     "hidden": true
   },
   {
+    "id": 2066,
+    "product_no": 2066,
+    "name": "[NB] 요노 스퀘어 전자담배",
+    "price": 42000,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202504/a23b6634ebed7bb313091cab55238235.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202504/a23b6634ebed7bb313091cab55238235.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202504/e11d52ca8eb681e2310287ebb7f0a86d.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202504/e11d52ca8eb681e2310287ebb7f0a86d.png",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [],
+    "optionPrices": {},
+    "sale": false,
+    "hidden": true
+  },
+  {
     "id": 2062,
     "product_no": 2062,
     "name": "[EV] 아스파이어 고텍 S 전자담배",
@@ -5033,26 +5053,6 @@
       "https://frokyvape.com/web/product/big/202504/460666d31bf6f80e8cd210a7920f3581.png"
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202504/460666d31bf6f80e8cd210a7920f3581.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false,
-    "hidden": true
-  },
-  {
-    "id": 1904,
-    "product_no": 1904,
-    "name": "[AB] 앰비언트 X 저스트포그 글렌트 전자담배",
-    "price": 45000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202502/b94a2641486e93ceabf489e8b366e998.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202502/b94a2641486e93ceabf489e8b366e998.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202502/5800b19215fbd960a2a238864fcbeff6.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202502/5800b19215fbd960a2a238864fcbeff6.png",
     "cat": "입호흡",
     "flavor": "",
     "options": [],
