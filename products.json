@@ -2619,10 +2619,8 @@
       "https://frokyvape.com/web/product/medium/202510/789a2886d6ecd397b0044d9736cfc316.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202510/789a2886d6ecd397b0044d9736cfc316.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202510/6e70bc9b7cea133eaa0eb89aa31915ef.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202510/6e70bc9b7cea133eaa0eb89aa31915ef.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -2630,6 +2628,7 @@
       "알로에",
       "레몬"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
