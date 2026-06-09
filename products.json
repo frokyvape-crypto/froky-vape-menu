@@ -6083,7 +6083,8 @@
       "피치 아이스"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 2619,
