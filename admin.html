@@ -560,6 +560,9 @@ let remoteHash = '';
 let remoteConfigHash = '';
 let lastSaveTime = 0;
 let preSaveHash = ''; // 저장 직전 remoteHash — CDN 구버전 구별용
+// 필터링 전 전체 상품 목록(삭제 상품 포함). products는 표시용 필터 버전이므로
+// persistProductsMutation의 저장 base로는 rawProducts를 쓴다.
+let rawProducts = [];
 // 우리가 직접 저장했거나 로드한 상품 상태 해시 기록. stale CDN(최대 5분 캐시)이
 // 과거 상태를 반환해도 이 목록에 있으면 "외부 변경"으로 오인하지 않고 무시한다.
 let knownProductHashes = [];
@@ -868,8 +871,11 @@ async function fetchLatestProducts({ fresh = false } = {}) {
         }
       }
     } catch (e) {}
+    // GitHub API 실패 시: CDN(최대 5분 stale) 대신 메모리의 rawProducts 사용.
+    // rawProducts는 마지막 성공 저장/로드 시의 전체 상품 목록이므로 CDN보다 항상 최신이다.
+    if (Array.isArray(rawProducts) && rawProducts.length > 0) return rawProducts.map(p => ({...p}));
   }
-  // 폴백: raw CDN (폴링 등 빈도 높은 호출 또는 API 실패 시)
+  // 폴백: raw CDN (폴링 등 fresh=false 호출 또는 rawProducts도 없는 초기 상태)
   let r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${FILE}?t=${Date.now()}`, { cache: 'no-store' });
   if (!r.ok) r = await fetch(`${FILE}?t=${Date.now()}`, { cache: 'no-store' });
   if (!r.ok) throw new Error(`products.json 조회 실패 (${r.status})`);
@@ -883,6 +889,7 @@ async function loadProducts({ silent = false } = {}) {
   try {
     const latest = await fetchLatestProducts({ fresh: true });
     fileSha = '';
+    rawProducts = latest; // 필터 전 전체 보존
     const _delIds = new Set((siteConfig.deletedProductIds || []).map(Number));
     products = _delIds.size ? latest.filter(p => !_delIds.has(Number(p.id))) : latest;
     remoteHash = JSON.stringify(products);
@@ -1313,6 +1320,7 @@ async function checkRemoteChanges() {
       if (knownProductHashes.includes(hash)) return;
       remoteHash = hash;
       recordKnownProductHash(hash);
+      rawProducts = rawData; // 다른 관리자 변경 반영 시 rawProducts도 갱신
       if (anyModalOpen) {
         pendingRemoteProducts = data;
         updateTopbar();
@@ -1535,6 +1543,7 @@ async function persistProductsMutation(mutator, message) {
       try {
         const useWorker = WORKER_URL && ADMIN_KEY;
         const res = useWorker ? await saveViaWorker(nextProducts) : await saveViaDirect(nextProducts);
+        rawProducts = nextProducts; // 저장 성공 시 rawProducts(필터 전) 갱신
         products = _delIds.size ? nextProducts.filter(p => !_delIds.has(Number(p.id))) : nextProducts;
         pendingRemoteProducts = null;
         remoteHash = JSON.stringify(products);
