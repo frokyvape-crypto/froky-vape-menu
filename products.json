@@ -6038,16 +6038,14 @@
   {
     "id": 1745,
     "product_no": 1745,
-    "name": "[O] BAT 노마드 싱크 5000 일회용 전자담배 10ml",
+    "name": "BAT 노마드 싱크 5000 일회용 전자담배 10ml",
     "price": 8200,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202411/f23934c75ad7864f47ea744af4482177.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202411/f23934c75ad7864f47ea744af4482177.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202411/7c4d03f49712fdaadff88c25d909ba49.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202411/7c4d03f49712fdaadff88c25d909ba49.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "5,000 퍼프",
     "options": [
