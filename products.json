@@ -5001,19 +5001,19 @@
     "sale": false
   },
   {
-    "id": 2066,
-    "product_no": 2066,
-    "name": "[NB] 요노 스퀘어 전자담배",
-    "price": 42000,
+    "id": 2126,
+    "product_no": 2126,
+    "name": "[[O] ] DIO 디오 800 일회용 교체 팟 1팩",
+    "price": 11000,
     "imgs": [
-      "https://frokyvape.com/web/product/medium/202504/a23b6634ebed7bb313091cab55238235.png"
+      "https://frokyvape.com/web/product/medium/202505/60bff052fdd87508bc190511613d1d8a.png"
     ],
-    "img": "https://frokyvape.com/web/product/medium/202504/a23b6634ebed7bb313091cab55238235.png",
+    "img": "https://frokyvape.com/web/product/medium/202505/60bff052fdd87508bc190511613d1d8a.png",
     "detailImgs": [
-      "https://frokyvape.com/web/product/big/202504/e11d52ca8eb681e2310287ebb7f0a86d.png"
+      "https://frokyvape.com/web/product/big/202505/c019daccf4251e5f2452bfe26c967d10.png"
     ],
-    "detailImg": "https://frokyvape.com/web/product/big/202504/e11d52ca8eb681e2310287ebb7f0a86d.png",
-    "cat": "입호흡",
+    "detailImg": "https://frokyvape.com/web/product/big/202505/c019daccf4251e5f2452bfe26c967d10.png",
+    "cat": "일회용",
     "flavor": "",
     "options": [],
     "optionPrices": {},
