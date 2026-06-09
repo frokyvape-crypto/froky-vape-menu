@@ -560,6 +560,10 @@ let remoteHash = '';
 let remoteConfigHash = '';
 let lastSaveTime = 0;
 let preSaveHash = ''; // 저장 직전 remoteHash — CDN 구버전 구별용
+// 내가 방금 저장한 상품 변경분 보호용 (CDN/전파 지연으로 latest가 옛 버전을 줄 때 되돌아감 방지)
+// id → { product, prev, deleted, savedAt }
+let myRecentEdits = new Map();
+const MY_EDIT_TTL_MS = 10 * 60 * 1000; // 10분 — CDN 5분 캐시 + 전파 지연을 충분히 덮는 보호 기간
 let autoRefreshTimer = null;
 let pendingRemoteProducts = null;
 let pendingRemoteConfig = null;
@@ -830,6 +834,66 @@ function removeNoticeImg(slot, idx) {
   markConfigDirty();
 }
 
+// ── 내 직전 저장 변경분 보호 ──────────────────────────────────────
+// 저장 직후 latest를 다시 받아올 때 CDN(~5분 캐시)/전파 지연으로 옛 버전이 오면,
+// 내가 방금 저장한 상품이 옛 상태로 되돌아간다. 아래 헬퍼들이 "내가 최근에 저장한 변경"을
+// 기억했다가, latest에 아직 반영 안 된 경우에만 다시 얹어 되돌아감을 막는다.
+// (다른 관리자가 그 사이 같은 상품을 또 바꾼 경우는 존중하여 덮어쓰지 않는다.)
+function clone(o) { return o == null ? o : JSON.parse(JSON.stringify(o)); }
+
+function pruneMyRecentEdits() {
+  const now = Date.now();
+  for (const [id, rec] of myRecentEdits) {
+    if (now - rec.savedAt > MY_EDIT_TTL_MS) myRecentEdits.delete(id);
+  }
+}
+
+// 저장 성공 직후 호출 — 이번에 추가/수정/삭제한 상품을 기록
+function registerMyRecentEdits(before, after) {
+  const now = Date.now();
+  const beforeById = new Map(before.map(p => [p.id, p]));
+  const afterById = new Map(after.map(p => [p.id, p]));
+  for (const [id, prod] of afterById) {
+    const prev = beforeById.get(id);
+    if (!prev || JSON.stringify(prev) !== JSON.stringify(prod)) {
+      myRecentEdits.set(id, { product: clone(prod), prev: clone(prev) || null, deleted: false, savedAt: now });
+    }
+  }
+  for (const [id, prev] of beforeById) {
+    if (!afterById.has(id)) {
+      myRecentEdits.set(id, { product: null, prev: clone(prev), deleted: true, savedAt: now });
+    }
+  }
+}
+
+// fetch한 latest 배열에 내 직전 변경이 빠져 있으면 복원해서 반환
+function applyMyRecentEdits(list) {
+  pruneMyRecentEdits();
+  if (!myRecentEdits.size || !Array.isArray(list)) return list;
+  const byId = new Map(list.map(p => [p.id, p]));
+  for (const [id, rec] of myRecentEdits) {
+    const cur = byId.get(id);
+    if (rec.deleted) {
+      if (cur && JSON.stringify(cur) === JSON.stringify(rec.prev)) {
+        byId.delete(id);            // 내 삭제가 아직 반영 안 됨 → 제거
+      } else if (!cur) {
+        myRecentEdits.delete(id);   // 이미 반영됨 → 추적 종료
+      }
+      // cur가 prev와 다르면 다른 관리자가 되살리거나 수정한 것 → 존중
+    } else {
+      if (!cur) {
+        byId.set(id, clone(rec.product));               // 내 추가가 아직 반영 안 됨 → 복원
+      } else if (JSON.stringify(cur) === JSON.stringify(rec.product)) {
+        myRecentEdits.delete(id);                        // 이미 반영됨 → 추적 종료
+      } else if (rec.prev && JSON.stringify(cur) === JSON.stringify(rec.prev)) {
+        byId.set(id, clone(rec.product));               // latest가 옛 버전 → 내 값으로 복원
+      }
+      // 그 외: 다른 관리자가 내 저장 이후 또 바꿈 → 존중
+    }
+  }
+  return [...byId.values()];
+}
+
 async function fetchLatestProducts({ fresh = false } = {}) {
   // TOKEN 있으면 raw 미디어 타입으로 직접 조회. fresh 모드(저장 직전)에는 비인증도 Contents API 사용 (CDN 5분 캐시 우회)
   if (TOKEN) {
@@ -871,7 +935,7 @@ async function fetchLatestProducts({ fresh = false } = {}) {
 async function loadProducts({ silent = false } = {}) {
   if (!silent) document.getElementById('tbl-body').innerHTML = '<tr><td colspan="8" class="empty-msg"><span class="spin"></span>불러오는 중...</td></tr>';
   try {
-    const latest = await fetchLatestProducts({ fresh: true });
+    const latest = applyMyRecentEdits(await fetchLatestProducts({ fresh: true }));
     fileSha = '';
     const _delIds = new Set((siteConfig.deletedProductIds || []).map(Number));
     products = _delIds.size ? latest.filter(p => !_delIds.has(Number(p.id))) : latest;
@@ -1291,7 +1355,7 @@ async function checkRemoteChanges() {
   if (isSaving) return;
   const anyModalOpen = !!document.querySelector('.modal.open');
   try {
-    const rawData = await fetchLatestProducts();
+    const rawData = applyMyRecentEdits(await fetchLatestProducts());
     const _cDelIds = new Set((siteConfig.deletedProductIds || []).map(Number));
     const data = _cDelIds.size ? rawData.filter(p => !_cDelIds.has(Number(p.id))) : rawData;
     const hash = JSON.stringify(data);
@@ -1514,13 +1578,17 @@ async function persistProductsMutation(mutator, message) {
       // fresh: true → TOKEN 유무 관계없이 GitHub Contents API로 실시간 데이터 조회 (CDN 캐시 우회)
       const latest = await fetchLatestProducts({ fresh: true });
       const _delIds = new Set((siteConfig.deletedProductIds || []).map(Number));
-      const filteredLatest = _delIds.size ? latest.filter(p => !_delIds.has(Number(p.id))) : latest;
+      // latest가 CDN/전파 지연으로 옛 버전이면, 내가 방금 저장한 변경분을 복원해 되돌아감 방지
+      const base = applyMyRecentEdits(latest.map(p => ({...p})));
+      const filteredLatest = _delIds.size ? base.filter(p => !_delIds.has(Number(p.id))) : base;
       preSaveHash = JSON.stringify(filteredLatest);
-      const nextProducts = mutator(latest.map(p => ({...p})));
+      const nextProducts = mutator(base.map(p => ({...p})));
       if (!Array.isArray(nextProducts)) throw new Error('상품 변경 결과가 올바르지 않습니다');
       try {
         const useWorker = WORKER_URL && ADMIN_KEY;
         const res = useWorker ? await saveViaWorker(nextProducts) : await saveViaDirect(nextProducts);
+        // 이번 변경분 기록 → 다음 저장 시 stale 데이터로부터 보호
+        registerMyRecentEdits(base, nextProducts);
         products = _delIds.size ? nextProducts.filter(p => !_delIds.has(Number(p.id))) : nextProducts;
         pendingRemoteProducts = null;
         remoteHash = JSON.stringify(products);
