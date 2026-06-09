@@ -5763,16 +5763,14 @@
   {
     "id": 2793,
     "product_no": 2793,
-    "name": "[O] 보졸 매직 플렉스 일회용 액상팟 25ml",
+    "name": "보졸 매직 플렉스 일회용 액상팟 25ml",
     "price": 15900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/b982e149478ee1b5c4a6e4be44ee7883.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/b982e149478ee1b5c4a6e4be44ee7883.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/a549fdbf75d212afc06c8cd0360d786c.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/a549fdbf75d212afc06c8cd0360d786c.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "40,000 퍼프",
     "options": [
