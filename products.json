@@ -3752,10 +3752,8 @@
       "https://frokyvape.com/web/product/medium/202310/efb3086b08dc7a64c3b02d608db94368.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202310/efb3086b08dc7a64c3b02d608db94368.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202310/4b30c0f9f2eae923612287c0a3063bb6.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202310/4b30c0f9f2eae923612287c0a3063bb6.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -3763,6 +3761,7 @@
       "수박포도",
       "코코팜"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
