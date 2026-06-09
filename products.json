@@ -6129,26 +6129,6 @@
     "sale": false
   },
   {
-    "id": 558,
-    "product_no": 558,
-    "name": "쓰리탑스 아이스버그 피치 폐호흡 액상 60ml",
-    "price": 22500,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202309/69f1340c1de83b1a4883847d28975bb0.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202309/69f1340c1de83b1a4883847d28975bb0.png",
-    "detailImgs": [],
-    "detailImg": "",
-    "cat": "폐호흡",
-    "flavor": "3mg",
-    "options": [
-      "피치 MAX",
-      "피치 오리지널"
-    ],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 544,
     "product_no": 544,
     "name": "쓰리탑스 즙같네 입호흡 액상 30ml",
