@@ -4275,16 +4275,14 @@
   {
     "id": 2514,
     "product_no": 2514,
-    "name": "♥2+1♥ 버킷 입호흡 액상 30ml",
+    "name": "버킷 입호흡 액상 30ml",
     "price": 9900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202509/5c545fb11881c5368892ec85596d6c7d.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/5c545fb11881c5368892ec85596d6c7d.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/7722945ecbc84649b9aa36dbc1b3570b.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/7722945ecbc84649b9aa36dbc1b3570b.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "",
     "options": [
@@ -4292,6 +4290,7 @@
       "애플 마제스티",
       "위즐"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
