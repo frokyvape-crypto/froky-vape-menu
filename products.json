@@ -4607,15 +4607,14 @@
       "https://frokyvape.com/web/product/medium/202505/43e02eecb3b1e5660f26918d25198474.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202505/43e02eecb3b1e5660f26918d25198474.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202505/b0ec62c682733f3eee4c7aab38038a2b.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202505/b0ec62c682733f3eee4c7aab38038a2b.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg / 10병단위 구매 가능",
     "options": [
       "알로에 포도 버블 (10병)"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
