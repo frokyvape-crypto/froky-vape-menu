@@ -2196,10 +2196,8 @@
       "https://frokyvape.com/web/product/medium/202602/8e9c8b48db2985107a10824c7352f470.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202602/8e9c8b48db2985107a10824c7352f470.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202602/8c7d9ce6f862ab104504459ef60c6be1.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202602/8c7d9ce6f862ab104504459ef60c6be1.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "25,000 퍼프",
     "options": [
@@ -2208,6 +2206,7 @@
       "마르키샤",
       "슈퍼 알포"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
