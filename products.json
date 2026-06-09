@@ -61,15 +61,16 @@
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/7d660827c2e0471853de083989c89aea.jpg",
     "detailImgs": [
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780886622033_fly8.jpg"
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780967693528_af2g.jpg"
     ],
-    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780886622033_fly8.jpg",
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780967693528_af2g.jpg",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "아크드립 수박",
       "아크드립 소다"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
