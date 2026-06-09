@@ -1535,6 +1535,18 @@ function diffProducts(before, after) {
 }
 
 // ops(변경분)만 Worker로 전송 → Worker가 GitHub 최신본 위에 병합 후 저장. 병합된 전체 배열 반환
+// Worker가 ops 병합 모드를 지원하는지 확인 (구버전 Worker와의 하위 호환). 한 번 true면 캐시.
+let workerOpsSupported = false;
+async function workerSupportsOps() {
+  if (workerOpsSupported) return true;
+  try {
+    const r = await fetch(WORKER_URL + '/api/health', { cache: 'no-store' });
+    const d = await r.json();
+    workerOpsSupported = !!d.productsOpsMerge;
+  } catch { workerOpsSupported = false; }
+  return workerOpsSupported;
+}
+
 async function saveViaWorkerOps(ops) {
   const url = WORKER_URL + '/api/github/products';
   console.log('[saveAndDeploy] Worker ops merge:', url, ops.length + ' ops');
@@ -1657,7 +1669,7 @@ async function persistProductsMutation(mutator, message) {
         // 이번 변경분 기록 → 표시 일관성(내 편집 보호)
         registerMyRecentEdits(base, nextProducts);
         let res, adopt;
-        if (useWorker) {
+        if (useWorker && await workerSupportsOps()) {
           // 변경분(ops)만 전송 → Worker가 GitHub 최신본 위에 병합. 동시 편집해도 서로 안 덮어씀.
           const ops = diffProducts(base, nextProducts);
           if (!ops.length) {
@@ -1669,6 +1681,10 @@ async function persistProductsMutation(mutator, message) {
           res = await saveViaWorkerOps(ops);
           // Worker가 돌려준 병합 결과(다른 관리자 변경 포함)를 권위본으로 채택
           adopt = Array.isArray(res.products) ? res.products : nextProducts;
+        } else if (useWorker) {
+          // 구버전 Worker(ops 미지원) — 기존 전체 배열 저장으로 폴백 (하위 호환)
+          res = await saveViaWorker(nextProducts);
+          adopt = nextProducts;
         } else {
           res = await saveViaDirect(nextProducts);
           adopt = nextProducts;
