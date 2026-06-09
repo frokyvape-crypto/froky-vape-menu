@@ -3139,15 +3139,14 @@
       "https://frokyvape.com/web/product/medium/202403/a016e58c13a29f012723047e38dfc1b4.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202403/a016e58c13a29f012723047e38dfc1b4.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202403/e935fb6582df4d05976d9c5b3d4a24ef.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202403/e935fb6582df4d05976d9c5b3d4a24ef.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
       "포카리"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
