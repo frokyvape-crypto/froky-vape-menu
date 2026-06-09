@@ -2425,10 +2425,8 @@
       "https://frokyvape.com/web/product/medium/202507/03bb42d0b0af13777f7f1cc35f2a5c3a.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202507/03bb42d0b0af13777f7f1cc35f2a5c3a.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202507/9d7809f0390f09f40cf0479ff3708dc1.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202507/9d7809f0390f09f40cf0479ff3708dc1.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "30,000 퍼프 / 배터리 미포함",
     "options": [
@@ -2445,6 +2443,7 @@
       "[액상 팟] 자몽",
       "[액상 팟] 그레이프"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
