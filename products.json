@@ -2485,10 +2485,8 @@
       "https://frokyvape.com/web/product/medium/202504/83321a56900368b31ae01dfadeda2109.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202504/83321a56900368b31ae01dfadeda2109.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202504/9cedc3adf0255e2f33a3b4f7ff181187.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202504/9cedc3adf0255e2f33a3b4f7ff181187.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "30,000 퍼프",
     "options": [
@@ -2503,6 +2501,7 @@
       "트리플 베리",
       "퍼킹 팹"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
