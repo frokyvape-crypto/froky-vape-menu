@@ -6454,5 +6454,40 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 1736,
+    "product_no": 1736,
+    "name": "[A] 파이 고농도 입호흡 액상 30ml",
+    "price": 15500,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202310/f3d631da767baba8803379a3aa2c9417.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202310/f3d631da767baba8803379a3aa2c9417.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202310/49098de28508ed3dfac9f57601d65fe0.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202310/49098de28508ed3dfac9f57601d65fe0.png",
+    "cat": "고농도",
+    "flavor": "9.8mg",
+    "options": [
+      "ST 베리",
+      "데미안",
+      "로스팅",
+      "블라썸",
+      "슈가넛",
+      "스윗치",
+      "스틴",
+      "스피아",
+      "아이스 러시안",
+      "아이스 멘솔",
+      "알포",
+      "웨스턴",
+      "토트",
+      "팔팔",
+      "홍 T"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
