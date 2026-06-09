@@ -5041,26 +5041,6 @@
     "hidden": true
   },
   {
-    "id": 2062,
-    "product_no": 2062,
-    "name": "[EV] 아스파이어 고텍 S 전자담배",
-    "price": 25000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202504/9836e81c3119b15f3ecffdd566afb644.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202504/9836e81c3119b15f3ecffdd566afb644.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202504/460666d31bf6f80e8cd210a7920f3581.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202504/460666d31bf6f80e8cd210a7920f3581.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false,
-    "hidden": true
-  },
-  {
     "id": 1904,
     "product_no": 1904,
     "name": "[AB] 앰비언트 X 저스트포그 글렌트 전자담배",
@@ -5113,6 +5093,26 @@
       "https://frokyvape.com/web/product/big/202502/7095f7fc1dde10f1e8ae7b046ed69656.png"
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202502/7095f7fc1dde10f1e8ae7b046ed69656.png",
+    "cat": "입호흡",
+    "flavor": "9.9mg",
+    "options": [],
+    "optionPrices": {},
+    "sale": false,
+    "hidden": true
+  },
+  {
+    "id": 1849,
+    "product_no": 1849,
+    "name": "[BJ] 브로스 베이커 스토너 입호흡 액상 30ml",
+    "price": 17000,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202501/738e402ff13c926ba254ff1dcb4bd5bb.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202501/738e402ff13c926ba254ff1dcb4bd5bb.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202501/6160e97228059603bb46f5f138857d81.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202501/6160e97228059603bb46f5f138857d81.png",
     "cat": "입호흡",
     "flavor": "9.9mg",
     "options": [],
