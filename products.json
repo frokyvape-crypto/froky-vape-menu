@@ -31,16 +31,15 @@
       "https://frokyvape.com/web/product/medium/202509/30518a760f09a1acaec4dbfbab9b9c29.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/30518a760f09a1acaec4dbfbab9b9c29.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/5133cc39c5f063ee3b247260719bac79.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/5133cc39c5f063ee3b247260719bac79.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "선셋 크러쉬",
       "망고 스틴"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
