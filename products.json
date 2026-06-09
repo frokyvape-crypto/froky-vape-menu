@@ -1992,10 +1992,8 @@
       "https://frokyvape.com/web/product/medium/202509/3e1b895c83d127c20d8caca08e6c6754.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/3e1b895c83d127c20d8caca08e6c6754.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/70c6cb5695c131ae7ad3fba3456c9312.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/70c6cb5695c131ae7ad3fba3456c9312.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -2004,6 +2002,7 @@
       "백향과",
       "파인레몬"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
