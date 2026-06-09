@@ -4587,16 +4587,15 @@
       "https://frokyvape.com/web/product/medium/202505/ee5ca817f693a6250dca91ef43cee1a0.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202505/ee5ca817f693a6250dca91ef43cee1a0.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202505/6f7003be5cfb318d2c10abfeb455f9c4.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202505/6f7003be5cfb318d2c10abfeb455f9c4.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg / 10병단위 구매 가능",
     "options": [
       "아이스 블라스트 (무향 아이스) (10병)",
       "사하라 (무향 담배) (10병)"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
