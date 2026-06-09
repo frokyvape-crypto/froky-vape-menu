@@ -5446,7 +5446,8 @@
     "flavor": "1박스 (10병) 단위로 구매 가능 상품입니다",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 1180,
