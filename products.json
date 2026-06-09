@@ -767,15 +767,14 @@
       "https://frokyvape.com/web/product/medium/202312/c15706661e511204d8de4ee2a63f216e.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202312/c15706661e511204d8de4ee2a63f216e.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202312/6372d375731a0f635a741aa65bd5d3bf.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202312/6372d375731a0f635a741aa65bd5d3bf.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9mg",
     "options": [
       "체리 젤라또"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
