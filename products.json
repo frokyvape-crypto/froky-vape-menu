@@ -5852,16 +5852,14 @@
   {
     "id": 2671,
     "product_no": 2671,
-    "name": "[O] 엘프바 아이스킹 양주연 에디션 일회용 전자담배 23ml",
+    "name": "엘프바 아이스킹 양주연 에디션 일회용 전자담배 23ml",
     "price": 22500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202512/e0ffbd949e9f4b22dad89d19e24054e9.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202512/e0ffbd949e9f4b22dad89d19e24054e9.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202512/bdcda97160b3ef9679287cf0395e1e05.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202512/bdcda97160b3ef9679287cf0395e1e05.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "25,000 퍼프",
     "options": [
