@@ -1477,10 +1477,8 @@
       "https://frokyvape.com/web/product/medium/202604/8fba16c0894d21580663e294f9962b51.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202604/8fba16c0894d21580663e294f9962b51.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202604/eda1952abb8a9c233ce97997bf3d6963.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202604/eda1952abb8a9c233ce97997bf3d6963.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -1489,6 +1487,7 @@
       "[슈퍼쿨] 라임",
       "[슈퍼쿨] 멜론"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
