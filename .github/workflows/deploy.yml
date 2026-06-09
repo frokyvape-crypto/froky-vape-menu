@@ -9,6 +9,14 @@ permissions:
   pages: write
   id-token: write
 
+# 동시 배포 충돌 방지: GitHub Pages는 한 번에 배포 1개만 허용한다.
+# 상품 저장 시 이미지/products.json 커밋이 몰려 푸시가 연달아 들어오면 배포가 서로
+# 부딪혀 절반가량이 실패했다(deploy-pages 단계). 같은 그룹으로 묶어 직렬화하면
+# 충돌 없이 가장 최신 커밋이 확실히 배포된다. (진행 중 배포는 취소하지 않고 큐잉)
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   deploy:
     environment:
