@@ -2513,10 +2513,8 @@
       "https://frokyvape.com/web/product/medium/202509/3713c5289381e4e79b19a3f1bc1171b1.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/3713c5289381e4e79b19a3f1bc1171b1.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/82af0314bf58a1d50a16d94d74fc53f5.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/82af0314bf58a1d50a16d94d74fc53f5.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "10개 단위 구매 가능 / 다바이스 미포함",
     "options": [
@@ -2531,6 +2529,7 @@
       "클래식 토바코",
       "콜라 아이스"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
