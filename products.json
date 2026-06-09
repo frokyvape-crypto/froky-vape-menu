@@ -5261,7 +5261,8 @@
     "flavor": "",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 1902,
@@ -5280,7 +5281,8 @@
     "flavor": "3mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 1901,
