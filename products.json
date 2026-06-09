@@ -2238,11 +2238,9 @@
       "https://frokyvape.com/web/product/medium/202602/81d79e6e069001b4d538d21e7efa8a64.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202602/81d79e6e069001b4d538d21e7efa8a64.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202602/9e3e467f7f4fb93233f45ca1e8e0ee03.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202602/9e3e467f7f4fb93233f45ca1e8e0ee03.png",
-    "cat": "입호흡",
+    "detailImgs": [],
+    "detailImg": "",
+    "cat": "일회용",
     "flavor": "2%",
     "options": [
       "리치 망고",
@@ -2252,6 +2250,7 @@
       "스트릿 시가",
       "레몬 라임"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
