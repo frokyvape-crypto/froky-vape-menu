@@ -2103,7 +2103,8 @@
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [],
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 2763,
