@@ -4057,10 +4057,8 @@
       "https://frokyvape.com/web/product/medium/202604/ddc4d22df2e68255caf015d41e0a6e88.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202604/ddc4d22df2e68255caf015d41e0a6e88.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202604/7344658fdcc238aea32d8bfaed4f1584.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202604/7344658fdcc238aea32d8bfaed4f1584.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -4071,6 +4069,7 @@
       "[슈퍼쿨] 키위행",
       "[슈퍼쿨] 파인애플행"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
