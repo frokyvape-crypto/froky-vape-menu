@@ -6292,16 +6292,14 @@
   {
     "id": 1378,
     "product_no": 1378,
-    "name": "[O 3 B] TMG TEA 입호흡 액상 30ml",
+    "name": "TMG TEA 입호흡 액상 30ml",
     "price": 9900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202403/c594cb59e6b295d36cf8fe1b8e7a32ff.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202403/c594cb59e6b295d36cf8fe1b8e7a32ff.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202403/f371b0d849d306545fd402de60a35adb.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202403/f371b0d849d306545fd402de60a35adb.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "",
     "options": [
