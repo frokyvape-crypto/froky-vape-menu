@@ -904,9 +904,13 @@ function applyMyRecentEdits(list) {
   return [...byId.values()];
 }
 
-async function fetchLatestProducts({ fresh = false } = {}) {
+async function fetchLatestProducts({ fresh = false, requireFresh = false } = {}) {
+  // requireFresh: 인증/실시간 조회가 실패하면 stale CDN으로 폴백하지 않고 에러를 던진다
+  // (직접 PAT 모드에서 옛 데이터 위에 저장해 다른 관리자 변경을 덮어쓰는 것을 차단)
+  let apiAttempted = false;
   // TOKEN 있으면 raw 미디어 타입으로 직접 조회. fresh 모드(저장 직전)에는 비인증도 Contents API 사용 (CDN 5분 캐시 우회)
   if (TOKEN) {
+    apiAttempted = true;
     try {
       const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}?ref=main&t=${Date.now()}`, {
         headers: { Authorization: 'token ' + TOKEN, Accept: 'application/vnd.github.raw', 'Cache-Control': 'no-cache' },
@@ -918,6 +922,7 @@ async function fetchLatestProducts({ fresh = false } = {}) {
       }
     } catch (e) {}
   } else if (fresh) {
+    apiAttempted = true;
     // Worker 전용 모드: 저장 직전에만 GitHub Contents API로 최신 데이터 조회 (공개 레포, rate-limit 60회/h 주의)
     try {
       const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}?ref=main&t=${Date.now()}`, {
@@ -932,6 +937,13 @@ async function fetchLatestProducts({ fresh = false } = {}) {
         }
       }
     } catch (e) {}
+  }
+  if (requireFresh && apiAttempted) {
+    // 실시간 조회 실패 → 덮어쓰기 사고 방지를 위해 저장 중단
+    throw Object.assign(
+      new Error('최신 상품 데이터를 확인하지 못했습니다(캐시 폴백 차단). 잠시 후 다시 시도해 주세요.'),
+      { staleBlocked: true }
+    );
   }
   // 폴백: raw CDN. stale일 수 있으나 호출부에서 applyMyRecentEdits로 내 직전 변경을 복원한다.
   let r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${FILE}?t=${Date.now()}`, { cache: 'no-store' });
@@ -1506,6 +1518,59 @@ async function saveViaWorker(nextProducts = products) {
   return data;
 }
 
+// before→after를 비교해 실제 변경분(ops)만 추출. stale한 부분은 ops에 포함되지 않으므로
+// Worker가 최신 위에 병합할 때 다른 관리자의 변경을 덮어쓰지 않는다.
+function diffProducts(before, after) {
+  const beforeById = new Map(before.map(p => [p.id, p]));
+  const afterById = new Map(after.map(p => [p.id, p]));
+  const ops = [];
+  for (const [id, p] of afterById) {
+    const b = beforeById.get(id);
+    if (!b || JSON.stringify(b) !== JSON.stringify(p)) ops.push({ type: 'upsert', product: p });
+  }
+  for (const [id] of beforeById) {
+    if (!afterById.has(id)) ops.push({ type: 'delete', id });
+  }
+  return ops;
+}
+
+// ops(변경분)만 Worker로 전송 → Worker가 GitHub 최신본 위에 병합 후 저장. 병합된 전체 배열 반환
+// Worker가 ops 병합 모드를 지원하는지 확인 (구버전 Worker와의 하위 호환). 한 번 true면 캐시.
+let workerOpsSupported = false;
+async function workerSupportsOps() {
+  if (workerOpsSupported) return true;
+  try {
+    const r = await fetch(WORKER_URL + '/api/health', { cache: 'no-store' });
+    const d = await r.json();
+    workerOpsSupported = !!d.productsOpsMerge;
+  } catch { workerOpsSupported = false; }
+  return workerOpsSupported;
+}
+
+async function saveViaWorkerOps(ops) {
+  const url = WORKER_URL + '/api/github/products';
+  console.log('[saveAndDeploy] Worker ops merge:', url, ops.length + ' ops');
+  const r = await fetch(url, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
+    body: JSON.stringify({ ops }),
+  });
+  let data;
+  try { data = await r.json(); } catch { data = { message: 'Invalid JSON response' }; }
+  if (!r.ok || !data.ok) {
+    showErrorModal({
+      action: 'GitHub 상품 데이터 저장 (Worker 병합)',
+      cause: data.message || `HTTP ${r.status}`,
+      fix: data.guide || 'Worker URL/Admin Key/Worker 환경변수를 확인하세요. Worker가 최신 코드로 배포됐는지도 확인하세요.',
+      status: data.status || r.status,
+      message: data.message || 'Unknown',
+    });
+    throw Object.assign(new Error(data.message || `HTTP ${r.status}`), { status: data.status || r.status });
+  }
+  console.log('[saveAndDeploy] Worker merge OK', data);
+  return data;
+}
+
 async function saveViaDirect(nextProducts = products) {
   console.log('[saveAndDeploy] Direct mode');
   const check = await ghApi('GET', `/repos/${REPO}/contents/${FILE}?ref=main`);
@@ -1588,8 +1653,10 @@ async function persistProductsMutation(mutator, message) {
         toast('⚠️ 저장 충돌 감지 — 최신 데이터로 자동 재시도 중...', 'info');
         await new Promise(r => setTimeout(r, 600 * attempt));
       }
-      // fresh: true → TOKEN 유무 관계없이 GitHub Contents API로 실시간 데이터 조회 (CDN 캐시 우회)
-      const latest = await fetchLatestProducts({ fresh: true });
+      const useWorker = WORKER_URL && ADMIN_KEY;
+      // fresh: true → 실시간 데이터 조회. 직접(PAT) 모드에서는 requireFresh로 옛 캐시 폴백을 차단해
+      // stale한 base 위에 저장하는 것을 원천 봉쇄한다. (Worker 모드는 서버가 다시 최신을 읽어 병합하므로 불필요)
+      const latest = await fetchLatestProducts({ fresh: true, requireFresh: !useWorker });
       const _delIds = new Set((siteConfig.deletedProductIds || []).map(Number));
       // latest가 CDN/전파 지연으로 옛 버전이면, 내가 방금 저장한 변경분을 복원해 되돌아감 방지
       const base = applyMyRecentEdits(latest.map(p => ({...p})));
@@ -1599,11 +1666,30 @@ async function persistProductsMutation(mutator, message) {
       const nextProducts = mutator(base.map(p => ({...p})));
       if (!Array.isArray(nextProducts)) throw new Error('상품 변경 결과가 올바르지 않습니다');
       try {
-        const useWorker = WORKER_URL && ADMIN_KEY;
-        const res = useWorker ? await saveViaWorker(nextProducts) : await saveViaDirect(nextProducts);
-        // 이번 변경분 기록 → 다음 저장 시 stale 데이터로부터 보호
+        // 이번 변경분 기록 → 표시 일관성(내 편집 보호)
         registerMyRecentEdits(base, nextProducts);
-        products = _delIds.size ? nextProducts.filter(p => !_delIds.has(Number(p.id))) : nextProducts;
+        let res, adopt;
+        if (useWorker && await workerSupportsOps()) {
+          // 변경분(ops)만 전송 → Worker가 GitHub 최신본 위에 병합. 동시 편집해도 서로 안 덮어씀.
+          const ops = diffProducts(base, nextProducts);
+          if (!ops.length) {
+            toast('변경 사항이 없습니다', 'info');
+            products = _delIds.size ? base.filter(p => !_delIds.has(Number(p.id))) : base;
+            renderTable();
+            return { ok: true, noChange: true };
+          }
+          res = await saveViaWorkerOps(ops);
+          // Worker가 돌려준 병합 결과(다른 관리자 변경 포함)를 권위본으로 채택
+          adopt = Array.isArray(res.products) ? res.products : nextProducts;
+        } else if (useWorker) {
+          // 구버전 Worker(ops 미지원) — 기존 전체 배열 저장으로 폴백 (하위 호환)
+          res = await saveViaWorker(nextProducts);
+          adopt = nextProducts;
+        } else {
+          res = await saveViaDirect(nextProducts);
+          adopt = nextProducts;
+        }
+        products = _delIds.size ? adopt.filter(p => !_delIds.has(Number(p.id))) : adopt;
         pendingRemoteProducts = null;
         remoteHash = JSON.stringify(products);
         recordKnownProductHash(remoteHash); // 방금 저장한 새 상태 기록
