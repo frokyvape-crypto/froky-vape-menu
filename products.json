@@ -509,28 +509,6 @@
     "sale": false
   },
   {
-    "id": 1351,
-    "product_no": 1351,
-    "name": "마샤 히든 입호흡 액상 30ml",
-    "price": 18100,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202403/657f37ca8fd1bbb0b9a1ce9a9751913f.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202403/657f37ca8fd1bbb0b9a1ce9a9751913f.png",
-    "detailImgs": [],
-    "detailImg": "",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [
-      "알로에베라",
-      "피치",
-      "멘솔",
-      "시가"
-    ],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 1202,
     "name": "엑스헤일러 입호흡 액상 30ml",
     "price": 16000,
@@ -5113,6 +5091,26 @@
       "https://frokyvape.com/web/product/big/202502/7095f7fc1dde10f1e8ae7b046ed69656.png"
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202502/7095f7fc1dde10f1e8ae7b046ed69656.png",
+    "cat": "입호흡",
+    "flavor": "9.9mg",
+    "options": [],
+    "optionPrices": {},
+    "sale": false,
+    "hidden": true
+  },
+  {
+    "id": 1849,
+    "product_no": 1849,
+    "name": "[BJ] 브로스 베이커 스토너 입호흡 액상 30ml",
+    "price": 17000,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202501/738e402ff13c926ba254ff1dcb4bd5bb.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202501/738e402ff13c926ba254ff1dcb4bd5bb.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202501/6160e97228059603bb46f5f138857d81.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202501/6160e97228059603bb46f5f138857d81.png",
     "cat": "입호흡",
     "flavor": "9.9mg",
     "options": [],
