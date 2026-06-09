@@ -4315,16 +4315,14 @@
   {
     "id": 2332,
     "product_no": 2332,
-    "name": "[M] 리퀴드랩 땡모반 입호흡 액상 30ml",
+    "name": "리퀴드랩 땡모반 입호흡 액상 30ml",
     "price": 77000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202508/cce0b629e319ea3a2b662e7d505dda18.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202508/cce0b629e319ea3a2b662e7d505dda18.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202508/e325f49243cad4774150e9fcf6f3345e.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202508/e325f49243cad4774150e9fcf6f3345e.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg / 10병단위 구매 가능",
     "options": [
