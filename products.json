@@ -1778,19 +1778,18 @@
   {
     "id": 2515,
     "product_no": 2515,
-    "name": "♥2+1♥ 베이크드 입호흡 액상 30ml",
+    "name": "베이크드 입호흡 액상 30ml",
     "price": 9900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202509/c5aec065d6f17a8164f8351b82dcd775.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/c5aec065d6f17a8164f8351b82dcd775.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/c2f46db779bab80a99f01211e4f396cf.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/c2f46db779bab80a99f01211e4f396cf.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "",
     "options": [],
+    "optionPrices": {},
     "sale": false
   },
   {
