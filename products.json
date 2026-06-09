@@ -1949,10 +1949,8 @@
       "https://frokyvape.com/web/product/medium/202511/f36024b9f59f8e00108c9ad28d1e6688.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202511/f36024b9f59f8e00108c9ad28d1e6688.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202511/f2e4f569ebe2ccbdad57455649a69bb1.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202511/f2e4f569ebe2ccbdad57455649a69bb1.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -1961,6 +1959,7 @@
       "민트 초코",
       "타바코"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
