@@ -662,10 +662,8 @@
       "https://frokyvape.com/web/product/medium/202509/ace6acbe0be045342e1d5f9e79619a7b.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/ace6acbe0be045342e1d5f9e79619a7b.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/6bc80b19616cd24956127be966ca2a1a.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/6bc80b19616cd24956127be966ca2a1a.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -687,6 +685,7 @@
       "민트 엔딩",
       "사이다 엔딩"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
