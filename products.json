@@ -2281,10 +2281,8 @@
       "https://frokyvape.com/web/product/medium/202512/51bc12c91ace7cdb6826088887153b8f.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202512/51bc12c91ace7cdb6826088887153b8f.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202512/9c4828f5a91a8b669ecfe763e0a5ba81.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202512/9c4828f5a91a8b669ecfe763e0a5ba81.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "30,000 퍼프",
     "options": [
@@ -2294,6 +2292,7 @@
       "[고농도] 망고 오아시스",
       "[고농도] 죠지아 피치 아이스"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
