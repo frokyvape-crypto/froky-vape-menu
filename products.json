@@ -3326,15 +3326,14 @@
       "https://frokyvape.com/web/product/medium/202310/19846ae9b6542940f3d7fb170607399b.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202310/19846ae9b6542940f3d7fb170607399b.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202310/f5db1da1d26aa448680276be1d4bd810.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202310/f5db1da1d26aa448680276be1d4bd810.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "시나롤"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
