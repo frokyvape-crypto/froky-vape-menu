@@ -4031,10 +4031,8 @@
       "https://frokyvape.com/web/product/medium/202604/2df64107e4e092bd2c959dc097ca31cd.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202604/2df64107e4e092bd2c959dc097ca31cd.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202604/1f75a98e25aa09032ca3b9d364d7dabf.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202604/1f75a98e25aa09032ca3b9d364d7dabf.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -4047,6 +4045,7 @@
       "체리 석류",
       "피치"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
