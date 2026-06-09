@@ -3038,16 +3038,15 @@
       "https://frokyvape.com/web/product/medium/202402/054457b5c09172fe90ea94b7ca8d51ca.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202402/054457b5c09172fe90ea94b7ca8d51ca.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202402/648c84266ef236c1ac0bacf8e5a66dbd.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202402/648c84266ef236c1ac0bacf8e5a66dbd.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg / 9mg",
     "options": [
       "알로에베라 (3MG / 연두색 병)",
       "알로에베라 (9MG / 검은색 병)"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
