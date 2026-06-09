@@ -1455,10 +1455,8 @@
       "https://frokyvape.com/web/product/medium/202604/fb01a8124c704657f24e8c69575d9cf1.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202604/fb01a8124c704657f24e8c69575d9cf1.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202604/75754cf56a5b3a0b74f8322acba6d6d1.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202604/75754cf56a5b3a0b74f8322acba6d6d1.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -1467,6 +1465,7 @@
       "[슈퍼쿨] 파인 레몬에이드",
       "[슈퍼쿨] 패션후르츠"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
