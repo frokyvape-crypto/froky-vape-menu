@@ -5642,7 +5642,8 @@
     "flavor": "6mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 369,
