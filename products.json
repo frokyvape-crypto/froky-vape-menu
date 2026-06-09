@@ -4103,10 +4103,8 @@
       "https://frokyvape.com/web/product/medium/202512/1af443776a3e26d337a3094a51678985.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202512/1af443776a3e26d337a3094a51678985.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202512/1e9c24ab6def46d7de1f0fd016d79e73.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202512/1e9c24ab6def46d7de1f0fd016d79e73.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -4114,6 +4112,7 @@
       "카라멜 넛 라떼",
       "카라멜 바닐라 라떼"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
