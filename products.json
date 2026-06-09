@@ -5595,16 +5595,14 @@
   {
     "id": 2725,
     "product_no": 2725,
-    "name": "♥2+1♥ 넥사 쥬스 입호흡 액상 30ml",
+    "name": "넥사 쥬스 입호흡 액상 30ml",
     "price": 9900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202602/43e7448ff584bc5f5e03767286948cfb.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202602/43e7448ff584bc5f5e03767286948cfb.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202602/40ef8a066520d5cd69b2cc02df0c209d.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202602/40ef8a066520d5cd69b2cc02df0c209d.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
