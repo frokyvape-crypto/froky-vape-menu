@@ -6332,16 +6332,14 @@
   {
     "id": 544,
     "product_no": 544,
-    "name": "[O 3 B] 쓰리탑스 즙같네 입호흡 액상 30ml",
+    "name": "쓰리탑스 즙같네 입호흡 액상 30ml",
     "price": 14400,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202506/0fcef7e9d3e9eaa9619b19d58eabf4be.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202506/0fcef7e9d3e9eaa9619b19d58eabf4be.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202506/41027146bd7caab6d36daf8c69678b21.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202506/41027146bd7caab6d36daf8c69678b21.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
