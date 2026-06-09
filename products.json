@@ -3929,10 +3929,8 @@
       "https://frokyvape.com/web/product/medium/202602/24033c3a430abd5b8d375cb2ecf1fa3a.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202602/24033c3a430abd5b8d375cb2ecf1fa3a.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202602/5b2672a68feb7d13595f418fd45f53df.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202602/5b2672a68feb7d13595f418fd45f53df.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg / 20,000퍼프",
     "options": [
@@ -3942,6 +3940,7 @@
       "오렌지",
       "스트로베리 키위"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
