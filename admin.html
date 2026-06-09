@@ -830,8 +830,8 @@ function removeNoticeImg(slot, idx) {
   markConfigDirty();
 }
 
-async function fetchLatestProducts() {
-  // 인증 토큰이 있으면 GitHub API로 항상 최신 조회 (raw CDN의 약 5분 캐시 회피)
+async function fetchLatestProducts({ fresh = false } = {}) {
+  // TOKEN 있으면 raw 미디어 타입으로 직접 조회. fresh 모드(저장 직전)에는 비인증도 Contents API 사용 (CDN 5분 캐시 우회)
   if (TOKEN) {
     try {
       const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}?ref=main&t=${Date.now()}`, {
@@ -843,8 +843,23 @@ async function fetchLatestProducts() {
         if (Array.isArray(data)) return data;
       }
     } catch (e) {}
+  } else if (fresh) {
+    // Worker 전용 모드: 저장 직전에만 GitHub Contents API로 최신 데이터 조회 (공개 레포, rate-limit 60회/h 주의)
+    try {
+      const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}?ref=main&t=${Date.now()}`, {
+        headers: { Accept: 'application/vnd.github+json', 'Cache-Control': 'no-cache' },
+        cache: 'no-store',
+      });
+      if (r.ok) {
+        const meta = await r.json();
+        if (meta && meta.content) {
+          const data = JSON.parse(atob(meta.content.replace(/\n/g, '')));
+          if (Array.isArray(data)) return data;
+        }
+      }
+    } catch (e) {}
   }
-  // 폴백: raw CDN (토큰 없거나 API 실패 시)
+  // 폴백: raw CDN (폴링 등 빈도 높은 호출 또는 API 실패 시)
   let r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${FILE}?t=${Date.now()}`, { cache: 'no-store' });
   if (!r.ok) r = await fetch(`${FILE}?t=${Date.now()}`, { cache: 'no-store' });
   if (!r.ok) throw new Error(`products.json 조회 실패 (${r.status})`);
@@ -856,7 +871,7 @@ async function fetchLatestProducts() {
 async function loadProducts({ silent = false } = {}) {
   if (!silent) document.getElementById('tbl-body').innerHTML = '<tr><td colspan="8" class="empty-msg"><span class="spin"></span>불러오는 중...</td></tr>';
   try {
-    const latest = await fetchLatestProducts();
+    const latest = await fetchLatestProducts({ fresh: true });
     fileSha = '';
     const _delIds = new Set((siteConfig.deletedProductIds || []).map(Number));
     products = _delIds.size ? latest.filter(p => !_delIds.has(Number(p.id))) : latest;
@@ -1083,8 +1098,8 @@ function setNoticeForm() {
   renderNoticeImgGrid('popup');
 }
 
-async function fetchLatestSiteConfig() {
-  // 인증 토큰이 있으면 GitHub API로 항상 최신 조회 (raw CDN의 약 5분 캐시 회피)
+async function fetchLatestSiteConfig({ fresh = false } = {}) {
+  // TOKEN 있으면 raw 미디어 타입으로 직접 조회. fresh 모드(저장 직전)에는 비인증도 Contents API 사용
   if (TOKEN) {
     try {
       const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${CONFIG_FILE}?ref=main&t=${Date.now()}`, {
@@ -1096,8 +1111,22 @@ async function fetchLatestSiteConfig() {
         if (cfg && typeof cfg === 'object') return {...DEFAULT_SITE_CONFIG, ...cfg};
       }
     } catch (e) {}
+  } else if (fresh) {
+    try {
+      const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${CONFIG_FILE}?ref=main&t=${Date.now()}`, {
+        headers: { Accept: 'application/vnd.github+json', 'Cache-Control': 'no-cache' },
+        cache: 'no-store',
+      });
+      if (r.ok) {
+        const meta = await r.json();
+        if (meta && meta.content) {
+          const cfg = JSON.parse(atob(meta.content.replace(/\n/g, '')));
+          if (cfg && typeof cfg === 'object') return {...DEFAULT_SITE_CONFIG, ...cfg};
+        }
+      }
+    } catch (e) {}
   }
-  // 폴백: raw CDN (토큰 없거나 API 실패 시)
+  // 폴백: raw CDN
   let r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${CONFIG_FILE}?t=${Date.now()}`, { cache: 'no-store' });
   if (!r.ok) r = await fetch(`${CONFIG_FILE}?t=${Date.now()}`, { cache: 'no-store' });
   if (!r.ok) throw new Error(`site-config.json 조회 실패 (${r.status})`);
@@ -1150,7 +1179,7 @@ async function saveSiteConfig(scope = 'notice') {
 
     let savedConfig = null;
     for (let attempt = 0; attempt < 2; attempt++) {
-      const latestConfig = await fetchLatestSiteConfig().catch(() => ({...DEFAULT_SITE_CONFIG}));
+      const latestConfig = await fetchLatestSiteConfig({ fresh: true }).catch(() => ({...DEFAULT_SITE_CONFIG}));
       const nextConfig = scope === 'categories'
         ? {...latestConfig, categories: normalizeCategories(categories)}
         : {
@@ -1476,17 +1505,22 @@ async function persistProductsMutation(mutator, message) {
   if (isSaving) throw new Error('이미 저장 중입니다');
   setSavingUI(true);
   try {
-    for (let attempt = 0; attempt < 2; attempt++) {
-      const latest = await fetchLatestProducts();
+    for (let attempt = 0; attempt < 3; attempt++) {
+      if (attempt > 0) {
+        // 충돌 감지 시 최신 데이터 재로드 후 재시도
+        toast('⚠️ 저장 충돌 감지 — 최신 데이터로 자동 재시도 중...', 'info');
+        await new Promise(r => setTimeout(r, 600 * attempt));
+      }
+      // fresh: true → TOKEN 유무 관계없이 GitHub Contents API로 실시간 데이터 조회 (CDN 캐시 우회)
+      const latest = await fetchLatestProducts({ fresh: true });
       const _delIds = new Set((siteConfig.deletedProductIds || []).map(Number));
       const filteredLatest = _delIds.size ? latest.filter(p => !_delIds.has(Number(p.id))) : latest;
-      preSaveHash = JSON.stringify(filteredLatest); // checkRemoteChanges와 동일한 필터링 기준으로 해시 기록
+      preSaveHash = JSON.stringify(filteredLatest);
       const nextProducts = mutator(latest.map(p => ({...p})));
       if (!Array.isArray(nextProducts)) throw new Error('상품 변경 결과가 올바르지 않습니다');
       try {
         const useWorker = WORKER_URL && ADMIN_KEY;
         const res = useWorker ? await saveViaWorker(nextProducts) : await saveViaDirect(nextProducts);
-        // checkRemoteChanges와 동일한 기준(filtered)으로 products·remoteHash 설정
         products = _delIds.size ? nextProducts.filter(p => !_delIds.has(Number(p.id))) : nextProducts;
         pendingRemoteProducts = null;
         remoteHash = JSON.stringify(products);
@@ -1494,11 +1528,11 @@ async function persistProductsMutation(mutator, message) {
         renderTable();
         return res;
       } catch (e) {
-        if (attempt === 0 && (e.status === 409 || e.status === 422)) continue;
+        if (attempt < 2 && (e.status === 409 || e.status === 422)) continue;
         throw e;
       }
     }
-    throw new Error('다른 관리자의 저장과 충돌했습니다. 다시 시도해 주세요.');
+    throw new Error('다른 관리자의 저장과 계속 충돌합니다. 페이지를 새로고침 후 다시 시도해 주세요.');
   } finally {
     setSavingUI(false);
   }
@@ -1510,7 +1544,7 @@ async function persistDeletedProductIds({ add = [], remove = [] } = {}) {
   if (!addSet.size && !removeSet.size) return;
 
   for (let attempt = 0; attempt < 2; attempt++) {
-    const latestConfig = await fetchLatestSiteConfig().catch(() => ({...DEFAULT_SITE_CONFIG}));
+    const latestConfig = await fetchLatestSiteConfig({ fresh: true }).catch(() => ({...DEFAULT_SITE_CONFIG}));
     const deleted = new Set((latestConfig.deletedProductIds || []).map(Number).filter(Number.isFinite));
     addSet.forEach(id => deleted.add(id));
     removeSet.forEach(id => deleted.delete(id));
