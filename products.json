@@ -1886,10 +1886,8 @@
       "https://frokyvape.com/web/product/medium/202601/6a0b5ccca426da9cb4c58be27572baba.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202601/6a0b5ccca426da9cb4c58be27572baba.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202601/b8dc4546f27ad31b588137149e712297.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202601/b8dc4546f27ad31b588137149e712297.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -1901,6 +1899,7 @@
       "체리",
       "플레인"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
