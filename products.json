@@ -6089,16 +6089,14 @@
   {
     "id": 2619,
     "product_no": 2619,
-    "name": "[O] 로스트베이프 오리온 바 일회용 전자담배 25ml",
+    "name": "로스트베이프 오리온 바 일회용 전자담배 25ml",
     "price": 22500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202511/7615e10b7ddf7038c837272e7a3c010d.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202511/7615e10b7ddf7038c837272e7a3c010d.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202511/57c467044d04cbd2f0f5d46cc27c8eef.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202511/57c467044d04cbd2f0f5d46cc27c8eef.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "40,000 퍼프",
     "options": [
