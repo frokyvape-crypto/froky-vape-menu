@@ -6449,14 +6449,16 @@
   {
     "id": 53,
     "product_no": 53,
-    "name": "[O  CD] 메즈 하이민트 입호흡 액상 30ml",
+    "name": "메즈 하이민트 입호흡 액상 30ml",
     "price": 16600,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202504/c0b46edaf355441a2f97f9c394bb68be.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202504/c0b46edaf355441a2f97f9c394bb68be.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202504/d0fa3e8f112c3a27afc1f2f33aa7f6b0.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202504/d0fa3e8f112c3a27afc1f2f33aa7f6b0.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
