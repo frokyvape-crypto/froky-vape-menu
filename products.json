@@ -3277,10 +3277,8 @@
       "https://frokyvape.com/web/product/medium/202411/756d34e52c08e24b040719737141012e.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202411/756d34e52c08e24b040719737141012e.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202411/58e8165b85941e01ae21f030eb75dfbc.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202411/58e8165b85941e01ae21f030eb75dfbc.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg / 10병단위 구매 가능",
     "options": [
@@ -3297,6 +3295,7 @@
       "아이스 레몬베리 (10병)",
       "아이스 애플 (10병)"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
