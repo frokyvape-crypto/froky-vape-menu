@@ -6266,22 +6266,24 @@
   {
     "id": 2368,
     "product_no": 2368,
-    "name": "[1.98%] 프라임 체크 입호흡 액상 30ml",
+    "name": "프라임 체크 입호흡 액상 30ml",
     "price": 17100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202508/5a1dcdb3d399915f52918536016521e5.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202508/5a1dcdb3d399915f52918536016521e5.jpg",
     "detailImgs": [
-      "https://frokyvape.com/web/product/big/202508/445aaad561b3e19f563cdd328c5a7f7e.jpg"
+      "https://store.img11.co.kr/63487412/d74831ce-37fe-4052-b54e-488cbf6cb575_1660711135315.jpg"
     ],
-    "detailImg": "https://frokyvape.com/web/product/big/202508/445aaad561b3e19f563cdd328c5a7f7e.jpg",
+    "detailImg": "https://store.img11.co.kr/63487412/d74831ce-37fe-4052-b54e-488cbf6cb575_1660711135315.jpg",
     "cat": "고농도",
-    "flavor": "1.98%",
+    "flavor": "9.8mg",
     "options": [
-      "[1.98%] 아이스 레몬",
-      "[1.98%] 쿨툰드라",
-      "[1.98%] 파워멘솔"
+      "복숭아",
+      "아이스 그레이프",
+      "아이스 알로에",
+      "쿨툰드라",
+      "화이트 멘솔"
     ],
     "optionPrices": {},
     "sale": false
