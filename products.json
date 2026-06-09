@@ -103,15 +103,14 @@
       "https://frokyvape.com/web/product/medium/202505/5bfd7eef189301ac8589e12acdd453de.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202505/5bfd7eef189301ac8589e12acdd453de.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202505/a8ea364cc6e691e4bd9d893cced0682b.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202505/a8ea364cc6e691e4bd9d893cced0682b.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg / 10병단위 구매 가능",
     "options": [
       "마일드 시가 (10병)"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
