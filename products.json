@@ -5978,16 +5978,14 @@
   {
     "id": 2015,
     "product_no": 2015,
-    "name": "[긱베이프] 긱바 펄스 X 일회용 전자담배 18ml",
+    "name": "긱베이프 긱바 펄스 X 일회용 전자담배 18ml",
     "price": 19200,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202503/15c3967cc638d2c96b43f2454bfd8f07.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202503/15c3967cc638d2c96b43f2454bfd8f07.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202503/20a08072526a165d452b7902e757f4ec.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202503/20a08072526a165d452b7902e757f4ec.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "25,000 퍼프",
     "options": [],
