@@ -3120,15 +3120,14 @@
       "https://frokyvape.com/web/product/medium/202403/c6451c3b6d927e3ff3ecd6bd9594e266.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202403/c6451c3b6d927e3ff3ecd6bd9594e266.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202403/bf2c227a351161006c7afbca5c50d384.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202403/bf2c227a351161006c7afbca5c50d384.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "포카리"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
