@@ -3729,10 +3729,8 @@
       "https://frokyvape.com/web/product/medium/202310/f3d631da767baba8803379a3aa2c9417.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202310/f3d631da767baba8803379a3aa2c9417.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202310/49098de28508ed3dfac9f57601d65fe0.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202310/49098de28508ed3dfac9f57601d65fe0.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "0.98mg",
     "options": [
@@ -3742,6 +3740,7 @@
       "팔팔",
       "알포"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
