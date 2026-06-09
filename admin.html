@@ -558,6 +558,8 @@ let selectedNoticeMode = 'stock';
 let isSaving = false;
 let remoteHash = '';
 let remoteConfigHash = '';
+let lastSaveTime = 0;
+let preSaveHash = ''; // 저장 직전 remoteHash — CDN 구버전 구별용
 let autoRefreshTimer = null;
 let pendingRemoteProducts = null;
 let pendingRemoteConfig = null;
@@ -616,6 +618,7 @@ function doLogin() {
 function logout() {
   stopAutoRefresh();
   TOKEN = '';
+  sessionStorage.removeItem('fv-adm');
   localStorage.removeItem('fv-adm');
   products = []; fileSha = '';
   document.getElementById('page-app').style.display = 'none';
@@ -628,7 +631,9 @@ function logout() {
     document.body.classList.add('light');
     document.getElementById('theme-btn').textContent = '☀️';
   }
-  const t = localStorage.getItem('fv-adm');
+  const _lsToken = localStorage.getItem('fv-adm');
+  const t = sessionStorage.getItem('fv-adm') || _lsToken;
+  if (_lsToken && !sessionStorage.getItem('fv-adm')) { sessionStorage.setItem('fv-adm', _lsToken); localStorage.removeItem('fv-adm'); }
   if (t) { TOKEN = t; dbLoad(); showApp(); }
   else if (WORKER_URL && ADMIN_KEY) { dbLoad(); showApp(); }
 })();
@@ -648,6 +653,17 @@ async function showSection(id) {
     await loadProducts();
   }
   if (id === 'sec-notice' || id === 'sec-categories') await loadSiteConfig();
+  if (id === 'sec-cafe24') {
+    const _cid = sessionStorage.getItem('fv-c24-id') || localStorage.getItem('fv-c24-id') || '';
+    const _sec = sessionStorage.getItem('fv-c24-sec') || localStorage.getItem('fv-c24-sec') || '';
+    const _rt  = sessionStorage.getItem('fv-c24-rt')  || localStorage.getItem('fv-c24-rt')  || '';
+    const idEl = document.getElementById('c24-id');
+    const secEl = document.getElementById('c24-secret');
+    const rtEl  = document.getElementById('c24-rt');
+    if (idEl  && !idEl.value  && _cid) idEl.value  = _cid;
+    if (secEl && !secEl.value && _sec) secEl.value = _sec;
+    if (rtEl  && !rtEl.value  && _rt)  rtEl.value  = _rt;
+  }
 }
 
 async function ghApi(method, path, body) {
@@ -920,6 +936,7 @@ function renderCategoryControls() {
     bulkCat.value = categories.some(c => c.value === current) ? current : '';
   }
   renderCategoryList();
+  updateOrphanWarning();
 }
 
 function renderCategoryList() {
@@ -971,6 +988,50 @@ function removeCategory(idx) {
   categories.splice(idx, 1);
   renderCategoryControls();
   markConfigDirty();
+}
+
+function detectOrphanCategories() {
+  const validValues = new Set(categories.map(c => c.value));
+  const orphanMap = {};
+  products.forEach(p => {
+    if (!validValues.has(p.cat)) {
+      orphanMap[p.cat] = (orphanMap[p.cat] || 0) + 1;
+    }
+  });
+  return orphanMap;
+}
+
+function updateOrphanWarning() {
+  const el = document.getElementById('orphan-warning');
+  if (!el) return;
+  const orphanMap = detectOrphanCategories();
+  const entries = Object.entries(orphanMap);
+  if (!entries.length) { el.style.display = 'none'; return; }
+  const total = entries.reduce((s, [, n]) => s + n, 0);
+  const names = entries.map(([v, n]) => `"${v}" (${n}개)`).join(', ');
+  document.getElementById('orphan-msg').textContent = `⚠️ 삭제된 카테고리를 사용하는 상품 ${total}개: ${names}`;
+  const sel = document.getElementById('orphan-target');
+  sel.innerHTML = categories.map(c => `<option value="${escHtml(c.value)}">${escHtml(c.label)}</option>`).join('');
+  el.style.display = 'flex';
+}
+
+async function reclassifyOrphans() {
+  const targetCat = document.getElementById('orphan-target').value;
+  if (!targetCat) { toast('이동할 카테고리를 선택하세요', 'err'); return; }
+  const orphanMap = detectOrphanCategories();
+  const orphanValues = new Set(Object.keys(orphanMap));
+  if (!orphanValues.size) { toast('고아 상품이 없습니다', 'info'); return; }
+  const total = Object.values(orphanMap).reduce((s, n) => s + n, 0);
+  if (!confirm(`${total}개 상품을 "${categoryLabel(targetCat)}" 카테고리로 이동할까요?`)) return;
+  try {
+    await persistProductsMutation(latest => latest.map(p =>
+      orphanValues.has(p.cat) ? { ...p, cat: targetCat } : p
+    ), `고아 상품 ${total}개 → ${categoryLabel(targetCat)} 재분류`);
+    updateOrphanWarning();
+    toast(`${total}개 상품 재분류 완료`, 'ok');
+  } catch (e) {
+    toast('재분류 실패: ' + e.message, 'err');
+  }
 }
 
 function markConfigDirty() {
@@ -1119,6 +1180,7 @@ async function saveSiteConfig(scope = 'notice') {
     configDirty = false;
     pendingRemoteConfig = null;
     setNoticeForm();
+    if (scope === 'categories') updateOrphanWarning();
     toast(scope === 'categories' ? '카테고리 저장 완료' : '공지 설정 저장 완료', 'ok');
   } catch (e) {
     toast((scope === 'categories' ? '카테고리' : '공지 설정') + ' 저장 실패: ' + e.message, 'err');
@@ -1151,8 +1213,8 @@ function renderTable() {
     <td><input type="checkbox" class="prod-check" data-id="${p.id}" onchange="updateDeleteBtn()" style="width:14px;height:14px;accent-color:var(--g);cursor:pointer"></td>
     <td><img class="prod-img" src="${getImgs(p)[0] || ''}" onerror="this.src=''" alt=""></td>
     <td>
-      <div style="font-weight:700;margin-bottom:2px">${p.name}</div>
-      <div style="font-size:.72rem;color:var(--muted)">${p.flavor || ''}</div>
+      <div style="font-weight:700;margin-bottom:2px">${escHtml(p.name)}</div>
+      <div style="font-size:.72rem;color:var(--muted)">${escHtml(p.flavor || '')}</div>
       ${getDetailImgs(p).length ? `<div style="font-size:.68rem;color:var(--g);margin-top:2px">🖼 상세이미지 ${getDetailImgs(p).length}장</div>` : ''}
       ${getImgs(p).length > 1 ? `<div style="font-size:.68rem;color:var(--muted);margin-top:1px">📷 ${getImgs(p).length}장</div>` : ''}
     </td>
@@ -1178,9 +1240,12 @@ async function checkRemoteChanges() {
     const hash = JSON.stringify(data);
     if (!remoteHash) remoteHash = hash;
     else if (hash !== remoteHash) {
+      // CDN이 저장 전 구버전을 아직 반환하는 경우 무시 (다른 관리자 변경과 구별)
+      if (preSaveHash && hash === preSaveHash) return;
       remoteHash = hash;
       if (anyModalOpen) {
         pendingRemoteProducts = data;
+        updateTopbar();
         toast('다른 관리자가 상품을 변경했습니다. 편집창을 닫으면 반영됩니다.', 'info');
       } else {
         products = data;
@@ -1268,7 +1333,8 @@ function saveWorker() {
   WORKER_URL = document.getElementById('w-url').value.trim().replace(/\/$/, '');
   ADMIN_KEY = document.getElementById('w-key').value.trim();
   localStorage.setItem('fv-worker-url', WORKER_URL);
-  localStorage.setItem('fv-admin-key', ADMIN_KEY);
+  sessionStorage.setItem('fv-admin-key', ADMIN_KEY);
+  localStorage.removeItem('fv-admin-key');
   closeWorkerModal();
   toast(WORKER_URL ? 'Worker 모드 활성 (URL+Key 저장됨)' : '직접 모드 (Worker 미설정)', 'ok');
 }
@@ -1276,6 +1342,7 @@ function clearWorker() {
   WORKER_URL = ''; ADMIN_KEY = '';
   localStorage.removeItem('fv-worker-url');
   localStorage.removeItem('fv-admin-key');
+  sessionStorage.removeItem('fv-admin-key');
   document.getElementById('w-url').value = '';
   document.getElementById('w-key').value = '';
   toast('Worker 설정 초기화', 'info');
@@ -1366,8 +1433,14 @@ async function saveAndDeploy() {
 function markDeployStarted(res, message) {
   dbSave();
   remoteHash = JSON.stringify(products);
-  document.getElementById('deploy-banner').classList.add('show');
-  setTimeout(() => document.getElementById('deploy-banner').classList.remove('show'), 70000);
+  const banner = document.getElementById('deploy-banner');
+  const span = banner?.querySelector('span');
+  if (span) span.textContent = 'GitHub에 저장 후 배포 중... (30~60초)';
+  banner?.classList.add('show');
+  setTimeout(() => {
+    if (span) span.textContent = '✅ 배포 완료 — 메뉴 페이지에 반영되었습니다';
+    setTimeout(() => banner?.classList.remove('show'), 4000);
+  }, 90000);
   toast(message + (res?.commitUrl ? ' (커밋 생성됨)' : ''), 'ok');
 }
 
@@ -1377,12 +1450,16 @@ async function persistProductsMutation(mutator, message) {
   try {
     for (let attempt = 0; attempt < 2; attempt++) {
       const latest = await fetchLatestProducts();
+      const _delIds = new Set((siteConfig.deletedProductIds || []).map(Number));
+      const filteredLatest = _delIds.size ? latest.filter(p => !_delIds.has(Number(p.id))) : latest;
+      preSaveHash = JSON.stringify(filteredLatest); // checkRemoteChanges와 동일한 필터링 기준으로 해시 기록
       const nextProducts = mutator(latest.map(p => ({...p})));
       if (!Array.isArray(nextProducts)) throw new Error('상품 변경 결과가 올바르지 않습니다');
       try {
         const useWorker = WORKER_URL && ADMIN_KEY;
         const res = useWorker ? await saveViaWorker(nextProducts) : await saveViaDirect(nextProducts);
-        products = nextProducts;
+        // checkRemoteChanges와 동일한 기준(filtered)으로 products·remoteHash 설정
+        products = _delIds.size ? nextProducts.filter(p => !_delIds.has(Number(p.id))) : nextProducts;
         pendingRemoteProducts = null;
         remoteHash = JSON.stringify(products);
         markDeployStarted(res, message);
@@ -1636,7 +1713,8 @@ async function exchangeCafe24Code() {
 
     // 발급된 토큰 저장
     localStorage.setItem('fv-c24-id',  cid);
-    localStorage.setItem('fv-c24-sec', sec);
+    sessionStorage.setItem('fv-c24-sec', sec);
+    localStorage.removeItem('fv-c24-sec');
     localStorage.setItem('fv-c24-rt',  d.refresh_token);
     document.getElementById('c24-rt').value   = d.refresh_token;
     document.getElementById('c24-code').value = '';
@@ -1655,9 +1733,10 @@ async function fetchCafe24() {
   if (!cid || !sec || !rt) { toast('카페24 Client ID / Secret / Refresh Token을 모두 입력하세요', 'err'); return; }
   const searchName = document.getElementById('c24-search').value.trim();
   const withOptions = !!document.getElementById('c24-with-options')?.checked;
-  // 입력값 localStorage 저장
+  // 입력값 저장 (Secret은 sessionStorage)
   localStorage.setItem('fv-c24-id', cid);
-  localStorage.setItem('fv-c24-sec', sec);
+  sessionStorage.setItem('fv-c24-sec', sec);
+  localStorage.removeItem('fv-c24-sec');
   localStorage.setItem('fv-c24-rt', rt);
 
   const btn = document.getElementById('btn-c24-load');
@@ -1895,7 +1974,7 @@ function filterC24() {
     return `<tr style="${isDupe ? 'opacity:.45' : ''}">
       <td><input type="checkbox" class="import-check" data-i="${origIdx}" ${isDupe ? '' : 'checked'}></td>
       <td><img src="${img}" style="width:32px;height:32px;object-fit:cover;border-radius:5px;" onerror="this.src=''"></td>
-      <td>${p.product_name}${isDupe ? ' <span style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">중복</span>' : ''}${optionStatus}</td>
+      <td>${escHtml(p.product_name)}${isDupe ? ' <span style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">중복</span>' : ''}${optionStatus}</td>
       <td style="white-space:nowrap">${Number(p.price).toLocaleString('ko-KR')}원</td>
       <td><span style="display:inline-block;padding:2px 7px;border-radius:4px;font-size:.68rem;font-weight:800;background:${selling ? 'rgba(46,204,64,.16)' : 'rgba(229,57,53,.14)'};color:${selling ? 'var(--g)' : 'var(--red)'}">${c24SellingLabel(p)}</span></td>
       <td><span class="cat-tag c-${CAT(p.product_name)}">${categoryLabel(CAT(p.product_name))}</span></td>
@@ -1975,6 +2054,38 @@ async function importSelected() {
   const sel = [...document.querySelectorAll('.import-check:checked')].map(cb => window._c24[+cb.dataset.i]);
   let added = 0, updated = 0;
   if (!sel.length) { toast('추가할 상품을 선택하세요', 'err'); return; }
+
+  // 낙관적 업데이트: GitHub 저장 전에 로컬 products 즉시 반영
+  const toUrl = s => {
+    if (!s) return '';
+    if (s.startsWith('//')) return 'https:' + s;
+    if (s.startsWith('/')) return 'https://frokyvape.cafe24.com' + s;
+    return s;
+  };
+  sel.forEach(p => {
+    const mainImg = toUrl(p.list_image || p.detail_image || '');
+    const detailImg = toUrl(p.detail_image || '');
+    const extraImgs = Array.isArray(p.additional_images)
+      ? p.additional_images.map(img => toUrl(typeof img === 'string' ? img : (img.big || img.medium || img.url || img.small || ''))).filter(Boolean)
+      : [];
+    const allDetailImgs = [detailImg, ...extraImgs].filter(Boolean);
+    const importedOptions = Array.isArray(p._options) ? p._options : [];
+    const existing = products.find(x => x.id === p.product_no || x.product_no === p.product_no);
+    if (!existing) {
+      products.push({
+        id: p.product_no, product_no: p.product_no, name: p.product_name, price: parseInt(p.price) || 0,
+        imgs: mainImg ? [mainImg] : [], img: mainImg,
+        detailImgs: allDetailImgs, detailImg: allDetailImgs[0] || '',
+        cat: CAT(p.product_name), flavor: (p.summary_description || '').trim(),
+        options: importedOptions, optionPrices: {}, sale: !!p.price_content,
+      });
+    }
+  });
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+  document.getElementById('sec-products').style.display = 'block';
+  renderTable();
+  toast(`상품 추가 중... (${sel.length}개)`, 'info');
+
   try {
     await persistDeletedProductIds({ remove: sel.map(p => p.product_no) });
     await persistProductsMutation(latest => {
