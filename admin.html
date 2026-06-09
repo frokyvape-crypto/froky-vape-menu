@@ -1148,11 +1148,8 @@ function renderTable() {
     <td style="font-size:.75rem;color:var(--muted)">${adminOptionsText(p)}</td>
     <td>${p.sale ? '<span class="sale-tag">SALE</span>' : ''}</td>
     <td><div class="td-btns">
-      ${p.hidden ? '<span style="font-size:.7rem;background:#888;color:#fff;padding:1px 5px;border-radius:3px;margin-right:4px">숨김</span>' : ''}
       <button class="btn btn-outline btn-xs" onclick="openEditModal(${p.id})">수정</button>
-      ${p.hidden
-        ? `<button class="btn btn-xs" style="background:var(--g);color:#fff" onclick="restoreProduct(${p.id})">복원</button>`
-        : `<button class="btn btn-red btn-xs" onclick="delProduct(${p.id})">삭제</button>`}
+      <button class="btn btn-red btn-xs" onclick="delProduct(${p.id})">삭제</button>
     </div></td>
   </tr>`).join('');
   updateDeleteBtn();
@@ -1387,6 +1384,58 @@ async function persistProductsMutation(mutator, message) {
   }
 }
 
+async function persistDeletedProductIds({ add = [], remove = [] } = {}) {
+  const addSet = new Set(add.map(Number).filter(Number.isFinite));
+  const removeSet = new Set(remove.map(Number).filter(Number.isFinite));
+  if (!addSet.size && !removeSet.size) return;
+
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const latestConfig = await fetchLatestSiteConfig().catch(() => ({...DEFAULT_SITE_CONFIG}));
+    const deleted = new Set((latestConfig.deletedProductIds || []).map(Number).filter(Number.isFinite));
+    addSet.forEach(id => deleted.add(id));
+    removeSet.forEach(id => deleted.delete(id));
+    const nextConfig = {...latestConfig, deletedProductIds: [...deleted].sort((a, b) => a - b)};
+
+    let status = 0;
+    if (WORKER_URL && ADMIN_KEY) {
+      const wr = await fetch(WORKER_URL + '/api/github/config', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
+        body: JSON.stringify({ config: nextConfig }),
+      });
+      const data = await wr.json();
+      status = data.status || wr.status;
+      if (!wr.ok || !data.ok) {
+        if (attempt === 0 && (status === 409 || status === 422)) continue;
+        throw Object.assign(new Error(data.message || `삭제 목록 저장 실패 (${wr.status})`), { status });
+      }
+    } else {
+      const latest = await ghApi('GET', `/repos/${REPO}/contents/${CONFIG_FILE}?ref=main`);
+      let currentSha = '';
+      if (latest.ok) currentSha = (await latest.json()).sha;
+      else if (latest.status !== 404) throw new Error(`설정 SHA 조회 실패 (${latest.status})`);
+      const body = {
+        message: `chore: 삭제 상품 목록 업데이트 ${new Date().toLocaleString('ko-KR')}`,
+        content: base64EncodeUtf8(JSON.stringify(nextConfig, null, 2) + '\n'),
+        branch: 'main',
+      };
+      if (currentSha) body.sha = currentSha;
+      const r = await ghApi('PUT', `/repos/${REPO}/contents/${CONFIG_FILE}`, body);
+      status = r.status;
+      if (!r.ok) {
+        if (attempt === 0 && (status === 409 || status === 422)) continue;
+        let data = {}; try { data = await r.json(); } catch {}
+        throw Object.assign(new Error(data.message || `삭제 목록 저장 실패 (${status})`), { status });
+      }
+    }
+
+    siteConfig = nextConfig;
+    remoteConfigHash = JSON.stringify(nextConfig);
+    return;
+  }
+  throw new Error('다른 관리자의 설정 저장과 충돌했습니다. 다시 시도해 주세요.');
+}
+
 let editId = null;
 function resetModal() {
   imgSlots = { main: [], detail: [] };
@@ -1485,25 +1534,12 @@ async function saveProduct() {
 }
 
 async function delProduct(id) {
-  if (!confirm('이 상품을 메뉴에서 숨기겠습니까?\n(카페24 동기화 후에도 숨김이 유지됩니다)')) return;
+  if (!confirm('이 상품을 완전히 삭제하시겠습니까?')) return;
   try {
+    await persistDeletedProductIds({ add: [id] });
     await persistProductsMutation(
-      latest => latest.map(p => p.id === id ? {...p, hidden: true} : p),
-      '상품 숨김 처리'
-    );
-  } catch (e) { toast('저장 실패: ' + e.message, 'err'); }
-}
-async function restoreProduct(id) {
-  if (!confirm('이 상품을 메뉴에 다시 표시하겠습니까?')) return;
-  try {
-    await persistProductsMutation(
-      latest => latest.map(p => {
-        if (p.id !== id) return p;
-        const restored = {...p};
-        delete restored.hidden;
-        return restored;
-      }),
-      '상품 복원'
+      latest => latest.filter(p => p.id !== id),
+      '상품 삭제'
     );
   } catch (e) { toast('저장 실패: ' + e.message, 'err'); }
 }
@@ -1905,14 +1941,15 @@ async function applyBulkEdit() {
 async function deleteSelected() {
   const selectedIds = selectedProductIds();
   if (!selectedIds.length) return;
-  if (!confirm(`선택한 ${selectedIds.length}개를 메뉴에서 숨기시겠습니까?`)) return;
+  if (!confirm(`선택한 ${selectedIds.length}개 상품을 완전히 삭제하시겠습니까?`)) return;
   try {
+    await persistDeletedProductIds({ add: selectedIds });
     await persistProductsMutation(
-      latest => latest.map(p => selectedIds.includes(p.id) ? {...p, hidden: true} : p),
-      `선택 상품 ${selectedIds.length}개 숨김 처리`
+      latest => latest.filter(p => !selectedIds.includes(p.id)),
+      `선택 상품 ${selectedIds.length}개 삭제`
     );
     updateDeleteBtn();
-  } catch (e) { toast('선택 숨김 실패: ' + e.message, 'err'); }
+  } catch (e) { toast('선택 삭제 실패: ' + e.message, 'err'); }
 }
 
 async function importSelected() {
@@ -1920,6 +1957,7 @@ async function importSelected() {
   let added = 0, updated = 0;
   if (!sel.length) { toast('추가할 상품을 선택하세요', 'err'); return; }
   try {
+    await persistDeletedProductIds({ remove: sel.map(p => p.product_no) });
     await persistProductsMutation(latest => {
       const next = latest.map(p => ({...p}));
       sel.forEach(p => {
