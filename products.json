@@ -5240,26 +5240,6 @@
     "hidden": true
   },
   {
-    "id": 1206,
-    "product_no": 1206,
-    "name": "[KV] 베이핑라이더 입호흡 액상 30ml",
-    "price": 6500,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202401/d557020e5a2b38eb27b83a060ad655ff.jpg"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202401/d557020e5a2b38eb27b83a060ad655ff.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202401/b22ea1cedcf0a2a4fa129d3dd30fe8d4.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202401/b22ea1cedcf0a2a4fa129d3dd30fe8d4.jpg",
-    "cat": "입호흡",
-    "flavor": "1박스 (10병) 단위로 구매 가능 상품입니다",
-    "options": [],
-    "optionPrices": {},
-    "sale": false,
-    "hidden": true
-  },
-  {
     "id": 1180,
     "product_no": 1180,
     "name": "잽쥬스 마르키사 입호흡 액상 30ml",
@@ -5332,6 +5312,26 @@
     "options": [],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 843,
+    "product_no": 843,
+    "name": "[YV K] EJUICE AWARD 베어헤드 시나롤 입호흡 액상 30ml",
+    "price": 11100,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202310/b8f95dc4aa109137d539ab041d5288a5.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202310/b8f95dc4aa109137d539ab041d5288a5.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202310/c2cad0aaa531cad301474d95a3d95ed7.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202310/c2cad0aaa531cad301474d95a3d95ed7.png",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [],
+    "optionPrices": {},
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 810,
