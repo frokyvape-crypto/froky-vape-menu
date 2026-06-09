@@ -6365,7 +6365,7 @@
   {
     "id": 516,
     "product_no": 516,
-    "name": "[O  CD] 메즈 폐호흡 액상 60ml",
+    "name": "메즈 폐호흡 액상 60ml",
     "price": 19200,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202310/ebccd514c78b902fb4db7954fe5eb9ba.png"
@@ -6388,22 +6388,24 @@
   {
     "id": 355,
     "product_no": 355,
-    "name": "메즈 입호흡 액상 30ml",
+    "name": "[O  CD] 메즈 입호흡 액상 30ml",
     "price": 16600,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202309/146131ea79d52bac77dd30499f8942ce.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202309/146131ea79d52bac77dd30499f8942ce.png",
     "detailImgs": [
-      "https://store.img11.co.kr/37273654/6fad21da-d1ae-456f-8caf-0711ff1598f1_1664504705910.jpg"
+      "https://frokyvape.com/web/product/big/202309/97e38baa943cae50a284e9224849747e.png"
     ],
-    "detailImg": "https://store.img11.co.kr/37273654/6fad21da-d1ae-456f-8caf-0711ff1598f1_1664504705910.jpg",
+    "detailImg": "https://frokyvape.com/web/product/big/202309/97e38baa943cae50a284e9224849747e.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "시트러스",
       "망고",
-      "멜론"
+      "멜론",
+      "베리 키위",
+      "그레이프프룻(자몽)"
     ],
     "optionPrices": {},
     "sale": false
