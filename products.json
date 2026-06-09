@@ -2038,11 +2038,9 @@
       "https://frokyvape.com/web/product/medium/202603/15e82500fc1c72e02f28675117526465.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/15e82500fc1c72e02f28675117526465.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/c647549a2ec519c67e0691cf78b22013.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/c647549a2ec519c67e0691cf78b22013.png",
-    "cat": "입호흡",
+    "detailImgs": [],
+    "detailImg": "",
+    "cat": "일회용",
     "flavor": "40,000 퍼프",
     "options": [
       "샤인머스켓",
@@ -2057,6 +2055,7 @@
       "레드애플",
       "레드 그레이프"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
