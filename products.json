@@ -5572,16 +5572,14 @@
   {
     "id": 2828,
     "product_no": 2828,
-    "name": "♥2+1♥ 슈가캔디 입호흡 액상 30ml",
+    "name": "슈가캔디 입호흡 액상 30ml",
     "price": 8800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/27e26042301939b8c16db15a34406b25.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/27e26042301939b8c16db15a34406b25.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/8418662c5df2711fd13913b3139c2fba.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/8418662c5df2711fd13913b3139c2fba.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
