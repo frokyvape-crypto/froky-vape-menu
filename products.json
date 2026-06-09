@@ -6272,8 +6272,10 @@
       "https://frokyvape.com/web/product/medium/202508/5a1dcdb3d399915f52918536016521e5.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202508/5a1dcdb3d399915f52918536016521e5.jpg",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202508/445aaad561b3e19f563cdd328c5a7f7e.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202508/445aaad561b3e19f563cdd328c5a7f7e.jpg",
     "cat": "고농도",
     "flavor": "1.98%",
     "options": [
@@ -6386,16 +6388,14 @@
   {
     "id": 355,
     "product_no": 355,
-    "name": "[O  CD] 메즈 입호흡 액상 30ml",
+    "name": "메즈 입호흡 액상 30ml",
     "price": 16600,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202309/146131ea79d52bac77dd30499f8942ce.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202309/146131ea79d52bac77dd30499f8942ce.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202309/97e38baa943cae50a284e9224849747e.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202309/97e38baa943cae50a284e9224849747e.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
