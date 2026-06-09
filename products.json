@@ -3441,15 +3441,14 @@
       "https://frokyvape.com/web/product/medium/202309/e8202072ea632b0663f02f43182b2cf5.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202309/e8202072ea632b0663f02f43182b2cf5.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202309/58f2cf386925122b5c33b746088f1fd5.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202309/58f2cf386925122b5c33b746088f1fd5.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "킹스베리"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
