@@ -6272,10 +6272,8 @@
       "https://frokyvape.com/web/product/medium/202508/5a1dcdb3d399915f52918536016521e5.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202508/5a1dcdb3d399915f52918536016521e5.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202508/445aaad561b3e19f563cdd328c5a7f7e.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202508/445aaad561b3e19f563cdd328c5a7f7e.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "고농도",
     "flavor": "1.98%",
     "options": [
@@ -6295,8 +6293,10 @@
       "https://frokyvape.com/web/product/medium/202412/c18a1cb81f6965b3c74ddcadeecdf7dd.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202412/c18a1cb81f6965b3c74ddcadeecdf7dd.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202412/84f4f654cc520405bd02fbf3a47c0ef4.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202412/84f4f654cc520405bd02fbf3a47c0ef4.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
