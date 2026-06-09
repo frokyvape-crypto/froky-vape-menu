@@ -282,7 +282,7 @@
     "id": 1691,
     "product_no": 1691,
     "name": "제이씨컴퍼니 트럼프 입호흡 액상 30ml",
-    "price": 14800,
+    "price": 13800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202409/696320988f8751f3e2038de5d25fc53f.png"
     ],
@@ -312,6 +312,7 @@
       "포도송이",
       "피치 (노멘솔)"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
