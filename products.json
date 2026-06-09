@@ -3254,10 +3254,8 @@
       "https://frokyvape.com/web/product/medium/202310/c1028ac280e18647b11640cf5876e1ae.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202310/c1028ac280e18647b11640cf5876e1ae.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202310/37baeccdfdaf4691c40caacaa23ebbbf.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202310/37baeccdfdaf4691c40caacaa23ebbbf.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg / 5병단위 구매 가능",
     "options": [
@@ -3267,6 +3265,7 @@
       "블랙/블랙 멘솔 (5병)",
       "블랙/아메리카노 (5병)"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
