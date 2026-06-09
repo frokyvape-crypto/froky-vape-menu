@@ -5909,16 +5909,14 @@
   {
     "id": 1820,
     "product_no": 1820,
-    "name": "[O] 엘프바 BC25000 아이스킹 일회용 전자담배 23ml",
+    "name": "엘프바 BC25000 아이스킹 일회용 전자담배 23ml",
     "price": 22500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202509/4a8fd4a7f8033b873ab189dc7d26893a.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/4a8fd4a7f8033b873ab189dc7d26893a.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/d0cd19cd284b52b52b2282b171d49972.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/d0cd19cd284b52b52b2282b171d49972.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "25,000 퍼프",
     "options": [
