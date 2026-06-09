@@ -1391,10 +1391,8 @@
       "https://frokyvape.com/web/product/medium/202603/be8b3d0d3d04eb6503a4c8ba36b98557.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/be8b3d0d3d04eb6503a4c8ba36b98557.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/4a001255c87689839e422c4efb89164d.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/4a001255c87689839e422c4efb89164d.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -1402,6 +1400,7 @@
       "시나노 골드애플",
       "청자몽"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
