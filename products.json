@@ -5103,7 +5103,8 @@
     "flavor": "",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 2682,
@@ -5122,7 +5123,8 @@
     "flavor": "",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 2453,
@@ -5141,7 +5143,8 @@
     "flavor": "60ml 대용량 입호흡",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 2320,
@@ -5198,7 +5201,8 @@
     "flavor": "",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 2066,
@@ -5217,7 +5221,8 @@
     "flavor": "",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 2062,
@@ -5236,7 +5241,8 @@
     "flavor": "",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 1904,
@@ -5255,7 +5261,8 @@
     "flavor": "",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 1902,
@@ -5274,7 +5281,8 @@
     "flavor": "3mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 1901,
@@ -5293,7 +5301,8 @@
     "flavor": "9.9mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 1849,
@@ -5312,7 +5321,8 @@
     "flavor": "9.9mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 1694,
@@ -5396,7 +5406,8 @@
     "flavor": "3mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 1313,
@@ -5415,7 +5426,8 @@
     "flavor": "10,000 퍼프 / 단종 예정",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 1206,
@@ -5434,7 +5446,8 @@
     "flavor": "1박스 (10병) 단위로 구매 가능 상품입니다",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 1180,
@@ -5472,7 +5485,8 @@
     "flavor": "3mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 957,
@@ -5529,7 +5543,8 @@
     "flavor": "9.8mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 810,
@@ -5548,7 +5563,8 @@
     "flavor": "3mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 788,
@@ -5586,7 +5602,8 @@
     "flavor": "9.8mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 541,
@@ -5605,7 +5622,8 @@
     "flavor": "",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 406,
@@ -5624,7 +5642,8 @@
     "flavor": "6mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 369,
@@ -5643,7 +5662,8 @@
     "flavor": "9.9mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 360,
@@ -5662,7 +5682,8 @@
     "flavor": "9.9mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 284,
@@ -5681,7 +5702,8 @@
     "flavor": "9.9mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 275,
@@ -5700,7 +5722,8 @@
     "flavor": "9.9mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 2695,
@@ -6674,10 +6697,8 @@
       "https://frokyvape.com/web/product/medium/202407/f51f44c052cb0cfd9cc17c02d9327c15.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202407/f51f44c052cb0cfd9cc17c02d9327c15.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202407/adacc057698e24a37f0274dd6be379a2.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202407/adacc057698e24a37f0274dd6be379a2.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
