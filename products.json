@@ -6394,16 +6394,16 @@
       "https://frokyvape.com/web/product/medium/202309/146131ea79d52bac77dd30499f8942ce.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202309/146131ea79d52bac77dd30499f8942ce.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://store.img11.co.kr/37273654/6fad21da-d1ae-456f-8caf-0711ff1598f1_1664504705910.jpg"
+    ],
+    "detailImg": "https://store.img11.co.kr/37273654/6fad21da-d1ae-456f-8caf-0711ff1598f1_1664504705910.jpg",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "시트러스",
       "망고",
-      "멜론",
-      "베리 키위",
-      "그레이프프룻(자몽)"
+      "멜론"
     ],
     "optionPrices": {},
     "sale": false
