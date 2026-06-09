@@ -3523,10 +3523,8 @@
       "https://frokyvape.com/web/product/medium/202309/fdc28ca5759425276e222955b6ccab2e.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202309/fdc28ca5759425276e222955b6ccab2e.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202309/aedc042d95223c59269f7a8622c17435.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202309/aedc042d95223c59269f7a8622c17435.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
@@ -3534,6 +3532,7 @@
       "그레이프",
       "피치"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
