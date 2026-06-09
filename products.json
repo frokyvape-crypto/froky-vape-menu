@@ -2924,10 +2924,8 @@
       "https://frokyvape.com/web/product/medium/202407/8c52b19ec62d1cef472884b587536b5e.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202407/8c52b19ec62d1cef472884b587536b5e.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202407/39dc7036dd933ee243327f9cd7ecb96f.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202407/39dc7036dd933ee243327f9cd7ecb96f.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
@@ -2935,6 +2933,7 @@
       "라임소다",
       "콜라"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
