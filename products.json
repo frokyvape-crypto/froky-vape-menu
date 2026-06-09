@@ -4882,26 +4882,6 @@
     "sale": false
   },
   {
-    "id": 2838,
-    "product_no": 2838,
-    "name": "♥VIP♥ 말론 한글 에디션 꽃 전자담배",
-    "price": 78000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202603/c380c84ed016eb164a97d8496ec6e876.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202603/c380c84ed016eb164a97d8496ec6e876.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/568c77274792ebfc846a6a984075cc6b.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/568c77274792ebfc846a6a984075cc6b.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false,
-    "hidden": true
-  },
-  {
     "id": 2682,
     "product_no": 2682,
     "name": "[VC] 멘솔 시리즈 입호흡 액상 30ml",
@@ -4942,26 +4922,6 @@
     "hidden": true
   },
   {
-    "id": 2320,
-    "product_no": 2320,
-    "name": "[삼성 알트 플러스] S11 18350 전자담배 배터리",
-    "price": 9200,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202507/29ae46d3ecbc3daa1cd0adc2e2a79098.jpg"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202507/29ae46d3ecbc3daa1cd0adc2e2a79098.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202507/e76b33305714a7aac9ecf9004a3caa4b.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202507/e76b33305714a7aac9ecf9004a3caa4b.jpg",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false,
-    "hidden": true
-  },
-  {
     "id": 2231,
     "product_no": 2231,
     "name": "잽쥬스 마르키사 야쿠자르트 입호흡 액상 30ml",
@@ -4977,146 +4937,6 @@
     "options": [],
     "optionPrices": {},
     "sale": false
-  },
-  {
-    "id": 2126,
-    "product_no": 2126,
-    "name": "[[O] ] DIO 디오 800 일회용 교체 팟 1팩",
-    "price": 11000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202505/60bff052fdd87508bc190511613d1d8a.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202505/60bff052fdd87508bc190511613d1d8a.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202505/c019daccf4251e5f2452bfe26c967d10.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202505/c019daccf4251e5f2452bfe26c967d10.png",
-    "cat": "일회용",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false,
-    "hidden": true
-  },
-  {
-    "id": 2066,
-    "product_no": 2066,
-    "name": "[NB] 요노 스퀘어 전자담배",
-    "price": 42000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202504/a23b6634ebed7bb313091cab55238235.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202504/a23b6634ebed7bb313091cab55238235.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202504/e11d52ca8eb681e2310287ebb7f0a86d.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202504/e11d52ca8eb681e2310287ebb7f0a86d.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false,
-    "hidden": true
-  },
-  {
-    "id": 2062,
-    "product_no": 2062,
-    "name": "[EV] 아스파이어 고텍 S 전자담배",
-    "price": 25000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202504/9836e81c3119b15f3ecffdd566afb644.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202504/9836e81c3119b15f3ecffdd566afb644.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202504/460666d31bf6f80e8cd210a7920f3581.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202504/460666d31bf6f80e8cd210a7920f3581.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false,
-    "hidden": true
-  },
-  {
-    "id": 1904,
-    "product_no": 1904,
-    "name": "[AB] 앰비언트 X 저스트포그 글렌트 전자담배",
-    "price": 45000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202502/b94a2641486e93ceabf489e8b366e998.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202502/b94a2641486e93ceabf489e8b366e998.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202502/5800b19215fbd960a2a238864fcbeff6.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202502/5800b19215fbd960a2a238864fcbeff6.png",
-    "cat": "입호흡",
-    "flavor": "",
-    "options": [],
-    "optionPrices": {},
-    "sale": false,
-    "hidden": true
-  },
-  {
-    "id": 1902,
-    "product_no": 1902,
-    "name": "[BJ] 브로스 베이커 스토너 폐호흡 액상 60ml",
-    "price": 22400,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202503/a0af16948ba12f74a4398bbd0304930a.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202503/a0af16948ba12f74a4398bbd0304930a.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202503/aba83d696b33c65d24c903c77d3c5427.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202503/aba83d696b33c65d24c903c77d3c5427.png",
-    "cat": "폐호흡",
-    "flavor": "3mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false,
-    "hidden": true
-  },
-  {
-    "id": 1901,
-    "product_no": 1901,
-    "name": "[BJ] 브로스 스팀베이프 입호흡 액상 30ml",
-    "price": 14800,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202502/f5b495dd0cc0c12a6a13b9e04ea6927b.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202502/f5b495dd0cc0c12a6a13b9e04ea6927b.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202502/7095f7fc1dde10f1e8ae7b046ed69656.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202502/7095f7fc1dde10f1e8ae7b046ed69656.png",
-    "cat": "입호흡",
-    "flavor": "9.9mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false,
-    "hidden": true
-  },
-  {
-    "id": 1849,
-    "product_no": 1849,
-    "name": "[BJ] 브로스 베이커 스토너 입호흡 액상 30ml",
-    "price": 17000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202501/738e402ff13c926ba254ff1dcb4bd5bb.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202501/738e402ff13c926ba254ff1dcb4bd5bb.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202501/6160e97228059603bb46f5f138857d81.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202501/6160e97228059603bb46f5f138857d81.png",
-    "cat": "입호흡",
-    "flavor": "9.9mg",
-    "options": [],
-    "optionPrices": {},
-    "sale": false,
-    "hidden": true
   },
   {
     "id": 1694,
