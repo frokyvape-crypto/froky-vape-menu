@@ -83,16 +83,10 @@
     ],
     "img": "https://frokyvape.com/web/product/medium/202508/8d829932d6a95fe439187d91582260bb.jpg",
     "detailImgs": [
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780885380717_o3r6.gif",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780885383127_m352.gif",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780885384817_s6xc.gif",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780885387152_7tp3.gif",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780885389156_3gd6.gif",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780885391541_7ls3.gif",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780885395403_aa07.jpg",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780885399466_x5er.gif"
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780967757196_0okr.gif",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780967764384_93tg.jpg"
     ],
-    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780885380717_o3r6.gif",
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780967757196_0okr.gif",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -103,6 +97,7 @@
       "젤리 알로에",
       "지저스 마르키사"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
