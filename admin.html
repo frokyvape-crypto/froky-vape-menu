@@ -1450,13 +1450,16 @@ async function persistProductsMutation(mutator, message) {
   try {
     for (let attempt = 0; attempt < 2; attempt++) {
       const latest = await fetchLatestProducts();
-      preSaveHash = JSON.stringify(latest); // CDN 구버전 감지를 위해 저장 전 해시 기록
+      const _delIds = new Set((siteConfig.deletedProductIds || []).map(Number));
+      const filteredLatest = _delIds.size ? latest.filter(p => !_delIds.has(Number(p.id))) : latest;
+      preSaveHash = JSON.stringify(filteredLatest); // checkRemoteChanges와 동일한 필터링 기준으로 해시 기록
       const nextProducts = mutator(latest.map(p => ({...p})));
       if (!Array.isArray(nextProducts)) throw new Error('상품 변경 결과가 올바르지 않습니다');
       try {
         const useWorker = WORKER_URL && ADMIN_KEY;
         const res = useWorker ? await saveViaWorker(nextProducts) : await saveViaDirect(nextProducts);
-        products = nextProducts;
+        // checkRemoteChanges와 동일한 기준(filtered)으로 products·remoteHash 설정
+        products = _delIds.size ? nextProducts.filter(p => !_delIds.has(Number(p.id))) : nextProducts;
         pendingRemoteProducts = null;
         remoteHash = JSON.stringify(products);
         markDeployStarted(res, message);
