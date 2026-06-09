@@ -6636,16 +6636,14 @@
   {
     "id": 1797,
     "product_no": 1797,
-    "name": "[O 3 B]  쓰리탑스 Chu 츄 입호흡 액상 30ml",
+    "name": "쓰리탑스 Chu 츄 입호흡 액상 30ml",
     "price": 11100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202412/87883ab72a415af536693f6a082433c9.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202412/87883ab72a415af536693f6a082433c9.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202412/b7da5c29c4cdae4dfd4584a30f8ce91c.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202412/b7da5c29c4cdae4dfd4584a30f8ce91c.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
