@@ -6239,16 +6239,14 @@
   {
     "id": 381,
     "product_no": 381,
-    "name": "[O M] 요요 입호흡 액상 30ml",
+    "name": "요요 입호흡 액상 30ml",
     "price": 15500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202309/f0b765a58d7fbe5d3b672676ca6a449a.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202309/f0b765a58d7fbe5d3b672676ca6a449a.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202309/67a546525e6833a55b29591c82f539b0.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202309/67a546525e6833a55b29591c82f539b0.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
