@@ -6479,25 +6479,27 @@
     ],
     "img": "https://frokyvape.com/web/product/medium/202310/f3d631da767baba8803379a3aa2c9417.png",
     "detailImgs": [
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973278587_j4g8.jpg"
+      "https://frokyvape.com/web/product/big/202310/49098de28508ed3dfac9f57601d65fe0.png"
     ],
-    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780973278587_j4g8.jpg",
+    "detailImg": "https://frokyvape.com/web/product/big/202310/49098de28508ed3dfac9f57601d65fe0.png",
     "cat": "고농도",
     "flavor": "9.8mg",
     "options": [
+      "ST 베리",
       "데미안",
       "로스팅",
       "블라썸",
       "슈가넛",
       "스윗치",
       "스틴",
-      "아이스러시안",
-      "아이스멘솔",
+      "스피아",
+      "아이스 러시안",
+      "아이스 멘솔",
       "알포",
       "웨스턴",
       "토트",
       "팔팔",
-      "홍T"
+      "홍 T"
     ],
     "optionPrices": {},
     "sale": false
