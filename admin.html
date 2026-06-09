@@ -560,6 +560,16 @@ let remoteHash = '';
 let remoteConfigHash = '';
 let lastSaveTime = 0;
 let preSaveHash = ''; // 저장 직전 remoteHash — CDN 구버전 구별용
+// 우리가 직접 저장했거나 로드한 상품 상태 해시 기록. stale CDN(최대 5분 캐시)이
+// 과거 상태를 반환해도 이 목록에 있으면 "외부 변경"으로 오인하지 않고 무시한다.
+let knownProductHashes = [];
+function recordKnownProductHash(hash) {
+  if (!hash) return;
+  const i = knownProductHashes.indexOf(hash);
+  if (i !== -1) knownProductHashes.splice(i, 1);
+  knownProductHashes.push(hash);
+  if (knownProductHashes.length > 20) knownProductHashes.shift();
+}
 let autoRefreshTimer = null;
 let pendingRemoteProducts = null;
 let pendingRemoteConfig = null;
@@ -876,6 +886,7 @@ async function loadProducts({ silent = false } = {}) {
     const _delIds = new Set((siteConfig.deletedProductIds || []).map(Number));
     products = _delIds.size ? latest.filter(p => !_delIds.has(Number(p.id))) : latest;
     remoteHash = JSON.stringify(products);
+    recordKnownProductHash(remoteHash);
     dbSave();
     renderTable();
     if (!silent) toast(`상품 ${products.length}개 로드`, 'ok');
@@ -1295,11 +1306,13 @@ async function checkRemoteChanges() {
     const _cDelIds = new Set((siteConfig.deletedProductIds || []).map(Number));
     const data = _cDelIds.size ? rawData.filter(p => !_cDelIds.has(Number(p.id))) : rawData;
     const hash = JSON.stringify(data);
-    if (!remoteHash) remoteHash = hash;
+    if (!remoteHash) { remoteHash = hash; recordKnownProductHash(hash); }
     else if (hash !== remoteHash) {
-      // CDN이 저장 전 구버전을 아직 반환하는 경우 무시 (다른 관리자 변경과 구별)
-      if (preSaveHash && hash === preSaveHash) return;
+      // stale CDN(최대 5분 캐시)이 우리가 이미 저장/로드했던 과거 상태를 반환하는 경우 무시.
+      // knownProductHashes에 없는 상태만 "다른 관리자의 외부 변경"으로 간주한다.
+      if (knownProductHashes.includes(hash)) return;
       remoteHash = hash;
+      recordKnownProductHash(hash);
       if (anyModalOpen) {
         pendingRemoteProducts = data;
         updateTopbar();
@@ -1516,6 +1529,7 @@ async function persistProductsMutation(mutator, message) {
       const _delIds = new Set((siteConfig.deletedProductIds || []).map(Number));
       const filteredLatest = _delIds.size ? latest.filter(p => !_delIds.has(Number(p.id))) : latest;
       preSaveHash = JSON.stringify(filteredLatest);
+      recordKnownProductHash(preSaveHash); // 저장 직전 상태도 "우리가 본 상태"로 기록 (CDN 지연 대비)
       const nextProducts = mutator(latest.map(p => ({...p})));
       if (!Array.isArray(nextProducts)) throw new Error('상품 변경 결과가 올바르지 않습니다');
       try {
@@ -1524,6 +1538,7 @@ async function persistProductsMutation(mutator, message) {
         products = _delIds.size ? nextProducts.filter(p => !_delIds.has(Number(p.id))) : nextProducts;
         pendingRemoteProducts = null;
         remoteHash = JSON.stringify(products);
+        recordKnownProductHash(remoteHash); // 방금 저장한 새 상태 기록
         markDeployStarted(res, message);
         renderTable();
         return res;
