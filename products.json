@@ -2324,10 +2324,8 @@
       "https://frokyvape.com/web/product/medium/202601/241304c9ceea12f32959323fef50abf1.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202601/241304c9ceea12f32959323fef50abf1.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202601/cdbab40cedc15c855f76344593e4bd1d.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202601/cdbab40cedc15c855f76344593e4bd1d.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "일회용",
     "flavor": "30,000 퍼프",
     "options": [
@@ -2337,6 +2335,7 @@
       "[고농도] 샤인머스켓",
       "[고농도] 퍼킹팹"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
