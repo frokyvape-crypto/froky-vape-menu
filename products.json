@@ -2945,10 +2945,8 @@
       "https://frokyvape.com/web/product/medium/202407/8358179fd22fe47cdcd77e9d22776a0d.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202407/8358179fd22fe47cdcd77e9d22776a0d.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202407/d2e832078a2fd274603de761ff6a1661.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202407/d2e832078a2fd274603de761ff6a1661.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -2956,6 +2954,7 @@
       "라임소다",
       "콜라"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
