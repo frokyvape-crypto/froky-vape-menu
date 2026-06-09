@@ -224,7 +224,7 @@
     "id": 1830,
     "product_no": 1830,
     "name": "굿쥬스 입호흡 액상 30ml",
-    "price": 37500,
+    "price": 78000,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202501/10139b6cd42542f4c875cfcea5523c82.png"
     ],
@@ -248,6 +248,7 @@
       "프레쉬 유자 (10병)",
       "스위트 멜론즈 (10병)"
     ],
+    "optionPrices": {},
     "sale": false
   },
   {
