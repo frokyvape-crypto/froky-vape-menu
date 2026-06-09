@@ -528,7 +528,8 @@
       "시가"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 1202,
