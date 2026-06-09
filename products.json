@@ -5201,7 +5201,8 @@
     "flavor": "",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "hidden": true
   },
   {
     "id": 2066,
