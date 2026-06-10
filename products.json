@@ -5932,20 +5932,19 @@
       "https://frokyvape.com/web/product/medium/202601/39a40d9c02f55d43e55c27939aa2d0b3.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202601/39a40d9c02f55d43e55c27939aa2d0b3.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058649315_yjoo.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058651834_k623.gif",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058656421_n5bo.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058658755_kjn1.gif",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058663670_xftq.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058665759_qhtv.gif",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058670469_15xu.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058649315_yjoo.png",
     "cat": "일회용",
     "flavor": "15,000 퍼프",
-    "options": [
-      "그레이프 아이스",
-      "멕시코 망고 아이스",
-      "스트로베리 워터멜론 아이스",
-      "쿨민트",
-      "콜라",
-      "피치 아이스",
-      "샤워 애플",
-      "그린티 아이스"
-    ],
+    "options": [],
     "optionPrices": {},
     "sale": false
   },
