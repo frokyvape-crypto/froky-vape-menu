@@ -1015,12 +1015,14 @@
       "https://frokyvape.com/web/product/medium/202407/78db001d3fffad858baf806201a389a2.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202407/78db001d3fffad858baf806201a389a2.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069784197_v11c.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069784197_v11c.png",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
-      "치즈 & 카라멜팝콘",
+      "치즈 카라멜팝콘",
       "코코넛 커스타드 케이크"
     ],
     "optionPrices": {},
