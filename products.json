@@ -5159,7 +5159,7 @@
     "id": 859,
     "product_no": 859,
     "name": "잽쥬스 아이수 입호흡 액상 30ml",
-    "price": 23400,
+    "price": 21900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202502/6e766058baba304e629124657fc36b50.png"
     ],
@@ -5168,7 +5168,11 @@
     "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "알로에베라",
+      "용과",
+      "체리"
+    ],
     "optionPrices": {},
     "sale": false
   },
