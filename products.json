@@ -5650,8 +5650,14 @@
       "https://frokyvape.com/web/product/medium/202407/31527b786d9605d090d1d435899b370a.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202407/31527b786d9605d090d1d435899b370a.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781059691813_aohp.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781059694656_uq8q.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781059698396_8nhw.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781059702164_omzr.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781059705836_sahx.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781059691813_aohp.jpg",
     "cat": "입호흡",
     "flavor": "3mg",
     "options": [
