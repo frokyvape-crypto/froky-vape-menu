@@ -5013,7 +5013,11 @@
     "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg",
-    "options": [],
+    "options": [
+      "3mg 오리지널",
+      "3mg 라즈베리",
+      "3mg 딸기"
+    ],
     "optionPrices": {},
     "sale": false
   },
