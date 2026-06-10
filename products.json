@@ -5775,8 +5775,11 @@
       "https://frokyvape.com/web/product/medium/202604/7441ca3f8ac5003a5140eb85e72c7663.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202604/7441ca3f8ac5003a5140eb85e72c7663.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781059430348_1lq7.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781059433588_lxcf.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781059430348_1lq7.jpg",
     "cat": "일회용",
     "flavor": "",
     "options": [
