@@ -5216,7 +5216,7 @@
     "id": 788,
     "product_no": 788,
     "name": "잽쥬스 아이수 폐호흡 액상 60ml",
-    "price": 30200,
+    "price": 29200,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202407/0a788a7665a2dfc62230b1231fef2808.png"
     ],
@@ -5225,7 +5225,10 @@
     "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg",
-    "options": [],
+    "options": [
+      "3mg 알로에베라",
+      "3mg 용과"
+    ],
     "optionPrices": {},
     "sale": false
   },
