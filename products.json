@@ -4655,8 +4655,10 @@
       "https://frokyvape.com/web/product/medium/202505/b397927904e0206b083da33f0ab171be.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202505/b397927904e0206b083da33f0ab171be.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781068867883_d4cq.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781068867883_d4cq.jpg",
     "cat": "입호흡",
     "flavor": "9.8mg / 10병단위 구매 가능",
     "options": [
