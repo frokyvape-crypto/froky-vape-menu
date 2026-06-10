@@ -6167,15 +6167,17 @@
       "https://frokyvape.com/web/product/medium/202506/0fcef7e9d3e9eaa9619b19d58eabf4be.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202506/0fcef7e9d3e9eaa9619b19d58eabf4be.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://og9og9.com/web/upload/NNEditor/20250912/likejeup_01.jpg",
+      "https://og9og9.com/web/upload/NNEditor/20250912/likejeup_02.jpg",
+      "https://og9og9.com/web/upload/NNEditor/20250912/likejeup_03.jpg"
+    ],
+    "detailImg": "https://og9og9.com/web/upload/NNEditor/20250912/likejeup_01.jpg",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
       "아오리 즙같네",
-      "딸기 즙같네",
       "블루베리 즙같네",
-      "오렌지 즙같네",
       "자몽 즙같네",
       "자두 즙같네",
       "딸기바나나 즙같네"
