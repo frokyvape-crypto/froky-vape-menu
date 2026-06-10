@@ -7246,8 +7246,18 @@
       "https://frokyvape.com/web/product/medium/202508/584f3475942da626dc2838ba7e28be41.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202508/584f3475942da626dc2838ba7e28be41.jpg",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781078859143_ovlp.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781078863058_jfwf.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781078868136_wa33.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781078872464_xca1.jpeg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781078876975_2yia.jpeg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781078880064_b1pp.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781078882289_azof.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781078885251_0073.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781078889744_z0zn.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781078859143_ovlp.png",
     "cat": "일회용",
     "flavor": "2%",
     "options": [
