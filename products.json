@@ -5891,24 +5891,21 @@
       "https://frokyvape.com/web/product/medium/202503/15c3967cc638d2c96b43f2454bfd8f07.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202503/15c3967cc638d2c96b43f2454bfd8f07.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058764393_n4b7.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058772322_urj2.gif",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058775545_w9k5.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058778054_tjbm.gif",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058782106_f26w.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058785503_hz8c.gif",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058793929_mrn7.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058797202_jb4n.gif",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058804834_m1sj.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781058764393_n4b7.png",
     "cat": "일회용",
     "flavor": "25,000 퍼프",
-    "options": [
-      "그린 애플 아이스",
-      "마이애미 민트",
-      "망고 피치 아이스",
-      "사워 블루 아이스",
-      "사워 애플 아이스",
-      "사워 피치 아이스",
-      "스트로베리 아이스",
-      "시트러스 스매쉬 아이스",
-      "체리 블라스트 아이스",
-      "코코넛 아이스",
-      "콜라 아이스",
-      "트로피컬 오렌지 아이스"
-    ],
+    "options": [],
     "optionPrices": {},
     "sale": false
   },
