@@ -5111,7 +5111,15 @@
     "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
-    "options": [],
+    "options": [
+      "오리지널",
+      "라즈베리",
+      "딸기",
+      "아오리사과",
+      "바나나분유",
+      "전통파 멘솔",
+      "칠성파 사이다"
+    ],
     "optionPrices": {},
     "sale": false
   },
