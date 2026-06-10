@@ -958,14 +958,20 @@
       "https://frokyvape.com/web/product/medium/202403/1d7312b93c435809085ba14f4a9a2a17.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202403/1d7312b93c435809085ba14f4a9a2a17.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069554050_i530.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069556442_4uy0.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069559058_0eem.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069561333_gzce.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069554050_i530.jpg",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
       "유자",
       "발렌시가",
-      "딸기"
+      "딸기",
+      "샤인머스킷"
     ],
     "optionPrices": {},
     "sale": false
