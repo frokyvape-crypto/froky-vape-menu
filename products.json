@@ -693,8 +693,28 @@
       "https://frokyvape.com/web/product/medium/202509/ace6acbe0be045342e1d5f9e79619a7b.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/ace6acbe0be045342e1d5f9e79619a7b.jpg",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067188155_lgyd.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067190997_rzwo.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067193527_78ew.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067195770_3r70.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067198274_hu0u.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067200859_nxj5.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067202974_dc0r.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067205207_c9fk.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067207359_xut4.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067209880_2d2w.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067212284_e93q.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067214370_ktm5.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067219962_c7jf.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067222031_e2f0.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067224422_7ljm.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067226541_aelc.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067228677_cs0n.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067230809_59wu.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067232947_a24p.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781067188155_lgyd.jpg",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
@@ -714,7 +734,9 @@
       "자몽 엔딩",
       "콜라 엔딩",
       "민트 엔딩",
-      "사이다 엔딩"
+      "사이다 엔딩",
+      "민트엔딩",
+      "주연엔딩2"
     ],
     "optionPrices": {},
     "sale": false
