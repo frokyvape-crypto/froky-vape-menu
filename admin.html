@@ -2384,5 +2384,44 @@ function toast(msg, type = 'ok') {
   clearTimeout(_tt); _tt = setTimeout(() => el.classList.remove('show'), 2400);
 }
 </script>
+<script>
+/* 보안 억제(눈속임): 우클릭/개발자도구 단축키 차단 + 경고 오버레이.
+   ※ 실제 보안이 아니라 일반인 대상 심리적 억제용 — 아는 사람은 우회 가능. */
+(function(){
+  function warn(msg){
+    var o = document.getElementById('__sec_overlay');
+    if(!o){
+      o = document.createElement('div');
+      o.id = '__sec_overlay';
+      o.style.cssText = 'position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;background:rgba(8,8,12,.94);color:#fff;font-size:17px;line-height:1.7;text-align:center;padding:28px;font-family:Pretendard,sans-serif;backdrop-filter:blur(6px)';
+      (document.body||document.documentElement).appendChild(o);
+    }
+    o.innerHTML = (msg||'⚠️ 이 페이지는 보호되어 있습니다.');
+    o.style.display = 'flex';
+    clearTimeout(o._t);
+    o._t = setTimeout(function(){ o.style.display='none'; }, 1500);
+  }
+  document.addEventListener('contextmenu', function(e){ e.preventDefault(); warn('🔒 우클릭은 사용할 수 없습니다.'); });
+  document.addEventListener('keydown', function(e){
+    var k = (e.key||'').toUpperCase();
+    if (k==='F12' ||
+        (e.ctrlKey && e.shiftKey && (k==='I'||k==='J'||k==='C'||k==='K')) ||
+        ((e.ctrlKey||e.metaKey) && (k==='U'||k==='S'))) {
+      e.preventDefault();
+      warn('🔒 개발자 도구는 사용할 수 없습니다.');
+      return false;
+    }
+  });
+  // 데스크톱에서 도킹된 개발자도구 감지(가벼운 경고만, 1.5초 뒤 사라짐 → 오탐이어도 무해)
+  var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints||0) > 0;
+  if(!isTouch){
+    setInterval(function(){
+      if ((window.outerWidth - window.innerWidth) > 180 || (window.outerHeight - window.innerHeight) > 280){
+        warn('🔒 개발자 도구가 감지되었습니다.<br>이 페이지는 보호되어 있습니다.');
+      }
+    }, 1200);
+  }
+})();
+</script>
 </body>
 </html>
