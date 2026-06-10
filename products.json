@@ -3815,29 +3815,6 @@
     "sale": false
   },
   {
-    "id": 367,
-    "product_no": 367,
-    "name": "파이 저농도 입호흡 액상 30ml",
-    "price": 13300,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202310/f3d631da767baba8803379a3aa2c9417.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202310/f3d631da767baba8803379a3aa2c9417.png",
-    "detailImgs": [],
-    "detailImg": "",
-    "cat": "입호흡",
-    "flavor": "0.98mg",
-    "options": [
-      "토트",
-      "아이스 멘솔",
-      "아이스 러시안",
-      "팔팔",
-      "알포"
-    ],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 329,
     "product_no": 329,
     "name": "오르카 프리징 입호흡 액상 30ml",
