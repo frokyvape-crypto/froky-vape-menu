@@ -4451,8 +4451,16 @@
       "https://frokyvape.com/web/product/medium/202509/c9a7f058e8e0c49985f4f4c3f57294bd.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/c9a7f058e8e0c49985f4f4c3f57294bd.jpg",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069340522_thaj.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069343903_aq7z.webp",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069353862_l0tn.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069356790_j6dg.webp",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069365747_ms5o.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069368127_fkpf.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069370307_pd4r.webp"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069340522_thaj.jpg",
     "cat": "입호흡",
     "flavor": "9.8mg / 10병단위 구매 가능",
     "options": [
