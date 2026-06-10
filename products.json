@@ -4544,8 +4544,10 @@
       "https://frokyvape.com/web/product/medium/202507/2ae0743da5831f0e60b3db3674bf4295.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202507/2ae0743da5831f0e60b3db3674bf4295.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://medusamall.com/web/upload/NNEditor/20250521/9ca05efa3376ae8724e90f8a5c484447.jpg"
+    ],
+    "detailImg": "https://medusamall.com/web/upload/NNEditor/20250521/9ca05efa3376ae8724e90f8a5c484447.jpg",
     "cat": "입호흡",
     "flavor": "9.8mg / 10병단위 구매 가능",
     "options": [
