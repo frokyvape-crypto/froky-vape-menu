@@ -1596,8 +1596,10 @@
       "https://frokyvape.com/web/product/medium/202604/a612cc8f9f88ea7b3d6d96a2e10dffe5.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202604/a612cc8f9f88ea7b3d6d96a2e10dffe5.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781062544183_1heu.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781062544183_1heu.png",
     "cat": "노멘솔",
     "flavor": "9.8mg",
     "options": [
