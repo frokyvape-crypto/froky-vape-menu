@@ -1432,10 +1432,8 @@
       "https://frokyvape.com/web/product/medium/202603/1033b0ca88cd28c0e1e95b8381ff2df0.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/1033b0ca88cd28c0e1e95b8381ff2df0.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/418fa1b46e16490fabb8b73782f263ee.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/418fa1b46e16490fabb8b73782f263ee.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
@@ -1444,7 +1442,8 @@
       "폐호흡 파인 레몬에이드 100ml",
       "폐호흡 패션후르츠 100ml"
     ],
-    "sale": false
+    "sale": false,
+    "optionPrices": {}
   },
   {
     "id": 2859,
