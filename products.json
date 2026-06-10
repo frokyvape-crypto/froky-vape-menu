@@ -5884,29 +5884,6 @@
     "sale": false
   },
   {
-    "id": 1699,
-    "product_no": 1699,
-    "name": "엘프바 BC10000 슈퍼쿨 에디션 일회용 전자담배 15ml",
-    "price": 21000,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202409/7cd32f92731ba9544c7e564768408b90.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202409/7cd32f92731ba9544c7e564768408b90.png",
-    "detailImgs": [],
-    "detailImg": "",
-    "cat": "일회용",
-    "flavor": "10,000 퍼프",
-    "options": [
-      "그레이프 체리",
-      "포카리 아이스",
-      "레몬 라임",
-      "샤인머스켓",
-      "피치 아이스"
-    ],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 2015,
     "product_no": 2015,
     "name": "긱베이프 긱바 펄스 X 일회용 전자담배 18ml",
