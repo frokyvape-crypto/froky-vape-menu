@@ -7166,5 +7166,37 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 2378,
+    "product_no": 2378,
+    "name": "[고농도] 네스티바 클리어 30000 일회용 전자담배 18ml",
+    "price": 27900,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202508/584f3475942da626dc2838ba7e28be41.jpg"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202508/584f3475942da626dc2838ba7e28be41.jpg",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202508/bea76d6251e6347d80b1db5aa7604d44.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202508/bea76d6251e6347d80b1db5aa7604d44.jpg",
+    "cat": "고농도",
+    "flavor": "2%",
+    "options": [
+      "[고농도] 그린 애플",
+      "[고농도] 더블 슬로우 블로우",
+      "[고농도] 레드 자몽",
+      "[고농도] 샤인머스켓",
+      "[고농도] 아틱 민트",
+      "[고농도] 알로에 그레이리프",
+      "[고농도] 캐리비언 망고",
+      "[고농도] 콜라 아이스",
+      "[고농도] 판타지 파인애플",
+      "[고농도] 포카리",
+      "[고농도] 피즈 사이다",
+      "[고농도] 피치 아이스"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
