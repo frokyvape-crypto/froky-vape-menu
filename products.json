@@ -1126,8 +1126,20 @@
       "https://frokyvape.com/web/product/medium/202406/1c3658ea90009a5997057028fe33d8fb.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202406/1c3658ea90009a5997057028fe33d8fb.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781070320670_nmj3.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781070324319_gob8.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781070327933_ovg6.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781070330756_v4zc.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781070333959_36ea.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781070336338_i6ot.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781070338440_y8hw.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781070340321_4k6b.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781070344167_oeez.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781070347211_6pqa.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781070350805_b8l7.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781070320670_nmj3.jpg",
     "cat": "일회용",
     "flavor": "12,000퍼프 / 배터리 미포함",
     "options": [
