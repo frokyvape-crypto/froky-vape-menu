@@ -2737,8 +2737,12 @@
       "https://frokyvape.com/web/product/medium/202509/3713c5289381e4e79b19a3f1bc1171b1.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/3713c5289381e4e79b19a3f1bc1171b1.jpg",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781079449763_cbw4.jpeg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781079452836_2i8v.jpeg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781079460588_k7ra.jpeg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781079449763_cbw4.jpeg",
     "cat": "일회용",
     "flavor": "10개 단위 구매 가능 / 다바이스 미포함",
     "options": [
