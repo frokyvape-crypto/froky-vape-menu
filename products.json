@@ -3943,8 +3943,10 @@
       "https://frokyvape.com/web/product/medium/202309/8f375d4ca0c8472d79b84e78c2f0dae7.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202309/8f375d4ca0c8472d79b84e78c2f0dae7.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://ai.esmplus.com/khb6th/kkang/title/KakaoTalk_20200504_1700359531.jpg"
+    ],
+    "detailImg": "https://ai.esmplus.com/khb6th/kkang/title/KakaoTalk_20200504_1700359531.jpg",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
