@@ -1968,8 +1968,10 @@
       "https://frokyvape.com/web/product/medium/202509/c5aec065d6f17a8164f8351b82dcd775.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/c5aec065d6f17a8164f8351b82dcd775.jpg",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781074745344_sl5k.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781074745344_sl5k.png",
     "cat": "입호흡",
     "flavor": "",
     "options": [
