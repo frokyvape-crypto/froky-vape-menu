@@ -7347,5 +7347,77 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 2865,
+    "product_no": 2865,
+    "name": "[2%] 차이티 대용량 입호흡 액상 100ml",
+    "price": 20100,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202603/f733405e90a9f841a73b1ba567f1db0d.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202603/f733405e90a9f841a73b1ba567f1db0d.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202603/e1decf19b5f2077f93b67b1c5b2b804b.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202603/e1decf19b5f2077f93b67b1c5b2b804b.png",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "레몬 그린티 100ml",
+      "빙홍차 100ml",
+      "자스민 머스켓 100ml",
+      "락 슈가 페어 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2813,
+    "product_no": 2813,
+    "name": "♥2+1♥ 차이티 대용량 입호흡 액상 100ml",
+    "price": 20100,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202603/64b78a2e3e81b5a3a8247449d7555fd3.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202603/64b78a2e3e81b5a3a8247449d7555fd3.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202603/f9611374f0c3ec7f44e438b04d84b54e.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202603/f9611374f0c3ec7f44e438b04d84b54e.png",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "레몬 그린티 100ml",
+      "빙홍차 100ml",
+      "자스민 머스켓 100ml",
+      "락 슈가 페어 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2696,
+    "product_no": 2696,
+    "name": "♥2+1♥ 차이티 입호흡 액상 30ml",
+    "price": 8800,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202601/2fa883dd96b0c71343674565f14df550.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202601/2fa883dd96b0c71343674565f14df550.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202601/0ca1e854ae842a0d339fadaa1730c298.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202601/0ca1e854ae842a0d339fadaa1730c298.png",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "레몬 그린티",
+      "빙홍차",
+      "자스민 머스켓",
+      "락 슈가 페어"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
