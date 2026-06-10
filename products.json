@@ -7307,9 +7307,9 @@
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
-      "[100ml] 라임",
-      "[100ml] 알로에",
-      "[100ml] 소다"
+      "라임 100ml",
+      "알로에 100ml",
+      "소다 100ml"
     ],
     "optionPrices": {},
     "sale": false
