@@ -1037,8 +1037,10 @@
       "https://frokyvape.com/web/product/medium/202406/ba5cfa8c7bafb0dcf7296102b9be7dee.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202406/ba5cfa8c7bafb0dcf7296102b9be7dee.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069887388_gdoz.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069887388_gdoz.png",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
