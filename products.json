@@ -3074,8 +3074,18 @@
       "https://frokyvape.com/web/product/medium/202502/6d478438b3b403f1fddd8622234aaefa.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202502/6d478438b3b403f1fddd8622234aaefa.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781072235216_id8q.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781072237361_19gz.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781072240652_0w3z.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781072243846_v2s8.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781072246614_kc5l.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781072249371_ubf9.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781072251788_71xh.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781072255710_ui3c.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781072258428_j9md.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781072235216_id8q.jpg",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
