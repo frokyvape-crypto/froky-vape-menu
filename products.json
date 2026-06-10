@@ -4975,7 +4975,9 @@
     "detailImg": "",
     "cat": "입호흡",
     "flavor": "",
-    "options": [],
+    "options": [
+      "야쿠자르트"
+    ],
     "optionPrices": {},
     "sale": false
   },
