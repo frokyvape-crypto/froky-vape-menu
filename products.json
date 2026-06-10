@@ -985,18 +985,22 @@
       "https://frokyvape.com/web/product/medium/202507/57c27da719a6792b91815ea7ee6a2e3e.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202507/57c27da719a6792b91815ea7ee6a2e3e.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069649597_ggsz.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069651478_jvoj.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069653182_tt7z.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069654852_y8tr.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069656350_rntb.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069658266_ve8i.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069659930_l9sz.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069661736_gobm.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069663365_p2nb.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781069649597_ggsz.jpg",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
-      "피치 엔딩",
-      "망고 엔딩",
       "포멜로 엔딩",
-      "오렌지 엔딩",
-      "딸기 엔딩",
-      "스피아민트 엔딩",
-      "애플 엔딩",
       "머스캣 엔딩"
     ],
     "optionPrices": {},
