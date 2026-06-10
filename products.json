@@ -5821,8 +5821,14 @@
       "https://frokyvape.com/web/product/medium/202508/1667050b55470d34263d1256ec11350e.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202508/1667050b55470d34263d1256ec11350e.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781059347458_jiez.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781059350967_ekpa.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781059355858_xokm.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781059360090_xcdy.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781059364024_drb1.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781059347458_jiez.png",
     "cat": "일회용",
     "flavor": "20,000 퍼프",
     "options": [
