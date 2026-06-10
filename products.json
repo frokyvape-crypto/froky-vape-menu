@@ -3960,13 +3960,17 @@
       "https://frokyvape.com/web/product/medium/202310/fa1c9bda142733b91c2ea57af7001fca.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202310/fa1c9bda142733b91c2ea57af7001fca.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781059633561_ti8y.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781059633561_ti8y.jpg",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
       "그랜드 마스터",
-      "캐슬롱"
+      "캐슬롱",
+      "보우든메이트",
+      "갬빗"
     ],
     "optionPrices": {},
     "sale": false
