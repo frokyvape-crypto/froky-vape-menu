@@ -53,8 +53,9 @@ export default {
     if (url.pathname === '/api/health' && request.method === 'GET') {
       return jsonResponse({
         ok: true,
-        version: '2026-06-09-ops-merge',
+        version: '2026-06-10-ops-merge-hardened',
         productsOpsMerge: true,
+        hardened: true,
         cafe24ProductsEndpoint: '/api/v2/admin/products',
         cafe24ProductsScope: 'all',
         ts: Date.now(),
@@ -65,12 +66,17 @@ export default {
   },
 };
 
+// 관리자 페이지가 호스팅되는 출처만 허용 (다른 웹사이트의 브라우저 호출 차단).
+// 커스텀 도메인을 쓰게 되면 여기에 추가하세요.
+const ALLOWED_ORIGINS = ['https://frokyvape-crypto.github.io'];
+
 function corsHeaders() {
   return {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': ALLOWED_ORIGINS[0],
     'Access-Control-Allow-Methods': 'PUT, POST, GET, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Key',
     'Access-Control-Max-Age': '86400',
+    'Vary': 'Origin',
   };
 }
 
@@ -97,11 +103,55 @@ function base64DecodeUtf8(b64) {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+// 타이밍 안전 문자열 비교 (키 길이/내용 추론을 어렵게)
+function timingSafeEqual(a, b) {
+  const enc = new TextEncoder();
+  const ab = enc.encode(String(a));
+  const bb = enc.encode(String(b));
+  // 길이가 달라도 동일한 연산량을 수행해 조기 반환에 의한 정보 누출을 줄인다
+  const len = Math.max(ab.length, bb.length, 1);
+  let diff = ab.length ^ bb.length;
+  for (let i = 0; i < len; i++) {
+    diff |= (ab[i] || 0) ^ (bb[i] || 0);
+  }
+  return diff === 0;
+}
+
+// ── 관리자 키 무차별 입력 방어 (in-memory, best-effort) ────────────
+// Cloudflare Worker는 요청마다 상태가 초기화될 수 있어 완벽한 rate limit은 아니지만,
+// 같은 isolate 안에서의 연속 무차별 시도에 마찰을 준다. (강력하게 하려면 Cloudflare
+// Rate Limiting Rules 또는 KV/Durable Objects 필요)
+const FAILED_AUTH = new Map(); // ip -> { count, resetAt }
+const RL_WINDOW_MS = 5 * 60 * 1000; // 5분
+const RL_MAX_FAILS = 15;
+
+function authRateLimited(ip) {
+  const rec = FAILED_AUTH.get(ip);
+  return !!(rec && Date.now() < rec.resetAt && rec.count >= RL_MAX_FAILS);
+}
+function recordAuthFail(ip) {
+  const now = Date.now();
+  let rec = FAILED_AUTH.get(ip);
+  if (!rec || now >= rec.resetAt) rec = { count: 0, resetAt: now + RL_WINDOW_MS };
+  rec.count++;
+  FAILED_AUTH.set(ip, rec);
+  if (FAILED_AUTH.size > 5000) {
+    for (const [k, v] of FAILED_AUTH) if (now >= v.resetAt) FAILED_AUTH.delete(k);
+  }
+}
+function recordAuthSuccess(ip) { FAILED_AUTH.delete(ip); }
+
 function checkAuth(request, env) {
+  const ip = request.headers.get('cf-connecting-ip') || 'unknown';
+  if (authRateLimited(ip)) {
+    return { ok: false, status: 429, message: '인증 시도가 너무 많습니다.', guide: '잠시 후(약 5분 뒤) 다시 시도하세요.' };
+  }
   const adminKey = request.headers.get('X-Admin-Key') || '';
-  if (!env.ADMIN_KEY || adminKey !== env.ADMIN_KEY) {
+  if (!env.ADMIN_KEY || !timingSafeEqual(adminKey, env.ADMIN_KEY)) {
+    recordAuthFail(ip);
     return { ok: false, status: 401, message: 'Unauthorized', guide: 'X-Admin-Key 헤더가 누락되었거나 일치하지 않습니다.' };
   }
+  recordAuthSuccess(ip);
   return null;
 }
 
