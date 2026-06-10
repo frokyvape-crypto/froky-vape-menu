@@ -5097,8 +5097,11 @@
       "https://frokyvape.com/web/product/medium/202407/52328bbeae87f2381bd62abcf53d2701.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202407/52328bbeae87f2381bd62abcf53d2701.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781061215802_11hu.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781061218701_bcl9.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781061215802_11hu.jpg",
     "cat": "폐호흡-고농도",
     "flavor": "9mg",
     "options": [
