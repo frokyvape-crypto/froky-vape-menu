@@ -8183,16 +8183,14 @@
   {
     "id": 2584,
     "product_no": 2584,
-    "name": "미노아 대용량 입호흡 액상 100ml",
-    "price": 20100,
+    "name": "[대용량] 미노아 입호흡 액상 100ml",
+    "price": 20300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202511/421d230eb58913a6cf7b77d4f73d5131.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202511/421d230eb58913a6cf7b77d4f73d5131.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202511/78f1a8c34b271437de2308d662e1bc93.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202511/78f1a8c34b271437de2308d662e1bc93.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
