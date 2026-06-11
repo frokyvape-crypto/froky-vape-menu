@@ -8374,16 +8374,14 @@
   {
     "id": 2504,
     "product_no": 2504,
-    "name": "한입 대용량 입호흡 액상 100ml",
-    "price": 20100,
+    "name": "[대용량] 한입 입호흡 액상 100ml",
+    "price": 20300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202509/35af838a4583ea26058a27d543fbdfd3.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/35af838a4583ea26058a27d543fbdfd3.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/cddbccf6da1a3560dfd4e41bdc9315fe.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/cddbccf6da1a3560dfd4e41bdc9315fe.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
