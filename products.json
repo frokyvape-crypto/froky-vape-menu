@@ -7675,16 +7675,14 @@
   {
     "id": 2862,
     "product_no": 2862,
-    "name": "레인드롭 대용량 입호흡 액상 100ml",
-    "price": 20100,
+    "name": "[대용량] 레인드롭 입호흡 액상 100ml",
+    "price": 20300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/68cb151c2910f584ee320494ba1a85c9.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/68cb151c2910f584ee320494ba1a85c9.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/b865b3ca1c2ef30ddf834cde0f56a332.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/b865b3ca1c2ef30ddf834cde0f56a332.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
