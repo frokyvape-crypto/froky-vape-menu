@@ -8251,8 +8251,10 @@
       "https://frokyvape.com/web/product/medium/202509/d490ebdafebfbd8c902f035d2228cadd.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/d490ebdafebfbd8c902f035d2228cadd.jpg",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781162272092_wkgp.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781162272092_wkgp.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
