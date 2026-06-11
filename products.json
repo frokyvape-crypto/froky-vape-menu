@@ -8368,5 +8368,125 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 2850,
+    "product_no": 2850,
+    "name": "[2%] 한입 대용량 입호흡 액상 100ml",
+    "price": 20100,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202603/a77208fcdfcd595c72323e24dcd8374d.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202603/a77208fcdfcd595c72323e24dcd8374d.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202603/31884b6cce7c7329fc36cf9196876cd1.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202603/31884b6cce7c7329fc36cf9196876cd1.png",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "딸기 100ml",
+      "멜론 100ml",
+      "백향과 100ml",
+      "적포도 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2814,
+    "product_no": 2814,
+    "name": "한입 폐호흡 액상 100ml",
+    "price": 15700,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202603/ecf33caea222188e0ee2196c105d21ad.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202603/ecf33caea222188e0ee2196c105d21ad.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202603/aeb3692897c013026912f74322cec4d3.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202603/aeb3692897c013026912f74322cec4d3.png",
+    "cat": "폐호흡",
+    "flavor": "3mg",
+    "options": [
+      "폐호흡 딸기 100ml",
+      "폐호흡 멜론 100ml",
+      "폐호흡 백향과 100ml",
+      "폐호흡 적포도 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2625,
+    "product_no": 2625,
+    "name": "[2%] 한입 입호흡 액상 30ml",
+    "price": 9900,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202512/5e5af404bbaa49af753db6f7320a6ac1.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202512/5e5af404bbaa49af753db6f7320a6ac1.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202512/71a10a8b10313b8035a2c20dbb63c7f4.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202512/71a10a8b10313b8035a2c20dbb63c7f4.png",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "딸기",
+      "적포도",
+      "백향과",
+      "멜론"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2504,
+    "product_no": 2504,
+    "name": "♥2+1♥ 한입 대용량 입호흡 액상 100ml",
+    "price": 20100,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202509/35af838a4583ea26058a27d543fbdfd3.jpg"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202509/35af838a4583ea26058a27d543fbdfd3.jpg",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202509/cddbccf6da1a3560dfd4e41bdc9315fe.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202509/cddbccf6da1a3560dfd4e41bdc9315fe.jpg",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "딸기 100ml",
+      "멜론 100ml",
+      "백향과 100ml",
+      "적포도 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2488,
+    "product_no": 2488,
+    "name": "♥2+1♥ 한입 입호흡 액상 30ml",
+    "price": 8800,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202509/5e2a241711982a7785cadfa80092ed05.jpg"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202509/5e2a241711982a7785cadfa80092ed05.jpg",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202509/abb5db1b47b4902259793298747dae61.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202509/abb5db1b47b4902259793298747dae61.jpg",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "딸기",
+      "멜론",
+      "백향과",
+      "적포도"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
