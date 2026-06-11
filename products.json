@@ -8086,5 +8086,120 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 2849,
+    "product_no": 2849,
+    "name": "[2%] 피즈 대용량 입호흡 액상 100ml",
+    "price": 20100,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202603/21014a9ec31bc117b0ed2746a9efdf42.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202603/21014a9ec31bc117b0ed2746a9efdf42.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202603/cd0a8069920e304456d428cf03ce3945.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202603/cd0a8069920e304456d428cf03ce3945.png",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "라임 100ml",
+      "소다 블러스트 100ml",
+      "알로에 베라 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2815,
+    "product_no": 2815,
+    "name": "피즈 폐호흡 액상 100ml",
+    "price": 15700,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202603/6af25addf561dee44ff7f32487ef233e.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202603/6af25addf561dee44ff7f32487ef233e.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202603/41f774abc7d10bbc8866b27f7a20901d.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202603/41f774abc7d10bbc8866b27f7a20901d.png",
+    "cat": "폐호흡",
+    "flavor": "3mg",
+    "options": [
+      "폐호흡 라임 100ml",
+      "폐호흡 소다 블라스트 100ml",
+      "폐호흡 알로에 베라 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2626,
+    "product_no": 2626,
+    "name": "♥2+1♥ 2% 피즈 입호흡 액상 30ml",
+    "price": 9900,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202512/0c3b267dccc1191b98b053c85b5d375c.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202512/0c3b267dccc1191b98b053c85b5d375c.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202512/bbc783429b047c40a4f99c95a1f41945.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202512/bbc783429b047c40a4f99c95a1f41945.png",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "라임",
+      "소다블라스트",
+      "알로에베라"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2508,
+    "product_no": 2508,
+    "name": "♥2+1♥ 피즈 대용량 입호흡 액상 100ml",
+    "price": 20100,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202509/6d5f9db78c002c289a1139d212e7abc9.jpg"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202509/6d5f9db78c002c289a1139d212e7abc9.jpg",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202509/0145c8a081a7758ac9183d9aa356e439.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202509/0145c8a081a7758ac9183d9aa356e439.jpg",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "라임 100ml",
+      "소다 블러스트 100ml",
+      "알로에 베라 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2475,
+    "product_no": 2475,
+    "name": "♥2+1♥ 피즈 입호흡 액상 30ml",
+    "price": 8800,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202509/276543cfd2db9bd5771ca09b71643909.jpg"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202509/276543cfd2db9bd5771ca09b71643909.jpg",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202509/258c54a3024d0c0375971165336a6b2d.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202509/258c54a3024d0c0375971165336a6b2d.jpg",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "라임",
+      "소다 블라스트",
+      "알로에 베라"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
