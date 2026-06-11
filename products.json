@@ -8418,16 +8418,14 @@
   {
     "id": 2692,
     "product_no": 2692,
-    "name": "톡톡 대용량 입호흡 액상 100ml",
-    "price": 18900,
+    "name": "[대용량] 톡톡 입호흡 액상 100ml",
+    "price": 18100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202601/89d95a0fe96307e2ed310761f54d15da.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202601/89d95a0fe96307e2ed310761f54d15da.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202601/867aba1cab738df1ede3e27584cd295e.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202601/867aba1cab738df1ede3e27584cd295e.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
