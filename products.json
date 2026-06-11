@@ -7792,16 +7792,14 @@
   {
     "id": 2825,
     "product_no": 2825,
-    "name": "반하나 대용량 입호흡 액상 100ml",
-    "price": 18900,
+    "name": "[대용량] 반하나 입호흡 액상 100ml",
+    "price": 18100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/82c8d53918f189d308e19fd2412248d5.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/82c8d53918f189d308e19fd2412248d5.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/6836368e931911c2b16efb1d41bc047a.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/6836368e931911c2b16efb1d41bc047a.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
