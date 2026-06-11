@@ -7654,22 +7654,20 @@
     "id": 2863,
     "product_no": 2863,
     "name": "[2%] 레인드롭 대용량 입호흡 액상 100ml",
-    "price": 20100,
+    "price": 20300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/0a13dbfebe7efb0765b2c51cb8b6354b.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/0a13dbfebe7efb0765b2c51cb8b6354b.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/d3eea67ef3ece9d2d09400e9268ae03d.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/d3eea67ef3ece9d2d09400e9268ae03d.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
-    "flavor": "",
+    "flavor": "2%",
     "options": [
-      "레드 & 그린 애플 100ml",
-      "사워 그레이프 100ml",
-      "피치 블라썸 100ml",
-      "피치 플럼 100ml"
+      "[2%] 레드 & 그린 애플 100ml",
+      "[2%] 사워 그레이프 100ml",
+      "[2%] 피치 블라썸 100ml",
+      "[2%] 피치 플럼 100ml"
     ],
     "optionPrices": {},
     "sale": false
