@@ -7816,16 +7816,14 @@
   {
     "id": 2829,
     "product_no": 2829,
-    "name": "슈가캔디 대용량 입호흡 액상 100ml",
-    "price": 18900,
+    "name": "[대용량] 슈가캔 입호흡 액상 100ml",
+    "price": 18100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/2c45059919fd344a9811c6814c4dbd87.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/2c45059919fd344a9811c6814c4dbd87.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/38f27995c040f6238699c56f254896cf.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/38f27995c040f6238699c56f254896cf.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
