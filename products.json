@@ -8488,21 +8488,19 @@
     "id": 2858,
     "product_no": 2858,
     "name": "[2%] 카페인 입호흡 액상 100ml",
-    "price": 20100,
+    "price": 20300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/d9d9029943bad18c286876a602c4896f.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/d9d9029943bad18c286876a602c4896f.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/5b27fe79cfcc95d6dbf304af83641a39.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/5b27fe79cfcc95d6dbf304af83641a39.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
     "flavor": "",
     "options": [
-      "아인슈페너 100ml",
-      "카라멜마끼아또 100ml",
-      "토피넛라떼 100ml"
+      "[2%] 아인슈페너 100ml",
+      "[2%] 카라멜마끼아또 100ml",
+      "[2%] 토피넛라떼 100ml"
     ],
     "optionPrices": {},
     "sale": false
