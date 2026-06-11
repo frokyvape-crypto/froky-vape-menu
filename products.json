@@ -8397,17 +8397,15 @@
     "id": 2488,
     "product_no": 2488,
     "name": "한입 입호흡 액상 30ml",
-    "price": 8800,
+    "price": 9900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202509/5e2a241711982a7785cadfa80092ed05.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/5e2a241711982a7785cadfa80092ed05.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/abb5db1b47b4902259793298747dae61.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/abb5db1b47b4902259793298747dae61.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
-    "flavor": "",
+    "flavor": "9.8mg",
     "options": [
       "딸기",
       "멜론",
