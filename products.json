@@ -8515,5 +8515,53 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 2847,
+    "product_no": 2847,
+    "name": "[2%] 퓨어 대용량 입호흡 액상 100ml",
+    "price": 20100,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202603/fee9d6c246a71e39f00dc5878f8270a5.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202603/fee9d6c246a71e39f00dc5878f8270a5.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202603/c9760e0701d96486a13278ba2dc8a921.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202603/c9760e0701d96486a13278ba2dc8a921.png",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "그레이프 100ml",
+      "그린 그레이프 100ml",
+      "라임 100ml",
+      "멜론 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2503,
+    "product_no": 2503,
+    "name": "♥2+1♥ 퓨어 대용량 입호흡 액상 100ml",
+    "price": 20100,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202509/d1c03531313d0774eb3a43591e0361a0.jpg"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202509/d1c03531313d0774eb3a43591e0361a0.jpg",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202509/4318c16c75dfbf725b48cfcc3c52c2dd.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202509/4318c16c75dfbf725b48cfcc3c52c2dd.jpg",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "그레이프 100ml",
+      "그린 그레이프 100ml",
+      "라임 100ml",
+      "멜론 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
