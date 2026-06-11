@@ -8111,16 +8111,14 @@
   {
     "id": 2508,
     "product_no": 2508,
-    "name": "피즈 대용량 입호흡 액상 100ml",
-    "price": 20100,
+    "name": "[대용량] 피즈 입호흡 액상 100ml",
+    "price": 20300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202509/6d5f9db78c002c289a1139d212e7abc9.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/6d5f9db78c002c289a1139d212e7abc9.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/0145c8a081a7758ac9183d9aa356e439.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/0145c8a081a7758ac9183d9aa356e439.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
