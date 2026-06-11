@@ -8215,17 +8215,15 @@
     "id": 2583,
     "product_no": 2583,
     "name": "미노아 입호흡 액상 30ml",
-    "price": 8800,
+    "price": 9900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202511/d0faf062f05f8ab0a5328d0b9ea4c5e6.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202511/d0faf062f05f8ab0a5328d0b9ea4c5e6.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202511/ea8980aef6bcc54201a1f7402de83542.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202511/ea8980aef6bcc54201a1f7402de83542.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
-    "flavor": "",
+    "flavor": "9.8mg",
     "options": [
       "민트 초코",
       "초코 밀크",
