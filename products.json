@@ -8309,7 +8309,7 @@
     "id": 2850,
     "product_no": 2850,
     "name": "[2%] 한입 대용량 입호흡 액상 100ml",
-    "price": 20100,
+    "price": 20300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/a77208fcdfcd595c72323e24dcd8374d.png"
     ],
@@ -8318,13 +8318,13 @@
       "https://frokyvape.com/web/product/big/202603/31884b6cce7c7329fc36cf9196876cd1.png"
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202603/31884b6cce7c7329fc36cf9196876cd1.png",
-    "cat": "입호흡",
-    "flavor": "",
+    "cat": "고농도",
+    "flavor": "2%",
     "options": [
-      "딸기 100ml",
-      "멜론 100ml",
-      "백향과 100ml",
-      "적포도 100ml"
+      "[2%] 딸기 100ml",
+      "[2%] 멜론 100ml",
+      "[2%] 백향과 100ml",
+      "[2%] 적포도 100ml"
     ],
     "optionPrices": {},
     "sale": false
