@@ -8159,25 +8159,23 @@
       "https://frokyvape.com/web/product/medium/202511/cb6c70b9bedc5dfe4aa46c7c01382535.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202511/cb6c70b9bedc5dfe4aa46c7c01382535.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202511/0be44dfbe758a42d294a107f743e0806.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202511/0be44dfbe758a42d294a107f743e0806.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "고농도",
-    "flavor": "",
+    "flavor": "2%",
     "options": [
-      "민트 초코",
-      "초코 밀크",
-      "초코 바나나",
-      "타바코",
-      "듀얼 멜론",
-      "망고",
-      "블루베리",
-      "스트로베리",
-      "아이스 애플",
-      "쿨 민트",
-      "피치",
-      "피치 멜론"
+      "[2%] 민트 초코",
+      "[2%] 초코 밀크",
+      "[2%] 초코 바나나",
+      "[2%] 타바코",
+      "[2%] 듀얼 멜론",
+      "[2%] 망고",
+      "[2%] 블루베리",
+      "[2%] 스트로베리",
+      "[2%] 아이스 애플",
+      "[2%] 쿨 민트",
+      "[2%] 피치",
+      "[2%] 피치 멜론"
     ],
     "optionPrices": {},
     "sale": false
