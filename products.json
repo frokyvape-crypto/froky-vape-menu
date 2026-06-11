@@ -8051,21 +8051,19 @@
     "id": 2849,
     "product_no": 2849,
     "name": "[2%] 피즈 대용량 입호흡 액상 100ml",
-    "price": 20100,
+    "price": 20300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/21014a9ec31bc117b0ed2746a9efdf42.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/21014a9ec31bc117b0ed2746a9efdf42.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/cd0a8069920e304456d428cf03ce3945.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/cd0a8069920e304456d428cf03ce3945.png",
-    "cat": "폐호흡고농도",
+    "detailImgs": [],
+    "detailImg": "",
+    "cat": "고농도",
     "flavor": "",
     "options": [
-      "라임 100ml",
-      "소다 블러스트 100ml",
-      "알로에 베라 100ml"
+      "[2%] 라임 100ml",
+      "[2%] 소다 블러스트 100ml",
+      "[2%] 알로에 베라 100ml"
     ],
     "optionPrices": {},
     "sale": false
