@@ -8471,8 +8471,10 @@
       "https://frokyvape.com/web/product/medium/202509/d1c03531313d0774eb3a43591e0361a0.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/d1c03531313d0774eb3a43591e0361a0.jpg",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781161865315_uvf3.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781161865315_uvf3.jpg",
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
