@@ -7593,17 +7593,15 @@
       "https://frokyvape.com/web/product/medium/202603/7c707ab86e906d34288410b7ea862aec.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/7c707ab86e906d34288410b7ea862aec.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/2b97c2aaaeb2d8c3950661b6a6c1299a.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/2b97c2aaaeb2d8c3950661b6a6c1299a.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
-    "flavor": "",
+    "flavor": "2%",
     "options": [
-      "라임 100ml",
-      "자두 100ml",
-      "파인 레몬에이드 100ml",
-      "패션후르츠 100ml"
+      "[2%] 라임 100ml",
+      "[2%] 자두 100ml",
+      "[2%] 파인 레몬에이드 100ml",
+      "[2%] 패션후르츠 100ml"
     ],
     "optionPrices": {},
     "sale": false
