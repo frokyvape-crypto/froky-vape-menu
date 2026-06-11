@@ -7655,5 +7655,53 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 2863,
+    "product_no": 2863,
+    "name": "[2%] 레인드롭 대용량 입호흡 액상 100ml",
+    "price": 20100,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202603/0a13dbfebe7efb0765b2c51cb8b6354b.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202603/0a13dbfebe7efb0765b2c51cb8b6354b.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202603/d3eea67ef3ece9d2d09400e9268ae03d.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202603/d3eea67ef3ece9d2d09400e9268ae03d.png",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "레드 & 그린 애플 100ml",
+      "사워 그레이프 100ml",
+      "피치 블라썸 100ml",
+      "피치 플럼 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2862,
+    "product_no": 2862,
+    "name": "레인드롭 대용량 입호흡 액상 30ml",
+    "price": 20100,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202603/68cb151c2910f584ee320494ba1a85c9.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202603/68cb151c2910f584ee320494ba1a85c9.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202603/b865b3ca1c2ef30ddf834cde0f56a332.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202603/b865b3ca1c2ef30ddf834cde0f56a332.png",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "레드 & 그린 애플 100ml",
+      "사워 그레이프 100ml",
+      "피치 블라썸 100ml",
+      "피치 플럼 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
