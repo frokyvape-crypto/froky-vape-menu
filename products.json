@@ -7964,16 +7964,14 @@
   {
     "id": 2509,
     "product_no": 2509,
-    "name": "베이크드 대용량 입호흡 액상 100ml",
-    "price": 20100,
+    "name": "[대용량] 베이크드 입호흡 액상 100ml",
+    "price": 20300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202509/5843324ea8f820c523a1df5d74dd5f35.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/5843324ea8f820c523a1df5d74dd5f35.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/75b33748c8244bf2c1e8b3911fa0f494.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/75b33748c8244bf2c1e8b3911fa0f494.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
