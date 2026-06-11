@@ -8264,16 +8264,14 @@
   {
     "id": 2497,
     "product_no": 2497,
-    "name": "루왁 대용량 입호흡 액상 100ml",
-    "price": 20100,
+    "name": "[대용량] 루왁 입호흡 액상 100ml",
+    "price": 20300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202509/26640d98b27c345a04f6b4a68f55e202.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/26640d98b27c345a04f6b4a68f55e202.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/4581730d73a3719ea18cb6dc5310cd29.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/4581730d73a3719ea18cb6dc5310cd29.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
