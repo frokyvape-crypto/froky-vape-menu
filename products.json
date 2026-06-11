@@ -2548,8 +2548,10 @@
       "https://frokyvape.com/web/product/medium/202601/241304c9ceea12f32959323fef50abf1.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202601/241304c9ceea12f32959323fef50abf1.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139554501_cgea.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139554501_cgea.png",
     "cat": "일회용",
     "flavor": "30,000 퍼프",
     "options": [
