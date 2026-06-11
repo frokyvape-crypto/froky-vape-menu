@@ -7899,16 +7899,14 @@
   {
     "id": 2797,
     "product_no": 2797,
-    "name": "밀키웨이 대용량 입호흡 액상 100ml",
-    "price": 20100,
+    "name": "[대용량] 밀키웨이 입호흡 액상 100ml",
+    "price": 20300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/cf7204cab68beeaa5b958abd53257746.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/cf7204cab68beeaa5b958abd53257746.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/245550b6c4bb90476ebc8d58f5d4e926.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/245550b6c4bb90476ebc8d58f5d4e926.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
