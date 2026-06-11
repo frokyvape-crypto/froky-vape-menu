@@ -8096,8 +8096,10 @@
       "https://frokyvape.com/web/product/medium/202512/0c3b267dccc1191b98b053c85b5d375c.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202512/0c3b267dccc1191b98b053c85b5d375c.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781162492321_tsow.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781162492321_tsow.png",
     "cat": "고농도",
     "flavor": "2%",
     "options": [
