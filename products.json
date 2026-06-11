@@ -7949,16 +7949,14 @@
       "https://frokyvape.com/web/product/medium/202512/91f9ddac83f55d0d536f05a84a11bec2.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202512/91f9ddac83f55d0d536f05a84a11bec2.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202512/7e3da4658d482dfa5fb27cce136bb053.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202512/7e3da4658d482dfa5fb27cce136bb053.png",
-    "cat": "입호흡",
+    "detailImgs": [],
+    "detailImg": "",
+    "cat": "고농도",
     "flavor": "2%",
     "options": [
-      "2%] 레몬 케이크",
-      "2%] 바나나 케이크",
-      "2%] 애플파이"
+      "[2%] 레몬 케이크",
+      "[2%] 바나나 케이크",
+      "[2%] 애플파이"
     ],
     "optionPrices": {},
     "sale": false
