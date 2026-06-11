@@ -8465,16 +8465,14 @@
   {
     "id": 2503,
     "product_no": 2503,
-    "name": "퓨어 대용량 입호흡 액상 100ml",
-    "price": 20100,
+    "name": "[대용량] 퓨어 입호흡 액상 100ml",
+    "price": 20300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202509/d1c03531313d0774eb3a43591e0361a0.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/d1c03531313d0774eb3a43591e0361a0.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/4318c16c75dfbf725b48cfcc3c52c2dd.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/4318c16c75dfbf725b48cfcc3c52c2dd.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
