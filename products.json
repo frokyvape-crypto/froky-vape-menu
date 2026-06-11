@@ -8016,16 +8016,14 @@
       "https://frokyvape.com/web/product/medium/202512/f9950d42303aeae9c344f39da046fb19.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202512/f9950d42303aeae9c344f39da046fb19.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202512/d1303f113136d19dd3c3b07d5d141ba2.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202512/d1303f113136d19dd3c3b07d5d141ba2.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "고농도",
     "flavor": "",
     "options": [
-      "너티 크림",
-      "애플 마제스티",
-      "위즐"
+      "[2%] 너티 크림",
+      "[2%] 애플 마제스티",
+      "[2%] 위즐"
     ],
     "optionPrices": {},
     "sale": false
