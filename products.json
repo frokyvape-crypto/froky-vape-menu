@@ -7880,15 +7880,13 @@
     "id": 2697,
     "product_no": 2697,
     "name": "빙빙 입호흡 액상 30ml",
-    "price": 8800,
+    "price": 9900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202601/3bafc8960de9d85814cfac11249c3b78.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202601/3bafc8960de9d85814cfac11249c3b78.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202601/97ae73ec9200d789d9e101d5d5be1000.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202601/97ae73ec9200d789d9e101d5d5be1000.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
