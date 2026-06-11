@@ -7840,7 +7840,7 @@
     "id": 2868,
     "product_no": 2868,
     "name": "[2%] 빙빙 대용량 입호흡 액상 100ml",
-    "price": 20100,
+    "price": 20300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/43496b1f0eb74b04df88102fd07da793.png"
     ],
@@ -7849,11 +7849,11 @@
       "https://frokyvape.com/web/product/big/202603/f9c4625b0217c32bc2dcc4250463df94.png"
     ],
     "detailImg": "https://frokyvape.com/web/product/big/202603/f9c4625b0217c32bc2dcc4250463df94.png",
-    "cat": "폐호흡고농도",
-    "flavor": "",
+    "cat": "고농도",
+    "flavor": "2%",
     "options": [
-      "애딸빙 100ml",
-      "애망빙 100ml"
+      "[2%] 애딸빙 100ml",
+      "[2%] 애망빙 100ml"
     ],
     "optionPrices": {},
     "sale": false
