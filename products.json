@@ -8072,15 +8072,13 @@
     "id": 2815,
     "product_no": 2815,
     "name": "피즈 폐호흡 액상 100ml",
-    "price": 15700,
+    "price": 14800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/6af25addf561dee44ff7f32487ef233e.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/6af25addf561dee44ff7f32487ef233e.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/41f774abc7d10bbc8866b27f7a20901d.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/41f774abc7d10bbc8866b27f7a20901d.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
