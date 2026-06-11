@@ -8341,5 +8341,32 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 2694,
+    "product_no": 2694,
+    "name": "♥2+1♥ 오레비 대용량 입호흡 액상 100ml",
+    "price": 20100,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202601/2bd3104f1dc6d818bf4646029976bcb8.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202601/2bd3104f1dc6d818bf4646029976bcb8.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202601/e19694d92f9bd6958644215ce65553c5.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202601/e19694d92f9bd6958644215ce65553c5.png",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "그레이프프루트 100ml",
+      "그린그레이프 100ml",
+      "레몬 100ml",
+      "애플 100ml",
+      "자스민 100ml",
+      "체리 100ml",
+      "플레인 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
