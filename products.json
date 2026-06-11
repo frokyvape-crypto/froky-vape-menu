@@ -7722,15 +7722,13 @@
     "id": 2668,
     "product_no": 2668,
     "name": "과일정류장 입호흡 액상 30ml",
-    "price": 8800,
+    "price": 9900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202512/b0bbbd609841fc896604bd8e83d2ec93.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202512/b0bbbd609841fc896604bd8e83d2ec93.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202512/683e27d3a9b4ab5ddc66cbc0ed9f048b.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202512/683e27d3a9b4ab5ddc66cbc0ed9f048b.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
