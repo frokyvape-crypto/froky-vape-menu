@@ -8530,23 +8530,21 @@
     "id": 2864,
     "product_no": 2864,
     "name": "[2%] 밀키웨이 대용량 입호흡 액상 100ml",
-    "price": 20100,
+    "price": 20300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/ae3c6febdefdfb31235aa022a2a72972.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/ae3c6febdefdfb31235aa022a2a72972.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/aba5c982843ac8958deb14ec30ba9e02.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/aba5c982843ac8958deb14ec30ba9e02.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
-    "flavor": "",
+    "flavor": "2%",
     "options": [
-      "소다 밀크 100ml",
-      "스윗 밀크 100ml",
-      "커피 우유 100ml",
-      "딸기 우유 100ml",
-      "말차 라떼 100ml"
+      "[2%] 소다 밀크 100ml",
+      "[2%] 스윗 밀크 100ml",
+      "[2%] 커피 우유 100ml",
+      "[2%] 딸기 우유 100ml",
+      "[2%] 말차 라떼 100ml"
     ],
     "optionPrices": {},
     "sale": false
