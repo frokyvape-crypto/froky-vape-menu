@@ -8246,17 +8246,15 @@
     "id": 2516,
     "product_no": 2516,
     "name": "루왁 입호흡 액상 30ml",
-    "price": 8800,
+    "price": 9900,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202509/d490ebdafebfbd8c902f035d2228cadd.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/d490ebdafebfbd8c902f035d2228cadd.jpg",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202509/dc5b83b6ae4916daa1fab47b8ad76de3.jpg"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202509/dc5b83b6ae4916daa1fab47b8ad76de3.jpg",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
-    "flavor": "",
+    "flavor": "9.8mg",
     "options": [
       "루왁"
     ],
