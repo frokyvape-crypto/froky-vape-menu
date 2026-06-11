@@ -8299,5 +8299,47 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 2516,
+    "product_no": 2516,
+    "name": "♥2+1♥ 루왁 입호흡 액상 30ml",
+    "price": 8800,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202509/d490ebdafebfbd8c902f035d2228cadd.jpg"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202509/d490ebdafebfbd8c902f035d2228cadd.jpg",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202509/dc5b83b6ae4916daa1fab47b8ad76de3.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202509/dc5b83b6ae4916daa1fab47b8ad76de3.jpg",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "루왁"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2497,
+    "product_no": 2497,
+    "name": "♥2+1♥ 루왁 대용량 입호흡 액상 100ml",
+    "price": 20100,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202509/26640d98b27c345a04f6b4a68f55e202.jpg"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202509/26640d98b27c345a04f6b4a68f55e202.jpg",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202509/4581730d73a3719ea18cb6dc5310cd29.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202509/4581730d73a3719ea18cb6dc5310cd29.jpg",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "아메리카노 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
