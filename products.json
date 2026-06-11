@@ -7698,15 +7698,13 @@
     "id": 2816,
     "product_no": 2816,
     "name": "과일정류장 폐호흡 액상 100ml",
-    "price": 15700,
+    "price": 14800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/221516a935684c06ee2924c248588577.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/221516a935684c06ee2924c248588577.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/3dabfffc9f5307c010e4eca3ddd03b47.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/3dabfffc9f5307c010e4eca3ddd03b47.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
