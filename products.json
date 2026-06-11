@@ -7745,16 +7745,14 @@
   {
     "id": 2823,
     "product_no": 2823,
-    "name": "프레쉬쥬스 대용량 입호흡 액상 100ml",
-    "price": 18900,
+    "name": "[대용량] 프레쉬쥬스 입호흡 액상 100ml",
+    "price": 18100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/f07fc08a567e3912cc6b8514c526f4c8.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/f07fc08a567e3912cc6b8514c526f4c8.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/eba21625e8d2ea4fccdf518c35bef7aa.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/eba21625e8d2ea4fccdf518c35bef7aa.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
