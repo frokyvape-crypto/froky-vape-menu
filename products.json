@@ -8563,5 +8563,51 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 2858,
+    "product_no": 2858,
+    "name": "[2%] 카페인 입호흡 액상 100ml",
+    "price": 20100,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202603/d9d9029943bad18c286876a602c4896f.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202603/d9d9029943bad18c286876a602c4896f.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202603/5b27fe79cfcc95d6dbf304af83641a39.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202603/5b27fe79cfcc95d6dbf304af83641a39.png",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "아인슈페너 100ml",
+      "카라멜마끼아또 100ml",
+      "토피넛라떼 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2691,
+    "product_no": 2691,
+    "name": "♥2+1♥ 카페인 입호흡 액상 30ml",
+    "price": 9900,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202601/b2f857a0b100257dc51fe69e8ffc53dc.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202601/b2f857a0b100257dc51fe69e8ffc53dc.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202601/51c4c5d73b61d968178ed21ec16e7caf.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202601/51c4c5d73b61d968178ed21ec16e7caf.png",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "아인슈페너",
+      "카라멜마끼아또",
+      "토피넛라떼"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
