@@ -7768,16 +7768,14 @@
   {
     "id": 2827,
     "product_no": 2827,
-    "name": "오나나 대용량 입호흡 액상 100ml",
-    "price": 18900,
+    "name": "[대용량] 오나나 입호흡 액상 100ml",
+    "price": 18100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/db05f5c071319823a1dc52db7f8fcdca.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/db05f5c071319823a1dc52db7f8fcdca.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/97bb2ca62d0842354030b68757b1b554.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/97bb2ca62d0842354030b68757b1b554.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
