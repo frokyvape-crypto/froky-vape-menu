@@ -8283,16 +8283,14 @@
   {
     "id": 2694,
     "product_no": 2694,
-    "name": "오레비 대용량 입호흡 액상 100ml",
-    "price": 20100,
+    "name": "[대용량] 오레비 입호흡 액상 100ml",
+    "price": 20300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202601/2bd3104f1dc6d818bf4646029976bcb8.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202601/2bd3104f1dc6d818bf4646029976bcb8.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202601/e19694d92f9bd6958644215ce65553c5.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202601/e19694d92f9bd6958644215ce65553c5.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
