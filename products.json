@@ -2486,8 +2486,22 @@
       "https://frokyvape.com/web/product/medium/202602/c4c6cd0736cf1df4185b4f381071bce4.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202602/c4c6cd0736cf1df4185b4f381071bce4.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139794903_rcu5.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139798120_zw5c.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139800846_4fqb.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139803081_b16n.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139805904_50r6.gif",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139809563_q7zj.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139820443_d9jz.gif",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139824133_a5od.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139825814_z9p4.gif",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139829753_j6jm.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139831989_n1ui.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139834404_u0ud.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139836001_o7p9.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139794903_rcu5.png",
     "cat": "일회용",
     "flavor": "액상 팟 미 포힘",
     "options": [
