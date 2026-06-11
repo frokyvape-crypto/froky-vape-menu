@@ -7990,21 +7990,19 @@
     "id": 2843,
     "product_no": 2843,
     "name": "[2%] 버킷 대용량 입호흡 액상 100ml",
-    "price": 20100,
+    "price": 20300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202603/082e0d3cec521c0ae7957e61b381779f.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/082e0d3cec521c0ae7957e61b381779f.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202603/b2017394655a62980951bf194e72e403.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202603/b2017394655a62980951bf194e72e403.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "폐호흡고농도",
-    "flavor": "",
+    "flavor": "2%",
     "options": [
-      "너티 크림 100ml",
-      "애플 마제스티 100ml",
-      "위즐 100ml"
+      "[2%] 버너티 크림 100ml",
+      "[2%] 버애플 마제스티 100ml",
+      "[2%] 버위즐 100ml"
     ],
     "optionPrices": {},
     "sale": false
