@@ -8201,5 +8201,103 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 2610,
+    "product_no": 2610,
+    "name": "♥2+1♥ 2% 미노아 입호흡 액상 30ml",
+    "price": 9900,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202511/cb6c70b9bedc5dfe4aa46c7c01382535.jpg"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202511/cb6c70b9bedc5dfe4aa46c7c01382535.jpg",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202511/0be44dfbe758a42d294a107f743e0806.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202511/0be44dfbe758a42d294a107f743e0806.jpg",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "민트 초코",
+      "초코 밀크",
+      "초코 바나나",
+      "타바코",
+      "듀얼 멜론",
+      "망고",
+      "블루베리",
+      "스트로베리",
+      "아이스 애플",
+      "쿨 민트",
+      "피치",
+      "피치 멜론"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2584,
+    "product_no": 2584,
+    "name": "♥2+1♥ 미노아 대용량 입호흡 액상 100ml",
+    "price": 20100,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202511/421d230eb58913a6cf7b77d4f73d5131.jpg"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202511/421d230eb58913a6cf7b77d4f73d5131.jpg",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202511/78f1a8c34b271437de2308d662e1bc93.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202511/78f1a8c34b271437de2308d662e1bc93.jpg",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "듀얼 멜론 100ml",
+      "망고 100ml",
+      "민트 초코 100ml",
+      "블루베리 100ml",
+      "스트로베리 100ml",
+      "스피아 민트 100ml",
+      "아이스 애플 100ml",
+      "초코 밀크 100ml",
+      "초코 바나나 100ml",
+      "쿨 민트 100ml",
+      "타바코 100ml",
+      "피치 100ml",
+      "피치 멜론 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2583,
+    "product_no": 2583,
+    "name": "♥2+1♥ 미노아 입호흡 액상 30ml",
+    "price": 8800,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202511/d0faf062f05f8ab0a5328d0b9ea4c5e6.jpg"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202511/d0faf062f05f8ab0a5328d0b9ea4c5e6.jpg",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202511/ea8980aef6bcc54201a1f7402de83542.jpg"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202511/ea8980aef6bcc54201a1f7402de83542.jpg",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "민트 초코",
+      "초코 밀크",
+      "초코 바나나",
+      "타바코",
+      "듀얼 멜론",
+      "망고",
+      "블루베리",
+      "스트로베리",
+      "스피아 민트",
+      "아이스 애플",
+      "쿨 민트",
+      "피치",
+      "피치 멜론"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
