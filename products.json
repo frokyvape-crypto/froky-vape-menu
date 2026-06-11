@@ -8358,17 +8358,15 @@
       "https://frokyvape.com/web/product/medium/202512/5e5af404bbaa49af753db6f7320a6ac1.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202512/5e5af404bbaa49af753db6f7320a6ac1.png",
-    "detailImgs": [
-      "https://frokyvape.com/web/product/big/202512/71a10a8b10313b8035a2c20dbb63c7f4.png"
-    ],
-    "detailImg": "https://frokyvape.com/web/product/big/202512/71a10a8b10313b8035a2c20dbb63c7f4.png",
+    "detailImgs": [],
+    "detailImg": "",
     "cat": "입호흡",
-    "flavor": "",
+    "flavor": "2%",
     "options": [
-      "딸기",
-      "적포도",
-      "백향과",
-      "멜론"
+      "[2%] 딸기",
+      "[2%] 적포도",
+      "[2%] 백향과",
+      "[2%] 멜론"
     ],
     "optionPrices": {},
     "sale": false
