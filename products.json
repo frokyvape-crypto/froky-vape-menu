@@ -2571,8 +2571,16 @@
       "https://frokyvape.com/web/product/medium/202510/5d0af748e7b5e8fe680c8e8457cf5be5.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202510/5d0af748e7b5e8fe680c8e8457cf5be5.jpg",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139270867_c96f.png",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139274766_lb17.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139279425_n979.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139282778_6cl7.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139285126_jllg.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139296758_1gmi.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139309011_1b1k.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781139270867_c96f.png",
     "cat": "입호흡",
     "flavor": "*디바이스 미 포함* / 30,000퍼프",
     "options": [
