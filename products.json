@@ -7703,5 +7703,57 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 2816,
+    "product_no": 2816,
+    "name": "과일정류장 폐호흡 액상 100ml",
+    "price": 15700,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202603/221516a935684c06ee2924c248588577.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202603/221516a935684c06ee2924c248588577.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202603/3dabfffc9f5307c010e4eca3ddd03b47.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202603/3dabfffc9f5307c010e4eca3ddd03b47.png",
+    "cat": "폐호흡",
+    "flavor": "3mg",
+    "options": [
+      "폐호흡 라즈베리행 100ml",
+      "폐호흡 사과 (애플행) 100ml",
+      "폐호흡 오렌지행 100ml",
+      "폐호흡 체리행 100ml",
+      "폐호흡 키위행 100ml",
+      "폐호흡 파인애플행 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2668,
+    "product_no": 2668,
+    "name": "♥2+1♥ 과일정류장 입호흡 액상 30ml",
+    "price": 8800,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202512/b0bbbd609841fc896604bd8e83d2ec93.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202512/b0bbbd609841fc896604bd8e83d2ec93.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202512/683e27d3a9b4ab5ddc66cbc0ed9f048b.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202512/683e27d3a9b4ab5ddc66cbc0ed9f048b.png",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "라즈베리",
+      "사과",
+      "오렌지",
+      "체리",
+      "키위",
+      "파인애플"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
