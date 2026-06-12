@@ -515,6 +515,10 @@ function applySiteConfig(cfg,{allowPopup=false}={}){
   document.getElementById('notice-banner-img').src=bannerImgs[0]||DEFAULT_SITE_CONFIG.noticeBannerImg;
   if(allowPopup&&siteConfig.noticePopupEnabled)openNoticePopup();
 }
+function visibleProducts(list){
+  const deleted=new Set((siteConfig.deletedProductIds||[]).map(String));
+  return (Array.isArray(list)?list:[]).filter(p=>!deleted.has(String(p.id)));
+}
 async function loadSiteConfig({silent=false,allowPopup=true}={}){
   const t=Date.now();
   // GitHub API is not CDN-cached — always returns the latest committed file
@@ -735,7 +739,7 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 async function fetchProductsFresh(){
   const res=await fetch('products.json?t='+Date.now(),{cache:'no-store'});
   if(!res.ok)throw new Error();
-  return await res.json();
+  return visibleProducts(await res.json());
 }
 async function loadProducts({silent=false}={}){
   if(!silent)document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품을 불러오는 중... ⏳</div>';
@@ -748,7 +752,7 @@ async function loadProducts({silent=false}={}){
   }catch(e){
     try{
       const cached=localStorage.getItem('fv-products-cache');
-      if(cached){P=JSON.parse(cached);productsHash=JSON.stringify(P);renderCurrentView();if(!silent)showToast('네트워크 오류 — 캐시된 상품 표시 중');}
+      if(cached){P=visibleProducts(JSON.parse(cached));productsHash=JSON.stringify(P);renderCurrentView();if(!silent)showToast('네트워크 오류 — 캐시된 상품 표시 중');}
       else if(!silent)document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품 준비 중입니다 😊</div>';
     }catch(ce){
       if(!silent)document.getElementById('product-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)">상품 준비 중입니다 😊</div>';
@@ -757,6 +761,17 @@ async function loadProducts({silent=false}={}){
 }
 async function refreshIfChanged(){
   if(document.hidden)return;
+  try{
+    const r=await fetch('site-config.json?t='+Date.now(),{cache:'no-store'});
+    if(r.ok){
+      const cfg=await r.json();
+      const nextConfigHash=JSON.stringify(cfg);
+      if(nextConfigHash!==siteConfigHash){
+        siteConfigHash=nextConfigHash;
+        applySiteConfig(cfg,{allowPopup:false});
+      }
+    }
+  }catch(e){}
   try{
     const next=await fetchProductsFresh();
     const nextHash=JSON.stringify(next);
@@ -769,20 +784,8 @@ async function refreshIfChanged(){
       showToast('상품 정보가 업데이트되었습니다');
     }
   }catch(e){}
-  try{
-    const r=await fetch('site-config.json?t='+Date.now(),{cache:'no-store'});
-    if(r.ok){
-      const cfg=await r.json();
-      const nextHash=JSON.stringify(cfg);
-      if(nextHash!==siteConfigHash){
-        siteConfigHash=nextHash;
-        applySiteConfig(cfg,{allowPopup:false});
-        renderCurrentView();
-      }
-    }
-  }catch(e){}
 }
-function startAutoRefresh(){clearInterval(autoRefreshTimer);autoRefreshTimer=setInterval(refreshIfChanged,30000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshIfChanged();});}
+function startAutoRefresh(){clearInterval(autoRefreshTimer);autoRefreshTimer=setInterval(refreshIfChanged,5000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshIfChanged();});}
 async function initPage(){await loadSiteConfig({allowPopup:true});await loadProducts();startAutoRefresh();}
 initPage();
 </script>

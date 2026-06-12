@@ -1871,7 +1871,7 @@ async function delProduct(id) {
   try {
     await persistDeletedProductIds({ add: [id] });
     await persistProductsMutation(
-      latest => latest.filter(p => p.id !== id),
+      latest => latest.filter(p => String(p.id) !== String(id)),
       '상품 삭제'
     );
   } catch (e) { toast('저장 실패: ' + e.message, 'err'); }
@@ -2283,7 +2283,10 @@ async function deleteSelected() {
   try {
     await persistDeletedProductIds({ add: selectedIds });
     await persistProductsMutation(
-      latest => latest.filter(p => !selectedIds.includes(p.id)),
+      latest => {
+        const selectedKeys = new Set(selectedIds.map(String));
+        return latest.filter(p => !selectedKeys.has(String(p.id)));
+      },
       `선택 상품 ${selectedIds.length}개 삭제`
     );
     updateDeleteBtn();
