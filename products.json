@@ -8027,8 +8027,10 @@
       "https://frokyvape.com/web/product/medium/202603/082e0d3cec521c0ae7957e61b381779f.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202603/082e0d3cec521c0ae7957e61b381779f.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781240367365_2nll.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781240367365_2nll.jpg",
     "cat": "폐호흡고농도",
     "flavor": "2%",
     "options": [
