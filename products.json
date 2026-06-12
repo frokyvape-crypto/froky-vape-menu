@@ -8913,5 +8913,28 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 1781234357637,
+    "name": "[대용량] 카페프레소 입호흡 액상 100ml",
+    "price": 18100,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234347956_9uq4.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234347956_9uq4.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234351379_528w.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234354521_25lu.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234351379_528w.jpg",
+    "cat": "폐호흡고농도",
+    "flavor": "9.8mg",
+    "options": [
+      "아인슈페너 100ml",
+      "카라멜 넛 라떼 100ml",
+      "카라멜 바닐라 라떼 100ml"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
