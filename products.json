@@ -9050,5 +9050,31 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 1781234940186,
+    "name": "미노아 폐호흡 액상 100ml",
+    "price": 14800,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234931661_f7vo.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234931661_f7vo.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234934938_3krs.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234934938_3krs.png",
+    "cat": "폐호흡",
+    "flavor": "3mg",
+    "options": [
+      "폐호흡 듀얼멜론",
+      "폐호흡 망고",
+      "폐호흡 민트초코",
+      "폐호흡 초코밀크",
+      "폐호흡 초코바나나",
+      "폐호흡 피치",
+      "폐호흡 피치멜론"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
