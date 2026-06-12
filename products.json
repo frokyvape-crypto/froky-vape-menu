@@ -8050,10 +8050,12 @@
       "https://frokyvape.com/web/product/medium/202512/f9950d42303aeae9c344f39da046fb19.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202512/f9950d42303aeae9c344f39da046fb19.png",
-    "detailImgs": [],
-    "detailImg": "",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781240403830_fwf1.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781240403830_fwf1.jpg",
     "cat": "고농도",
-    "flavor": "",
+    "flavor": "2%",
     "options": [
       "[2%] 너티 크림",
       "[2%] 애플 마제스티",
