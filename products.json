@@ -1008,8 +1008,8 @@
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
-      "포멜로 엔딩",
-      "머스캣 엔딩"
+      "폐호흡 포멜로 엔딩",
+      "폐호흡 머스캣 엔딩"
     ],
     "optionPrices": {},
     "sale": false
