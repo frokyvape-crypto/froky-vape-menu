@@ -8817,5 +8817,30 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 1781233957082,
+    "name": "[2%] 드링크 프로젝트 입호흡 액상 30ml",
+    "price": 9900,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781233944139_tkvj.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781233944139_tkvj.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781233947763_v7x1.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781233947763_v7x1.png",
+    "cat": "고농도",
+    "flavor": "2%",
+    "options": [
+      "[2%] 레드 윙스",
+      "[2%] 제로 사이다",
+      "[2%] 카보네이티드",
+      "[2%] 콜라",
+      "[2%] 판타지 오렌지",
+      "[2%] 판타지 포도"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
