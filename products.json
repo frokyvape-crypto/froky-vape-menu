@@ -8712,5 +8712,30 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 1781232350849,
+    "name": "[2%] 과일정류장 입호흡 액상 30ml",
+    "price": 9900,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781232342887_d8oo.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781232342887_d8oo.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781232345450_mgnr.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781232345450_mgnr.png",
+    "cat": "고농도",
+    "flavor": "2%",
+    "options": [
+      "[2%] 라즈베리",
+      "[2%] 사과",
+      "[2%] 오렌지",
+      "[2%] 체리",
+      "[2%] 키위",
+      "[2%] 파인애플"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
