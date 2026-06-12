@@ -5517,8 +5517,8 @@
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
-      "[100ml] 파인 레몬 소다",
-      "[100ml] 라임"
+      "파인 레몬 소다 100ml",
+      "라임 100ml"
     ],
     "optionPrices": {},
     "sale": false
