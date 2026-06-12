@@ -4059,7 +4059,7 @@
   {
     "id": 1734,
     "product_no": 1734,
-    "name": "프라임 저농도 입호흡 액상 30ml",
+    "name": "[0.1mg] 프라임 입호흡 액상 30ml",
     "price": 10600,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202411/27c2e661d85f3d1f439b9ea07d83c9a5.png"
@@ -4072,11 +4072,11 @@
     "cat": "입호흡",
     "flavor": "0.1mg",
     "options": [
-      "파워 멘솔",
-      "아이스 멘솔",
-      "아이스 피치",
-      "아이스 레몬",
-      "쿨툰드라"
+      "[0.1mg] 파워 멘솔",
+      "[0.1mg] 아이스 멘솔",
+      "[0.1mg] 아이스 피치",
+      "[0.1mg] 아이스 레몬",
+      "[0.1mg] 쿨툰드라"
     ],
     "optionPrices": {},
     "sale": false
