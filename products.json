@@ -5475,9 +5475,9 @@
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
-      "[100ml] 레몬",
-      "[100ml] 체리",
-      "[100ml] 포도"
+      "레몬 100ml",
+      "체리 100ml",
+      "포도 100ml"
     ],
     "optionPrices": {},
     "sale": false
