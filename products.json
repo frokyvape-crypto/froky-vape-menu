@@ -8842,5 +8842,29 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 1781234046043,
+    "name": "[2%] 레인드롭 입호흡 액상 30ml",
+    "price": 9900,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234036746_u8t1.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234036746_u8t1.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234040414_wpe1.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234043620_98vz.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234040414_wpe1.jpg",
+    "cat": "고농도",
+    "flavor": "2%",
+    "options": [
+      "[2%] 레드 & 그린 애플",
+      "[2%] 사워 그레이프",
+      "[2%] 피치 블라썸",
+      "[2%] 피치 플럼"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
