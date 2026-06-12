@@ -2969,33 +2969,6 @@
     "sale": false
   },
   {
-    "id": 2527,
-    "product_no": 2527,
-    "name": "카디날 Quik 일회용 전자담배 2ml",
-    "price": 10900,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202510/66141ca0220e89c5818e95ad97e21f8f.jpg"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202510/66141ca0220e89c5818e95ad97e21f8f.jpg",
-    "detailImgs": [
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781077160148_0blb.jpg",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781077164630_gi6f.jpg",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781077167410_1j8v.jpg",
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781077173229_fxv5.jpg"
-    ],
-    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781077160148_0blb.jpg",
-    "cat": "일회용",
-    "flavor": "2,000 퍼프",
-    "options": [
-      "워터 멜론",
-      "그레이프",
-      "콜라 레몬",
-      "믹스 베리"
-    ],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 2517,
     "product_no": 2517,
     "name": "넥사 픽스 클리어 일회용 전자담배 20ml",
