@@ -8936,5 +8936,27 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 1781234427412,
+    "name": "[2%] 카페인 입호흡 액상 30ml",
+    "price": 9900,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234416507_ktg7.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234416507_ktg7.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234419360_0ay1.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1781234419360_0ay1.png",
+    "cat": "고농도",
+    "flavor": "2%",
+    "options": [
+      "[2%] 아인슈페너",
+      "[2%] 카라멜마끼아또",
+      "[2%] 토피넛라떼"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
