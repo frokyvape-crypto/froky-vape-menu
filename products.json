@@ -9156,5 +9156,41 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 2340,
+    "product_no": 2340,
+    "name": "[O] 엘프바 조인원 아이스 20000 일회용 액상 팟 20ml",
+    "price": 15900,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202508/10caa5ba669d188977d38fbe706e4baa.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202508/10caa5ba669d188977d38fbe706e4baa.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202508/367984f6ea018c9c90cf0291f9634c80.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202508/367984f6ea018c9c90cf0291f9634c80.png",
+    "cat": "일회용",
+    "flavor": "20,000 퍼프",
+    "options": [
+      "[액상 팟] 02 딸기 키위 아이스",
+      "[액상 팟] 03 레몬 라임",
+      "[액상 팟] 10 마이애미 민트",
+      "[액상 팟] 01 블루라즈베리 아이스",
+      "[액상 팟] 04 샤인머스켓",
+      "[액상 팟] 11 유자 아이스",
+      "[액상 팟] 08 체리 석류",
+      "[액상 팟] 06 패션후르츠 키위 구아바",
+      "[액상 팟] 05 포도 체리",
+      "[액상 팟] 09 포카리 아이스",
+      "[액상 팟] 07 피치 아이스",
+      "[액상 팟] 12 자스민 그린티",
+      "[액상 팟] 13 녹두 아이스",
+      "[액상 팟] 17 파인애플 아이스",
+      "[액상 팟] 18 워터멜론 아이스",
+      "[액상 팟] 19 블랙 스트로베리 민트"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
