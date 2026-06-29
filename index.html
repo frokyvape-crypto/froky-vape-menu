@@ -581,8 +581,26 @@ function startBestCarousel(){
 function buildCarousel(){const best=P.filter(p=>p.cat==='best');const track=document.getElementById('carousel-track');track.innerHTML=best.map(p=>`<div class="best-card" onclick="openBestCard(${p.id})"><img src="${getImgs(p)[0]||''}" alt="${p.name}" loading="lazy" draggable="false"><div class="best-card-body"><div class="best-card-name">${p.name}${p.sale?'<span class="hot">SALE</span>':''}</div><div class="best-card-price">${productDisplayPrice(p)}</div></div></div>`).join('');startBestCarousel();}
 function renderGrid(cat){currentCat=cat;const items=cat==='all'?P:P.filter(p=>p.cat===cat);document.getElementById('best-section').style.display=cat==='all'?'':'none';document.getElementById('section-label').textContent=cat==='all'?'전체 상품':categoryLabel(cat);document.getElementById('product-grid').innerHTML=items.map(cardHTML).join('');}
 function filterCat(cat,el){currentCat=cat;document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');renderGrid(cat);}
+const SEARCH_SYNONYM_GROUPS=[
+  ['포도','그레이프','grape'],
+  ['자두','플럼','plum'],
+  ['복숭아','피치','peach'],
+  ['딸기','스트로베리','strawberry'],
+  ['수박','워터멜론','watermelon'],
+  ['사과','애플','apple'],
+  ['파인애플','pineapple'],
+];
 function searchKey(s){return String(s||'').toLowerCase().replace(/\s+/g,'');}
-function onSearch(val){const q=val.trim(),key=searchKey(q);document.getElementById('search-clear').style.display=q?'block':'none';if(!q){document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');return;}document.getElementById('best-section').style.display='none';const res=P.filter(p=>[p.name,p.flavor,...(Array.isArray(p.options)?p.options:[])].some(v=>searchKey(v).includes(key)));const lbl=document.getElementById('search-result-label');lbl.style.display='block';lbl.textContent=`"${q}" 검색 결과 ${res.length}개`;document.getElementById('section-label').textContent='검색 결과';document.getElementById('product-grid').innerHTML=res.length?res.map(cardHTML).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0">검색 결과가 없습니다 😢</div>';}
+function searchKeys(s){
+  const key=searchKey(s),keys=new Set([key]);
+  if(!key)return[];
+  SEARCH_SYNONYM_GROUPS.forEach(group=>{
+    const normalized=group.map(searchKey);
+    if(normalized.some(term=>key.includes(term)||(key.length>=2&&term.includes(key))))normalized.forEach(term=>keys.add(term));
+  });
+  return[...keys];
+}
+function onSearch(val){const q=val.trim(),keys=searchKeys(q);document.getElementById('search-clear').style.display=q?'block':'none';if(!q){document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');return;}document.getElementById('best-section').style.display='none';const res=P.filter(p=>[p.name,p.flavor,...(Array.isArray(p.options)?p.options:[])].some(v=>{const value=searchKey(v);return keys.some(key=>value.includes(key));}));const lbl=document.getElementById('search-result-label');lbl.style.display='block';lbl.textContent=`"${q}" 검색 결과 ${res.length}개`;document.getElementById('section-label').textContent='검색 결과';document.getElementById('product-grid').innerHTML=res.length?res.map(cardHTML).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0">검색 결과가 없습니다 😢</div>';}
 function clearSearch(){document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');}
 function renderCurrentView(){const q=document.getElementById('search-input')?.value||'';buildCarousel();if(q.trim())onSearch(q);else renderGrid(currentCat||'all');}
 function renderSheetOptions(p,selected=''){const options=Array.isArray(p.options)?p.options:[];const optionEl=document.getElementById('s-option');optionEl.innerHTML=options.length?'<option value="">옵션 선택</option>'+options.map(o=>`<option value="${escAttr(o)}">${escAttr(optionLabel(p,o))}</option>`).join(''):'<option value="옵션 없음">옵션 없음</option>';optionEl.disabled=!options.length;if(options.includes(selected))optionEl.value=selected;else if(!options.length)optionEl.value='옵션 없음';}
