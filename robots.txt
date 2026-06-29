@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin.html
+Disallow: /callback.html
+Disallow: /cafe24-callback.html
+Allow: /
+
+Sitemap: https://frokyvape-crypto.github.io/froky-vape-menu/sitemap.xml

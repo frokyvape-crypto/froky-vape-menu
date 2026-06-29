@@ -27,6 +27,28 @@
 ### `GET /api/health`
 간단한 헬스체크. `{ ok: true, ts }` 반환.
 
+### `POST /api/gsc/summary`
+
+Google Search Console 읽기 전용 요약을 반환.
+
+- 헤더
+  - `Content-Type: application/json`
+  - `X-Admin-Key: <ADMIN_KEY>`
+- 바디
+  ```json
+  {
+    "siteUrl": "https://frokyvape-crypto.github.io/froky-vape-menu/",
+    "inspectUrl": "https://frokyvape-crypto.github.io/froky-vape-menu/",
+    "days": 28
+  }
+  ```
+- 응답
+  - 클릭수, 노출수, CTR, 평균 순위
+  - 상위 검색어/페이지
+  - 사이트맵 등록 상태
+  - 대표 URL 색인 검사 결과
+  - 룰 기반 해결방안
+
 ## 동작 흐름
 
 1. `X-Admin-Key` 검증
@@ -52,6 +74,27 @@ wrangler deploy
 
 배포 후 Worker URL이 출력됩니다 (예: `https://froky-vape-admin.<account>.workers.dev`).
 이 URL을 관리자 페이지의 **Worker URL** 필드에 입력하세요.
+
+### Search Console 연동 설정
+
+Google Cloud에서 Search Console API를 활성화하고 OAuth client를 만든 뒤, Search Console 권한이 있는 Google 계정으로 refresh token을 발급합니다. scope는 읽기 전용만 사용하세요.
+
+```bash
+wrangler secret put GSC_CLIENT_ID
+wrangler secret put GSC_CLIENT_SECRET
+wrangler secret put GSC_REFRESH_TOKEN
+wrangler secret put ADMIN_KEY
+
+wrangler deploy
+```
+
+공개 속성 URL은 `wrangler.toml`의 `[vars]` 또는 Cloudflare 대시보드 변수로 설정할 수 있습니다.
+
+```toml
+GSC_SITE_URL = "https://frokyvape-crypto.github.io/froky-vape-menu/"
+```
+
+Search Console 속성값은 실제 등록값과 정확히 같아야 합니다. URL-prefix 속성은 끝 `/` 포함 여부까지 맞추고, 도메인 속성은 `sc-domain:example.com` 형식을 씁니다.
 
 ## 로컬 개발
 

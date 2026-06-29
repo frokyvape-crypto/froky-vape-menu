@@ -8,7 +8,11 @@ GITHUB_OWNER = "frokyvape-crypto"
 GITHUB_REPO = "froky-vape-menu"
 GITHUB_BRANCH = "main"
 PRODUCTS_PATH = "products.json"
+GSC_SITE_URL = "https://frokyvape-crypto.github.io/froky-vape-menu/"
 
 # 시크릿은 wrangler secret put 으로 등록:
 #   wrangler secret put GITHUB_TOKEN
 #   wrangler secret put ADMIN_KEY
+#   wrangler secret put GSC_CLIENT_ID
+#   wrangler secret put GSC_CLIENT_SECRET
+#   wrangler secret put GSC_REFRESH_TOKEN

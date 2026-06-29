@@ -1,0 +1,7 @@
+.memory-app/
+.env
+.env.*
+*.log
+*.tmp
+.DS_Store
+Thumbs.db

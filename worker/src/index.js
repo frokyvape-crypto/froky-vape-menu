@@ -4,11 +4,15 @@
 // PUT /api/github/upload    → 이미지 파일 업로드
 // POST /api/cafe24/products → 카페24 상품 목록 조회
 // POST /api/cafe24/token    → 카페24 OAuth 코드→토큰 교환
+// POST /api/gsc/summary     → Google Search Console 읽기 전용 요약
 // GET /api/health
 //
 // Environment:
 //   vars:    GITHUB_OWNER, GITHUB_REPO, GITHUB_BRANCH, PRODUCTS_PATH
 //   secret:  GITHUB_TOKEN, ADMIN_KEY
+// Optional GSC:
+//   vars:    GSC_SITE_URL
+//   secret:  GSC_CLIENT_ID, GSC_CLIENT_SECRET, GSC_REFRESH_TOKEN
 
 const REQUIRED_VARS = ['GITHUB_OWNER', 'GITHUB_REPO', 'GITHUB_BRANCH', 'PRODUCTS_PATH', 'GITHUB_TOKEN', 'ADMIN_KEY'];
 
@@ -46,6 +50,12 @@ export default {
 
     if (url.pathname === '/api/cafe24/token' && request.method === 'POST') {
       const result = await handleCafe24Token(request, env);
+      const status = result.ok ? 200 : (result.status || 500);
+      return jsonResponse(result, status);
+    }
+
+    if (url.pathname === '/api/gsc/summary' && request.method === 'POST') {
+      const result = await handleGscSummary(request, env);
       const status = result.ok ? 200 : (result.status || 500);
       return jsonResponse(result, status);
     }
@@ -307,6 +317,243 @@ async function handleCafe24Token(request, env) {
     refresh_token: tokenData.refresh_token,
     expires_at: tokenData.expires_at,
   };
+}
+
+async function handleGscSummary(request, env) {
+  const authErr = checkAuth(request, env);
+  if (authErr) return authErr;
+
+  for (const key of ['GSC_CLIENT_ID', 'GSC_CLIENT_SECRET', 'GSC_REFRESH_TOKEN']) {
+    if (!env[key]) {
+      return {
+        ok: false,
+        status: 500,
+        message: `GSC 설정 ${key} 누락`,
+        guide: 'wrangler secret put 으로 Google OAuth 값을 설정하세요.',
+      };
+    }
+  }
+
+  let body = {};
+  try { body = await request.json(); } catch {}
+
+  const siteUrl = String(body.siteUrl || env.GSC_SITE_URL || '').trim();
+  if (!siteUrl) {
+    return { ok: false, status: 400, message: 'Search Console siteUrl이 필요합니다.' };
+  }
+
+  const days = Math.min(Math.max(Number(body.days || 28), 7), 90);
+  const range = makeGscDateRange(days);
+  const previousRange = makePreviousDateRange(range);
+  const token = await getGoogleAccessToken(env);
+
+  try {
+    const [total, previousTotal, queries, pages, sitemaps, inspection] = await Promise.all([
+      querySearchAnalytics(token, siteUrl, range, []),
+      querySearchAnalytics(token, siteUrl, previousRange, []),
+      querySearchAnalytics(token, siteUrl, range, ['query'], 10),
+      querySearchAnalytics(token, siteUrl, range, ['page'], 10),
+      listGscSitemaps(token, siteUrl),
+      inspectGscUrl(token, siteUrl, body.inspectUrl),
+    ]);
+
+    return {
+      ok: true,
+      siteUrl,
+      range,
+      total: firstRow(total),
+      previousTotal: firstRow(previousTotal),
+      queries: queries.rows || [],
+      pages: pages.rows || [],
+      sitemaps,
+      inspection,
+      recommendations: makeGscRecommendations({
+        total: firstRow(total),
+        previousTotal: firstRow(previousTotal),
+        queries: queries.rows || [],
+        pages: pages.rows || [],
+        sitemaps,
+        inspection,
+      }),
+    };
+  } catch (e) {
+    return { ok: false, status: e.status || 502, message: e.message || String(e) };
+  }
+}
+
+function makeGscDateRange(days) {
+  // Search Console data is delayed; use a conservative 3-day lag.
+  const end = new Date();
+  end.setUTCDate(end.getUTCDate() - 3);
+  const start = new Date(end);
+  start.setUTCDate(start.getUTCDate() - days + 1);
+  return { startDate: isoDate(start), endDate: isoDate(end), days };
+}
+
+function makePreviousDateRange(range) {
+  const end = new Date(range.startDate + 'T00:00:00Z');
+  end.setUTCDate(end.getUTCDate() - 1);
+  const start = new Date(end);
+  start.setUTCDate(start.getUTCDate() - range.days + 1);
+  return { startDate: isoDate(start), endDate: isoDate(end), days: range.days };
+}
+
+function isoDate(date) {
+  return date.toISOString().slice(0, 10);
+}
+
+async function getGoogleAccessToken(env) {
+  const params = new URLSearchParams({
+    client_id: env.GSC_CLIENT_ID,
+    client_secret: env.GSC_CLIENT_SECRET,
+    refresh_token: env.GSC_REFRESH_TOKEN,
+    grant_type: 'refresh_token',
+  });
+  const res = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: params.toString(),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || !data.access_token) {
+    const err = new Error(data.error_description || data.error || `Google token failed: ${res.status}`);
+    err.status = 502;
+    throw err;
+  }
+  return data.access_token;
+}
+
+async function querySearchAnalytics(token, siteUrl, range, dimensions = [], rowLimit = 1) {
+  const endpoint = `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`;
+  const res = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      startDate: range.startDate,
+      endDate: range.endDate,
+      dimensions,
+      rowLimit,
+      dataState: 'final',
+    }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const err = new Error(data.error?.message || `Search Analytics failed: ${res.status}`);
+    err.status = res.status;
+    throw err;
+  }
+  return data;
+}
+
+function firstRow(data) {
+  const row = data?.rows?.[0] || {};
+  return {
+    clicks: row.clicks || 0,
+    impressions: row.impressions || 0,
+    ctr: row.ctr || 0,
+    position: row.position || 0,
+  };
+}
+
+async function listGscSitemaps(token, siteUrl) {
+  const endpoint = `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/sitemaps`;
+  const res = await fetch(endpoint, { headers: { Authorization: `Bearer ${token}` } });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) return { error: data.error?.message || `Sitemaps failed: ${res.status}`, sitemap: [] };
+  return data;
+}
+
+async function inspectGscUrl(token, siteUrl, inspectUrl) {
+  const target = String(inspectUrl || defaultInspectionUrl(siteUrl) || '').trim();
+  if (!target || !/^https?:\/\//i.test(target)) return null;
+  const res = await fetch('https://searchconsole.googleapis.com/v1/urlInspection/index:inspect', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      inspectionUrl: target,
+      siteUrl,
+      languageCode: 'ko-KR',
+    }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) return { error: data.error?.message || `URL Inspection failed: ${res.status}` };
+  return data;
+}
+
+function defaultInspectionUrl(siteUrl) {
+  if (/^https?:\/\//i.test(siteUrl)) return siteUrl;
+  if (siteUrl.startsWith('sc-domain:')) return `https://${siteUrl.replace('sc-domain:', '')}/`;
+  return '';
+}
+
+function makeGscRecommendations({ total, previousTotal, queries, pages, sitemaps, inspection }) {
+  const items = [];
+  const sitemapCount = sitemaps?.sitemap?.length || 0;
+  if (!sitemapCount) {
+    items.push({
+      level: 'warn',
+      label: 'SITEMAP',
+      title: '사이트맵 제출 확인',
+      detail: 'sitemap.xml 파일을 만들었더라도 Search Console에 제출되어야 색인 발견 속도를 높일 수 있습니다.',
+    });
+  }
+  if ((total.impressions || 0) > 50 && (total.ctr || 0) < 0.01) {
+    items.push({
+      level: 'bad',
+      label: 'CTR',
+      title: '노출 대비 클릭률이 낮습니다',
+      detail: '검색 결과에서 보이는 사이트 제목, 설명, 대표 상품명 문구가 검색 의도와 맞는지 점검하세요.',
+    });
+  }
+  if ((total.position || 0) > 15 && (total.impressions || 0) > 20) {
+    items.push({
+      level: 'warn',
+      label: 'RANK',
+      title: '평균 순위가 낮습니다',
+      detail: '카테고리별 설명 문구, 상품 상세 텍스트, 지역/브랜드 키워드를 메인 콘텐츠에 보강하는 것이 좋습니다.',
+    });
+  }
+  if ((previousTotal.clicks || 0) && total.clicks < previousTotal.clicks * 0.7) {
+    items.push({
+      level: 'bad',
+      label: 'DROP',
+      title: '이전 기간 대비 클릭이 크게 줄었습니다',
+      detail: '최근 공지/상품 변경, 배포 상태, robots.txt, Search Console 수동 조치와 색인 제외 URL을 확인하세요.',
+    });
+  }
+  const highImpressionNoClick = queries.find(row => (row.impressions || 0) >= 20 && !(row.clicks || 0));
+  if (highImpressionNoClick) {
+    items.push({
+      level: 'warn',
+      label: 'QUERY',
+      title: `"${highImpressionNoClick.keys?.[0] || '검색어'}" 검색어를 개선 후보로 보세요`,
+      detail: '노출은 있지만 클릭이 없는 검색어입니다. 메인 문구나 상품명에 더 자연스럽게 반영할 여지가 있습니다.',
+    });
+  }
+  const indexResult = inspection?.inspectionResult?.indexStatusResult;
+  if (indexResult && indexResult.verdict !== 'PASS') {
+    items.push({
+      level: 'bad',
+      label: 'INDEX',
+      title: '대표 URL 색인 상태를 확인해야 합니다',
+      detail: indexResult.coverageState || 'URL Inspection 결과가 PASS가 아닙니다.',
+    });
+  }
+  if (!pages.length) {
+    items.push({
+      level: 'warn',
+      label: 'PAGE',
+      title: '페이지 단위 검색 데이터가 부족합니다',
+      detail: '현재 쇼핑몰이 단일 페이지 중심이면 상품별 상세 URL이 없어 검색 노출 확장에 한계가 있습니다.',
+    });
+  }
+  return items;
 }
 
 // ── Cafe24 상품 조회 ─────────────────────────────────────────────

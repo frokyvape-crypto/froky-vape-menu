@@ -7,6 +7,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
+<meta name="robots" content="noindex, nofollow">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -166,6 +167,22 @@ tr:hover td{background:rgba(128,128,128,.06);}
 .nm-value{font-size:.68rem;color:var(--muted);font-family:monospace;background:var(--bg);padding:1px 5px;border-radius:4px;}
 .nm-del{margin-left:4px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:.78rem;padding:2px 5px;border-radius:4px;line-height:1;transition:color .15s,background .15s;flex-shrink:0;}
 .nm-del:hover{color:var(--red);background:rgba(229,57,53,.12);}
+.seo-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px;}
+.seo-metric{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;}
+.seo-label{font-size:.68rem;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px;}
+.seo-value{font-size:1.25rem;font-weight:900;color:var(--text);}
+.seo-sub{font-size:.72rem;color:var(--muted);margin-top:3px;line-height:1.45;}
+.seo-panel{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;margin-top:10px;}
+.seo-panel h3{font-size:.84rem;color:var(--g);margin-bottom:8px;}
+.seo-list{display:flex;flex-direction:column;gap:7px;}
+.seo-item{display:flex;gap:8px;align-items:flex-start;font-size:.8rem;line-height:1.55;color:var(--text);}
+.seo-item b{color:var(--g);}
+.seo-pill{display:inline-flex;align-items:center;justify-content:center;min-width:54px;padding:2px 7px;border-radius:999px;font-size:.66rem;font-weight:900;background:rgba(46,204,64,.12);color:var(--g);border:1px solid rgba(46,204,64,.25);}
+.seo-pill.warn{background:rgba(245,220,0,.1);color:var(--y);border-color:rgba(245,220,0,.3);}
+.seo-pill.bad{background:rgba(229,57,53,.1);color:var(--red);border-color:rgba(229,57,53,.25);}
+.seo-code{font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 6px;word-break:break-all;}
+@media(max-width:760px){.seo-grid{grid-template-columns:1fr 1fr;}.seo-value{font-size:1.05rem;}}
+@media(max-width:460px){.seo-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -225,6 +242,11 @@ tr:hover td{background:rgba(128,128,128,.06);}
         <div class="ac-icon">#</div>
         <div class="ac-title">카테고리 추가</div>
         <div class="ac-desc">상품 분류 버튼 추가/수정</div>
+      </div>
+      <div class="action-card" onclick="showSection('sec-gsc')">
+        <div class="ac-icon">🔎</div>
+        <div class="ac-title">검색 노출 점검</div>
+        <div class="ac-desc">구글 서치콘솔 성과와 해결방안 확인</div>
       </div>
       <div class="action-card" data-deploy onclick="saveAndDeploy()">
         <div class="ac-icon">🚀</div>
@@ -415,6 +437,54 @@ tr:hover td{background:rgba(128,128,128,.06);}
         <button class="btn btn-g" id="btn-save-config" onclick="saveSiteConfig('notice')">공지 설정 저장</button>
       </div>
     </div>
+
+    <div class="section" id="sec-gsc" style="display:none">
+      <div class="section-head">
+        <h2>🔎 구글 검색 노출 점검</h2>
+        <button class="btn btn-outline btn-xs" onclick="loadGscSummary()">새로고침</button>
+      </div>
+      <div class="section-body">
+        <div class="filter-bar">
+          <select id="gsc-days" title="조회 기간">
+            <option value="28">최근 28일</option>
+            <option value="90">최근 90일</option>
+          </select>
+          <input id="gsc-site-url" type="text" placeholder="Search Console 속성 URL (비우면 Worker 기본값)">
+          <input id="gsc-inspect-url" type="url" placeholder="검사할 대표 URL (선택)">
+          <button class="btn btn-g btn-xs" id="btn-gsc-load" onclick="loadGscSummary()">분석하기</button>
+        </div>
+        <div class="seo-sub" style="margin-bottom:12px">
+          Worker에 Google Search Console read-only 인증을 설정하면 검색 성과, 사이트맵, 대표 URL 색인 상태를 한 번에 확인합니다.
+        </div>
+        <div id="gsc-status" class="seo-panel">
+          <div class="seo-sub">아직 분석 전입니다. Worker 설정 후 분석하기를 눌러주세요.</div>
+        </div>
+        <div id="gsc-result" style="display:none">
+          <div class="seo-grid">
+            <div class="seo-metric"><div class="seo-label">Clicks</div><div class="seo-value" id="gsc-clicks">-</div><div class="seo-sub" id="gsc-clicks-sub"></div></div>
+            <div class="seo-metric"><div class="seo-label">Impressions</div><div class="seo-value" id="gsc-impressions">-</div><div class="seo-sub" id="gsc-impressions-sub"></div></div>
+            <div class="seo-metric"><div class="seo-label">CTR</div><div class="seo-value" id="gsc-ctr">-</div><div class="seo-sub">검색 결과에서 클릭된 비율</div></div>
+            <div class="seo-metric"><div class="seo-label">Position</div><div class="seo-value" id="gsc-position">-</div><div class="seo-sub">낮을수록 상위 노출</div></div>
+          </div>
+          <div class="seo-panel">
+            <h3>해결방안</h3>
+            <div class="seo-list" id="gsc-recommendations"></div>
+          </div>
+          <div class="seo-panel">
+            <h3>상위 검색어</h3>
+            <div class="tbl-wrap"><table><thead><tr><th>검색어</th><th>클릭</th><th>노출</th><th>CTR</th><th>순위</th></tr></thead><tbody id="gsc-query-body"></tbody></table></div>
+          </div>
+          <div class="seo-panel">
+            <h3>상위 페이지</h3>
+            <div class="tbl-wrap"><table><thead><tr><th>페이지</th><th>클릭</th><th>노출</th><th>CTR</th><th>순위</th></tr></thead><tbody id="gsc-page-body"></tbody></table></div>
+          </div>
+          <div class="seo-panel">
+            <h3>색인/사이트맵</h3>
+            <div class="seo-list" id="gsc-indexing"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -580,6 +650,7 @@ let configDirty = false;
 const DEFAULT_WORKER_URL = 'https://froky-vape-admin.frokyvape.workers.dev';
 let WORKER_URL = localStorage.getItem('fv-worker-url') || DEFAULT_WORKER_URL;
 let ADMIN_KEY = sessionStorage.getItem('fv-admin-key') || localStorage.getItem('fv-admin-key') || '';
+const DEFAULT_GSC_SITE_URL = 'https://frokyvape-crypto.github.io/froky-vape-menu/';
 
 // ── localStorage DB ────────────────────────────
 function dbSave() {
@@ -666,6 +737,12 @@ async function showSection(id) {
     await loadProducts();
   }
   if (id === 'sec-notice' || id === 'sec-categories') await loadSiteConfig();
+  if (id === 'sec-gsc') {
+    const siteEl = document.getElementById('gsc-site-url');
+    const inspectEl = document.getElementById('gsc-inspect-url');
+    if (siteEl && !siteEl.value) siteEl.value = localStorage.getItem('fv-gsc-site-url') || DEFAULT_GSC_SITE_URL;
+    if (inspectEl && !inspectEl.value) inspectEl.value = localStorage.getItem('fv-gsc-inspect-url') || DEFAULT_GSC_SITE_URL;
+  }
   if (id === 'sec-cafe24') {
     const _cid = sessionStorage.getItem('fv-c24-id') || localStorage.getItem('fv-c24-id') || '';
     const _sec = sessionStorage.getItem('fv-c24-sec') || localStorage.getItem('fv-c24-sec') || '';
@@ -1369,6 +1446,116 @@ async function refreshAdminData({ silent = false } = {}) {
     loadSiteConfig({ silent }),
   ]);
   renderTable();
+}
+
+function fmtNum(n) {
+  return Number(n || 0).toLocaleString('ko-KR');
+}
+function fmtCtr(n) {
+  return `${((Number(n || 0)) * 100).toFixed(1)}%`;
+}
+function fmtPos(n) {
+  const v = Number(n || 0);
+  return v ? v.toFixed(1) : '-';
+}
+function deltaText(current, previous, formatter = fmtNum, lowerIsBetter = false) {
+  const c = Number(current || 0), p = Number(previous || 0);
+  if (!p) return '이전 기간 비교 없음';
+  const diff = c - p;
+  const pct = Math.abs(diff / p * 100).toFixed(1);
+  const good = lowerIsBetter ? diff < 0 : diff > 0;
+  const sign = diff > 0 ? '+' : diff < 0 ? '-' : '';
+  return `${good ? '개선' : diff === 0 ? '동일' : '하락'} ${sign}${formatter(Math.abs(diff))} (${pct}%)`;
+}
+function renderGscRows(rows, emptyText) {
+  if (!rows || !rows.length) return `<tr><td colspan="5" class="empty-msg">${emptyText}</td></tr>`;
+  return rows.map(row => {
+    const key = Array.isArray(row.keys) ? row.keys[0] : '-';
+    return `<tr>
+      <td><span class="seo-code">${escHtml(key)}</span></td>
+      <td>${fmtNum(row.clicks)}</td>
+      <td>${fmtNum(row.impressions)}</td>
+      <td>${fmtCtr(row.ctr)}</td>
+      <td>${fmtPos(row.position)}</td>
+    </tr>`;
+  }).join('');
+}
+function renderGscRecommendations(items) {
+  const list = document.getElementById('gsc-recommendations');
+  if (!items || !items.length) {
+    list.innerHTML = '<div class="seo-item"><span class="seo-pill">OK</span><span>큰 경고는 없습니다. 상위 검색어와 페이지를 보며 상품명/카테고리 문구를 꾸준히 맞춰주세요.</span></div>';
+    return;
+  }
+  list.innerHTML = items.map(item => {
+    const level = item.level === 'bad' ? 'bad' : item.level === 'warn' ? 'warn' : '';
+    return `<div class="seo-item"><span class="seo-pill ${level}">${escHtml(item.label || '점검')}</span><span><b>${escHtml(item.title || '')}</b><br>${escHtml(item.detail || '')}</span></div>`;
+  }).join('');
+}
+function renderGscIndexing(data) {
+  const target = document.getElementById('gsc-indexing');
+  const parts = [];
+  const sitemapCount = data.sitemaps?.sitemap?.length || data.sitemaps?.length || 0;
+  parts.push(`<div class="seo-item"><span class="seo-pill ${sitemapCount ? '' : 'warn'}">SITEMAP</span><span>${sitemapCount ? `${sitemapCount}개 사이트맵이 Search Console에 등록되어 있습니다.` : '등록된 사이트맵을 찾지 못했습니다. Search Console에서 sitemap.xml 제출을 확인하세요.'}</span></div>`);
+  const inspection = data.inspection?.inspectionResult?.indexStatusResult;
+  if (inspection) {
+    const coverage = inspection.coverageState || '-';
+    const verdict = inspection.verdict || '-';
+    const level = verdict === 'PASS' ? '' : 'warn';
+    parts.push(`<div class="seo-item"><span class="seo-pill ${level}">INDEX</span><span>대표 URL 색인 상태: <b>${escHtml(verdict)}</b> / ${escHtml(coverage)}</span></div>`);
+  } else {
+    parts.push('<div class="seo-item"><span class="seo-pill warn">INDEX</span><span>대표 URL 검사는 건너뛰었거나 권한/쿼터 문제로 실패했습니다.</span></div>');
+  }
+  target.innerHTML = parts.join('');
+}
+function renderGscSummary(data) {
+  const total = data.total || {};
+  const previous = data.previousTotal || {};
+  document.getElementById('gsc-clicks').textContent = fmtNum(total.clicks);
+  document.getElementById('gsc-impressions').textContent = fmtNum(total.impressions);
+  document.getElementById('gsc-ctr').textContent = fmtCtr(total.ctr);
+  document.getElementById('gsc-position').textContent = fmtPos(total.position);
+  document.getElementById('gsc-clicks-sub').textContent = deltaText(total.clicks, previous.clicks);
+  document.getElementById('gsc-impressions-sub').textContent = deltaText(total.impressions, previous.impressions);
+  document.getElementById('gsc-query-body').innerHTML = renderGscRows(data.queries, '검색어 데이터가 없습니다');
+  document.getElementById('gsc-page-body').innerHTML = renderGscRows(data.pages, '페이지 데이터가 없습니다');
+  renderGscRecommendations(data.recommendations);
+  renderGscIndexing(data);
+  document.getElementById('gsc-status').innerHTML = `<div class="seo-sub">집계 기간: ${escHtml(data.range?.startDate || '-')} ~ ${escHtml(data.range?.endDate || '-')} / 속성: <span class="seo-code">${escHtml(data.siteUrl || '-')}</span></div>`;
+  document.getElementById('gsc-result').style.display = '';
+}
+async function loadGscSummary() {
+  const btn = document.getElementById('btn-gsc-load');
+  const status = document.getElementById('gsc-status');
+  const siteUrl = (document.getElementById('gsc-site-url').value || '').trim();
+  const inspectUrl = (document.getElementById('gsc-inspect-url').value || '').trim();
+  const days = Number(document.getElementById('gsc-days').value || 28);
+  if (!WORKER_URL || !ADMIN_KEY) {
+    status.innerHTML = '<div class="seo-item"><span class="seo-pill bad">설정</span><span>먼저 상단 ⚙️에서 Worker URL과 Admin Key를 설정하세요.</span></div>';
+    return;
+  }
+  localStorage.setItem('fv-gsc-site-url', siteUrl);
+  localStorage.setItem('fv-gsc-inspect-url', inspectUrl);
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span>분석 중';
+  status.innerHTML = '<div class="seo-sub">Search Console 데이터를 불러오는 중입니다...</div>';
+  try {
+    const r = await fetch(WORKER_URL + '/api/gsc/summary', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
+      body: JSON.stringify({ siteUrl, inspectUrl, days }),
+    });
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok || !data.ok) throw new Error(data.message || `GSC 조회 실패 (${r.status})`);
+    renderGscSummary(data);
+    toast('검색 노출 분석 완료', 'ok');
+  } catch (e) {
+    document.getElementById('gsc-result').style.display = 'none';
+    status.innerHTML = `<div class="seo-item"><span class="seo-pill bad">오류</span><span>${escHtml(e.message || String(e))}<br>Worker의 GSC OAuth secret, Search Console 속성 권한, 사이트 URL을 확인하세요.</span></div>`;
+    toast('GSC 분석 실패: ' + (e.message || e), 'err');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '분석하기';
+  }
 }
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden) checkRemoteChanges();
