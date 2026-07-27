@@ -139,10 +139,10 @@
     "options": [
       "자몽 & 히비스커스",
       "아샷추",
-      "자스민 & 믹스베리",
       "딸기 & 초코"
     ],
-    "sale": false
+    "sale": false,
+    "optionPrices": {}
   },
   {
     "id": 1912,
