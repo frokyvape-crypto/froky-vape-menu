@@ -160,10 +160,10 @@
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
-      "체리엇 더 오리지널",
-      "체리엇 더 오리지널 (아이스)"
+      "체리엇 더 오리지널"
     ],
-    "sale": false
+    "sale": false,
+    "optionPrices": {}
   },
   {
     "id": 1898,
