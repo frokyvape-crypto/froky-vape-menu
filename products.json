@@ -363,10 +363,10 @@
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
-      "키위 패션 키스",
       "시트러스 만다린 키스"
     ],
-    "sale": false
+    "sale": false,
+    "optionPrices": {}
   },
   {
     "id": 1542,
