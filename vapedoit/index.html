@@ -697,17 +697,14 @@
     }
     async function checkout(){
       if(!cart.length)return;
-      const payWindow=window.open('about:blank','_blank');
       const total=cart.reduce((sum,item)=>sum+item.price*item.qty,0);
       const payUrl=buildAutoPayUrl(cart,total);
       if(!payUrl){
-        if(payWindow)payWindow.close();
         showToast('총금액이 100원 단위인지 확인해 주세요');
         return;
       }
       showToast('상품명과 금액을 자동 입력합니다');
-      if(payWindow)payWindow.location.href=payUrl;
-      else window.location.href=payUrl;
+      window.location.assign(payUrl);
     }
     $('searchInput').addEventListener('input',renderProducts);
     $('sortSelect').addEventListener('change',renderProducts);
