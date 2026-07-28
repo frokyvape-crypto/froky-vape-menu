@@ -64,8 +64,8 @@
       color:var(--red);background:#fff;font-size:.72rem;
     }
     .hero{
-      position:relative;min-height:570px;overflow:hidden;
-      display:grid;grid-template-columns:minmax(0,1.05fr) minmax(380px,.95fr);
+      position:relative;min-height:520px;overflow:hidden;
+      display:grid;grid-template-columns:1fr;
       background:
         linear-gradient(132deg,transparent 0 79%,rgba(227,6,19,.08) 79% 79.8%,transparent 79.8%),
         repeating-linear-gradient(135deg,transparent 0 22px,rgba(0,0,0,.026) 22px 23px),
@@ -78,20 +78,13 @@
       font-size:clamp(8rem,20vw,21rem);font-weight:950;line-height:1;
       letter-spacing:-.09em;pointer-events:none;
     }
-    .side-ribbon{
-      position:absolute;z-index:2;left:0;top:0;width:90px;height:290px;
-      display:flex;justify-content:center;padding-top:44px;
-      background:var(--red);color:#fff;
-      writing-mode:vertical-rl;font-weight:950;font-size:1.2rem;letter-spacing:.18em;
-      clip-path:polygon(0 0,100% 0,87% 100%,0 100%);
-    }
     .hero-left{
-      position:relative;z-index:3;display:flex;align-items:center;
-      padding:80px 30px 72px clamp(118px,10vw,190px);
+      position:relative;z-index:3;display:flex;align-items:center;justify-content:center;
+      padding:82px clamp(30px,8vw,130px);
       min-width:0;
     }
     .hero-card{
-      width:min(650px,100%);padding:52px 56px 48px;color:#fff;background:var(--black);
+      width:min(760px,100%);padding:58px 64px 54px;color:#fff;background:var(--black);
       box-shadow:20px 22px 0 var(--red),var(--shadow);
       transform:rotate(-3.5deg);position:relative;
       clip-path:polygon(4% 0,100% 7%,95% 100%,0 91%);
@@ -108,29 +101,6 @@
     }
     .hero-title span{color:var(--red)}
     .hero-desc{margin:22px 0 0;max-width:430px;color:#d6d6d6;font-weight:650;line-height:1.75}
-    .hero-right{
-      position:relative;z-index:3;display:flex;flex-direction:column;justify-content:center;
-      padding:74px clamp(24px,6vw,100px) 72px 42px;
-      min-width:0;
-    }
-    .hero-right .small{font-weight:950;letter-spacing:.16em;color:var(--red);font-size:.78rem}
-    .hero-right h1{
-      margin:12px 0 18px;font-size:clamp(2.8rem,5.4vw,6.5rem);
-      line-height:.94;letter-spacing:-.075em;font-weight:1000;
-    }
-    .hero-right h1 .en{display:block;font-size:.56em;letter-spacing:-.045em;color:#000}
-    .hero-right p{margin:0;max-width:540px;font-size:clamp(1rem,1.45vw,1.3rem);line-height:1.65;font-weight:800}
-    .hero-right p strong{color:var(--red)}
-    .hero-cta{
-      margin-top:34px;width:min(430px,100%);min-height:64px;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:0 24px 0 30px;text-decoration:none;
-      background:var(--red);color:#fff;font-size:1rem;font-weight:950;
-      box-shadow:10px 10px 0 #111;transition:transform .18s,box-shadow .18s;
-      clip-path:polygon(0 0,100% 0,95% 100%,0 100%);
-    }
-    .hero-cta:hover{transform:translate(4px,4px);box-shadow:6px 6px 0 #111}
-    .hero-cta b{font-size:1.45rem}
     .trust-strip{
       display:grid;grid-template-columns:repeat(4,1fr);background:#0b0b0b;color:#fff;
       border-bottom:4px solid var(--red);
@@ -310,25 +280,20 @@
     }
     .toast.show{opacity:1;transform:translate(-50%,0)}
     @media(max-width:1050px){
-      .hero{grid-template-columns:1fr;min-height:0}
-      .hero-left{padding:78px 70px 30px 120px}
-      .hero-right{padding:42px 70px 78px 120px}
-      .hero-card{width:650px}
+      .hero{min-height:460px}
+      .hero-left{padding:72px 70px}
+      .hero-card{width:min(700px,100%)}
       .product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
     }
     @media(max-width:720px){
       .topbar{height:64px;padding:0 13px}
       .brand-en{font-size:1rem}.brand-ko,.ghost-btn{display:none}
       .cart-btn{padding:8px 11px}
-      .side-ribbon{width:48px;height:190px;font-size:.82rem;padding-top:24px}
-      .hero-left{padding:55px 22px 20px 68px}
+      .hero{min-height:370px}
+      .hero-left{padding:58px 22px}
       .hero-card{width:100%;padding:36px 28px 32px;box-shadow:10px 12px 0 var(--red)}
       .hero-title{font-size:clamp(2.15rem,10vw,3.2rem)}
       .hero-desc{font-size:.82rem}
-      .hero-right{padding:35px 22px 55px 68px}
-      .hero-right .small,.hero-right h1,.hero-right p{max-width:100%}
-      .hero-right h1{font-size:clamp(2.3rem,12vw,4.2rem)}
-      .hero-cta{min-height:56px;margin-top:25px}
       .trust-strip{grid-template-columns:1fr 1fr}
       .trust-item:nth-child(2){border-right:0}
       .trust-item{min-height:84px;padding:16px}
@@ -367,7 +332,6 @@
 
   <main>
     <section class="hero">
-      <div class="side-ribbon">베이프두잇</div>
       <div class="hero-left">
         <div class="hero-card">
           <div class="hero-card-inner">
@@ -376,12 +340,6 @@
             <p class="hero-desc">선명한 취향, 분명한 선택. 원하는 상품을 더 빠르고 편하게 만나보세요.</p>
           </div>
         </div>
-      </div>
-      <div class="hero-right">
-        <div class="small">YOUR VAPE, YOUR CHOICE</div>
-        <h1><span class="en">VAPE DO IT.</span>베이프두잇</h1>
-        <p>액상 베이프두잇샵<br>찾던 상품을 <strong>한눈에</strong></p>
-        <a class="hero-cta" href="#products"><span>베이프두잇 상품 바로보기</span><b>▶</b></a>
       </div>
     </section>
 
