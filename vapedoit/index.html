@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#e30613">
+  <meta name="description" content="베이프두잇 액상·베이프 상품 메뉴">
+  <title>VAPE DO IT. | 베이프두잇</title>
+  <style>
+    :root{
+      --red:#e30613;
+      --red-dark:#b8000a;
+      --black:#090909;
+      --ink:#171717;
+      --paper:#f5f5f3;
+      --white:#fff;
+      --line:#d8d8d4;
+      --muted:#6f6f6a;
+      --shadow:0 22px 70px rgba(0,0,0,.14);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--ink);
+      background:var(--paper);
+      font-family:Pretendard,"Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif;
+      overflow-x:hidden;
+    }
+    button,input,select{font:inherit}
+    button{color:inherit}
+    img{display:block;max-width:100%}
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      height:74px;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 clamp(18px,4vw,64px);
+      color:var(--white);background:rgba(9,9,9,.96);
+      border-bottom:4px solid var(--red);
+      backdrop-filter:blur(12px);
+    }
+    .brand{
+      display:flex;align-items:center;gap:13px;
+      color:inherit;text-decoration:none;font-weight:950;letter-spacing:-.04em;
+    }
+    .brand-mark{
+      width:34px;height:34px;background:var(--red);
+      clip-path:polygon(0 0,100% 0,0 100%);
+      filter:drop-shadow(5px 5px 0 rgba(255,255,255,.15));
+    }
+    .brand-en{font-size:1.18rem;letter-spacing:.06em}
+    .brand-ko{font-size:.78rem;color:#b9b9b9;font-weight:700}
+    .top-actions{display:flex;align-items:center;gap:10px}
+    .ghost-btn,.cart-btn{
+      border:1px solid rgba(255,255,255,.22);border-radius:3px;
+      padding:10px 15px;background:transparent;color:#fff;
+      cursor:pointer;font-size:.84rem;font-weight:850;
+    }
+    .ghost-btn:hover{border-color:#fff}
+    .cart-btn{background:var(--red);border-color:var(--red);display:flex;gap:8px}
+    .cart-count{
+      min-width:20px;height:20px;padding:0 5px;border-radius:20px;
+      display:inline-flex;align-items:center;justify-content:center;
+      color:var(--red);background:#fff;font-size:.72rem;
+    }
+    .hero{
+      position:relative;min-height:570px;overflow:hidden;
+      display:grid;grid-template-columns:minmax(0,1.05fr) minmax(380px,.95fr);
+      background:
+        linear-gradient(132deg,transparent 0 79%,rgba(227,6,19,.08) 79% 79.8%,transparent 79.8%),
+        repeating-linear-gradient(135deg,transparent 0 22px,rgba(0,0,0,.026) 22px 23px),
+        #f8f8f7;
+      border-bottom:1px solid var(--line);
+    }
+    .hero::before{
+      content:"OPEN";position:absolute;left:1vw;bottom:-.24em;
+      color:transparent;-webkit-text-stroke:2px rgba(0,0,0,.13);
+      font-size:clamp(8rem,20vw,21rem);font-weight:950;line-height:1;
+      letter-spacing:-.09em;pointer-events:none;
+    }
+    .side-ribbon{
+      position:absolute;z-index:2;left:0;top:0;width:90px;height:290px;
+      display:flex;justify-content:center;padding-top:44px;
+      background:var(--red);color:#fff;
+      writing-mode:vertical-rl;font-weight:950;font-size:1.2rem;letter-spacing:.18em;
+      clip-path:polygon(0 0,100% 0,87% 100%,0 100%);
+    }
+    .hero-left{
+      position:relative;z-index:3;display:flex;align-items:center;
+      padding:80px 30px 72px clamp(118px,10vw,190px);
+      min-width:0;
+    }
+    .hero-card{
+      width:min(650px,100%);padding:52px 56px 48px;color:#fff;background:var(--black);
+      box-shadow:20px 22px 0 var(--red),var(--shadow);
+      transform:rotate(-3.5deg);position:relative;
+      clip-path:polygon(4% 0,100% 7%,95% 100%,0 91%);
+    }
+    .hero-card::after{
+      content:"";position:absolute;right:18px;top:-1px;width:64px;height:64px;background:var(--red);
+      clip-path:polygon(100% 0,100% 100%,0 0);
+    }
+    .hero-card-inner{transform:rotate(3.5deg)}
+    .eyebrow{font-size:.78rem;font-weight:900;letter-spacing:.26em;color:#d6d6d6}
+    .hero-title{
+      margin:12px 0 2px;font-size:clamp(3rem,5vw,5.4rem);
+      font-weight:1000;letter-spacing:.03em;line-height:.88;white-space:nowrap;
+    }
+    .hero-title span{color:var(--red)}
+    .hero-desc{margin:22px 0 0;max-width:430px;color:#d6d6d6;font-weight:650;line-height:1.75}
+    .hero-right{
+      position:relative;z-index:3;display:flex;flex-direction:column;justify-content:center;
+      padding:74px clamp(24px,6vw,100px) 72px 42px;
+      min-width:0;
+    }
+    .hero-right .small{font-weight:950;letter-spacing:.16em;color:var(--red);font-size:.78rem}
+    .hero-right h1{
+      margin:12px 0 18px;font-size:clamp(2.8rem,5.4vw,6.5rem);
+      line-height:.94;letter-spacing:-.075em;font-weight:1000;
+    }
+    .hero-right h1 .en{display:block;font-size:.56em;letter-spacing:-.045em;color:#000}
+    .hero-right p{margin:0;max-width:540px;font-size:clamp(1rem,1.45vw,1.3rem);line-height:1.65;font-weight:800}
+    .hero-right p strong{color:var(--red)}
+    .hero-cta{
+      margin-top:34px;width:min(430px,100%);min-height:64px;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 24px 0 30px;text-decoration:none;
+      background:var(--red);color:#fff;font-size:1rem;font-weight:950;
+      box-shadow:10px 10px 0 #111;transition:transform .18s,box-shadow .18s;
+      clip-path:polygon(0 0,100% 0,95% 100%,0 100%);
+    }
+    .hero-cta:hover{transform:translate(4px,4px);box-shadow:6px 6px 0 #111}
+    .hero-cta b{font-size:1.45rem}
+    .trust-strip{
+      display:grid;grid-template-columns:repeat(4,1fr);background:#0b0b0b;color:#fff;
+      border-bottom:4px solid var(--red);
+    }
+    .trust-item{
+      min-height:96px;padding:22px 24px;display:flex;align-items:center;gap:14px;
+      border-right:1px solid #292929;
+    }
+    .trust-item:last-child{border-right:0}
+    .trust-no{color:var(--red);font-size:1.5rem;font-weight:1000}
+    .trust-copy b{display:block;font-size:.94rem}
+    .trust-copy span{display:block;margin-top:4px;color:#888;font-size:.72rem}
+    .shop{
+      max-width:1500px;margin:0 auto;padding:76px clamp(16px,4vw,56px) 110px;
+    }
+    .shop-head{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:30px}
+    .shop-kicker{color:var(--red);font-size:.75rem;font-weight:1000;letter-spacing:.23em}
+    .shop-title{margin:8px 0 0;font-size:clamp(2rem,4vw,4rem);font-weight:1000;letter-spacing:-.07em;line-height:1}
+    .product-count{color:var(--muted);font-size:.85rem;font-weight:750}
+    .tools{
+      position:sticky;top:74px;z-index:35;margin:0 calc(clamp(16px,4vw,56px) * -1) 36px;
+      padding:14px clamp(16px,4vw,56px);
+      background:rgba(245,245,243,.94);border-block:1px solid var(--line);
+      backdrop-filter:blur(13px);
+    }
+    .tools-row{display:flex;gap:12px;align-items:center}
+    .search-wrap{position:relative;flex:1}
+    .search-input{
+      width:100%;height:50px;padding:0 48px 0 18px;border:2px solid #111;
+      border-radius:0;background:#fff;outline:none;font-weight:750;
+    }
+    .search-input:focus{border-color:var(--red);box-shadow:4px 4px 0 var(--red)}
+    .search-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:1rem}
+    .sort-select{
+      height:50px;min-width:145px;padding:0 38px 0 14px;border:2px solid #111;
+      border-radius:0;background:#fff;font-weight:800;cursor:pointer;
+    }
+    .categories{
+      display:flex;gap:8px;margin-top:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;
+    }
+    .categories::-webkit-scrollbar{display:none}
+    .cat-btn{
+      flex:0 0 auto;border:1px solid #c5c5c0;background:#fff;padding:9px 15px;
+      cursor:pointer;font-size:.8rem;font-weight:850;transition:.15s;
+    }
+    .cat-btn:hover,.cat-btn.active{color:#fff;background:var(--red);border-color:var(--red)}
+    .product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 20px}
+    .product-card{
+      position:relative;background:#fff;border:1px solid var(--line);
+      transition:transform .2s,box-shadow .2s,border-color .2s;min-width:0;
+    }
+    .product-card:hover{transform:translateY(-5px);box-shadow:10px 12px 0 #111;border-color:#111}
+    .product-img-wrap{aspect-ratio:1/1;overflow:hidden;background:#eee;position:relative;cursor:pointer}
+    .product-img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+    .product-card:hover .product-img{transform:scale(1.035)}
+    .badge{
+      position:absolute;top:12px;left:0;padding:7px 12px;background:var(--red);color:#fff;
+      font-size:.66rem;font-weight:1000;letter-spacing:.09em;
+    }
+    .quick{
+      position:absolute;right:10px;bottom:10px;width:40px;height:40px;
+      display:grid;place-items:center;border:0;background:#111;color:#fff;cursor:pointer;font-weight:900;
+    }
+    .quick:hover{background:var(--red)}
+    .product-info{padding:17px 16px 8px}
+    .product-cat{font-size:.67rem;color:var(--red);font-weight:950;letter-spacing:.08em}
+    .product-name{
+      margin:8px 0 10px;min-height:44px;line-height:1.4;font-size:.96rem;font-weight:900;
+      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+    }
+    .product-meta{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .product-flavor{color:var(--muted);font-size:.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .product-price{font-size:1.03rem;font-weight:1000;white-space:nowrap}
+    .card-action{
+      width:calc(100% - 32px);margin:10px 16px 16px;height:42px;border:2px solid #111;
+      background:#fff;cursor:pointer;font-size:.8rem;font-weight:950;transition:.15s;
+    }
+    .card-action:hover{background:#111;color:#fff}
+    .state{
+      grid-column:1/-1;min-height:240px;display:grid;place-items:center;text-align:center;
+      color:var(--muted);font-weight:800;border:1px dashed #bbb;background:#fff;
+    }
+    .loader{width:36px;height:36px;border:4px solid #ddd;border-top-color:var(--red);border-radius:50%;animation:spin .8s linear infinite;margin:auto auto 14px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .scrim{
+      position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.6);
+      opacity:0;pointer-events:none;transition:.2s;backdrop-filter:blur(2px);
+    }
+    .scrim.open{opacity:1;pointer-events:auto}
+    .drawer{
+      position:fixed;z-index:100;right:0;top:0;width:min(440px,100%);height:100dvh;
+      display:flex;flex-direction:column;background:#fff;transform:translateX(105%);
+      transition:transform .28s cubic-bezier(.2,.8,.2,1);box-shadow:-20px 0 60px rgba(0,0,0,.25);
+    }
+    .drawer.open{transform:none}
+    .drawer-head{
+      min-height:78px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;
+      color:#fff;background:#111;border-bottom:4px solid var(--red);
+    }
+    .drawer-head h2{margin:0;font-size:1.25rem}
+    .icon-close{width:38px;height:38px;border:1px solid #555;background:transparent;color:#fff;cursor:pointer;font-size:1.3rem}
+    .cart-items{flex:1;overflow:auto;padding:18px}
+    .cart-empty{padding:70px 15px;text-align:center;color:var(--muted);font-weight:750}
+    .cart-item{
+      display:grid;grid-template-columns:70px 1fr auto;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);
+    }
+    .cart-item img{width:70px;height:70px;object-fit:cover;background:#eee}
+    .cart-item-name{font-size:.82rem;font-weight:900;line-height:1.35}
+    .cart-item-opt{margin-top:5px;color:var(--muted);font-size:.7rem}
+    .qty{display:flex;align-items:center;margin-top:9px}
+    .qty button{width:27px;height:27px;border:1px solid #ccc;background:#fff;cursor:pointer}
+    .qty span{width:31px;text-align:center;font-size:.78rem;font-weight:850}
+    .cart-item-side{text-align:right}
+    .cart-item-price{font-size:.78rem;font-weight:950;white-space:nowrap}
+    .remove{margin-top:14px;border:0;background:transparent;color:var(--red);font-size:.7rem;cursor:pointer}
+    .drawer-foot{padding:20px 22px max(20px,env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#f6f6f4}
+    .total{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;font-weight:900}
+    .total strong{font-size:1.5rem;color:var(--red)}
+    .checkout{width:100%;height:54px;border:0;background:var(--red);color:#fff;cursor:pointer;font-weight:950}
+    .checkout:disabled{background:#aaa;cursor:not-allowed}
+    .modal-wrap{
+      position:fixed;inset:0;z-index:110;display:grid;place-items:center;padding:18px;
+      background:rgba(0,0,0,.65);opacity:0;pointer-events:none;transition:.2s;
+    }
+    .modal-wrap.open{opacity:1;pointer-events:auto}
+    .product-modal{
+      width:min(900px,100%);max-height:90dvh;overflow:auto;background:#fff;position:relative;
+      display:grid;grid-template-columns:1fr 1fr;box-shadow:var(--shadow);
+    }
+    .modal-img{width:100%;height:100%;min-height:450px;object-fit:cover;background:#eee}
+    .modal-content{padding:42px 34px;display:flex;flex-direction:column}
+    .modal-x{position:absolute;right:12px;top:12px;width:40px;height:40px;border:0;background:#111;color:#fff;cursor:pointer;z-index:3}
+    .modal-cat{color:var(--red);font-size:.72rem;font-weight:1000;letter-spacing:.08em}
+    .modal-name{margin:10px 0 12px;font-size:clamp(1.45rem,3vw,2.3rem);line-height:1.16;letter-spacing:-.05em}
+    .modal-price{font-size:1.45rem;font-weight:1000}
+    .field-label{display:block;margin:28px 0 8px;font-size:.76rem;font-weight:950}
+    .option-select{width:100%;height:50px;border:2px solid #111;background:#fff;padding:0 12px}
+    .modal-add{margin-top:auto;min-height:54px;border:0;background:var(--red);color:#fff;cursor:pointer;font-weight:950}
+    .footer{
+      padding:42px clamp(18px,5vw,70px);display:flex;justify-content:space-between;gap:30px;
+      color:#aaa;background:#090909;border-top:8px solid var(--red);
+    }
+    .footer strong{display:block;color:#fff;font-size:1.2rem;letter-spacing:.05em}
+    .footer p{margin:8px 0 0;font-size:.73rem;line-height:1.6}
+    .toast{
+      position:fixed;left:50%;bottom:28px;z-index:150;transform:translate(-50%,30px);
+      padding:13px 18px;color:#fff;background:#111;border-left:5px solid var(--red);
+      opacity:0;pointer-events:none;transition:.22s;font-size:.82rem;font-weight:850;box-shadow:var(--shadow);
+    }
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    @media(max-width:1050px){
+      .hero{grid-template-columns:1fr;min-height:0}
+      .hero-left{padding:78px 70px 30px 120px}
+      .hero-right{padding:42px 70px 78px 120px}
+      .hero-card{width:650px}
+      .product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    }
+    @media(max-width:720px){
+      .topbar{height:64px;padding:0 13px}
+      .brand-en{font-size:1rem}.brand-ko,.ghost-btn{display:none}
+      .cart-btn{padding:8px 11px}
+      .side-ribbon{width:48px;height:190px;font-size:.82rem;padding-top:24px}
+      .hero-left{padding:55px 22px 20px 68px}
+      .hero-card{width:100%;padding:36px 28px 32px;box-shadow:10px 12px 0 var(--red)}
+      .hero-title{font-size:clamp(2.15rem,10vw,3.2rem)}
+      .hero-desc{font-size:.82rem}
+      .hero-right{padding:35px 22px 55px 68px}
+      .hero-right .small,.hero-right h1,.hero-right p{max-width:100%}
+      .hero-right h1{font-size:clamp(2.3rem,12vw,4.2rem)}
+      .hero-cta{min-height:56px;margin-top:25px}
+      .trust-strip{grid-template-columns:1fr 1fr}
+      .trust-item:nth-child(2){border-right:0}
+      .trust-item{min-height:84px;padding:16px}
+      .shop{padding:54px 12px 80px}
+      .shop-head{align-items:start;flex-direction:column;gap:12px;padding:0 4px}
+      .tools{top:64px;margin-inline:-12px;padding:10px 12px}
+      .tools-row{gap:7px}.sort-select{min-width:112px;width:112px;font-size:.74rem}
+      .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 8px}
+      .product-card:hover{box-shadow:5px 6px 0 #111}
+      .product-info{padding:12px 10px 5px}
+      .product-name{font-size:.82rem;min-height:39px}
+      .product-meta{display:block}.product-flavor{display:block;max-width:100%}.product-price{display:block;margin-top:7px;font-size:.9rem}
+      .card-action{width:calc(100% - 20px);margin:8px 10px 10px;height:38px}
+      .product-modal{grid-template-columns:1fr;max-height:92dvh}
+      .modal-img{min-height:0;height:auto;aspect-ratio:1/1}
+      .modal-content{padding:28px 20px 22px}
+      .modal-add{margin-top:25px}
+      .footer{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span><span class="brand-en">VAPE DO IT.</span><span class="brand-ko"> 베이프두잇</span></span>
+    </a>
+    <div class="top-actions">
+      <button class="ghost-btn" onclick="document.querySelector('#products').scrollIntoView()">상품 보기</button>
+      <button class="cart-btn" onclick="openCart()">장바구니 <span class="cart-count" id="cartCount">0</span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="side-ribbon">베이프두잇</div>
+      <div class="hero-left">
+        <div class="hero-card">
+          <div class="hero-card-inner">
+            <div class="eyebrow">PREMIUM VAPE SELECT SHOP</div>
+            <div class="hero-title">VAPE <span>DO IT.</span></div>
+            <p class="hero-desc">선명한 취향, 분명한 선택. 원하는 상품을 더 빠르고 편하게 만나보세요.</p>
+          </div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="small">YOUR VAPE, YOUR CHOICE</div>
+        <h1><span class="en">VAPE DO IT.</span>베이프두잇</h1>
+        <p>액상 베이프두잇샵<br>찾던 상품을 <strong>한눈에</strong></p>
+        <a class="hero-cta" href="#products"><span>베이프두잇 상품 바로보기</span><b>▶</b></a>
+      </div>
+    </section>
+
+    <section class="trust-strip" aria-label="서비스 안내">
+      <div class="trust-item"><span class="trust-no">01</span><span class="trust-copy"><b>한눈에 찾는 상품</b><span>카테고리별 빠른 탐색</span></span></div>
+      <div class="trust-item"><span class="trust-no">02</span><span class="trust-copy"><b>간편한 옵션 선택</b><span>상품별 맛·옵션 확인</span></span></div>
+      <div class="trust-item"><span class="trust-no">03</span><span class="trust-copy"><b>실시간 상품 반영</b><span>최신 메뉴 자동 업데이트</span></span></div>
+      <div class="trust-item"><span class="trust-no">04</span><span class="trust-copy"><b>모바일 최적화</b><span>어디서든 편리하게</span></span></div>
+    </section>
+
+    <section class="shop" id="products">
+      <div class="shop-head">
+        <div>
+          <div class="shop-kicker">VAPE DO IT COLLECTION</div>
+          <h2 class="shop-title">전체 상품</h2>
+        </div>
+        <div class="product-count" id="productCount">상품을 불러오는 중입니다</div>
+      </div>
+      <div class="tools">
+        <div class="tools-row">
+          <div class="search-wrap">
+            <input class="search-input" id="searchInput" type="search" placeholder="상품명 또는 옵션을 검색하세요" autocomplete="off">
+            <span class="search-icon">⌕</span>
+          </div>
+          <select class="sort-select" id="sortSelect" aria-label="정렬">
+            <option value="default">기본 정렬</option>
+            <option value="low">낮은 가격순</option>
+            <option value="high">높은 가격순</option>
+            <option value="name">이름순</option>
+          </select>
+        </div>
+        <div class="categories" id="categories"></div>
+      </div>
+      <div class="product-grid" id="productGrid">
+        <div class="state"><div><div class="loader"></div>상품을 불러오는 중입니다</div></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div><strong>VAPE DO IT.</strong><p>베이프두잇 · 액상 및 베이프 상품 메뉴</p></div>
+    <p>본 페이지는 성인 고객을 위한 상품 안내 페이지입니다.<br>상품 정보와 가격은 운영 상황에 따라 변경될 수 있습니다.</p>
+  </footer>
+
+  <div class="scrim" id="scrim" onclick="closeCart()"></div>
+  <aside class="drawer" id="drawer" aria-label="장바구니">
+    <div class="drawer-head"><h2>장바구니</h2><button class="icon-close" onclick="closeCart()" aria-label="닫기">×</button></div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="drawer-foot">
+      <div class="total"><span>총 상품금액</span><strong id="cartTotal">0원</strong></div>
+      <button class="checkout" id="checkoutBtn" onclick="checkout()" disabled>주문 내용 복사 후 결제하기</button>
+    </div>
+  </aside>
+
+  <div class="modal-wrap" id="productModal" onclick="closeProductOutside(event)">
+    <article class="product-modal">
+      <button class="modal-x" onclick="closeProduct()" aria-label="닫기">×</button>
+      <img class="modal-img" id="modalImg" src="" alt="">
+      <div class="modal-content">
+        <div class="modal-cat" id="modalCat"></div>
+        <h2 class="modal-name" id="modalName"></h2>
+        <div class="modal-price" id="modalPrice"></div>
+        <label class="field-label" for="modalOption">옵션 선택</label>
+        <select class="option-select" id="modalOption"></select>
+        <button class="modal-add" onclick="addSelected()">선택 상품 장바구니 담기</button>
+      </div>
+    </article>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const PRODUCT_URL='../products.json';
+    const CONFIG_URL='../site-config.json';
+    const LIVE_ROOT='https://frokyvape-crypto.github.io/froky-vape-menu/';
+    const PAY_URL='https://frokyvape.com/product/%EC%95%8C%EC%BD%9C%EC%8A%A4%EC%99%91/3253/category/23/display/1/';
+    const FALLBACK_CATEGORIES=['best','입호흡','고농도','폐호흡고농도','노멘솔','일회용','폐호흡','폐호흡-고농도'];
+    let products=[];
+    let categories=[];
+    let activeCategory='all';
+    let activeProduct=null;
+    let cart=loadCart();
+
+    const $=id=>document.getElementById(id);
+    const won=n=>`${Number(n||0).toLocaleString('ko-KR')}원`;
+    const text=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const normalized=v=>String(v??'').toLowerCase().replace(/\s+/g,'');
+    const images=p=>[...(Array.isArray(p.imgs)?p.imgs:[]),p.img].filter((v,i,a)=>v&&a.indexOf(v)===i);
+    const productPrice=(p,option)=>Number(p?.optionPrices?.[option]??p?.price??0);
+
+    function loadCart(){
+      try{return JSON.parse(localStorage.getItem('vapedoit-cart')||'[]')}catch{return[]}
+    }
+    function saveCart(){
+      localStorage.setItem('vapedoit-cart',JSON.stringify(cart));
+      renderCart();
+    }
+    function showToast(message){
+      $('toast').textContent=message;
+      $('toast').classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer=setTimeout(()=>$('toast').classList.remove('show'),1800);
+    }
+    async function fetchJson(localUrl,liveFile,stamp){
+      const local=await fetch(`${localUrl}?t=${stamp}`,{cache:'no-store'});
+      if(local.ok)return local.json();
+      const live=await fetch(`${LIVE_ROOT}${liveFile}?t=${stamp}`,{cache:'no-store'});
+      if(!live.ok)throw new Error(`${liveFile} 조회 실패 (${live.status})`);
+      return live.json();
+    }
+    async function loadData(){
+      try{
+        const stamp=Date.now();
+        const [productData,config]=await Promise.all([
+          fetchJson(PRODUCT_URL,'products.json',stamp),
+          fetchJson(CONFIG_URL,'site-config.json',stamp).catch(()=>({}))
+        ]);
+        products=productData;
+        categories=Array.isArray(config.categories)&&config.categories.length
+          ?config.categories
+          :FALLBACK_CATEGORIES.map(value=>({value,label:value}));
+        renderCategories();
+        renderProducts();
+        syncCart();
+      }catch(error){
+        console.error(error);
+        $('productGrid').innerHTML='<div class="state">상품을 불러오지 못했습니다.<br>잠시 후 다시 시도해 주세요.</div>';
+        $('productCount').textContent='연결 확인 필요';
+      }
+    }
+    function renderCategories(){
+      const items=[{value:'all',label:'전체'},...categories];
+      $('categories').innerHTML=items.map(c=>`<button class="cat-btn${c.value===activeCategory?' active':''}" data-cat="${text(c.value)}">${text(c.label)}</button>`).join('');
+      $('categories').querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>{
+        activeCategory=btn.dataset.cat;
+        renderCategories();
+        renderProducts();
+      }));
+    }
+    function visibleProducts(){
+      const query=normalized($('searchInput').value);
+      let list=products.filter(p=>{
+        const categoryOk=activeCategory==='all'||p.cat===activeCategory;
+        const searchOk=!query||[p.name,p.flavor,...(Array.isArray(p.options)?p.options:[])].some(v=>normalized(v).includes(query));
+        return categoryOk&&searchOk;
+      });
+      const sort=$('sortSelect').value;
+      if(sort==='low')list.sort((a,b)=>Number(a.price)-Number(b.price));
+      if(sort==='high')list.sort((a,b)=>Number(b.price)-Number(a.price));
+      if(sort==='name')list.sort((a,b)=>String(a.name).localeCompare(String(b.name),'ko'));
+      return list;
+    }
+    function renderProducts(){
+      const list=visibleProducts();
+      $('productCount').textContent=`전체 ${products.length.toLocaleString('ko-KR')}개 · 현재 ${list.length.toLocaleString('ko-KR')}개`;
+      if(!list.length){
+        $('productGrid').innerHTML='<div class="state">조건에 맞는 상품이 없습니다.</div>';
+        return;
+      }
+      $('productGrid').innerHTML=list.map(p=>{
+        const img=images(p)[0]||'';
+        return `<article class="product-card">
+          <div class="product-img-wrap" onclick="openProduct(${Number(p.id)})">
+            <img class="product-img" src="${text(img)}" alt="${text(p.name)}" loading="lazy">
+            ${p.sale?'<span class="badge">SALE</span>':''}
+            <button class="quick" onclick="event.stopPropagation();openProduct(${Number(p.id)})" aria-label="상품 보기">＋</button>
+          </div>
+          <div class="product-info">
+            <div class="product-cat">${text(p.cat||'PRODUCT')}</div>
+            <div class="product-name">${text(p.name)}</div>
+            <div class="product-meta"><span class="product-flavor">${text(p.flavor||'옵션 선택')}</span><strong class="product-price">${won(p.price)}</strong></div>
+          </div>
+          <button class="card-action" onclick="openProduct(${Number(p.id)})">옵션 선택</button>
+        </article>`;
+      }).join('');
+    }
+    function openProduct(id){
+      activeProduct=products.find(p=>Number(p.id)===Number(id));
+      if(!activeProduct)return;
+      const opts=Array.isArray(activeProduct.options)&&activeProduct.options.length?activeProduct.options:['기본'];
+      $('modalImg').src=images(activeProduct)[0]||'';
+      $('modalImg').alt=activeProduct.name||'';
+      $('modalCat').textContent=activeProduct.cat||'PRODUCT';
+      $('modalName').textContent=activeProduct.name||'';
+      $('modalPrice').textContent=won(activeProduct.price);
+      $('modalOption').innerHTML=opts.map(opt=>`<option value="${text(opt)}">${text(opt)}${productPrice(activeProduct,opt)!==Number(activeProduct.price)?` · ${won(productPrice(activeProduct,opt))}`:''}</option>`).join('');
+      $('modalOption').onchange=()=>{$('modalPrice').textContent=won(productPrice(activeProduct,$('modalOption').value))};
+      $('productModal').classList.add('open');
+      document.body.style.overflow='hidden';
+    }
+    function closeProduct(){
+      $('productModal').classList.remove('open');
+      document.body.style.overflow='';
+    }
+    function closeProductOutside(event){
+      if(event.target===$('productModal'))closeProduct();
+    }
+    function addSelected(){
+      if(!activeProduct)return;
+      const option=$('modalOption').value;
+      const key=`${activeProduct.id}__${option}`;
+      const found=cart.find(item=>item.key===key);
+      if(found)found.qty+=1;
+      else cart.push({
+        key,id:activeProduct.id,name:activeProduct.name,option,
+        price:productPrice(activeProduct,option),qty:1,img:images(activeProduct)[0]||''
+      });
+      saveCart();
+      closeProduct();
+      showToast('장바구니에 담았습니다');
+    }
+    function syncCart(){
+      cart=cart.map(item=>{
+        const p=products.find(product=>Number(product.id)===Number(item.id));
+        return p?{...item,name:p.name,price:productPrice(p,item.option),img:images(p)[0]||item.img}:item;
+      });
+      saveCart();
+    }
+    function renderCart(){
+      const qty=cart.reduce((sum,item)=>sum+item.qty,0);
+      const total=cart.reduce((sum,item)=>sum+item.price*item.qty,0);
+      $('cartCount').textContent=qty;
+      $('cartTotal').textContent=won(total);
+      $('checkoutBtn').disabled=!cart.length;
+      $('cartItems').innerHTML=cart.length?cart.map(item=>`
+        <div class="cart-item">
+          <img src="${text(item.img)}" alt="${text(item.name)}">
+          <div>
+            <div class="cart-item-name">${text(item.name)}</div>
+            <div class="cart-item-opt">${text(item.option)}</div>
+            <div class="qty">
+              <button onclick="changeQty('${encodeURIComponent(item.key)}',-1)">−</button>
+              <span>${item.qty}</span>
+              <button onclick="changeQty('${encodeURIComponent(item.key)}',1)">＋</button>
+            </div>
+          </div>
+          <div class="cart-item-side">
+            <div class="cart-item-price">${won(item.price*item.qty)}</div>
+            <button class="remove" onclick="removeItem('${encodeURIComponent(item.key)}')">삭제</button>
+          </div>
+        </div>`).join(''):'<div class="cart-empty">담긴 상품이 없습니다.<br>원하는 상품을 선택해 주세요.</div>';
+    }
+    function changeQty(encodedKey,delta){
+      const key=decodeURIComponent(encodedKey);
+      const item=cart.find(v=>v.key===key);
+      if(!item)return;
+      item.qty=Math.max(1,item.qty+delta);
+      saveCart();
+    }
+    function removeItem(encodedKey){
+      const key=decodeURIComponent(encodedKey);
+      cart=cart.filter(item=>item.key!==key);
+      saveCart();
+    }
+    function openCart(){
+      renderCart();
+      $('scrim').classList.add('open');
+      $('drawer').classList.add('open');
+      document.body.style.overflow='hidden';
+    }
+    function closeCart(){
+      $('scrim').classList.remove('open');
+      $('drawer').classList.remove('open');
+      document.body.style.overflow='';
+    }
+    async function checkout(){
+      if(!cart.length)return;
+      const payWindow=window.open('about:blank','_blank');
+      const total=cart.reduce((sum,item)=>sum+item.price*item.qty,0);
+      const memo=[
+        '[VAPE DO IT. 주문내역]',
+        ...cart.map((item,index)=>`${index+1}. ${item.name} / 옵션: ${item.option} / 수량: ${item.qty}개 / 금액: ${won(item.price*item.qty)}`),
+        `총 상품금액: ${won(total)}`
+      ].join('\n');
+      try{
+        await navigator.clipboard.writeText(memo);
+        showToast('주문 내용이 복사되었습니다');
+      }catch{
+        showToast('결제 페이지로 이동합니다');
+      }
+      if(payWindow)payWindow.location.href=PAY_URL;
+      else window.location.href=PAY_URL;
+    }
+    $('searchInput').addEventListener('input',renderProducts);
+    $('sortSelect').addEventListener('change',renderProducts);
+    document.addEventListener('keydown',event=>{
+      if(event.key==='Escape'){closeProduct();closeCart()}
+    });
+    renderCart();
+    loadData();
+  </script>
+</body>
+</html>
