@@ -207,7 +207,10 @@
     .qty span{width:31px;text-align:center;font-size:.78rem;font-weight:850}
     .cart-item-side{text-align:right}
     .cart-item-price{font-size:.78rem;font-weight:950;white-space:nowrap}
-    .remove{margin-top:14px;border:0;background:transparent;color:var(--red);font-size:.7rem;cursor:pointer}
+    .remove{
+      margin-top:12px;border:1px solid var(--red);background:var(--red);color:#fff;
+      padding:7px 10px;font-size:.72rem;font-weight:900;cursor:pointer;white-space:nowrap;
+    }
     .drawer-foot{padding:20px 22px max(20px,env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#f6f6f4}
     .total{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;font-weight:900}
     .total strong{font-size:1.5rem;color:var(--red)}
@@ -420,7 +423,8 @@
     let activeCategory='all';
     let activeProduct=null;
     let activeQty=1;
-    let cart=loadCart();
+    let cart=[];
+    try{localStorage.removeItem('vapedoit-cart')}catch{}
 
     const $=id=>document.getElementById(id);
     const won=n=>`${Number(n||0).toLocaleString('ko-KR')}원`;
@@ -430,11 +434,7 @@
     const detailImages=p=>[...(Array.isArray(p.detailImgs)?p.detailImgs:[]),p.detailImg].filter((v,i,a)=>v&&a.indexOf(v)===i);
     const productPrice=(p,option)=>Number(p?.optionPrices?.[option]??p?.price??0);
 
-    function loadCart(){
-      try{return JSON.parse(localStorage.getItem('vapedoit-cart')||'[]')}catch{return[]}
-    }
     function saveCart(){
-      localStorage.setItem('vapedoit-cart',JSON.stringify(cart));
       renderCart();
     }
     function showToast(message){
@@ -645,7 +645,7 @@
           </div>
           <div class="cart-item-side">
             <div class="cart-item-price">${won(item.price*item.qty)}</div>
-            <button class="remove" onclick="removeItem('${encodeURIComponent(item.key)}')">삭제</button>
+            <button class="remove" aria-label="${text(item.name)} 장바구니에서 삭제" onclick="removeItem('${encodeURIComponent(item.key)}')">상품 삭제</button>
           </div>
         </div>`).join(''):'<div class="cart-empty">담긴 상품이 없습니다.<br>원하는 상품을 선택해 주세요.</div>';
     }
