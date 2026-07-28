@@ -2415,15 +2415,7 @@ function toast(msg, type = 'ok') {
       return false;
     }
   });
-  // 데스크톱에서 도킹된 개발자도구 감지(가벼운 경고만, 1.5초 뒤 사라짐 → 오탐이어도 무해)
-  var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints||0) > 0;
-  if(!isTouch){
-    setInterval(function(){
-      if ((window.outerWidth - window.innerWidth) > 180 || (window.outerHeight - window.innerHeight) > 280){
-        warn('🔒 개발자 도구가 감지되었습니다.<br>이 페이지는 보호되어 있습니다.');
-      }
-    }, 1200);
-  }
+  // 브라우저 사이드 패널을 개발자도구로 오인하므로 화면 크기 기반 감지는 사용하지 않는다.
 })();
 </script>
 </body>
