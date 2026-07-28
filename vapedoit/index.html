@@ -64,43 +64,10 @@
       color:var(--red);background:#fff;font-size:.72rem;
     }
     .hero{
-      position:relative;min-height:520px;overflow:hidden;
-      display:grid;grid-template-columns:1fr;
-      background:
-        linear-gradient(132deg,transparent 0 79%,rgba(227,6,19,.08) 79% 79.8%,transparent 79.8%),
-        repeating-linear-gradient(135deg,transparent 0 22px,rgba(0,0,0,.026) 22px 23px),
-        #f8f8f7;
+      position:relative;overflow:hidden;background:#fff;
       border-bottom:1px solid var(--line);
     }
-    .hero::before{
-      content:"OPEN";position:absolute;left:1vw;bottom:-.24em;
-      color:transparent;-webkit-text-stroke:2px rgba(0,0,0,.13);
-      font-size:clamp(8rem,20vw,21rem);font-weight:950;line-height:1;
-      letter-spacing:-.09em;pointer-events:none;
-    }
-    .hero-left{
-      position:relative;z-index:3;display:flex;align-items:center;justify-content:center;
-      padding:82px clamp(30px,8vw,130px);
-      min-width:0;
-    }
-    .hero-card{
-      width:min(760px,100%);padding:58px 64px 54px;color:#fff;background:var(--black);
-      box-shadow:20px 22px 0 var(--red),var(--shadow);
-      transform:rotate(-3.5deg);position:relative;
-      clip-path:polygon(4% 0,100% 7%,95% 100%,0 91%);
-    }
-    .hero-card::after{
-      content:"";position:absolute;right:18px;top:-1px;width:64px;height:64px;background:var(--red);
-      clip-path:polygon(100% 0,100% 100%,0 0);
-    }
-    .hero-card-inner{transform:rotate(3.5deg)}
-    .eyebrow{font-size:.78rem;font-weight:900;letter-spacing:.26em;color:#d6d6d6}
-    .hero-title{
-      margin:12px 0 2px;font-size:clamp(3rem,5vw,5.4rem);
-      font-weight:1000;letter-spacing:.03em;line-height:.88;white-space:nowrap;
-    }
-    .hero-title span{color:var(--red)}
-    .hero-desc{margin:22px 0 0;max-width:430px;color:#d6d6d6;font-weight:650;line-height:1.75}
+    .hero-banner{display:block;width:100%;height:auto;aspect-ratio:2018/779;object-fit:contain;background:#fff}
     .trust-strip{
       display:grid;grid-template-columns:repeat(4,1fr);background:#0b0b0b;color:#fff;
       border-bottom:4px solid var(--red);
@@ -280,20 +247,12 @@
     }
     .toast.show{opacity:1;transform:translate(-50%,0)}
     @media(max-width:1050px){
-      .hero{min-height:460px}
-      .hero-left{padding:72px 70px}
-      .hero-card{width:min(700px,100%)}
       .product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
     }
     @media(max-width:720px){
       .topbar{height:64px;padding:0 13px}
       .brand-en{font-size:1rem}.brand-ko,.ghost-btn{display:none}
       .cart-btn{padding:8px 11px}
-      .hero{min-height:370px}
-      .hero-left{padding:58px 22px}
-      .hero-card{width:100%;padding:36px 28px 32px;box-shadow:10px 12px 0 var(--red)}
-      .hero-title{font-size:clamp(2.15rem,10vw,3.2rem)}
-      .hero-desc{font-size:.82rem}
       .trust-strip{grid-template-columns:1fr 1fr}
       .trust-item:nth-child(2){border-right:0}
       .trust-item{min-height:84px;padding:16px}
@@ -332,15 +291,7 @@
 
   <main>
     <section class="hero">
-      <div class="hero-left">
-        <div class="hero-card">
-          <div class="hero-card-inner">
-            <div class="eyebrow">PREMIUM VAPE SELECT SHOP</div>
-            <div class="hero-title">VAPE <span>DO IT.</span></div>
-            <p class="hero-desc">선명한 취향, 분명한 선택. 원하는 상품을 더 빠르고 편하게 만나보세요.</p>
-          </div>
-        </div>
-      </div>
+      <img class="hero-banner" src="tobacco-law-notice.png" alt="담배사업법 시행일 이전 제조 및 수입된 재고제품 판매 안내">
     </section>
 
     <section class="trust-strip" aria-label="서비스 안내">
