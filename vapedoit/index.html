@@ -370,7 +370,7 @@
     <div class="cart-items" id="cartItems"></div>
     <div class="drawer-foot">
       <div class="total"><span>총 상품금액</span><strong id="cartTotal">0원</strong></div>
-      <button class="checkout" id="checkoutBtn" onclick="checkout()" disabled>주문 내용 복사 후 결제하기</button>
+      <button class="checkout" id="checkoutBtn" onclick="checkout()" disabled>자동 입력 후 결제하기</button>
     </div>
   </aside>
 
@@ -412,7 +412,8 @@
     const PRODUCT_URL='../products.json';
     const CONFIG_URL='../site-config.json';
     const LIVE_ROOT='https://frokyvape-crypto.github.io/froky-vape-menu/';
-    const PAY_URL='https://frokyvape.com/product/%EC%95%8C%EC%BD%9C%EC%8A%A4%EC%99%91/3253/category/23/display/1/';
+    const PAY_URL='https://vapedoit.com/product/detail.html?product_no=677';
+    const PAY_UNIT_PRICE=100;
     const FALLBACK_CATEGORIES=['best','입호흡','고농도','폐호흡고농도','노멘솔','일회용','폐호흡','폐호흡-고농도'];
     let products=[];
     let categories=[];
@@ -671,23 +672,38 @@
       $('drawer').classList.remove('open');
       document.body.style.overflow='';
     }
+    function buildAutoPayUrl(items,total){
+      if(!items.length||total<=0||total%PAY_UNIT_PRICE!==0)return '';
+      const lines=items.map((item,index)=>`${index+1}. ${item.name}${item.option?` (${item.option})`:''} ×${item.qty}`);
+      const chunks=[''];
+      lines.forEach(line=>{
+        const next=chunks[chunks.length-1]?`${chunks[chunks.length-1]} | ${line}`:line;
+        if(next.length<=200)chunks[chunks.length-1]=next;
+        else if(chunks.length<2)chunks.push(line.slice(0,200));
+        else chunks[1]=`${chunks[1].slice(0,185)} | 외 ${lines.length-1}건`;
+      });
+      const url=new URL(PAY_URL);
+      url.searchParams.set('customOrder','Y');
+      url.searchParams.set('buyQty',String(total/PAY_UNIT_PRICE));
+      url.searchParams.set('orderAmount',String(total));
+      chunks.forEach((chunk,index)=>url.searchParams.set(`inputOption${index}`,chunk));
+      const loginUrl=new URL('/member/login.html',url.origin);
+      loginUrl.searchParams.set('returnUrl',url.pathname+url.search);
+      return loginUrl.toString();
+    }
     async function checkout(){
       if(!cart.length)return;
       const payWindow=window.open('about:blank','_blank');
       const total=cart.reduce((sum,item)=>sum+item.price*item.qty,0);
-      const memo=[
-        '[VAPE DO IT. 주문내역]',
-        ...cart.map((item,index)=>`${index+1}. ${item.name} / 옵션: ${item.option} / 수량: ${item.qty}개 / 금액: ${won(item.price*item.qty)}`),
-        `총 상품금액: ${won(total)}`
-      ].join('\n');
-      try{
-        await navigator.clipboard.writeText(memo);
-        showToast('주문 내용이 복사되었습니다');
-      }catch{
-        showToast('결제 페이지로 이동합니다');
+      const payUrl=buildAutoPayUrl(cart,total);
+      if(!payUrl){
+        if(payWindow)payWindow.close();
+        showToast('총금액이 100원 단위인지 확인해 주세요');
+        return;
       }
-      if(payWindow)payWindow.location.href=PAY_URL;
-      else window.location.href=PAY_URL;
+      showToast('상품명과 금액을 자동 입력합니다');
+      if(payWindow)payWindow.location.href=payUrl;
+      else window.location.href=payUrl;
     }
     $('searchInput').addEventListener('input',renderProducts);
     $('sortSelect').addEventListener('change',renderProducts);
