@@ -682,6 +682,10 @@
         else if(chunks.length<2)chunks.push(line.slice(0,200));
         else chunks[1]=`${chunks[1].slice(0,185)} | 외 ${lines.length-1}건`;
       });
+      if(chunks.length<2){
+        const totalQty=items.reduce((sum,item)=>sum+item.qty,0);
+        chunks.push(`총 구매수량 ${totalQty}개 / 결제금액 ${total.toLocaleString()}원`);
+      }
       const url=new URL(PAY_URL);
       url.searchParams.set('customOrder','Y');
       url.searchParams.set('buyQty',String(total/PAY_UNIT_PRICE));
