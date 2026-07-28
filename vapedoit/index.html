@@ -694,9 +694,7 @@
       url.searchParams.set('buyQty',String(total/PAY_UNIT_PRICE));
       url.searchParams.set('orderAmount',String(total));
       chunks.forEach((chunk,index)=>url.searchParams.set(`inputOption${index}`,chunk));
-      const loginUrl=new URL('/member/login.html',url.origin);
-      loginUrl.searchParams.set('returnUrl',url.pathname+url.search);
-      return loginUrl.toString();
+      return url.toString();
     }
     async function checkout(){
       if(!cart.length)return;
