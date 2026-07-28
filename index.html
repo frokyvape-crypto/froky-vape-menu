@@ -748,9 +748,7 @@ function buildAutoPayUrl(items,total){
   url.searchParams.set('buyQty',String(payQty));
   url.searchParams.set('orderAmount',String(total));
   chunks.forEach((chunk,index)=>url.searchParams.set(`inputOption${index}`,chunk));
-  const loginUrl=new URL('/member/login.html',url.origin);
-  loginUrl.searchParams.set('returnUrl',url.pathname+url.search);
-  return loginUrl.toString();
+  return url.toString();
 }
 async function goToPay(){
   const total=_pmOrderItems.reduce((sum,item)=>sum+item.price*item.qty,0);
