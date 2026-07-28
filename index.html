@@ -430,18 +430,18 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
           </div>
         </div>
         <div class="pm-steps">
-          <div class="pm-steps-title">카페24 결제창에서 이렇게 입력해 주세요</div>
+          <div class="pm-steps-title">카페24 결제창 자동 입력 안내</div>
           <div class="pm-step">
             <div class="pm-step-num">1</div>
-            <div class="pm-step-text">옵션에서 <b><span class="pm-emphasis-red">상품명 &amp; 수량</span> 필수 기입</b>을 클릭해 주세요.</div>
+            <div class="pm-step-text"><b><span class="pm-emphasis-red">상품명·옵션·수량</span></b>이 결제상품 입력칸에 자동으로 들어갑니다.</div>
           </div>
           <div class="pm-step">
             <div class="pm-step-num">2</div>
-            <div class="pm-step-text">아래 <b class="pm-emphasis-red">개인결제창 입력 수량</b>만큼 수량을 수정해 주세요.<span class="pm-step-sub">카페24 개인결제창은 100원 단위 상품이라 금액에 맞춰 수량을 넣어야 합니다.</span></div>
+            <div class="pm-step-text"><b class="pm-emphasis-red">총 결제금액 ÷ 100</b>으로 결제상품 수량도 자동 입력됩니다.</div>
           </div>
           <div class="pm-step">
             <div class="pm-step-num">3</div>
-            <div class="pm-step-text">아래 <b class="pm-emphasis-red">상품명 / 맛 / 수량</b>을 복사해서 입력칸에 붙여넣어 주세요.</div>
+            <div class="pm-step-text">이동한 결제창에서 내용과 금액을 확인한 뒤 바로 구매해 주세요.</div>
           </div>
         </div>
         <div class="pm-guide">
@@ -451,7 +451,6 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
             <div class="pm-guide-unit">개</div>
             <div class="pm-guide-meta">
               <div class="pm-guide-amount" id="pm-pay-amount">0원</div>
-              <button class="pm-guide-copy" onclick="copyPmPayQty()">📋 복사</button>
             </div>
           </div>
         </div>
@@ -460,16 +459,11 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
           <div class="pm-guide-row">
             <div class="pm-real-order" id="pm-real-qty">제품명 / 맛 / 수량</div>
             <div class="pm-guide-meta">
-              <button class="pm-guide-copy pm-guide-copy-y" onclick="copyPmRealQty()">📋 복사</button>
             </div>
           </div>
         </div>
-        <div class="pm-guide-hint">아래 버튼을 누르기 전까지 카페24 결제창으로 이동하지 않습니다.</div>
+        <div class="pm-guide-hint">아래 버튼을 누르면 주문내용과 금액이 결제창에 자동 입력됩니다.</div>
         <div class="pay-btns">
-          <label class="pay-required-check">
-            <input type="checkbox" id="pay-required-check" onchange="updatePayButtonState()">
-            <span>※필독※ 구매하는 방법</span>
-          </label>
           <button class="go-pay-btn" id="go-pay-btn" onclick="goToPay()">결제하러 가기 →</button>
         </div>
       </div>
@@ -486,8 +480,8 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 <button class="kakao-float" onclick="window.open('http://pf.kakao.com/_MxhQqX','_blank')">카카오톡 문의</button>
 <div class="toast" id="toast"></div>
 <script>
-const PAY_URL='https://frokyvape.com/product/%EC%95%8C%EC%BD%9C%EC%8A%A4%EC%99%91/3253/category/23/display/1/';
-const PERSONAL_PAY_PRODUCT_NO='3253';
+const PAY_URL='https://frokyvape.com/product/detail.html?product_no=1134';
+const PERSONAL_PAY_PRODUCT_NO='1134';
 const PERSONAL_PAY_UNIT_PRICE=100;
 const CAFE24_MALL='frokyvape';
 const REPO='frokyvape-crypto/froky-vape-menu';
@@ -673,9 +667,10 @@ function sheetBuyNow(){
   if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}
   const unit=optionUnitPrice(sp,opt);
   const total=unit*sq;
-  _pmPayQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
+  _pmPayQty=privatePayQuantity(total);
   _pmPayCopyText=String(_pmPayQty);
   _pmRealCopyText=formatPmOrderLine(sp.name,opt,sq);
+  _pmOrderItems=[{name:sp.name,option:opt,qty:sq,price:unit}];
   document.getElementById('pm-items').innerHTML=`<div class="order-row"><div><div class="order-row-name">${escH(sp.name)}</div><div class="order-row-opt">${opt&&opt!=='옵션 없음'?`${escH(opt)} × `:''}${sq}개</div></div><span class="order-row-price">${fmt(total)}</span></div>`;
   document.getElementById('pm-total').textContent=fmt(total);
   document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();
@@ -685,13 +680,14 @@ function sheetBuyNow(){
   document.getElementById('pay-modal-overlay').classList.add('open');
   closeSheet();
 }
-let _pmPayQty=0,_pmPayCopyText='',_pmRealCopyText='';
+let _pmPayQty=0,_pmPayCopyText='',_pmRealCopyText='',_pmOrderItems=[];
 function openPayModal(){
   closeCart();
   const total=cart.reduce((s,c)=>s+c.price*c.qty,0);
-  _pmPayQty=Math.ceil(total/PERSONAL_PAY_UNIT_PRICE);
+  _pmPayQty=privatePayQuantity(total);
   _pmPayCopyText=String(_pmPayQty);
   _pmRealCopyText=cart.map(c=>formatPmOrderLine(c.name,c.option,c.qty)).join('\n');
+  _pmOrderItems=cart.map(c=>({name:c.name,option:c.option,qty:c.qty,price:c.price}));
   document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${escH(c.name)}</div><div class="order-row-opt">${escH(c.option)} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');
   document.getElementById('pm-total').textContent=fmt(total);
   document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();
@@ -702,18 +698,13 @@ function openPayModal(){
 }
 function closePayModal(){document.getElementById('pay-modal-overlay').classList.remove('open');}
 function resetPayRequiredCheck(){
-  const chk=document.getElementById('pay-required-check');
-  if(chk)chk.checked=false;
   updatePayButtonState();
 }
 function updatePayButtonState(){
-  const chk=document.getElementById('pay-required-check');
   const btn=document.getElementById('go-pay-btn');
   if(!btn)return;
-  const ok=!!chk?.checked;
   btn.textContent='결제하러 가기 →';
-  btn.classList.toggle('need-check',!ok);
-  if(ok)openPaymentGuideLightbox();
+  btn.classList.remove('need-check');
 }
 function openPaymentGuideLightbox(){
   const img=document.getElementById('payment-guide-img');
@@ -734,15 +725,34 @@ function privatePayQuantity(total){
   if(total%PERSONAL_PAY_UNIT_PRICE!==0)return 0;
   return total/PERSONAL_PAY_UNIT_PRICE;
 }
+function buildAutoPayUrl(items,total){
+  const payQty=privatePayQuantity(total);
+  if(!items.length||payQty<=0)return '';
+  const lines=items.map((item,index)=>{
+    const option=item.option&&item.option!=='옵션 없음'?` (${item.option})`:'';
+    return `${index+1}. ${item.name}${option} ×${item.qty}`;
+  });
+  const chunks=[''];
+  lines.forEach(line=>{
+    const next=chunks[chunks.length-1]?`${chunks[chunks.length-1]} | ${line}`:line;
+    if(next.length<=200)chunks[chunks.length-1]=next;
+    else if(chunks.length<2)chunks.push(line.slice(0,200));
+    else chunks[1]=`${chunks[1].slice(0,185)} | 외 ${lines.length-1}건`;
+  });
+  const url=new URL(PAY_URL);
+  url.searchParams.set('customOrder','Y');
+  url.searchParams.set('buyQty',String(payQty));
+  url.searchParams.set('orderAmount',String(total));
+  chunks.forEach((chunk,index)=>url.searchParams.set(`inputOption${index}`,chunk));
+  const loginUrl=new URL('/member/login.html',url.origin);
+  loginUrl.searchParams.set('returnUrl',url.pathname+url.search);
+  return loginUrl.toString();
+}
 async function goToPay(){
-  const chk=document.getElementById('pay-required-check');
-  const btn=document.getElementById('go-pay-btn');
-  if(!chk?.checked){
-    if(btn)btn.textContent='필독의 체크박스를 확인해주세요!';
-    showToast('※필독※ 구매하는 방법을 확인해 주세요');
-    return;
-  }
-  window.open(PAY_URL,'_blank','noopener');
+  const total=_pmOrderItems.reduce((sum,item)=>sum+item.price*item.qty,0);
+  const payUrl=buildAutoPayUrl(_pmOrderItems,total);
+  if(!payUrl){showToast('총금액이 100원 단위인지 확인해 주세요.');return;}
+  window.open(payUrl,'_blank','noopener');
 }
 function copyPmPayQty(){
   navigator.clipboard.writeText(_pmPayCopyText).then(()=>{
