@@ -415,7 +415,7 @@
     const PRODUCT_URL='../products.json';
     const CONFIG_URL='../site-config.json';
     const LIVE_ROOT='https://frokyvape-crypto.github.io/froky-vape-menu/';
-    const PAY_URL='https://vapedoit.com/product/detail.html?product_no=677';
+    const ='https://vapedoit.com/product/detail.html?product_no=677';
     const PAY_UNIT_PRICE=100;
     const FALLBACK_CATEGORIES=['best','입호흡','고농도','폐호흡고농도','노멘솔','일회용','폐호흡','폐호흡-고농도'];
     let products=[];
@@ -686,7 +686,7 @@
         const totalQty=items.reduce((sum,item)=>sum+item.qty,0);
         chunks.push(`총 구매수량 ${totalQty}개 / 결제금액 ${total.toLocaleString()}원`);
       }
-      const url=new URL(PAY_URL);
+      const url=new URL();
       url.searchParams.set('customOrder','Y');
       url.searchParams.set('buyQty',String(total/PAY_UNIT_PRICE));
       url.searchParams.set('orderAmount',String(total));
