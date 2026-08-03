@@ -216,6 +216,11 @@
     .total strong{font-size:1.5rem;color:var(--red)}
     .checkout{width:100%;height:54px;border:0;background:var(--red);color:#fff;cursor:pointer;font-weight:950;display:flex;align-items:center;justify-content:center;text-decoration:none}
     .checkout.disabled{background:#aaa;cursor:not-allowed;pointer-events:none}
+    .purchase-rule-status{display:none;margin-bottom:12px;padding:11px 12px;border:1px solid #c9d9ca;background:#edf7ee;color:#1e6f2b;font-size:.76rem;font-weight:800;line-height:1.5}
+    .purchase-rule-status.show{display:block}
+    .purchase-rule-status.invalid{border-color:#f0b9bc;background:#fff0f1;color:#a90712}
+    .purchase-rule-line+.purchase-rule-line{margin-top:3px}
+    .purchase-rule-hint{margin:14px 0 0;padding:10px 11px;border-left:4px solid var(--red);background:#fff2f3;color:#8d0710;font-size:.78rem;font-weight:850;line-height:1.45}
     .modal-wrap{
       position:fixed;inset:0;z-index:110;display:grid;place-items:center;padding:18px;
       background:rgba(0,0,0,.65);opacity:0;pointer-events:none;transition:.2s;
@@ -372,8 +377,9 @@
     <div class="drawer-head"><h2>장바구니 <span id="drawerCount">0개</span></h2><button class="icon-close" onclick="closeCart()" aria-label="장바구니 닫기">×</button></div>
     <div class="cart-items" id="cartItems"></div>
     <div class="drawer-foot">
+      <div class="purchase-rule-status" id="purchaseRuleStatus"></div>
       <div class="total"><span>총 상품금액</span><strong id="cartTotal">0원</strong></div>
-      <a class="checkout disabled" id="checkoutBtn" href="#" aria-disabled="true">자동 입력 후 결제하기</a>
+      <a class="checkout disabled" id="checkoutBtn" href="#" aria-disabled="true" onclick="return checkout(event)">자동 입력 후 결제하기</a>
     </div>
   </aside>
 
@@ -398,6 +404,7 @@
           </div>
           <div class="modal-total">선택 상품금액<strong id="modalTotal">0원</strong></div>
         </div>
+        <div class="purchase-rule-hint" id="modalPurchaseRule"></div>
         <div class="modal-actions">
           <button class="modal-cart-open" onclick="openCartFromProduct()">장바구니 보기</button>
           <button class="modal-add" onclick="addSelected()">장바구니 담기</button>
@@ -411,6 +418,7 @@
   </div>
   <div class="toast" id="toast"></div>
 
+  <script src="../purchase-rules.js?v=20260803"></script>
   <script>
     const PRODUCT_URL='../products.json';
     const CONFIG_URL='../site-config.json';
@@ -477,6 +485,7 @@
           fetchJson(PRODUCT_URL,'products.json',stamp),
           fetchJson(CONFIG_URL,'site-config.json',stamp).catch(()=>({}))
         ]);
+        PurchaseRules.configure(config.purchaseRules);
         products=productData;
         categories=Array.isArray(config.categories)&&config.categories.length
           ?config.categories
@@ -542,7 +551,7 @@
     function openProduct(id){
       activeProduct=products.find(p=>Number(p.id)===Number(id));
       if(!activeProduct)return;
-      activeQty=1;
+      activeQty=PurchaseRules.initialQty(activeProduct,'');
       const productImages=images(activeProduct);
       const productDetails=detailImages(activeProduct);
       const opts=Array.isArray(activeProduct.options)&&activeProduct.options.length?activeProduct.options:[];
@@ -557,12 +566,12 @@
       $('modalOption').innerHTML=opts.length
         ?'<option value="">옵션을 선택해 주세요</option>'+opts.map(opt=>`<option value="${text(opt)}">${text(opt)}${productPrice(activeProduct,opt)!==Number(activeProduct.price)?` · ${won(productPrice(activeProduct,opt))}`:''}</option>`).join('')
         :'<option value="옵션 없음">옵션 없음</option>';
-      $('modalOption').onchange=updateModalTotal;
-      $('modalQty').textContent='1';
+      $('modalOption').onchange=handleModalOptionChange;
+      $('modalQty').textContent=String(activeQty);
       $('detailImages').innerHTML=productDetails.length
         ?productDetails.map(url=>`<img src="${text(url)}" alt="${text(activeProduct.name)} 상세 이미지" loading="lazy" onerror="this.style.display='none'">`).join('')
         :'<div class="detail-empty">등록된 상세 이미지가 없습니다.</div>';
-      updateModalTotal();
+      syncModalPurchaseRule();
       $('productModal').classList.add('open');
       document.body.style.overflow='hidden';
     }
@@ -574,8 +583,19 @@
     function selectedOption(){
       return $('modalOption').value;
     }
+    function syncModalPurchaseRule({reset=false}={}){
+      if(!activeProduct)return;
+      const option=selectedOption();
+      const rule=PurchaseRules.ruleFor(activeProduct,option);
+      activeQty=reset?PurchaseRules.initialQty(activeProduct,option):PurchaseRules.normalizeQty(activeQty,rule);
+      $('modalQty').textContent=String(activeQty);
+      $('modalPurchaseRule').textContent=PurchaseRules.hint(activeProduct,option);
+      updateModalTotal();
+    }
+    function handleModalOptionChange(){syncModalPurchaseRule({reset:true})}
     function changeModalQty(delta){
-      activeQty=Math.max(1,activeQty+delta);
+      const rule=PurchaseRules.ruleFor(activeProduct,selectedOption());
+      activeQty=PurchaseRules.adjustQty(activeQty,delta,rule);
       $('modalQty').textContent=String(activeQty);
       updateModalTotal();
     }
@@ -624,16 +644,36 @@
       });
       saveCart();
     }
+    function renderPurchaseRuleStatus(result){
+      const el=$('purchaseRuleStatus');
+      if(!cart.length){el.className='purchase-rule-status';el.innerHTML='';return}
+      const lines=[];
+      if(result.general)lines.push(result.general.valid
+        ?`✅ 일반 상품 전체: 합계 ${result.general.total}개로 최소 주문 충족`
+        :`⚠️ 일반 상품 전체: 현재 ${result.general.total}/${result.general.unit}개 · ${result.general.needed}개 더 담아주세요`
+      );
+      lines.push(...result.groups.map(group=>group.valid
+        ?`✅ ${group.label}: 합계 ${group.total}개로 교차묶음 완성`
+        :`⚠️ ${group.label}: 현재 ${group.total%group.unit}/${group.unit}개 · ${group.needed}개 더 담아주세요`
+      ));
+      result.errors.filter(error=>!lines.some(line=>line.includes(error.split(' 교차묶음')[0])||(error.startsWith('일반 상품은')&&line.includes('일반 상품 전체')))).forEach(error=>lines.push(`⚠️ ${error}`));
+      if(!lines.length&&result.valid&&result.hasFiveUnitItem)lines.push('✅ 5개 단위 구매 조건을 충족했습니다.');
+      if(!lines.length){el.className='purchase-rule-status';el.innerHTML='';return}
+      el.className=`purchase-rule-status show${result.valid?'':' invalid'}`;
+      el.innerHTML=lines.map(line=>`<div class="purchase-rule-line">${text(line)}</div>`).join('');
+    }
     function renderCart(){
       const qty=cart.reduce((sum,item)=>sum+item.qty,0);
       const total=cart.reduce((sum,item)=>sum+item.price*item.qty,0);
+      const purchase=PurchaseRules.validate(cart,products);
       $('cartCount').textContent=qty;
       $('drawerCount').textContent=`${qty}개`;
       $('cartTotal').textContent=won(total);
-      const checkoutUrl=buildAutoPayUrl(cart,total);
+      const checkoutUrl=purchase.valid?buildAutoPayUrl(cart,total):'';
       $('checkoutBtn').href=checkoutUrl||'#';
       $('checkoutBtn').classList.toggle('disabled',!checkoutUrl);
       $('checkoutBtn').setAttribute('aria-disabled',checkoutUrl?'false':'true');
+      renderPurchaseRuleStatus(purchase);
       $('cartItems').innerHTML=cart.length?cart.map(item=>`
         <div class="cart-item">
           <img src="${text(item.img)}" alt="${text(item.name)}" onclick="openCartProduct(${Number(item.id)})" style="cursor:pointer">
@@ -656,7 +696,9 @@
       const key=decodeURIComponent(encodedKey);
       const item=cart.find(v=>v.key===key);
       if(!item)return;
-      item.qty=Math.max(1,item.qty+delta);
+      const product=products.find(p=>String(p.id)===String(item.id))||item;
+      const rule=PurchaseRules.ruleFor(product,item.option);
+      item.qty=PurchaseRules.adjustQty(item.qty,delta,rule);
       saveCart();
     }
     function removeItem(encodedKey){
@@ -676,7 +718,7 @@
       document.body.style.overflow='';
     }
     function buildAutoPayUrl(items,total){
-      if(!items.length||total<=0||total%PAY_UNIT_PRICE!==0)return '';
+      if(!items.length||total<=0||total%PAY_UNIT_PRICE!==0||!PurchaseRules.validate(items,products).valid)return '';
       const lines=items.map((item,index)=>`${index+1}. ${item.name}${item.option?` (${item.option})`:''} ×${item.qty}`);
       const chunks=[''];
       lines.forEach(line=>{
@@ -696,16 +738,20 @@
       chunks.forEach((chunk,index)=>url.searchParams.set(`inputOption${index}`,chunk));
       return url.toString();
     }
-    async function checkout(){
-      if(!cart.length)return;
+    async function checkout(event){
+      if(event)event.preventDefault();
+      if(!cart.length)return false;
+      const purchase=PurchaseRules.validate(cart,products);
+      if(!purchase.valid){showToast(purchase.errors[0]);return false}
       const total=cart.reduce((sum,item)=>sum+item.price*item.qty,0);
       const payUrl=buildAutoPayUrl(cart,total);
       if(!payUrl){
         showToast('총금액이 100원 단위인지 확인해 주세요');
-        return;
+        return false;
       }
       showToast('상품명과 금액을 자동 입력합니다');
       window.location.assign(payUrl);
+      return false;
     }
     $('searchInput').addEventListener('input',renderProducts);
     $('sortSelect').addEventListener('change',renderProducts);

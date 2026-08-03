@@ -140,6 +140,12 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 .checkout-btn{width:100%;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:none;cursor:pointer;padding:14px;border-radius:12px;font-family:'Pretendard',sans-serif;font-size:.95rem;font-weight:800;box-shadow:0 0 16px var(--g-glow);transition:opacity .2s;}
 .checkout-btn:hover{opacity:.88;}
 .checkout-btn:disabled{background:var(--border);color:var(--muted);cursor:not-allowed;box-shadow:none;}
+.purchase-rule-status{display:none;margin-bottom:10px;padding:10px 12px;border:1px solid rgba(46,204,64,.28);border-radius:10px;background:rgba(46,204,64,.08);font-size:.75rem;line-height:1.5;}
+.purchase-rule-status.show{display:block;}
+.purchase-rule-status.invalid{border-color:rgba(255,193,7,.45);background:rgba(255,193,7,.1);color:#ffd765;}
+[data-theme="light"] .purchase-rule-status.invalid{color:#7a5700;}
+.purchase-rule-line+.purchase-rule-line{margin-top:3px;}
+.purchase-rule-hint{margin:-6px 0 16px;padding:9px 11px;border-radius:8px;background:rgba(46,204,64,.08);color:var(--g);font-size:.76rem;font-weight:700;line-height:1.45;}
 .sheet-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;display:none;align-items:flex-end;justify-content:center;overflow-y:auto;}
 .sheet-overlay.open{display:flex;}
 .sheet{background:var(--surface);width:100%;max-width:520px;border-radius:22px 22px 0 0;border-top:2px solid rgba(46,204,64,.35);animation:slideUp .25s ease;flex-shrink:0;}
@@ -363,6 +369,7 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
   <div class="drawer-header"><h2>🛒 장바구니</h2><button class="close-btn" onclick="closeCart()">✕</button></div>
   <div class="cart-items" id="cart-items"></div>
   <div class="drawer-footer">
+    <div class="purchase-rule-status" id="purchase-rule-status"></div>
     <div class="total-row"><span>합계</span><span class="total-price" id="total-price">0원</span></div>
     <button class="checkout-btn" id="checkout-btn" onclick="openPayModal()" disabled>구매하기 →</button>
   </div>
@@ -385,13 +392,14 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
     </div>
     <div class="sheet-body">
       <div class="sheet-label">옵션 선택</div>
-      <select class="sheet-select" id="s-option" onchange="updateTotal()"><option value="">옵션 선택</option></select>
+      <select class="sheet-select" id="s-option" onchange="handleSheetOptionChange()"><option value="">옵션 선택</option></select>
       <div class="sheet-label">수량</div>
       <div class="qty-wrap">
         <button class="sq-btn" onclick="sheetQty(-1)">−</button>
         <div class="sq-val" id="s-qty">1</div>
         <button class="sq-btn" onclick="sheetQty(1)">+</button>
       </div>
+      <div class="purchase-rule-hint" id="s-purchase-rule"></div>
       <div class="sheet-actions">
         <button class="btn-sheet-cart" onclick="sheetAddCart()">장바구니 담기</button>
         <button class="btn-sheet-buy"  onclick="sheetBuyNow()">구매하기</button>
@@ -479,6 +487,7 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 </div>
 <button class="kakao-float" onclick="window.open('http://pf.kakao.com/_MxhQqX','_blank')">카카오톡 문의</button>
 <div class="toast" id="toast"></div>
+<script src="purchase-rules.js?v=20260803"></script>
 <script>
 const PAY_URL='https://frokyvape.com/product/찾으시는-제품-찾아드립니다/1134/category/54/display/1/';
 const PERSONAL_PAY_PRODUCT_NO='1134';
@@ -503,6 +512,7 @@ function renderCategoryNav(){const nav=document.getElementById('category-nav');i
 function applySiteConfig(cfg,{allowPopup=false}={}){
   siteConfig={...DEFAULT_SITE_CONFIG,...(cfg||{})};
   siteConfig.categories=normalizeCategories(siteConfig.categories);
+  PurchaseRules.configure(siteConfig.purchaseRules);
   renderCategoryNav();
   document.body.setAttribute('data-notice-mode',siteConfig.noticeMode||'default');
   const bannerImgs=getNoticeImgs('noticeBannerImg',DEFAULT_SITE_CONFIG.noticeBannerImg);
@@ -603,13 +613,51 @@ function onSearch(val){const q=val.trim(),keys=searchKeys(q);document.getElement
 function clearSearch(){document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');}
 function renderCurrentView(){const q=document.getElementById('search-input')?.value||'';buildCarousel();if(q.trim())onSearch(q);else renderGrid(currentCat||'all');}
 function renderSheetOptions(p,selected=''){const options=Array.isArray(p.options)?p.options:[];const optionEl=document.getElementById('s-option');optionEl.innerHTML=options.length?'<option value="">옵션 선택</option>'+options.map(o=>`<option value="${escAttr(o)}">${escAttr(optionLabel(p,o))}</option>`).join(''):'<option value="옵션 없음">옵션 없음</option>';optionEl.disabled=!options.length;if(options.includes(selected))optionEl.value=selected;else if(!options.length)optionEl.value='옵션 없음';}
-function syncOpenProductSheet(){if(!sp)return;const next=P.find(p=>p.id===sp.id);if(!next){closeSheet();sp=null;return;}const prevOpt=document.getElementById('s-option')?.value||'';sp=next;document.getElementById('s-name').textContent=sp.name;document.getElementById('s-tag').textContent=sp.flavor;renderSheetOptions(sp,prevOpt);updateTotal();}
+function syncOpenProductSheet(){if(!sp)return;const next=P.find(p=>p.id===sp.id);if(!next){closeSheet();sp=null;return;}const prevOpt=document.getElementById('s-option')?.value||'';sp=next;document.getElementById('s-name').textContent=sp.name;document.getElementById('s-tag').textContent=sp.flavor;renderSheetOptions(sp,prevOpt);syncSheetPurchaseRule();}
 function syncCartWithProducts(){cart=cart.map(c=>{const p=P.find(x=>x.id===c.id);return p?{...c,name:p.name,price:optionUnitPrice(p,c.option),img:getImgs(p)[0]||c.img}:c;});updateCartUI();}
 function productDetailImages(p){return Array.isArray(p.detailImgs)&&p.detailImgs.length?p.detailImgs:(p.detailImg?[p.detailImg]:[]);}
 function addToCart(p,option,qty){const key=`${p.id}_${option}`;const price=optionUnitPrice(p,option);const ex=cart.find(c=>c.key===key);if(ex)ex.qty+=qty;else cart.push({key,id:p.id,name:p.name,option,price,qty,img:p.img});updateCartUI();showToast(`🛒 ${p.name} 담겼습니다`);}
-function updateCartUI(){const total=cart.reduce((s,c)=>s+c.price*c.qty,0);const count=cart.reduce((s,c)=>s+c.qty,0);document.getElementById('cart-count').textContent=count;document.getElementById('total-price').textContent=fmt(total);document.getElementById('checkout-btn').disabled=!cart.length;const el=document.getElementById('cart-items');if(!cart.length){el.innerHTML='<div class="cart-empty">장바구니가 비어있습니다 🛒</div>';return;}el.innerHTML=cart.map(c=>`<div class="cart-item"><img src="${c.img}" alt="${c.name}"><div><div class="ci-name">${c.name}</div><div class="ci-opt">${c.option}</div><div class="qty-ctrl"><button class="qty-btn" onclick="changeQty('${c.key}',-1)">−</button><span class="qty-val">${c.qty}</span><button class="qty-btn" onclick="changeQty('${c.key}',1)">+</button></div></div><div class="ci-right"><span class="ci-price">${fmt(c.price*c.qty)}</span><button class="ci-del" onclick="removeItem('${c.key}')">삭제</button></div></div>`).join('');}
-function changeQty(k,d){const i=cart.find(c=>c.key===k);if(i)i.qty=Math.max(1,i.qty+d);updateCartUI();}
-function removeItem(k){cart=cart.filter(c=>c.key!==k);updateCartUI();}
+function renderPurchaseRuleStatus(result){
+  const el=document.getElementById('purchase-rule-status');
+  if(!el)return;
+  if(!cart.length){el.className='purchase-rule-status';el.innerHTML='';return;}
+  const lines=[];
+  if(result.general)lines.push(result.general.valid
+    ?`✅ 일반 상품 전체: 합계 ${result.general.total}개로 최소 주문 충족`
+    :`⚠️ 일반 상품 전체: 현재 ${result.general.total}/${result.general.unit}개 · ${result.general.needed}개 더 담아주세요`
+  );
+  lines.push(...result.groups.map(group=>group.valid
+    ?`✅ ${group.label}: 합계 ${group.total}개로 교차묶음 완성`
+    :`⚠️ ${group.label}: 현재 ${group.total%group.unit}/${group.unit}개 · ${group.needed}개 더 담아주세요`
+  ));
+  result.errors.filter(error=>!lines.some(line=>line.includes(error.split(' 교차묶음')[0])||(error.startsWith('일반 상품은')&&line.includes('일반 상품 전체')))).forEach(error=>lines.push(`⚠️ ${error}`));
+  if(!lines.length&&result.valid&&result.hasFiveUnitItem)lines.push('✅ 5개 단위 구매 조건을 충족했습니다.');
+  if(!lines.length){el.className='purchase-rule-status';el.innerHTML='';return;}
+  el.className=`purchase-rule-status show${result.valid?'':' invalid'}`;
+  el.innerHTML=lines.map(line=>`<div class="purchase-rule-line">${escAttr(line)}</div>`).join('');
+}
+function updateCartUI(){
+  const total=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const count=cart.reduce((s,c)=>s+c.qty,0);
+  const purchase=PurchaseRules.validate(cart,P);
+  document.getElementById('cart-count').textContent=count;
+  document.getElementById('total-price').textContent=fmt(total);
+  document.getElementById('checkout-btn').disabled=!cart.length||!purchase.valid;
+  renderPurchaseRuleStatus(purchase);
+  const el=document.getElementById('cart-items');
+  if(!cart.length){el.innerHTML='<div class="cart-empty">장바구니가 비어있습니다 🛒</div>';return;}
+  el.innerHTML=cart.map(c=>{const encodedKey=encodeURIComponent(c.key).replace(/'/g,'%27');return `<div class="cart-item"><img src="${escAttr(c.img)}" alt="${escAttr(c.name)}"><div><div class="ci-name">${escAttr(c.name)}</div><div class="ci-opt">${escAttr(c.option)}</div><div class="qty-ctrl"><button class="qty-btn" onclick="changeQty('${encodedKey}',-1)">−</button><span class="qty-val">${c.qty}</span><button class="qty-btn" onclick="changeQty('${encodedKey}',1)">+</button></div></div><div class="ci-right"><span class="ci-price">${fmt(c.price*c.qty)}</span><button class="ci-del" onclick="removeItem('${encodedKey}')">삭제</button></div></div>`;}).join('');
+}
+function changeQty(encodedKey,d){
+  const key=decodeURIComponent(encodedKey);
+  const item=cart.find(c=>c.key===key);
+  if(!item)return;
+  const product=P.find(p=>String(p.id)===String(item.id))||item;
+  const rule=PurchaseRules.ruleFor(product,item.option);
+  item.qty=PurchaseRules.adjustQty(item.qty,d,rule);
+  updateCartUI();
+}
+function removeItem(encodedKey){const key=decodeURIComponent(encodedKey);cart=cart.filter(c=>c.key!==key);updateCartUI();}
 function openCart(){document.getElementById('overlay').classList.add('open');document.getElementById('drawer').classList.add('open');}
 function closeCart(){document.getElementById('overlay').classList.remove('open');document.getElementById('drawer').classList.remove('open');}
 function openSheet(id){
@@ -621,9 +669,8 @@ function openSheet(id){
   document.getElementById('s-price').textContent=fmt(sp.price);
   document.getElementById('s-total').textContent='합계: '+fmt(sp.price);
   document.getElementById('s-tag').textContent=sp.flavor;
-  document.getElementById('s-qty').textContent=1;
   renderSheetOptions(sp);
-  updateTotal();
+  syncSheetPurchaseRule({reset:true});
   document.getElementById('btn-sheet-detail').style.display=getDetailImgs(sp).length?'block':'none';
   const thumbs=document.getElementById('s-thumbs');
   if(imgs.length>1){
@@ -646,7 +693,22 @@ function openDetailModal(){
 function closeDetailModal(){document.getElementById('detail-modal-overlay').classList.remove('open');}
 function closeDetailModalOut(e){if(e.target===document.getElementById('detail-modal-overlay'))closeDetailModal();}
 function closeSheetOut(e){if(e.target===document.getElementById('sheet-overlay'))closeSheet();}
-function sheetQty(d){sq=Math.max(1,sq+d);document.getElementById('s-qty').textContent=sq;updateTotal();}
+function syncSheetPurchaseRule({reset=false}={}){
+  if(!sp)return;
+  const option=getSheetOption();
+  const rule=PurchaseRules.ruleFor(sp,option);
+  sq=reset?PurchaseRules.initialQty(sp,option):PurchaseRules.normalizeQty(sq,rule);
+  document.getElementById('s-qty').textContent=sq;
+  document.getElementById('s-purchase-rule').textContent=PurchaseRules.hint(sp,option);
+  updateTotal();
+}
+function handleSheetOptionChange(){syncSheetPurchaseRule({reset:true});}
+function sheetQty(d){
+  const rule=PurchaseRules.ruleFor(sp,getSheetOption());
+  sq=PurchaseRules.adjustQty(sq,d,rule);
+  document.getElementById('s-qty').textContent=sq;
+  updateTotal();
+}
 function currentSheetUnitPrice(){return sp?optionUnitPrice(sp,getSheetOption()):0;}
 function updateTotal(){if(!sp)return;const unit=currentSheetUnitPrice();document.getElementById('s-price').textContent=fmt(unit);document.getElementById('s-total').textContent='합계: '+fmt(unit*sq);}
 function getSheetOption(){
@@ -667,10 +729,12 @@ function sheetBuyNow(){
   if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}
   const unit=optionUnitPrice(sp,opt);
   const total=unit*sq;
+  const purchase=PurchaseRules.validate([{id:sp.id,name:sp.name,option:opt,qty:sq,price:unit}],P);
+  if(!purchase.valid){showToast(`⚠️ ${purchase.errors[0]}`);return;}
   _pmPayQty=privatePayQuantity(total);
   _pmPayCopyText=String(_pmPayQty);
   _pmRealCopyText=formatPmOrderLine(sp.name,opt,sq);
-  _pmOrderItems=[{name:sp.name,option:opt,qty:sq,price:unit}];
+  _pmOrderItems=[{id:sp.id,name:sp.name,option:opt,qty:sq,price:unit}];
   document.getElementById('pm-items').innerHTML=`<div class="order-row"><div><div class="order-row-name">${escH(sp.name)}</div><div class="order-row-opt">${opt&&opt!=='옵션 없음'?`${escH(opt)} × `:''}${sq}개</div></div><span class="order-row-price">${fmt(total)}</span></div>`;
   document.getElementById('pm-total').textContent=fmt(total);
   document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();
@@ -683,11 +747,13 @@ function sheetBuyNow(){
 let _pmPayQty=0,_pmPayCopyText='',_pmRealCopyText='',_pmOrderItems=[];
 function openPayModal(){
   closeCart();
+  const purchase=PurchaseRules.validate(cart,P);
+  if(!purchase.valid){showToast(`⚠️ ${purchase.errors[0]}`);openCart();return;}
   const total=cart.reduce((s,c)=>s+c.price*c.qty,0);
   _pmPayQty=privatePayQuantity(total);
   _pmPayCopyText=String(_pmPayQty);
   _pmRealCopyText=cart.map(c=>formatPmOrderLine(c.name,c.option,c.qty)).join('\n');
-  _pmOrderItems=cart.map(c=>({name:c.name,option:c.option,qty:c.qty,price:c.price}));
+  _pmOrderItems=cart.map(c=>({id:c.id,name:c.name,option:c.option,qty:c.qty,price:c.price}));
   document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${escH(c.name)}</div><div class="order-row-opt">${escH(c.option)} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');
   document.getElementById('pm-total').textContent=fmt(total);
   document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();
@@ -727,7 +793,7 @@ function privatePayQuantity(total){
 }
 function buildAutoPayUrl(items,total){
   const payQty=privatePayQuantity(total);
-  if(!items.length||payQty<=0)return '';
+  if(!items.length||payQty<=0||!PurchaseRules.validate(items,P).valid)return '';
   const lines=items.map((item,index)=>{
     const option=item.option&&item.option!=='옵션 없음'?` (${item.option})`:'';
     return `${index+1}. ${item.name}${option} ×${item.qty}`;
@@ -751,6 +817,8 @@ function buildAutoPayUrl(items,total){
   return url.toString();
 }
 async function goToPay(){
+  const purchase=PurchaseRules.validate(_pmOrderItems,P);
+  if(!purchase.valid){showToast(`⚠️ ${purchase.errors[0]}`);return;}
   const total=_pmOrderItems.reduce((sum,item)=>sum+item.price*item.qty,0);
   const payUrl=buildAutoPayUrl(_pmOrderItems,total);
   if(!payUrl){showToast('총금액이 100원 단위인지 확인해 주세요.');return;}
