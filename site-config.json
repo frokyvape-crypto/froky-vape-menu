@@ -73,67 +73,100 @@
       {
         "id": "jusco",
         "label": "저스코 · ㅇㄱㄹㅇ",
-        "keywords": ["저스코"]
+        "keywords": [
+          "저스코"
+        ]
       },
       {
         "id": "tropicow",
         "label": "트로피카우 · 아크드립 외",
-        "keywords": ["트로피카우", "아크드립", "라드카페", "체리엇", "텅 플레이버", "스피즈"]
+        "keywords": [
+          "트로피카우",
+          "아크드립",
+          "라드카페",
+          "체리엇",
+          "텅 플레이버",
+          "스피즈"
+        ]
       },
       {
         "id": "moko",
         "label": "모코 전체",
-        "keywords": ["모코리퀴드"]
+        "keywords": [
+          "모코리퀴드"
+        ]
       },
       {
         "id": "tn-trump",
         "label": "티엔 · 제이씨컴퍼니 트럼프",
-        "keywords": ["티엔 입호흡", "제이씨컴퍼니 트럼프"]
+        "keywords": [
+          "티엔 입호흡",
+          "제이씨컴퍼니 트럼프"
+        ]
       },
       {
         "id": "smoji",
         "label": "스모지",
-        "keywords": ["스모지"]
+        "keywords": [
+          "스모지"
+        ]
       },
       {
         "id": "goodjuice",
         "label": "굿쥬스",
-        "keywords": ["굿쥬스"]
+        "keywords": [
+          "굿쥬스"
+        ]
       },
       {
         "id": "felix",
         "label": "펠릭스 전체",
-        "keywords": ["펠릭스"]
+        "keywords": [
+          "펠릭스"
+        ]
       },
       {
         "id": "gaemasisseo",
         "label": "개마시써",
-        "keywords": ["개마시써"]
+        "keywords": [
+          "개마시써"
+        ]
       },
       {
         "id": "vapebasket",
         "label": "베이프바스켓 전체",
-        "keywords": ["베이프바스켓"]
+        "keywords": [
+          "베이프바스켓"
+        ]
       },
       {
         "id": "masha",
         "label": "마샤 전체",
-        "keywords": ["마샤"]
+        "keywords": [
+          "마샤"
+        ]
       },
       {
         "id": "xhaler-flexx",
         "label": "엑스헤일러 · 플렉스엑스",
-        "keywords": ["엑스헤일러", "플렉스엑스"]
+        "keywords": [
+          "엑스헤일러",
+          "플렉스엑스"
+        ]
       },
       {
         "id": "sweeden",
         "label": "스위든 전체",
-        "keywords": ["스위든"]
+        "keywords": [
+          "스위든"
+        ]
       },
       {
         "id": "zapjuice",
         "label": "잽쥬스 전체",
-        "keywords": ["잽쥬스"]
+        "keywords": [
+          "잽쥬스"
+        ]
       }
     ]
   },
@@ -144,11 +177,13 @@
     367,
     369,
     406,
+    431,
     541,
     558,
     559,
     810,
     843,
+    867,
     957,
     965,
     1080,
