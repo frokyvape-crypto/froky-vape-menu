@@ -3748,29 +3748,6 @@
     "sale": false
   },
   {
-    "id": 365,
-    "product_no": 365,
-    "name": "크로닉 입호흡 액상 30ml",
-    "price": 15500,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202507/b3e4c09edc72084d4cb81ba4fa4bb409.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202507/b3e4c09edc72084d4cb81ba4fa4bb409.png",
-    "detailImgs": [
-      "https://og9og9.com/web/upload/NNEditor/20240528/chronic_30_EC8381EC84B8_ECB694EAB080.png",
-      "https://og9og9.com/web/upload/NNEditor/20240528/chronic_30_t_ECB694EAB080.png"
-    ],
-    "detailImg": "https://og9og9.com/web/upload/NNEditor/20240528/chronic_30_EC8381EC84B8_ECB694EAB080.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [
-      "레드불",
-      "피치 망고"
-    ],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 409,
     "product_no": 409,
     "name": "S.T 긍정쥬스 폐호흡 액상 60ml",
