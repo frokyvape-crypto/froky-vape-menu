@@ -8929,5 +8929,60 @@
     ],
     "optionPrices": {},
     "sale": false
+  },
+  {
+    "id": 867,
+    "product_no": 867,
+    "name": "[A] 크로닉쥬스 슈퍼쿨 입호흡 액상 30ml",
+    "price": 15500,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202310/6c17cf1e037b8f5f9eee6f2a09486334.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202310/6c17cf1e037b8f5f9eee6f2a09486334.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202310/52a3a47aa73e1cddd85ba2ee9053414d.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202310/52a3a47aa73e1cddd85ba2ee9053414d.png",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "*슈퍼쿨* 초코 스콘",
+      "*슈퍼쿨* 레드불",
+      "*슈퍼쿨* 리치",
+      "*슈퍼쿨* 피치 망고",
+      "*슈퍼쿨* 블랙 커런트"
+    ],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 365,
+    "product_no": 365,
+    "name": "[A] 크로닉 입호흡 액상 30ml",
+    "price": 15500,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202507/b3e4c09edc72084d4cb81ba4fa4bb409.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202507/b3e4c09edc72084d4cb81ba4fa4bb409.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202507/79a9a557b96574377a12897037ae632b.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202507/79a9a557b96574377a12897037ae632b.png",
+    "cat": "입호흡",
+    "flavor": "9.8mg",
+    "options": [
+      "레드불",
+      "리치",
+      "블랙커런트",
+      "스트로베리 버블껌",
+      "초코스콘",
+      "타바코",
+      "타바코 멘솔",
+      "피치망고",
+      "블루캔디바",
+      "더블애플"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
