@@ -3504,32 +3504,6 @@
     "sale": false
   },
   {
-    "id": 867,
-    "product_no": 867,
-    "name": "크로닉쥬스 슈퍼쿨 입호흡 액상 30ml",
-    "price": 15500,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202310/6c17cf1e037b8f5f9eee6f2a09486334.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202310/6c17cf1e037b8f5f9eee6f2a09486334.png",
-    "detailImgs": [
-      "https://og9og9.com/web/upload/NNEditor/20230802/ED81ACEBA19CEB8B8920EC8A88ED8DBCECBFA820EC8381EC84B8ED8E98EC9DB4ECA780.jpg",
-      "https://og9og9.com/web/upload/NNEditor/20230803/supercool_30_t.jpg"
-    ],
-    "detailImg": "https://og9og9.com/web/upload/NNEditor/20230802/ED81ACEBA19CEB8B8920EC8A88ED8DBCECBFA820EC8381EC84B8ED8E98EC9DB4ECA780.jpg",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [
-      "슈퍼쿨 레드불",
-      "슈퍼쿨 피치 망고",
-      "슈퍼쿨 리치",
-      "슈퍼쿨 블랙커런트",
-      "슈퍼쿨 초코스콘"
-    ],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
     "id": 2785,
     "product_no": 2785,
     "name": "노보 블랙 입호흡 액상 30ml",
@@ -3769,27 +3743,6 @@
       "스카디 옐로우",
       "스카디 레인보우",
       "스카디 퍼플"
-    ],
-    "optionPrices": {},
-    "sale": false
-  },
-  {
-    "id": 431,
-    "product_no": 431,
-    "name": "크로닉 폐호흡 액상 60ml",
-    "price": 21400,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202309/0e8983a9432c9a6242ccf80afd85adab.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202309/0e8983a9432c9a6242ccf80afd85adab.png",
-    "detailImgs": [
-      "https://store.img11.co.kr/37273654/6a691d6e-3b6a-4e00-a1ed-90d78dd664d1_1638867180704.jpg"
-    ],
-    "detailImg": "https://store.img11.co.kr/37273654/6a691d6e-3b6a-4e00-a1ed-90d78dd664d1_1638867180704.jpg",
-    "cat": "폐호흡",
-    "flavor": "3mg",
-    "options": [
-      "폐호흡 피치 망고"
     ],
     "optionPrices": {},
     "sale": false
