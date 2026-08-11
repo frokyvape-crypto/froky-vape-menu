@@ -9069,6 +9069,7 @@
     "flavor": "9.9mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   }
 ]
