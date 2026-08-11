@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>프로키베이프 관리자 v3.6</title>
+<title>프로키베이프 관리자 v3.8</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
@@ -80,9 +80,12 @@ html[data-storefront="vapedoit"] .topbar-logo{color:#e30613;}
 .form-row input,.form-row select{background:var(--bg);border:1.5px solid var(--border);color:var(--text);padding:9px 12px;border-radius:8px;font-family:'Pretendard',sans-serif;font-size:.87rem;outline:none;transition:border-color .2s;width:100%;}
 .form-row input:focus,.form-row select:focus{border-color:var(--g);}
 .option-price-list{display:flex;flex-direction:column;gap:7px;margin-top:4px;}
-.option-price-row{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:8px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:9px;padding:8px;}
+.option-price-row{display:grid;grid-template-columns:minmax(0,1fr) 150px 82px;gap:8px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:9px;padding:8px;}
 .option-price-name{font-size:.78rem;font-weight:800;line-height:1.35;word-break:break-word;}
 .option-price-row input{margin:0;background:var(--bg);}
+.option-stock-btn{width:82px;}
+.option-stock-btn.is-soldout{border-color:rgba(229,57,53,.6);background:rgba(229,57,53,.12);color:#ff6b67;}
+.option-soldout-mark{display:inline-block;margin-left:4px;color:#ff6b67;font-weight:900;white-space:nowrap;}
 .option-price-empty{font-size:.75rem;color:var(--muted);background:var(--card);border:1px dashed var(--border);border-radius:9px;padding:10px 12px;}
 .option-price-help{font-size:.72rem;color:var(--muted);line-height:1.6;margin-top:6px;}
 @media(max-width:520px){.option-price-row{grid-template-columns:1fr;}}
@@ -127,7 +130,8 @@ tr:hover td{background:rgba(128,128,128,.06);}
 .sale-tag{display:inline-block;padding:1px 6px;border-radius:4px;font-size:.65rem;font-weight:700;background:var(--red);color:#fff;}
 .stock-toggle{min-width:58px;}
 .stock-toggle.is-soldout{border-color:rgba(229,57,53,.5);color:#ff6b67;}
-.td-btns{display:flex;gap:5px;}
+.td-btns{display:flex;gap:5px;flex-wrap:wrap;}
+.btn-stock-action{min-width:68px;white-space:nowrap;}
 .empty-msg{text-align:center;color:var(--muted);padding:36px;font-size:.85rem;}
 
 .filter-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
@@ -205,7 +209,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
 
 <div id="page-app">
   <div class="topbar">
-    <span class="topbar-logo" id="topbar-logo">프로키베이프 관리자 <span style="font-size:.6rem;color:var(--muted);font-weight:400">v3.6</span></span>
+    <span class="topbar-logo" id="topbar-logo">프로키베이프 관리자 <span style="font-size:.6rem;color:var(--muted);font-weight:400">v3.8</span></span>
     <div class="storefront-switch" role="group" aria-label="관리할 사용자 페이지">
       <button class="storefront-btn" data-storefront="froky" onclick="selectStorefront('froky')">프로키베이프</button>
       <button class="storefront-btn" data-storefront="vapedoit" onclick="selectStorefront('vapedoit')">베이프두잇</button>
@@ -322,7 +326,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
               <th>옵션</th>
               <th>SALE</th>
               <th>판매상태</th>
-              <th style="width:110px">액션</th>
+              <th style="width:200px">개별 상품 액션</th>
             </tr></thead>
             <tbody id="tbl-body"><tr><td colspan="9" class="empty-msg">상품 목록 카드를 클릭하면 불러옵니다</td></tr></tbody>
           </table>
@@ -505,11 +509,11 @@ tr:hover td{background:rgba(128,128,128,.06);}
           </select>
         </div>
       </div>
-      <div class="form-row"><label>옵션 (쉼표 구분)</label><input id="f-opts" type="text" placeholder="애플, 그레이프 10병, 오렌지 5병" oninput="renderOptionPriceRows()"></div>
+      <div class="form-row"><label>옵션 (쉼표 구분)</label><input id="f-opts" type="text" placeholder="애플, 그레이프 10병, 오렌지 5병" oninput="handleModalOptionsInput()"></div>
       <div class="form-row">
-        <label>옵션별 가격 (비우면 기본 가격 적용)</label>
+        <label>옵션별 가격 및 판매상태</label>
         <div class="option-price-list" id="option-price-list"></div>
-        <div class="option-price-help">예: 애플은 15,000원, 그레이프 10병은 167,000원처럼 옵션마다 다른 가격을 넣을 수 있습니다.</div>
+        <div class="option-price-help">각 옵션 오른쪽의 <b>판매중 / 품절</b> 버튼으로 옵션 하나씩 품절 처리할 수 있습니다. 가격을 비우면 기본 가격이 적용됩니다.</div>
       </div>
       <div class="toggle-wrap">
         <label class="toggle"><input type="checkbox" id="f-sale"><span class="slider"></span></label>
@@ -663,10 +667,10 @@ function renderStorefrontContext() {
     btn.setAttribute('aria-pressed', active ? 'true' : 'false');
   });
   document.getElementById('topbar-logo').innerHTML =
-    `${store.label} 관리자 <span style="font-size:.6rem;color:var(--muted);font-weight:400">v3.6</span>`;
+    `${store.label} 관리자 <span style="font-size:.6rem;color:var(--muted);font-weight:400">v3.8</span>`;
   const openBtn = document.getElementById('storefront-open');
   openBtn.title = `${store.label} 사용자 페이지 열기`;
-  document.title = `${store.label} 관리자 v3.6`;
+  document.title = `${store.label} 관리자 v3.8`;
 }
 
 function selectStorefront(id) {
@@ -807,7 +811,10 @@ function getDetailImgs(p) {
   return [];
 }
 
+let modalOriginalOptions = [];
+let modalOptionsDirty = false;
 function getModalOptions() {
+  if (!modalOptionsDirty && modalOriginalOptions.length) return [...modalOriginalOptions];
   const raw = document.getElementById('f-opts')?.value || '';
   const seen = new Set();
   return raw.split(',').map(s => s.trim()).filter(Boolean).filter(opt => !seen.has(opt) && seen.add(opt));
@@ -832,28 +839,47 @@ function collectOptionPricesFromRows() {
   });
   return out;
 }
+function handleModalOptionsInput() {
+  modalOptionsDirty = true;
+  renderOptionPriceRows();
+}
+let modalSoldOutOptions = new Set();
+function toggleModalOptionSoldOut(button) {
+  const option = button.dataset.option || '';
+  if (!option) return;
+  if (modalSoldOutOptions.has(option)) modalSoldOutOptions.delete(option);
+  else modalSoldOutOptions.add(option);
+  renderOptionPriceRows();
+}
 function renderOptionPriceRows(seedMap) {
   const el = document.getElementById('option-price-list');
   if (!el) return;
   const options = getModalOptions();
   const current = normalizeOptionPrices(seedMap || collectOptionPricesFromRows(), options);
+  modalSoldOutOptions = new Set(options.filter(opt => modalSoldOutOptions.has(opt)));
   if (!options.length) {
     el.innerHTML = '<div class="option-price-empty">옵션을 입력하면 옵션별 가격 입력칸이 표시됩니다.</div>';
     return;
   }
   el.innerHTML = options.map(opt => {
     const value = current[opt] || '';
+    const soldOut = modalSoldOutOptions.has(opt);
     return `<div class="option-price-row">
       <div class="option-price-name">${escHtml(opt)}</div>
       <input type="number" min="0" step="100" data-option="${escHtml(opt)}" value="${value}" placeholder="기본가 사용">
+      <button type="button" class="btn btn-outline btn-xs option-stock-btn${soldOut ? ' is-soldout' : ''}" data-option="${escHtml(opt)}" onclick="toggleModalOptionSoldOut(this)">${soldOut ? '품절' : '판매중'}</button>
     </div>`;
   }).join('');
 }
 function adminOptionsText(p) {
   const options = Array.isArray(p.options) ? p.options : [];
   const prices = normalizeOptionPrices(p.optionPrices, options);
+  const soldOutOptions = new Set(Array.isArray(p.soldOutOptions) ? p.soldOutOptions : []);
   if (!options.length) return '-';
-  return options.map(opt => prices[opt] ? `${escHtml(opt)} (${Number(prices[opt]).toLocaleString('ko-KR')}원)` : escHtml(opt)).join(', ');
+  return options.map(opt => {
+    const label = prices[opt] ? `${escHtml(opt)} (${Number(prices[opt]).toLocaleString('ko-KR')}원)` : escHtml(opt);
+    return soldOutOptions.has(opt) ? `${label}<span class="option-soldout-mark">[품절]</span>` : label;
+  }).join(', ');
 }
 
 // ── 멀티 이미지 슬롯 ─────────────────────────────
@@ -1450,6 +1476,8 @@ function renderTable() {
     <td><button class="btn btn-outline btn-xs stock-toggle${p.soldOut ? ' is-soldout' : ''}" onclick="toggleSoldOut(${p.id})" title="클릭하여 판매상태 변경">${p.soldOut ? '품절' : '판매중'}</button></td>
     <td><div class="td-btns">
       <button class="btn btn-outline btn-xs" onclick="openEditModal(${p.id})">수정</button>
+      <button class="btn btn-outline btn-xs" onclick="openOptionStockModal(${p.id})">옵션 품절</button>
+      <button class="btn ${p.soldOut ? 'btn-g' : 'btn-red'} btn-xs btn-stock-action" onclick="toggleSoldOut(${p.id})">${p.soldOut ? '판매 재개' : '품절 처리'}</button>
       <button class="btn btn-red btn-xs" onclick="delProduct(${p.id})">삭제</button>
     </div></td>
   </tr>`).join('');
@@ -1857,6 +1885,9 @@ async function persistDeletedProductIds({ add = [], remove = [] } = {}) {
 
 let editId = null;
 function resetModal() {
+  modalSoldOutOptions = new Set();
+  modalOriginalOptions = [];
+  modalOptionsDirty = false;
   imgSlots = { main: [], detail: [] };
   renderImgGrid('main'); renderImgGrid('detail');
   ['f-id','f-name','f-price','f-flavor','f-opts'].forEach(id => document.getElementById(id).value = '');
@@ -1887,7 +1918,10 @@ function openEditModal(id) {
   document.getElementById('f-price').value = p.price;
   document.getElementById('f-flavor').value = p.flavor || '';
   document.getElementById('f-cat').value = p.cat;
+  modalOriginalOptions = Array.isArray(p.options) ? [...p.options] : [];
+  modalOptionsDirty = false;
   document.getElementById('f-opts').value = (p.options || []).join(', ');
+  modalSoldOutOptions = new Set(Array.isArray(p.soldOutOptions) ? p.soldOutOptions : []);
   renderOptionPriceRows(p.optionPrices || {});
   document.getElementById('f-sale').checked = !!p.sale;
   document.getElementById('f-sold-out').checked = !!p.soldOut;
@@ -1895,6 +1929,11 @@ function openEditModal(id) {
   imgSlots.detail = getDetailImgs(p).map(url => ({ url, file: null, preview: url }));
   renderImgGrid('main'); renderImgGrid('detail');
   document.getElementById('prod-modal').classList.add('open');
+}
+function openOptionStockModal(id) {
+  openEditModal(id);
+  document.getElementById('modal-title').textContent = '옵션별 품절 관리';
+  setTimeout(() => document.getElementById('option-price-list')?.scrollIntoView({ block: 'center', behavior: 'smooth' }), 0);
 }
 function applyPendingRemoteProducts() {
   if (!pendingRemoteProducts) return;
@@ -1945,6 +1984,7 @@ async function saveProduct() {
       flavor,
       options,
       optionPrices,
+      soldOutOptions: options.filter(option => modalSoldOutOptions.has(option)),
       sale: document.getElementById('f-sale').checked,
       soldOut: document.getElementById('f-sold-out').checked,
     };

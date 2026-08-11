@@ -446,6 +446,8 @@
     const images=p=>[...(Array.isArray(p.imgs)?p.imgs:[]),p.img].filter((v,i,a)=>v&&a.indexOf(v)===i);
     const detailImages=p=>[...(Array.isArray(p.detailImgs)?p.detailImgs:[]),p.detailImg].filter((v,i,a)=>v&&a.indexOf(v)===i);
     const productPrice=(p,option)=>Number(p?.optionPrices?.[option]??p?.price??0);
+    const isOptionSoldOut=(p,option)=>!!option&&Array.isArray(p?.soldOutOptions)&&p.soldOutOptions.includes(option);
+    const isCartItemSoldOut=(item,p)=>!!p&&(!!p.soldOut||isOptionSoldOut(p,item?.option));
 
     function saveCart(){
       renderCart();
@@ -536,11 +538,12 @@
       $('productGrid').innerHTML=list.map(p=>{
         const img=images(p)[0]||'';
         const soldOut=!!p.soldOut;
+        const partialSoldOut=!soldOut&&Array.isArray(p.soldOutOptions)&&p.soldOutOptions.length>0;
         return `<article class="product-card${soldOut?' sold-out':''}">
           <div class="product-img-wrap" onclick="openProduct(${Number(p.id)})">
             <img class="product-img" src="${text(img)}" alt="${text(p.name)}" loading="lazy">
             ${p.sale?'<span class="badge">SALE</span>':''}
-            ${soldOut?'<span class="soldout-badge">품절</span>':''}
+            ${soldOut?'<span class="soldout-badge">품절</span>':partialSoldOut?'<span class="soldout-badge">일부 옵션 품절</span>':''}
             <button class="quick" onclick="event.stopPropagation();openProduct(${Number(p.id)})" aria-label="상품 보기">＋</button>
           </div>
           <div class="product-info">
@@ -571,7 +574,7 @@
       $('modalCat').textContent=activeProduct.cat||'PRODUCT';
       $('modalName').textContent=activeProduct.name||'';
       $('modalOption').innerHTML=opts.length
-        ?'<option value="">옵션을 선택해 주세요</option>'+opts.map(opt=>`<option value="${text(opt)}">${text(opt)}${productPrice(activeProduct,opt)!==Number(activeProduct.price)?` · ${won(productPrice(activeProduct,opt))}`:''}</option>`).join('')
+        ?'<option value="">옵션을 선택해 주세요</option>'+opts.map(opt=>{const soldOut=isOptionSoldOut(activeProduct,opt);return`<option value="${text(opt)}" ${soldOut?'disabled':''}>${text(opt)}${productPrice(activeProduct,opt)!==Number(activeProduct.price)?` · ${won(productPrice(activeProduct,opt))}`:''}${soldOut?' (품절)':''}</option>`;}).join('')
         :'<option value="옵션 없음">옵션 없음</option>';
       $('modalOption').onchange=handleModalOptionChange;
       $('modalQty').textContent=String(activeQty);
@@ -602,17 +605,20 @@
     }
     function syncModalSoldOutState(){
       if(!activeProduct)return;
-      const soldOut=!!activeProduct.soldOut;
+      const productSoldOut=!!activeProduct.soldOut;
+      const optionSoldOut=isOptionSoldOut(activeProduct,selectedOption());
+      const soldOut=productSoldOut||optionSoldOut;
+      $('modalSoldOut').textContent=optionSoldOut?'선택한 옵션은 품절되었습니다.':'현재 품절되어 구매할 수 없습니다.';
       $('modalSoldOut').style.display=soldOut?'block':'none';
-      $('modalOption').disabled=soldOut;
+      $('modalOption').disabled=productSoldOut;
       document.querySelectorAll('.modal-qty button').forEach(button=>button.disabled=soldOut);
       $('modalAdd').disabled=soldOut;
-      $('modalAdd').textContent=soldOut?'품절':'장바구니 담기';
-      if(soldOut)$('modalPurchaseRule').textContent='현재 품절되어 구매할 수 없습니다.';
+      $('modalAdd').textContent=soldOut?(optionSoldOut?'옵션 품절':'품절'):'장바구니 담기';
+      if(soldOut)$('modalPurchaseRule').textContent=optionSoldOut?'선택한 옵션은 품절되어 구매할 수 없습니다.':'현재 품절되어 구매할 수 없습니다.';
     }
     function handleModalOptionChange(){syncModalPurchaseRule({reset:true})}
     function changeModalQty(delta){
-      if(activeProduct?.soldOut){showToast('품절된 상품입니다');return}
+      if(activeProduct?.soldOut||isOptionSoldOut(activeProduct,selectedOption())){showToast('품절된 상품 또는 옵션입니다');return}
       const rule=PurchaseRules.ruleFor(activeProduct,selectedOption());
       activeQty=PurchaseRules.adjustQty(activeQty,delta,rule);
       $('modalQty').textContent=String(activeQty);
@@ -637,6 +643,7 @@
       if(activeProduct.soldOut){showToast('품절된 상품입니다');return}
       const option=selectedOption();
       if(!option){showToast('옵션을 선택해 주세요');return}
+      if(isOptionSoldOut(activeProduct,option)){showToast('품절된 옵션입니다');return}
       const key=`${activeProduct.id}__${option}`;
       const found=cart.find(item=>item.key===key);
       if(found)found.qty+=activeQty;
@@ -661,7 +668,7 @@
       const removed=[];
       cart=cart.flatMap(item=>{
         const p=products.find(product=>Number(product.id)===Number(item.id));
-        if(p?.soldOut){removed.push(p.name);return[]}
+        if(isCartItemSoldOut(item,p)){removed.push(`${p.name}${item.option?` / ${item.option}`:''}`);return[]}
         return [p?{...item,name:p.name,price:productPrice(p,item.option),img:images(p)[0]||item.img}:item];
       });
       saveCart();
@@ -764,8 +771,8 @@
     async function checkout(event){
       if(event)event.preventDefault();
       if(!cart.length)return false;
-      const soldOutItem=cart.find(item=>products.find(p=>Number(p.id)===Number(item.id))?.soldOut);
-      if(soldOutItem){showToast(`${soldOutItem.name} 상품이 품절되었습니다`);syncCart();return false}
+      const soldOutItem=cart.find(item=>isCartItemSoldOut(item,products.find(p=>Number(p.id)===Number(item.id))));
+      if(soldOutItem){showToast(`${soldOutItem.name} 상품 또는 옵션이 품절되었습니다`);syncCart();return false}
       const purchase=PurchaseRules.validate(cart,products);
       if(!purchase.valid){showToast(purchase.errors[0]);return false}
       const total=cart.reduce((sum,item)=>sum+item.price*item.qty,0);
