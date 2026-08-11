@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>프로키베이프 관리자 v3.8</title>
+<title>프로키베이프 관리자 v3.9</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
@@ -209,7 +209,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
 
 <div id="page-app">
   <div class="topbar">
-    <span class="topbar-logo" id="topbar-logo">프로키베이프 관리자 <span style="font-size:.6rem;color:var(--muted);font-weight:400">v3.8</span></span>
+    <span class="topbar-logo" id="topbar-logo">프로키베이프 관리자 <span style="font-size:.6rem;color:var(--muted);font-weight:400">v3.9</span></span>
     <div class="storefront-switch" role="group" aria-label="관리할 사용자 페이지">
       <button class="storefront-btn" data-storefront="froky" onclick="selectStorefront('froky')">프로키베이프</button>
       <button class="storefront-btn" data-storefront="vapedoit" onclick="selectStorefront('vapedoit')">베이프두잇</button>
@@ -633,6 +633,21 @@ const DEFAULT_WORKER_URL = 'https://froky-vape-admin.frokyvape.workers.dev';
 let WORKER_URL = localStorage.getItem('fv-worker-url') || DEFAULT_WORKER_URL;
 let ADMIN_KEY = sessionStorage.getItem('fv-admin-key') || localStorage.getItem('fv-admin-key') || '';
 
+function catalogReadBase() {
+  if (location.hostname === '127.0.0.1' || location.hostname === 'localhost') {
+    return `${location.origin}/api/catalog`;
+  }
+  return `${(WORKER_URL || DEFAULT_WORKER_URL).replace(/\/+$/, '')}/api/catalog`;
+}
+
+async function fetchCatalogSnapshot(type) {
+  const r = await fetch(`${catalogReadBase()}/${type}`, { cache: 'no-store' });
+  if (!r.ok) throw new Error(`Worker 최신 조회 실패 (${r.status})`);
+  const payload = await r.json();
+  if (!payload?.ok || payload.data == null) throw new Error(payload?.message || 'Worker 최신 조회 응답 오류');
+  return payload.data;
+}
+
 // ── localStorage DB ────────────────────────────
 function dbSave() {
   localStorage.setItem('fv-products', JSON.stringify(products));
@@ -667,10 +682,10 @@ function renderStorefrontContext() {
     btn.setAttribute('aria-pressed', active ? 'true' : 'false');
   });
   document.getElementById('topbar-logo').innerHTML =
-    `${store.label} 관리자 <span style="font-size:.6rem;color:var(--muted);font-weight:400">v3.8</span>`;
+    `${store.label} 관리자 <span style="font-size:.6rem;color:var(--muted);font-weight:400">v3.9</span>`;
   const openBtn = document.getElementById('storefront-open');
   openBtn.title = `${store.label} 사용자 페이지 열기`;
-  document.title = `${store.label} 관리자 v3.8`;
+  document.title = `${store.label} 관리자 v3.9`;
 }
 
 function selectStorefront(id) {
@@ -1012,10 +1027,14 @@ function applyMyRecentEdits(list) {
 async function fetchLatestProducts({ fresh = false, requireFresh = false } = {}) {
   // requireFresh: 인증/실시간 조회가 실패하면 stale CDN으로 폴백하지 않고 에러를 던진다
   // (직접 PAT 모드에서 옛 데이터 위에 저장해 다른 관리자 변경을 덮어쓰는 것을 차단)
-  let apiAttempted = false;
+  let apiAttempted = true;
+  // 관리자끼리 같은 최신본을 보도록 Worker가 읽은 GitHub main을 최우선 사용한다.
+  try {
+    const data = await fetchCatalogSnapshot('products');
+    if (Array.isArray(data)) return data;
+  } catch (e) {}
   // TOKEN 있으면 raw 미디어 타입으로 직접 조회. fresh 모드(저장 직전)에는 비인증도 Contents API 사용 (CDN 5분 캐시 우회)
   if (TOKEN) {
-    apiAttempted = true;
     try {
       const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}?ref=main&t=${Date.now()}`, {
         headers: { Authorization: 'token ' + TOKEN, Accept: 'application/vnd.github.raw', 'Cache-Control': 'no-cache' },
@@ -1291,6 +1310,11 @@ function setNoticeForm() {
 }
 
 async function fetchLatestSiteConfig({ fresh = false } = {}) {
+  // 상품과 동일하게 Worker 최신본을 먼저 확인해 다른 관리자의 설정 변경을 빠르게 반영한다.
+  try {
+    const cfg = await fetchCatalogSnapshot('config');
+    if (cfg && typeof cfg === 'object' && !Array.isArray(cfg)) return {...DEFAULT_SITE_CONFIG, ...cfg};
+  } catch (e) {}
   // TOKEN 있으면 raw 미디어 타입으로 직접 조회. fresh 모드(저장 직전)에는 비인증도 Contents API 사용
   if (TOKEN) {
     try {
@@ -1500,7 +1524,7 @@ async function toggleSoldOut(id) {
 
 async function checkRemoteChanges() {
   if (isSaving) return;
-  const anyModalOpen = !!document.querySelector('.modal.open');
+  const anyModalOpen = !!document.querySelector('.modal-bg.open');
   try {
     const rawData = applyMyRecentEdits(await fetchLatestProducts());
     const _cDelIds = new Set((siteConfig.deletedProductIds || []).map(Number));
@@ -1508,7 +1532,7 @@ async function checkRemoteChanges() {
     const hash = JSON.stringify(data);
     if (!remoteHash) { remoteHash = hash; recordKnownProductHash(hash); }
     else if (hash !== remoteHash) {
-      // stale CDN(최대 5분 캐시)이 우리가 이미 저장/로드했던 과거 상태를 반환하는 경우 무시.
+      // Worker 장애 폴백에서 stale CDN이 우리가 이미 저장/로드했던 과거 상태를 반환하는 경우 무시.
       // knownProductHashes에 없는 상태만 "다른 관리자의 외부 변경"으로 간주한다.
       if (knownProductHashes.includes(hash)) return;
       remoteHash = hash;
