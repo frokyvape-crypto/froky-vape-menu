@@ -925,7 +925,11 @@
       "폐호흡 라임 사와"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "폐호흡 라임 사와"
+    ],
+    "soldOut": false
   },
   {
     "id": 1719,
