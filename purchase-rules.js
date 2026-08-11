@@ -18,7 +18,8 @@
       {id:'xhaler-flexx',label:'엑스헤일러 · 플렉스엑스',keywords:['엑스헤일러','플렉스엑스']},
       {id:'sweeden',label:'스위든 전체',keywords:['스위든']},
       {id:'zapjuice',label:'잽쥬스 전체',keywords:['잽쥬스']},
-      {id:'bubblemon-30-33',label:'버블몬 30ml · 33ml',productIds:['62','2857'],keywords:[]}
+      {id:'bubblemon-30-33',label:'버블몬 30ml · 33ml',productIds:['62','2857'],keywords:[]},
+      {id:'nfuse-cream-of-crop',label:'앤퓨즈 크오크 입호흡 30ml · 폐호흡 60ml',productIds:['1583','1584'],keywords:[]}
     ]
   };
 
