@@ -8982,7 +8982,7 @@
   {
     "id": 62,
     "product_no": 62,
-    "name": "[낱개 주문] 버블몬 입호흡 액상 30ml",
+    "name": "버블몬 입호흡 액상 30ml",
     "price": 17000,
     "imgs": [
       "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1786416171201_lsd9.png",
@@ -9005,7 +9005,8 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": false
+    "soldOut": false,
+    "soldOutOptions": []
   },
   {
     "id": 2857,
