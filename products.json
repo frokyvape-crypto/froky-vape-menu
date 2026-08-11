@@ -9049,7 +9049,8 @@
     "flavor": "3mg / 6mg",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   },
   {
     "id": 1583,
