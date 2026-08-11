@@ -9009,7 +9009,7 @@
     "id": 2857,
     "product_no": 2857,
     "name": "버블몬 입호흡 액상 33ml",
-    "price": 11900,
+    "price": 12900,
     "imgs": [
       "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1786416154750_1tmo.png"
     ],
@@ -9029,6 +9029,7 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": false
+    "soldOut": false,
+    "soldOutOptions": []
   }
 ]
