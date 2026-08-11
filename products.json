@@ -9042,15 +9042,21 @@
     ],
     "img": "https://frokyvape.com/web/product/medium/202407/5cf87c397629c5ccce7155678bde106f.png",
     "detailImgs": [
-      "https://frokyvape.com/web/product/big/202407/5acb132b02102ff55037c676ef4358cc.png"
+      "https://frokyvape.cafe24.com/web/upload/NNEditor/20240718/copy-1721280058-EC8381ED8E98.jpg"
     ],
-    "detailImg": "https://frokyvape.com/web/product/big/202407/5acb132b02102ff55037c676ef4358cc.png",
+    "detailImg": "https://frokyvape.cafe24.com/web/upload/NNEditor/20240718/copy-1721280058-EC8381ED8E98.jpg",
     "cat": "폐호흡",
     "flavor": "3mg / 6mg",
-    "options": [],
-    "optionPrices": {},
+    "options": [
+      "3mg 크오크 폐호흡",
+      "6mg 크오크 폐호흡"
+    ],
+    "optionPrices": {
+      "6mg 크오크 폐호흡": 20900
+    },
     "sale": false,
-    "soldOut": true
+    "soldOut": true,
+    "soldOutOptions": []
   },
   {
     "id": 1583,
