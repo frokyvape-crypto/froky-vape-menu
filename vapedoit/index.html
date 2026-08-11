@@ -423,7 +423,7 @@
   </div>
   <div class="toast" id="toast"></div>
 
-  <script src="../purchase-rules.js?v=20260803"></script>
+  <script src="../purchase-rules.js?v=20260811-bubblemon"></script>
   <script>
     const PRODUCT_URL='../products.json';
     const CONFIG_URL='../site-config.json';
@@ -433,6 +433,11 @@
     const FALLBACK_CATEGORIES=['best','입호흡','고농도','폐호흡고농도','노멘솔','일회용','폐호흡','폐호흡-고농도'];
     let products=[];
     let categories=[];
+    let siteConfig={};
+    let productsHash='';
+    let configHash='';
+    let autoRefreshTimer=0;
+    let refreshInFlight=false;
     let activeCategory='all';
     let activeProduct=null;
     let activeQty=1;
@@ -448,6 +453,10 @@
     const productPrice=(p,option)=>Number(p?.optionPrices?.[option]??p?.price??0);
     const isOptionSoldOut=(p,option)=>!!option&&Array.isArray(p?.soldOutOptions)&&p.soldOutOptions.includes(option);
     const isCartItemSoldOut=(item,p)=>!!p&&(!!p.soldOut||isOptionSoldOut(p,item?.option));
+    const visibleCatalogProducts=(items,config=siteConfig)=>{
+      const deleted=new Set((config?.deletedProductIds||[]).map(String));
+      return (Array.isArray(items)?items:[]).filter(product=>!deleted.has(String(product.id)));
+    };
 
     function saveCart(){
       renderCart();
@@ -492,8 +501,11 @@
           fetchJson(PRODUCT_URL,'products.json',stamp),
           fetchJson(CONFIG_URL,'site-config.json',stamp).catch(()=>({}))
         ]);
+        siteConfig=config;
+        configHash=JSON.stringify(config);
         PurchaseRules.configure(config.purchaseRules);
-        products=productData;
+        products=visibleCatalogProducts(productData,config);
+        productsHash=JSON.stringify(products);
         categories=Array.isArray(config.categories)&&config.categories.length
           ?config.categories
           :FALLBACK_CATEGORIES.map(value=>({value,label:value}));
@@ -505,6 +517,44 @@
         $('productGrid').innerHTML='<div class="state">상품을 불러오지 못했습니다.<br>잠시 후 다시 시도해 주세요.</div>';
         $('productCount').textContent='연결 확인 필요';
       }
+    }
+    async function refreshIfChanged(){
+      if(document.hidden||refreshInFlight)return;
+      refreshInFlight=true;
+      try{
+        const stamp=Date.now();
+        const [productData,config]=await Promise.all([
+          fetchJson(PRODUCT_URL,'products.json',stamp),
+          fetchJson(CONFIG_URL,'site-config.json',stamp).catch(()=>siteConfig)
+        ]);
+        const nextProducts=visibleCatalogProducts(productData,config);
+        const nextProductsHash=JSON.stringify(nextProducts);
+        const nextConfigHash=JSON.stringify(config);
+        if(nextProductsHash===productsHash&&nextConfigHash===configHash)return;
+        products=nextProducts;
+        siteConfig=config;
+        productsHash=nextProductsHash;
+        configHash=nextConfigHash;
+        PurchaseRules.configure(config.purchaseRules);
+        categories=Array.isArray(config.categories)&&config.categories.length
+          ?config.categories
+          :FALLBACK_CATEGORIES.map(value=>({value,label:value}));
+        if(activeCategory!=='all'&&!categories.some(category=>category.value===activeCategory))activeCategory='all';
+        renderCategories();
+        renderProducts();
+        syncCart();
+        syncOpenProductModal();
+        showToast('상품 정보가 업데이트되었습니다');
+      }catch(error){
+        console.error(error);
+      }finally{
+        refreshInFlight=false;
+      }
+    }
+    function startAutoRefresh(){
+      clearInterval(autoRefreshTimer);
+      autoRefreshTimer=setInterval(refreshIfChanged,5000);
+      document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshIfChanged()});
     }
     function renderCategories(){
       const items=[{value:'all',label:'전체'},...categories];
@@ -584,6 +634,20 @@
       syncModalPurchaseRule();
       $('productModal').classList.add('open');
       document.body.style.overflow='hidden';
+    }
+    function syncOpenProductModal(){
+      if(!activeProduct||!$('productModal').classList.contains('open'))return;
+      const id=activeProduct.id;
+      const previousOption=selectedOption();
+      const previousQty=activeQty;
+      if(!products.some(product=>Number(product.id)===Number(id))){closeProduct();activeProduct=null;return}
+      openProduct(id);
+      const options=Array.isArray(activeProduct.options)?activeProduct.options:[];
+      if(options.includes(previousOption)&&!isOptionSoldOut(activeProduct,previousOption))$('modalOption').value=previousOption;
+      const rule=PurchaseRules.ruleFor(activeProduct,selectedOption());
+      activeQty=PurchaseRules.normalizeQty(previousQty,rule);
+      $('modalQty').textContent=String(activeQty);
+      syncModalPurchaseRule();
     }
     function switchModalImage(button){
       $('modalImg').src=decodeURIComponent(button.dataset.image);
@@ -668,7 +732,7 @@
       const removed=[];
       cart=cart.flatMap(item=>{
         const p=products.find(product=>Number(product.id)===Number(item.id));
-        if(isCartItemSoldOut(item,p)){removed.push(`${p.name}${item.option?` / ${item.option}`:''}`);return[]}
+        if(!p||isCartItemSoldOut(item,p)){removed.push(`${p?.name||item.name}${item.option?` / ${item.option}`:''}`);return[]}
         return [p?{...item,name:p.name,price:productPrice(p,item.option),img:images(p)[0]||item.img}:item];
       });
       saveCart();
@@ -795,7 +859,7 @@
       }
     });
     renderCart();
-    loadData();
+    loadData().then(startAutoRefresh);
     setTimeout(openLawNoticePopup,350);
   </script>
 </body>

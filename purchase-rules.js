@@ -17,7 +17,8 @@
       {id:'masha',label:'마샤 전체',keywords:['마샤']},
       {id:'xhaler-flexx',label:'엑스헤일러 · 플렉스엑스',keywords:['엑스헤일러','플렉스엑스']},
       {id:'sweeden',label:'스위든 전체',keywords:['스위든']},
-      {id:'zapjuice',label:'잽쥬스 전체',keywords:['잽쥬스']}
+      {id:'zapjuice',label:'잽쥬스 전체',keywords:['잽쥬스']},
+      {id:'bubblemon-30-33',label:'버블몬 30ml · 33ml',productIds:['62','2857'],keywords:[]}
     ]
   };
 
@@ -36,7 +37,11 @@
             productIds:Array.isArray(group?.productIds)?group.productIds.map(String):[],
             keywords:Array.isArray(group?.keywords)?group.keywords.map(String).filter(Boolean):[]
           }))
-        :DEFAULT_RULES.mixGroups.map(group=>({...group,productIds:[]}))
+        :DEFAULT_RULES.mixGroups.map(group=>({
+            ...group,
+            productIds:Array.isArray(group.productIds)?group.productIds.map(String):[],
+            keywords:Array.isArray(group.keywords)?group.keywords.map(String).filter(Boolean):[]
+          }))
     };
   }
 
