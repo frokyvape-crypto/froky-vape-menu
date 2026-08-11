@@ -4,6 +4,8 @@
 // PUT /api/github/upload    → 이미지 파일 업로드
 // POST /api/cafe24/products → 카페24 상품 목록 조회
 // POST /api/cafe24/token    → 카페24 OAuth 코드→토큰 교환
+// GET /api/catalog/products → 사용자 페이지용 최신 상품 조회
+// GET /api/catalog/config   → 사용자 페이지용 최신 설정 조회
 // GET /api/health
 //
 // Environment:
@@ -11,9 +13,11 @@
 //   secret:  GITHUB_TOKEN, ADMIN_KEY
 
 const REQUIRED_VARS = ['GITHUB_OWNER', 'GITHUB_REPO', 'GITHUB_BRANCH', 'PRODUCTS_PATH', 'GITHUB_TOKEN', 'ADMIN_KEY'];
+const CATALOG_REQUIRED_VARS = ['GITHUB_OWNER', 'GITHUB_REPO', 'GITHUB_BRANCH', 'PRODUCTS_PATH', 'GITHUB_TOKEN'];
+const CATALOG_CACHE_SECONDS = 3;
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
     if (request.method === 'OPTIONS') {
@@ -22,14 +26,24 @@ export default {
 
     if (url.pathname === '/api/github/products' && request.method === 'PUT') {
       const result = await handleSaveProducts(request, env);
+      if (result.ok) await deleteCatalogCache(request, 'products');
       const status = result.ok ? 200 : (result.status || 500);
       return jsonResponse(result, status);
     }
 
     if (url.pathname === '/api/github/config' && request.method === 'PUT') {
       const result = await handleSaveConfig(request, env);
+      if (result.ok) await deleteCatalogCache(request, 'config');
       const status = result.ok ? 200 : (result.status || 500);
       return jsonResponse(result, status);
+    }
+
+    if (url.pathname === '/api/catalog/products' && request.method === 'GET') {
+      return handleCatalogRead(request, env, ctx, 'products');
+    }
+
+    if (url.pathname === '/api/catalog/config' && request.method === 'GET') {
+      return handleCatalogRead(request, env, ctx, 'config');
     }
 
     if (url.pathname === '/api/github/upload' && request.method === 'PUT') {
@@ -53,9 +67,10 @@ export default {
     if (url.pathname === '/api/health' && request.method === 'GET') {
       return jsonResponse({
         ok: true,
-        version: '2026-06-10-ops-merge-hardened',
+        version: '2026-08-11-public-catalog-v1',
         productsOpsMerge: true,
         hardened: true,
+        catalogReadEndpoints: ['/api/catalog/products', '/api/catalog/config'],
         cafe24ProductsEndpoint: '/api/v2/admin/products',
         cafe24ProductsScope: 'all',
         ts: Date.now(),
@@ -80,11 +95,49 @@ function corsHeaders() {
   };
 }
 
-function jsonResponse(data, status = 200) {
+function jsonResponse(data, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { 'Content-Type': 'application/json; charset=utf-8', ...corsHeaders() },
+    headers: { 'Content-Type': 'application/json; charset=utf-8', ...corsHeaders(), ...extraHeaders },
   });
+}
+
+function catalogCacheKey(request, type) {
+  const url = new URL(request.url);
+  url.pathname = `/api/catalog/${type}`;
+  url.search = '';
+  return new Request(url.toString(), { method: 'GET' });
+}
+
+async function deleteCatalogCache(request, type) {
+  if (typeof caches === 'undefined' || !caches.default) return;
+  await caches.default.delete(catalogCacheKey(request, type));
+}
+
+async function handleCatalogRead(request, env, ctx, type) {
+  for (const key of CATALOG_REQUIRED_VARS) {
+    if (!env[key]) return jsonResponse({ ok: false, message: `환경변수 ${key} 누락` }, 500);
+  }
+
+  const cache = typeof caches !== 'undefined' ? caches.default : null;
+  const cacheKey = catalogCacheKey(request, type);
+  const cached = cache ? await cache.match(cacheKey) : null;
+  if (cached) return cached;
+
+  const path = type === 'products' ? env.PRODUCTS_PATH : 'site-config.json';
+  try {
+    const { data, sha } = await readGithubJsonWithSha(env, path);
+    if (data == null) return jsonResponse({ ok: false, message: `${path} 파일을 찾을 수 없습니다.` }, 404);
+    const response = jsonResponse(
+      { ok: true, data, sha, source: 'github-main', ts: Date.now() },
+      200,
+      { 'Cache-Control': `public, max-age=${CATALOG_CACHE_SECONDS}` },
+    );
+    if (cache) ctx?.waitUntil?.(cache.put(cacheKey, response.clone()));
+    return response;
+  } catch (error) {
+    return jsonResponse({ ok: false, message: error.message || String(error) }, 502, { 'Cache-Control': 'no-store' });
+  }
 }
 
 function base64EncodeUtf8(str) {

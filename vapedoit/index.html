@@ -428,6 +428,7 @@
     const PRODUCT_URL='../products.json';
     const CONFIG_URL='../site-config.json';
     const LIVE_ROOT='https://frokyvape-crypto.github.io/froky-vape-menu/';
+    const CATALOG_API=(location.hostname==='127.0.0.1'||location.hostname==='localhost')?`${location.origin}/api/catalog`:'https://froky-vape-admin.frokyvape.workers.dev/api/catalog';
     const PAY_URL='https://vapedoit.com/product/원하시는-제품을-찾아드립니다/677/';
     const PAY_UNIT_PRICE=100;
     const FALLBACK_CATEGORIES=['best','입호흡','고농도','폐호흡고농도','노멘솔','일회용','폐호흡','폐호흡-고농도'];
@@ -488,6 +489,14 @@
       if(event.target===$('lawPopup'))closeLawNoticePopup();
     }
     async function fetchJson(localUrl,liveFile,stamp){
+      const type=liveFile==='products.json'?'products':'config';
+      try{
+        const latest=await fetch(`${CATALOG_API}/${type}`,{cache:'no-store'});
+        if(latest.ok){
+          const payload=await latest.json();
+          if(payload?.ok&&payload.data!=null)return payload.data;
+        }
+      }catch(error){}
       const local=await fetch(`${localUrl}?t=${stamp}`,{cache:'no-store'});
       if(local.ok)return local.json();
       const live=await fetch(`${LIVE_ROOT}${liveFile}?t=${stamp}`,{cache:'no-store'});

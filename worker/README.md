@@ -4,6 +4,16 @@
 
 ## 엔드포인트
 
+### `GET /api/catalog/products`, `GET /api/catalog/config`
+
+사용자 페이지가 GitHub Pages 배포를 기다리지 않고 `main` 브랜치의 최신 상품과 설정을 읽는 공개 조회 API입니다.
+
+- 응답: `{ "ok": true, "data": ..., "sha": "...", "source": "github-main" }`
+- GitHub 토큰은 Worker 내부에서만 사용하며 응답에 포함하지 않습니다.
+- GitHub API 호출 폭증을 막기 위해 Cloudflare Cache에 3초간 공유 캐시합니다.
+- 관리자 저장 성공 시 해당 캐시를 즉시 삭제합니다.
+- 사용자 페이지는 이 API가 실패하면 기존 GitHub Pages JSON으로 자동 전환합니다.
+
 ### `PUT /api/github/products`
 
 상품 목록을 `products.json` 으로 저장.
