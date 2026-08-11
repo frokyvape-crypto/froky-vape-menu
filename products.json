@@ -9030,6 +9030,8 @@
     "optionPrices": {},
     "sale": false,
     "soldOut": false,
-    "soldOutOptions": []
+    "soldOutOptions": [
+      "멘솔"
+    ]
   }
 ]
