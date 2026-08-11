@@ -815,10 +815,7 @@ function privatePayQuantity(total){
 function buildAutoPayUrl(items,total){
   const payQty=privatePayQuantity(total);
   if(!items.length||payQty<=0||!PurchaseRules.validate(items,P).valid)return '';
-  const lines=items.map((item,index)=>{
-    const option=item.option&&item.option!=='옵션 없음'?` (${item.option})`:'';
-    return `${index+1}. ${item.name}${option} ×${item.qty}`;
-  });
+  const lines=items.map(item=>formatPmOrderLine(item.name,item.option,item.qty));
   const chunks=[''];
   lines.forEach(line=>{
     const next=chunks[chunks.length-1]?`${chunks[chunks.length-1]} | ${line}`:line;

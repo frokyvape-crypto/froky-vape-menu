@@ -822,7 +822,11 @@
     }
     function buildAutoPayUrl(items,total){
       if(!items.length||total<=0||total%PAY_UNIT_PRICE!==0||!PurchaseRules.validate(items,products).valid)return '';
-      const lines=items.map((item,index)=>`${index+1}. ${item.name}${item.option?` (${item.option})`:''} ×${item.qty}`);
+      const lines=items.map(item=>[
+        item.name,
+        item.option&&item.option!=='옵션 없음'?item.option:null,
+        `${item.qty}개`
+      ].filter(Boolean).join(' / '));
       const chunks=[''];
       lines.forEach(line=>{
         const next=chunks[chunks.length-1]?`${chunks[chunks.length-1]} | ${line}`:line;
