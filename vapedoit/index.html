@@ -120,6 +120,7 @@
       transition:transform .2s,box-shadow .2s,border-color .2s;min-width:0;
     }
     .product-card:hover{transform:translateY(-5px);box-shadow:10px 12px 0 #111;border-color:#111}
+    .product-card.sold-out .product-img{filter:grayscale(1);opacity:.5}
     .product-img-wrap{aspect-ratio:1/1;overflow:hidden;background:#eee;position:relative;cursor:pointer}
     .product-img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
     .product-card:hover .product-img{transform:scale(1.035)}
@@ -127,6 +128,7 @@
       position:absolute;top:12px;left:0;padding:7px 12px;background:var(--red);color:#fff;
       font-size:.66rem;font-weight:1000;letter-spacing:.09em;
     }
+    .soldout-badge{position:absolute;top:12px;right:0;padding:7px 12px;background:#111;color:#fff;font-size:.7rem;font-weight:1000;letter-spacing:.08em;z-index:2}
     .quick{
       position:absolute;right:10px;bottom:10px;width:40px;height:40px;
       display:grid;place-items:center;border:0;background:#111;color:#fff;cursor:pointer;font-weight:900;
@@ -149,6 +151,7 @@
     .card-action:hover{background:#111;color:#fff}
     .card-action.cart{color:#fff;background:var(--red);border-color:var(--red)}
     .card-action.cart:hover{background:var(--red-dark);border-color:var(--red-dark)}
+    .card-action:disabled,.modal-add:disabled,.modal-qty button:disabled{background:#ddd!important;border-color:#bbb!important;color:#777!important;cursor:not-allowed!important}
     .state{
       grid-column:1/-1;min-height:240px;display:grid;place-items:center;text-align:center;
       color:var(--muted);font-weight:800;border:1px dashed #bbb;background:#fff;
@@ -244,6 +247,7 @@
     .modal-cat{color:var(--red);font-size:.72rem;font-weight:1000;letter-spacing:.08em}
     .modal-name{margin:10px 0 12px;font-size:clamp(1.45rem,3vw,2.3rem);line-height:1.16;letter-spacing:-.05em}
     .modal-price{font-size:1.45rem;font-weight:1000}
+    .modal-soldout{display:none;margin:14px 0 0;padding:9px 11px;background:#111;color:#fff;font-size:.78rem;font-weight:950;letter-spacing:.04em}
     .field-label{display:block;margin:28px 0 8px;font-size:.76rem;font-weight:950}
     .option-select{width:100%;height:50px;border:2px solid #111;background:#fff;padding:0 12px}
     .modal-qty-row{display:flex;align-items:center;justify-content:space-between;margin:18px 0 0}
@@ -394,6 +398,7 @@
         <div class="modal-cat" id="modalCat"></div>
         <h2 class="modal-name" id="modalName"></h2>
         <div class="modal-price" id="modalPrice"></div>
+        <div class="modal-soldout" id="modalSoldOut">현재 품절되어 구매할 수 없습니다.</div>
         <label class="field-label" for="modalOption">옵션 선택</label>
         <select class="option-select" id="modalOption"></select>
         <div class="modal-qty-row">
@@ -407,7 +412,7 @@
         <div class="purchase-rule-hint" id="modalPurchaseRule"></div>
         <div class="modal-actions">
           <button class="modal-cart-open" onclick="openCartFromProduct()">장바구니 보기</button>
-          <button class="modal-add" onclick="addSelected()">장바구니 담기</button>
+          <button class="modal-add" id="modalAdd" onclick="addSelected()">장바구니 담기</button>
         </div>
       </div>
       <section class="detail-section">
@@ -530,20 +535,22 @@
       }
       $('productGrid').innerHTML=list.map(p=>{
         const img=images(p)[0]||'';
-        return `<article class="product-card">
+        const soldOut=!!p.soldOut;
+        return `<article class="product-card${soldOut?' sold-out':''}">
           <div class="product-img-wrap" onclick="openProduct(${Number(p.id)})">
             <img class="product-img" src="${text(img)}" alt="${text(p.name)}" loading="lazy">
             ${p.sale?'<span class="badge">SALE</span>':''}
+            ${soldOut?'<span class="soldout-badge">품절</span>':''}
             <button class="quick" onclick="event.stopPropagation();openProduct(${Number(p.id)})" aria-label="상품 보기">＋</button>
           </div>
           <div class="product-info">
             <div class="product-cat">${text(p.cat||'PRODUCT')}</div>
             <div class="product-name">${text(p.name)}</div>
-            <div class="product-meta"><span class="product-flavor">${text(p.flavor||'옵션 선택')}</span><strong class="product-price">${won(p.price)}</strong></div>
+            <div class="product-meta"><span class="product-flavor">${text(p.flavor||'옵션 선택')}</span><strong class="product-price">${soldOut?'품절':won(p.price)}</strong></div>
           </div>
           <div class="card-actions">
             <button class="card-action" onclick="openProduct(${Number(p.id)})">상세보기</button>
-            <button class="card-action cart" onclick="openProduct(${Number(p.id)})">장바구니</button>
+            <button class="card-action cart" onclick="openProduct(${Number(p.id)})" ${soldOut?'disabled':''}>${soldOut?'품절':'장바구니'}</button>
           </div>
         </article>`;
       }).join('');
@@ -591,9 +598,21 @@
       $('modalQty').textContent=String(activeQty);
       $('modalPurchaseRule').textContent=PurchaseRules.hint(activeProduct,option);
       updateModalTotal();
+      syncModalSoldOutState();
+    }
+    function syncModalSoldOutState(){
+      if(!activeProduct)return;
+      const soldOut=!!activeProduct.soldOut;
+      $('modalSoldOut').style.display=soldOut?'block':'none';
+      $('modalOption').disabled=soldOut;
+      document.querySelectorAll('.modal-qty button').forEach(button=>button.disabled=soldOut);
+      $('modalAdd').disabled=soldOut;
+      $('modalAdd').textContent=soldOut?'품절':'장바구니 담기';
+      if(soldOut)$('modalPurchaseRule').textContent='현재 품절되어 구매할 수 없습니다.';
     }
     function handleModalOptionChange(){syncModalPurchaseRule({reset:true})}
     function changeModalQty(delta){
+      if(activeProduct?.soldOut){showToast('품절된 상품입니다');return}
       const rule=PurchaseRules.ruleFor(activeProduct,selectedOption());
       activeQty=PurchaseRules.adjustQty(activeQty,delta,rule);
       $('modalQty').textContent=String(activeQty);
@@ -615,6 +634,7 @@
     }
     function addSelected(){
       if(!activeProduct)return;
+      if(activeProduct.soldOut){showToast('품절된 상품입니다');return}
       const option=selectedOption();
       if(!option){showToast('옵션을 선택해 주세요');return}
       const key=`${activeProduct.id}__${option}`;
@@ -638,11 +658,14 @@
       openProduct(id);
     }
     function syncCart(){
-      cart=cart.map(item=>{
+      const removed=[];
+      cart=cart.flatMap(item=>{
         const p=products.find(product=>Number(product.id)===Number(item.id));
-        return p?{...item,name:p.name,price:productPrice(p,item.option),img:images(p)[0]||item.img}:item;
+        if(p?.soldOut){removed.push(p.name);return[]}
+        return [p?{...item,name:p.name,price:productPrice(p,item.option),img:images(p)[0]||item.img}:item];
       });
       saveCart();
+      if(removed.length)showToast(`품절 상품 ${removed.length}개를 장바구니에서 제외했습니다`);
     }
     function renderPurchaseRuleStatus(result){
       const el=$('purchaseRuleStatus');
@@ -741,6 +764,8 @@
     async function checkout(event){
       if(event)event.preventDefault();
       if(!cart.length)return false;
+      const soldOutItem=cart.find(item=>products.find(p=>Number(p.id)===Number(item.id))?.soldOut);
+      if(soldOutItem){showToast(`${soldOutItem.name} 상품이 품절되었습니다`);syncCart();return false}
       const purchase=PurchaseRules.validate(cart,products);
       if(!purchase.valid){showToast(purchase.errors[0]);return false}
       const total=cart.reduce((sum,item)=>sum+item.price*item.qty,0);

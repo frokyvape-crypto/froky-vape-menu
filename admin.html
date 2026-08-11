@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>프로키베이프 관리자 v3.5</title>
+<title>프로키베이프 관리자 v3.6</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
@@ -125,6 +125,8 @@ tr:hover td{background:rgba(128,128,128,.06);}
 .c-일회용{background:rgba(0,188,212,.15);color:#4dd0e1;}
 .c-best{background:rgba(46,204,64,.15);color:var(--g);}
 .sale-tag{display:inline-block;padding:1px 6px;border-radius:4px;font-size:.65rem;font-weight:700;background:var(--red);color:#fff;}
+.stock-toggle{min-width:58px;}
+.stock-toggle.is-soldout{border-color:rgba(229,57,53,.5);color:#ff6b67;}
 .td-btns{display:flex;gap:5px;}
 .empty-msg{text-align:center;color:var(--muted);padding:36px;font-size:.85rem;}
 
@@ -203,7 +205,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
 
 <div id="page-app">
   <div class="topbar">
-    <span class="topbar-logo" id="topbar-logo">프로키베이프 관리자 <span style="font-size:.6rem;color:var(--muted);font-weight:400">v3.5</span></span>
+    <span class="topbar-logo" id="topbar-logo">프로키베이프 관리자 <span style="font-size:.6rem;color:var(--muted);font-weight:400">v3.6</span></span>
     <div class="storefront-switch" role="group" aria-label="관리할 사용자 페이지">
       <button class="storefront-btn" data-storefront="froky" onclick="selectStorefront('froky')">프로키베이프</button>
       <button class="storefront-btn" data-storefront="vapedoit" onclick="selectStorefront('vapedoit')">베이프두잇</button>
@@ -285,6 +287,11 @@ tr:hover td{background:rgba(128,128,128,.06);}
             <option value="price-asc">가격 낮은순</option>
             <option value="price-desc">가격 높은순</option>
           </select>
+          <select id="flt-stock" onchange="renderTable()" title="판매 상태">
+            <option value="">전체 판매상태</option>
+            <option value="on">판매중</option>
+            <option value="off">품절</option>
+          </select>
         </div>
         <div class="filter-bar" id="bulk-bar" style="display:none">
           <span id="selected-count" style="font-size:.82rem;color:var(--muted);font-weight:700">선택 0개</span>
@@ -295,6 +302,11 @@ tr:hover td{background:rgba(128,128,128,.06);}
             <option value="">SALE 변경 안함</option>
             <option value="on">SALE 켜기</option>
             <option value="off">SALE 끄기</option>
+          </select>
+          <select id="bulk-stock" title="선택 상품 판매상태">
+            <option value="">판매상태 변경 안함</option>
+            <option value="on">판매중으로 변경</option>
+            <option value="off">품절로 변경</option>
           </select>
           <button class="btn btn-g btn-xs" onclick="applyBulkEdit()">선택 상품에 적용</button>
         </div>
@@ -309,9 +321,10 @@ tr:hover td{background:rgba(128,128,128,.06);}
               <th>카테고리</th>
               <th>옵션</th>
               <th>SALE</th>
+              <th>판매상태</th>
               <th style="width:110px">액션</th>
             </tr></thead>
-            <tbody id="tbl-body"><tr><td colspan="8" class="empty-msg">상품 목록 카드를 클릭하면 불러옵니다</td></tr></tbody>
+            <tbody id="tbl-body"><tr><td colspan="9" class="empty-msg">상품 목록 카드를 클릭하면 불러옵니다</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -502,6 +515,10 @@ tr:hover td{background:rgba(128,128,128,.06);}
         <label class="toggle"><input type="checkbox" id="f-sale"><span class="slider"></span></label>
         <span style="font-size:.83rem;color:var(--muted)">SALE 뱃지 표시</span>
       </div>
+      <div class="toggle-wrap">
+        <label class="toggle"><input type="checkbox" id="f-sold-out"><span class="slider"></span></label>
+        <span style="font-size:.83rem;color:var(--muted)">품절 처리 — 사용자 페이지에서 구매 차단</span>
+      </div>
     </div>
     <div class="modal-f">
       <button class="btn btn-outline" onclick="closeModal()">취소</button>
@@ -646,10 +663,10 @@ function renderStorefrontContext() {
     btn.setAttribute('aria-pressed', active ? 'true' : 'false');
   });
   document.getElementById('topbar-logo').innerHTML =
-    `${store.label} 관리자 <span style="font-size:.6rem;color:var(--muted);font-weight:400">v3.5</span>`;
+    `${store.label} 관리자 <span style="font-size:.6rem;color:var(--muted);font-weight:400">v3.6</span>`;
   const openBtn = document.getElementById('storefront-open');
   openBtn.title = `${store.label} 사용자 페이지 열기`;
-  document.title = `${store.label} 관리자 v3.5`;
+  document.title = `${store.label} 관리자 v3.6`;
 }
 
 function selectStorefront(id) {
@@ -1017,7 +1034,7 @@ async function fetchLatestProducts({ fresh = false, requireFresh = false } = {})
 }
 
 async function loadProducts({ silent = false } = {}) {
-  if (!silent) document.getElementById('tbl-body').innerHTML = '<tr><td colspan="8" class="empty-msg"><span class="spin"></span>불러오는 중...</td></tr>';
+  if (!silent) document.getElementById('tbl-body').innerHTML = '<tr><td colspan="9" class="empty-msg"><span class="spin"></span>불러오는 중...</td></tr>';
   try {
     const latest = applyMyRecentEdits(await fetchLatestProducts({ fresh: true }));
     fileSha = '';
@@ -1401,9 +1418,11 @@ function renderTable() {
   const q = (document.getElementById('flt-q').value || '').toLowerCase();
   const c = document.getElementById('flt-cat').value;
   const sort = document.getElementById('flt-sort')?.value || 'newest';
+  const stock = document.getElementById('flt-stock')?.value || '';
   let list = products.filter(p =>
     (!q || p.name.toLowerCase().includes(q) || (p.flavor || '').toLowerCase().includes(q)) &&
-    (!c || p.cat === c)
+    (!c || p.cat === c) &&
+    (!stock || (stock === 'off' ? !!p.soldOut : !p.soldOut))
   );
   if (sort === 'newest') list = [...list].reverse();
   else if (sort === 'oldest') { /* 기본 순서 */ }
@@ -1414,7 +1433,7 @@ function renderTable() {
   document.getElementById('count-info').textContent = `총 ${list.length}개 표시 (전체 ${products.length}개)`;
   const fmt = n => Number(n).toLocaleString('ko-KR') + '원';
   const tb = document.getElementById('tbl-body');
-  if (!list.length) { tb.innerHTML = '<tr><td colspan="8" class="empty-msg">상품이 없습니다</td></tr>'; return; }
+  if (!list.length) { tb.innerHTML = '<tr><td colspan="9" class="empty-msg">상품이 없습니다</td></tr>'; return; }
   tb.innerHTML = list.map(p => `<tr>
     <td><input type="checkbox" class="prod-check" data-id="${p.id}" onchange="updateDeleteBtn()" style="width:14px;height:14px;accent-color:var(--g);cursor:pointer"></td>
     <td><img class="prod-img" src="${getImgs(p)[0] || ''}" onerror="this.src=''" alt=""></td>
@@ -1428,12 +1447,27 @@ function renderTable() {
     <td><span class="cat-tag c-${p.cat}">${categoryLabel(p.cat)}</span></td>
     <td style="font-size:.75rem;color:var(--muted)">${adminOptionsText(p)}</td>
     <td>${p.sale ? '<span class="sale-tag">SALE</span>' : ''}</td>
+    <td><button class="btn btn-outline btn-xs stock-toggle${p.soldOut ? ' is-soldout' : ''}" onclick="toggleSoldOut(${p.id})" title="클릭하여 판매상태 변경">${p.soldOut ? '품절' : '판매중'}</button></td>
     <td><div class="td-btns">
       <button class="btn btn-outline btn-xs" onclick="openEditModal(${p.id})">수정</button>
       <button class="btn btn-red btn-xs" onclick="delProduct(${p.id})">삭제</button>
     </div></td>
   </tr>`).join('');
   updateDeleteBtn();
+}
+
+async function toggleSoldOut(id) {
+  const product = products.find(p => Number(p.id) === Number(id));
+  if (!product) return;
+  const nextSoldOut = !product.soldOut;
+  if (!confirm(`"${product.name}" 상품을 ${nextSoldOut ? '품절' : '판매중'} 상태로 변경할까요?`)) return;
+  try {
+    await persistProductsMutation(latest => latest.map(p =>
+      Number(p.id) === Number(id) ? { ...p, soldOut: nextSoldOut } : p
+    ), `${product.name} ${nextSoldOut ? '품절' : '판매 재개'}`);
+  } catch (e) {
+    toast('판매상태 변경 실패: ' + e.message, 'err');
+  }
 }
 
 async function checkRemoteChanges() {
@@ -1831,6 +1865,7 @@ function resetModal() {
   document.getElementById('f-cat').value = '입호흡';
   document.getElementById('f-cat').value = categories[0]?.value || document.getElementById('f-cat').value;
   document.getElementById('f-sale').checked = false;
+  document.getElementById('f-sold-out').checked = false;
   document.getElementById('f-main-file').value = '';
   document.getElementById('f-detail-file').value = '';
   const mainUrl = document.getElementById('f-main-url');
@@ -1855,6 +1890,7 @@ function openEditModal(id) {
   document.getElementById('f-opts').value = (p.options || []).join(', ');
   renderOptionPriceRows(p.optionPrices || {});
   document.getElementById('f-sale').checked = !!p.sale;
+  document.getElementById('f-sold-out').checked = !!p.soldOut;
   imgSlots.main   = getImgs(p).map(url => ({ url, file: null, preview: url }));
   imgSlots.detail = getDetailImgs(p).map(url => ({ url, file: null, preview: url }));
   renderImgGrid('main'); renderImgGrid('detail');
@@ -1910,6 +1946,7 @@ async function saveProduct() {
       options,
       optionPrices,
       sale: document.getElementById('f-sale').checked,
+      soldOut: document.getElementById('f-sold-out').checked,
     };
     await persistProductsMutation(latest => {
       if (editId === null) {
@@ -2317,7 +2354,8 @@ async function applyBulkEdit() {
   if (!selectedIds.length) { toast('수정할 상품을 선택하세요', 'err'); return; }
   const nextCat = document.getElementById('bulk-cat').value;
   const nextSale = document.getElementById('bulk-sale').value;
-  if (!nextCat && !nextSale) { toast('변경할 항목을 선택하세요', 'err'); return; }
+  const nextStock = document.getElementById('bulk-stock').value;
+  if (!nextCat && !nextSale && !nextStock) { toast('변경할 항목을 선택하세요', 'err'); return; }
   if (!confirm(`선택한 ${selectedIds.length}개 상품을 일괄 수정할까요?`)) return;
   try {
     await persistProductsMutation(latest => latest.map(p => {
@@ -2326,10 +2364,12 @@ async function applyBulkEdit() {
         ...p,
         ...(nextCat ? { cat: nextCat } : {}),
         ...(nextSale ? { sale: nextSale === 'on' } : {}),
+        ...(nextStock ? { soldOut: nextStock === 'off' } : {}),
       };
     }), `선택 상품 ${selectedIds.length}개 수정`);
     document.getElementById('bulk-cat').value = '';
     document.getElementById('bulk-sale').value = '';
+    document.getElementById('bulk-stock').value = '';
   } catch (e) { toast('일괄 수정 실패: ' + e.message, 'err'); }
 }
 async function deleteSelected() {
