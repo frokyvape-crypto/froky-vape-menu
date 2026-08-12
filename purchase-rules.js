@@ -3,7 +3,7 @@
 
   const DEFAULT_RULES={
     defaultUnit:5,
-    packPatterns:['10병','10개 단위','10개입','10개'],
+    packPatterns:['5병','10병','10개 단위','10개입','10개'],
     mixGroups:[
       {id:'jusco',label:'저스코 · ㅇㄱㄹㅇ',keywords:['저스코']},
       {id:'tropicow',label:'트로피카우 · 아크드립 외',keywords:['트로피카우','아크드립','라드카페','체리엇','텅 플레이버','스피즈']},
@@ -78,7 +78,7 @@
   }
 
   function ruleFor(product,option){
-    if(isPackOption(product,option))return {mode:'pack',step:1,min:1,unit:1,label:'기존 10개 묶음'};
+    if(isPackOption(product,option))return {mode:'pack',step:1,min:1,unit:1,label:'기존 묶음 상품'};
     const group=mixGroupFor(product);
     if(group)return {mode:'mix',step:1,min:1,unit:rules.defaultUnit,groupId:group.id,label:group.label};
     return {mode:'general',step:1,min:1,unit:rules.defaultUnit,label:'일반 상품 전체'};
@@ -141,7 +141,7 @@
 
   function hint(product,option){
     const rule=ruleFor(product,option);
-    if(rule.mode==='pack')return '기존 10개 묶음 상품으로 구매됩니다.';
+    if(rule.mode==='pack')return '옵션에 표시된 기존 묶음 수량으로 구매됩니다.';
     if(rule.mode==='mix')return `${rule.label} 상품끼리 합계 ${rule.unit}개 단위로 교차 구매할 수 있습니다.`;
     return `일반 상품은 종류와 맛에 관계없이 장바구니 전체 합계 최소 ${rule.unit}개부터 구매할 수 있습니다.`;
   }

@@ -64,6 +64,7 @@
   "purchaseRules": {
     "defaultUnit": 5,
     "packPatterns": [
+      "5병",
       "10병",
       "10개 단위",
       "10개입",
