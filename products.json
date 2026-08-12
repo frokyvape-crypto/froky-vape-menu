@@ -6819,7 +6819,11 @@
       "파워 드링크"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "퍼플 드링크"
+    ],
+    "soldOut": false
   },
   {
     "id": 1819,
