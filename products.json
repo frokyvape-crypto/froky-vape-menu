@@ -9107,7 +9107,8 @@
       "[고농도] 40K 피치 아이스"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   },
   {
     "id": 2565,
