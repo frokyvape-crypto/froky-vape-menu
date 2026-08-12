@@ -60,6 +60,21 @@
     return rules.packPatterns.some(pattern=>source.includes(normalized(pattern)));
   }
 
+  function packUnitFrom(value){
+    const source=normalized(value);
+    if(source.includes(normalized('5병')))return 5;
+    if(['10병','10개 단위','10개입','10개'].some(pattern=>source.includes(normalized(pattern))))return 10;
+    return 0;
+  }
+
+  function packUnitFor(product,option){
+    if(!product)return 0;
+    const direct=[option,product.name,product.flavor].map(packUnitFrom).find(Boolean);
+    if(direct)return direct;
+    const optionUnits=(Array.isArray(product.options)?product.options:[]).map(packUnitFrom).filter(Boolean);
+    return optionUnits.length&&optionUnits.every(unit=>unit===optionUnits[0])?optionUnits[0]:0;
+  }
+
   function isPackOption(product,option){
     if(!product)return false;
     if(hasPackMarker(`${product.name||''} ${option||''}`))return true;
@@ -78,7 +93,10 @@
   }
 
   function ruleFor(product,option){
-    if(isPackOption(product,option))return {mode:'pack',step:1,min:1,unit:1,label:'기존 묶음 상품'};
+    if(isPackOption(product,option)){
+      const packUnit=packUnitFor(product,option);
+      return {mode:'pack',step:1,min:1,unit:1,packUnit,label:packUnit?`기존 ${packUnit}개 묶음`:'기존 묶음 상품'};
+    }
     const group=mixGroupFor(product);
     if(group)return {mode:'mix',step:1,min:1,unit:rules.defaultUnit,groupId:group.id,label:group.label};
     return {mode:'general',step:1,min:1,unit:rules.defaultUnit,label:'일반 상품 전체'};
@@ -141,7 +159,7 @@
 
   function hint(product,option){
     const rule=ruleFor(product,option);
-    if(rule.mode==='pack')return '옵션에 표시된 기존 묶음 수량으로 구매됩니다.';
+    if(rule.mode==='pack')return rule.packUnit?`기존 ${rule.packUnit}개 묶음 상품으로 구매됩니다.`:'기존 묶음 상품으로 구매됩니다.';
     if(rule.mode==='mix')return `${rule.label} 상품끼리 합계 ${rule.unit}개 단위로 교차 구매할 수 있습니다.`;
     return `일반 상품은 종류와 맛에 관계없이 장바구니 전체 합계 최소 ${rule.unit}개부터 구매할 수 있습니다.`;
   }
