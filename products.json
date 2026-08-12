@@ -9113,30 +9113,30 @@
   {
     "id": 2565,
     "product_no": 2565,
-    "name": "[A] 네스티 원 40K 액상팟 20ml",
-    "price": 17500,
+    "name": "네스티 원 40K 액상팟 20ml",
+    "price": 19800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202510/86077dae6fdf8720f929e462abd5da7c.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202510/86077dae6fdf8720f929e462abd5da7c.jpg",
     "detailImgs": [
-      "https://frokyvape.com/web/product/big/202510/b255130651eb8ffbd4b72e3afd6b4284.jpg"
+      "https://og9og9.com/web/upload/NNEditor/20260403/copy-1775201440-01.png"
     ],
-    "detailImg": "https://frokyvape.com/web/product/big/202510/b255130651eb8ffbd4b72e3afd6b4284.jpg",
+    "detailImg": "https://og9og9.com/web/upload/NNEditor/20260403/copy-1775201440-01.png",
     "cat": "입호흡",
     "flavor": "*디바이스 미 포함*",
     "options": [
-      "더블 슬로우 블로우",
+      "도쿄 바나나",
+      "유자 아이스",
       "레드 자몽",
       "레몬 민트",
       "리치 아이스",
-      "빔토블",
-      "알로에 그레이프",
-      "콜라 아이스",
+      "빔토불",
       "피치 아이스"
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": true
+    "soldOut": false,
+    "soldOutOptions": []
   }
 ]
