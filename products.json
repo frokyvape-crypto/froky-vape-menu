@@ -163,7 +163,8 @@
       "체리엇 더 오리지널"
     ],
     "sale": false,
-    "optionPrices": {}
+    "optionPrices": {},
+    "soldOut": true
   },
   {
     "id": 1898,
