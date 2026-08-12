@@ -343,7 +343,11 @@
       "워터멜론"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "레몬"
+    ],
+    "soldOut": false
   },
   {
     "id": 1569,
