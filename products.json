@@ -9085,30 +9085,31 @@
     "id": 2567,
     "product_no": 2567,
     "name": "[2%] 네스티 원 40K 액상팟 20ml",
-    "price": 18900,
+    "price": 19800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202510/8d7bac6a06dc68913a06a894b12386fd.jpg"
     ],
     "img": "https://frokyvape.com/web/product/medium/202510/8d7bac6a06dc68913a06a894b12386fd.jpg",
     "detailImgs": [
-      "https://frokyvape.com/web/product/big/202510/cb2c0634023221ab8ee02d07aadb268f.jpg"
+      "https://og9og9.com/web/upload/NNEditor/20260325/01.png"
     ],
-    "detailImg": "https://frokyvape.com/web/product/big/202510/cb2c0634023221ab8ee02d07aadb268f.jpg",
+    "detailImg": "https://og9og9.com/web/upload/NNEditor/20260325/01.png",
     "cat": "입호흡",
     "flavor": "",
     "options": [
-      "[고농도] 40K 더블 슬로우 블로우",
-      "[고농도] 40K 레드 자몽",
-      "[고농도] 40K 레몬 민트",
-      "[고농도] 40K 리치 아이스",
-      "[고농도] 40K 빔토불",
-      "[고농도] 40K 알로에 그레이프",
-      "[고농도] 40K 콜라 아이스",
-      "[고농도] 40K 피치 아이스"
+      "[고농도] 도쿄 바나나",
+      "[고농도] 아틱 민트",
+      "[고농도] 애플 레몬에이드",
+      "[고농도] 유자 아이스",
+      "[고농도] 더블 슬로우 블로우",
+      "[고농도] 레드 자몽",
+      "[고농도] 빔토불",
+      "[고농도] 피치 아이스"
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": true
+    "soldOut": false,
+    "soldOutOptions": []
   },
   {
     "id": 2565,
