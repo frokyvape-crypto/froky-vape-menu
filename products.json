@@ -3689,10 +3689,17 @@
       "스트로베리",
       "리치",
       "레몬",
-      "워터멜론"
+      "워터멜론",
+      "자몽"
     ],
     "sale": false,
-    "optionPrices": {}
+    "optionPrices": {},
+    "soldOutOptions": [
+      "그레이프",
+      "레몬",
+      "자몽"
+    ],
+    "soldOut": false
   },
   {
     "id": 946,
