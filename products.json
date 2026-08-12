@@ -607,7 +607,11 @@
       "복숭아"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "복숭아"
+    ],
+    "soldOut": false
   },
   {
     "id": 1110,
