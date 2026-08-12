@@ -725,7 +725,12 @@
       "사이다 엔딩"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "포멜로 엔딩",
+      "스피아민트 엔딩"
+    ],
+    "soldOut": false
   },
   {
     "id": 1035,
