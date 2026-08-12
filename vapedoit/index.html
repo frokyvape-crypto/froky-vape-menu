@@ -836,7 +836,7 @@
       });
       if(chunks.length<2){
         const totalQty=items.reduce((sum,item)=>sum+item.qty,0);
-        chunks.push(`총 구매수량 ${totalQty}개 / 결제금액 ${total.toLocaleString()}원`);
+        chunks.push(`총 구매수량 ${totalQty}개`);
       }
       const url=new URL(PAY_URL);
       url.searchParams.set('customOrder','Y');

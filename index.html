@@ -734,6 +734,11 @@ function getSheetOption(){
 function formatPmOrderLine(name,option,qty){
   return [name,option&&option!=='옵션 없음'?option:null,`${qty}개`].filter(Boolean).join(' / ');
 }
+function formatPmAutoInputPreview(items){
+  const lines=items.map(item=>formatPmOrderLine(item.name,item.option,item.qty));
+  const totalQty=items.reduce((sum,item)=>sum+item.qty,0);
+  return `${lines.join(' | ')} | 총 구매수량 ${totalQty}개`;
+}
 function sheetAddCart(){
   if(sp?.soldOut){showToast('⚠️ 품절된 상품입니다');return;}
   const opt=getSheetOption();
@@ -752,7 +757,7 @@ function sheetBuyNow(){
   if(!purchase.valid){showToast(`⚠️ ${purchase.errors[0]}`);return;}
   _pmPayQty=privatePayQuantity(total);
   _pmPayCopyText=String(_pmPayQty);
-  _pmRealCopyText=formatPmOrderLine(sp.name,opt,sq);
+  _pmRealCopyText=formatPmAutoInputPreview([{name:sp.name,option:opt,qty:sq}]);
   _pmOrderItems=[{id:sp.id,name:sp.name,option:opt,qty:sq,price:unit}];
   document.getElementById('pm-items').innerHTML=`<div class="order-row"><div><div class="order-row-name">${escH(sp.name)}</div><div class="order-row-opt">${opt&&opt!=='옵션 없음'?`${escH(opt)} × `:''}${sq}개</div></div><span class="order-row-price">${fmt(total)}</span></div>`;
   document.getElementById('pm-total').textContent=fmt(total);
@@ -773,7 +778,7 @@ function openPayModal(){
   const total=cart.reduce((s,c)=>s+c.price*c.qty,0);
   _pmPayQty=privatePayQuantity(total);
   _pmPayCopyText=String(_pmPayQty);
-  _pmRealCopyText=cart.map(c=>formatPmOrderLine(c.name,c.option,c.qty)).join('\n');
+  _pmRealCopyText=formatPmAutoInputPreview(cart);
   _pmOrderItems=cart.map(c=>({id:c.id,name:c.name,option:c.option,qty:c.qty,price:c.price}));
   document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${escH(c.name)}</div><div class="order-row-opt">${escH(c.option)} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');
   document.getElementById('pm-total').textContent=fmt(total);
@@ -825,7 +830,7 @@ function buildAutoPayUrl(items,total){
   });
   if(chunks.length<2){
     const totalQty=items.reduce((sum,item)=>sum+item.qty,0);
-    chunks.push(`총 구매수량 ${totalQty}개 / 결제금액 ${total.toLocaleString()}원`);
+    chunks.push(`총 구매수량 ${totalQty}개`);
   }
   const url=new URL(PAY_URL);
   url.searchParams.set('customOrder','Y');
