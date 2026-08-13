@@ -329,7 +329,13 @@
       "피치 (노멘솔)"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "레드 (연초)",
+      "쏘쿨",
+      "피치 (노멘솔)"
+    ],
+    "soldOut": false
   },
   {
     "id": 1649,
