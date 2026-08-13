@@ -9177,5 +9177,28 @@
     "sale": false,
     "soldOut": false,
     "soldOutOptions": []
+  },
+  {
+    "id": 420,
+    "product_no": 420,
+    "name": "[A] 노보 타노스 폐호흡 액상 60ml",
+    "price": 14800,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202309/ebf0799dff37bf3f784878ed4d01c5ea.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202309/ebf0799dff37bf3f784878ed4d01c5ea.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202309/8a0b8a7ba1b9445caedf270b04a400ba.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202309/8a0b8a7ba1b9445caedf270b04a400ba.png",
+    "cat": "폐호흡",
+    "flavor": "5mg",
+    "options": [
+      "아이스 그린 그레이프",
+      "아이스 믹스베리",
+      "아이스 킹멘솔"
+    ],
+    "optionPrices": {},
+    "sale": false
   }
 ]
