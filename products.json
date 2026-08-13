@@ -9181,7 +9181,7 @@
   {
     "id": 420,
     "product_no": 420,
-    "name": "[A] 노보 타노스 폐호흡 액상 60ml",
+    "name": "노보 타노스 폐호흡 액상 60ml",
     "price": 14800,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202309/ebf0799dff37bf3f784878ed4d01c5ea.png"
@@ -9199,6 +9199,8 @@
       "아이스 킹멘솔"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   }
 ]
