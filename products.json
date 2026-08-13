@@ -9317,22 +9317,34 @@
   {
     "id": 1808,
     "product_no": 1808,
-    "name": "[펠릭스] 펠릭스 바 15K 일회용 전자담배 18ml",
+    "name": "펠릭스바 15K 일회용",
     "price": 21400,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202412/49e73daa1d88f53ca6d2ca038c464aa2.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202412/49e73daa1d88f53ca6d2ca038c464aa2.png",
     "detailImgs": [
-      "https://frokyvape.com/web/product/big/202412/31e45bd20934c254b04eb09813bd405f.png"
+      "https://frokyvape.cafe24.com/web/upload/NNEditor/20241219/1734573414240.jpeg"
     ],
-    "detailImg": "https://frokyvape.com/web/product/big/202412/31e45bd20934c254b04eb09813bd405f.png",
+    "detailImg": "https://frokyvape.cafe24.com/web/upload/NNEditor/20241219/1734573414240.jpeg",
     "cat": "일회용",
     "flavor": "15,000 퍼프",
-    "options": [],
+    "options": [
+      "블랙 사파이어",
+      "블루 하와이",
+      "더블 애플",
+      "트리플 베리",
+      "사쿠라 그레이프",
+      "마우이 선셋",
+      "핑크 시트러스",
+      "크리스피 민트",
+      "아쿠아",
+      "레몬사와"
+    ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": true
+    "soldOut": true,
+    "soldOutOptions": []
   },
   {
     "id": 1469,
