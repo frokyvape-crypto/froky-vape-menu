@@ -9217,22 +9217,34 @@
   {
     "id": 2634,
     "product_no": 2634,
-    "name": "[펠릭스] 노네임 박스 25,000 일회용 전자담배",
+    "name": "펠릭스 노네임박스 일회용",
     "price": 22500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202512/78a50c1276823d99eebc98221e4244d5.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202512/78a50c1276823d99eebc98221e4244d5.png",
     "detailImgs": [
-      "https://frokyvape.com/web/product/big/202512/f899f2e3b9c6eb464ccb07e6e1475d0f.png"
+      "https://frokyvape.cafe24.com/web/upload/NNEditor/20251204/36845787c1af9c450947fef5e560c559.jpg"
     ],
-    "detailImg": "https://frokyvape.com/web/product/big/202512/f899f2e3b9c6eb464ccb07e6e1475d0f.png",
+    "detailImg": "https://frokyvape.cafe24.com/web/upload/NNEditor/20251204/36845787c1af9c450947fef5e560c559.jpg",
     "cat": "일회용",
     "flavor": "",
-    "options": [],
+    "options": [
+      "레드애플",
+      "허니 유자",
+      "아쿠아",
+      "자몽",
+      "망고 탱고",
+      "피치 펀치",
+      "사쿠라 그레이프",
+      "슈퍼 샤인",
+      "스트로베리 키위",
+      "스윗 민트"
+    ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": true
+    "soldOut": true,
+    "soldOutOptions": []
   },
   {
     "id": 2295,
