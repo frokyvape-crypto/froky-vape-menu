@@ -9285,22 +9285,34 @@
   {
     "id": 1862,
     "product_no": 1862,
-    "name": "[펠릭스] FELIX EGG 12K 에그 일회용 전자담배 16ml",
-    "price": 20800,
+    "name": "펠릭스 에그 일회용",
+    "price": 19200,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202502/78e5c512a94f657ab60ff5d0dde0d890.png"
     ],
     "img": "https://frokyvape.com/web/product/medium/202502/78e5c512a94f657ab60ff5d0dde0d890.png",
     "detailImgs": [
-      "https://frokyvape.com/web/product/big/202502/20eb525ee4b784647dc25efc031adc71.png"
+      "https://frokyvape.cafe24.com/web/upload/NNEditor/20250205/113e7ee5246e813cd39e2e82ad4f446a.jpg"
     ],
-    "detailImg": "https://frokyvape.com/web/product/big/202502/20eb525ee4b784647dc25efc031adc71.png",
+    "detailImg": "https://frokyvape.cafe24.com/web/upload/NNEditor/20250205/113e7ee5246e813cd39e2e82ad4f446a.jpg",
     "cat": "일회용",
     "flavor": "12,000 퍼프",
-    "options": [],
+    "options": [
+      "레몬 사와",
+      "유자 사와",
+      "자몽 사와",
+      "복숭아",
+      "사쿠라 그레이프",
+      "알로에 그레이프",
+      "아쿠아",
+      "그린 애플",
+      "민트",
+      "스트로베리 키위"
+    ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": true
+    "soldOut": true,
+    "soldOutOptions": []
   },
   {
     "id": 1808,
