@@ -6697,7 +6697,12 @@
       "타바코 멘솔"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "블랙 멘솔",
+      "타바코 멘솔"
+    ],
+    "soldOut": false
   },
   {
     "id": 1378,
