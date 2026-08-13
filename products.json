@@ -9249,7 +9249,7 @@
   {
     "id": 2295,
     "product_no": 2295,
-    "name": "[펠릭스] Strong Zero Rush 스트롱 제로 러쉬 입호흡 액상 30ml",
+    "name": "펠릭스 제로러쉬 입호흡",
     "price": 13300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202507/33b1cecc0538164d3ecef9e673e57130.png"
@@ -9261,10 +9261,20 @@
     "detailImg": "https://frokyvape.com/web/product/big/202507/947215701ed31028d67b484a85a237d3.png",
     "cat": "입호흡",
     "flavor": "",
-    "options": [],
+    "options": [
+      "스피아 민트",
+      "레몬 스플래쉬",
+      "쥬시 피치",
+      "수박",
+      "자몽",
+      "스윗 머스켓",
+      "그레이프 피즈",
+      "프로스트 베리"
+    ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": true
+    "soldOut": true,
+    "soldOutOptions": []
   },
   {
     "id": 1862,
