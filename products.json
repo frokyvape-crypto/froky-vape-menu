@@ -9367,7 +9367,7 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": true,
+    "soldOut": false,
     "soldOutOptions": []
   }
 ]
