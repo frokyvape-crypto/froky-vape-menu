@@ -9202,5 +9202,100 @@
     "sale": false,
     "soldOutOptions": [],
     "soldOut": false
+  },
+  {
+    "id": 2634,
+    "product_no": 2634,
+    "name": "[펠릭스] 노네임 박스 25,000 일회용 전자담배",
+    "price": 22500,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202512/78a50c1276823d99eebc98221e4244d5.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202512/78a50c1276823d99eebc98221e4244d5.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202512/f899f2e3b9c6eb464ccb07e6e1475d0f.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202512/f899f2e3b9c6eb464ccb07e6e1475d0f.png",
+    "cat": "일회용",
+    "flavor": "",
+    "options": [],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 2295,
+    "product_no": 2295,
+    "name": "[펠릭스] Strong Zero Rush 스트롱 제로 러쉬 입호흡 액상 30ml",
+    "price": 13300,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202507/33b1cecc0538164d3ecef9e673e57130.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202507/33b1cecc0538164d3ecef9e673e57130.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202507/947215701ed31028d67b484a85a237d3.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202507/947215701ed31028d67b484a85a237d3.png",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 1862,
+    "product_no": 1862,
+    "name": "[펠릭스] FELIX EGG 12K 에그 일회용 전자담배 16ml",
+    "price": 20800,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202502/78e5c512a94f657ab60ff5d0dde0d890.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202502/78e5c512a94f657ab60ff5d0dde0d890.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202502/20eb525ee4b784647dc25efc031adc71.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202502/20eb525ee4b784647dc25efc031adc71.png",
+    "cat": "일회용",
+    "flavor": "12,000 퍼프",
+    "options": [],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 1808,
+    "product_no": 1808,
+    "name": "[펠릭스] 펠릭스 바 15K 일회용 전자담배 18ml",
+    "price": 21400,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202412/49e73daa1d88f53ca6d2ca038c464aa2.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202412/49e73daa1d88f53ca6d2ca038c464aa2.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202412/31e45bd20934c254b04eb09813bd405f.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202412/31e45bd20934c254b04eb09813bd405f.png",
+    "cat": "일회용",
+    "flavor": "15,000 퍼프",
+    "options": [],
+    "optionPrices": {},
+    "sale": false
+  },
+  {
+    "id": 1469,
+    "product_no": 1469,
+    "name": "[펠릭스] 토바코 시리즈 입호흡 액상 30ml",
+    "price": 15500,
+    "imgs": [
+      "https://frokyvape.com/web/product/medium/202405/1b7a53eca8779388412cfd17fd322af7.png"
+    ],
+    "img": "https://frokyvape.com/web/product/medium/202405/1b7a53eca8779388412cfd17fd322af7.png",
+    "detailImgs": [
+      "https://frokyvape.com/web/product/big/202405/eeaa2bfa3616948d97406d1f445813ed.png"
+    ],
+    "detailImg": "https://frokyvape.com/web/product/big/202405/eeaa2bfa3616948d97406d1f445813ed.png",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [],
+    "optionPrices": {},
+    "sale": false
   }
 ]
