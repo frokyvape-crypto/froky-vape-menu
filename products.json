@@ -282,7 +282,11 @@
       "소다 사와"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "라임 사와"
+    ],
+    "soldOut": false
   },
   {
     "id": 1691,
