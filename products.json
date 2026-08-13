@@ -255,7 +255,13 @@
       "스위트 멜론즈 (10병)"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "에이프리콧 체리 (10병)",
+      "비비비 (10병)",
+      "스위트 멜론즈 (10병)"
+    ],
+    "soldOut": false
   },
   {
     "id": 1696,
