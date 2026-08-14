@@ -9369,5 +9369,37 @@
     "sale": false,
     "soldOut": false,
     "soldOutOptions": []
+  },
+  {
+    "id": 1786674204509,
+    "name": "펠릭스 Firerose 30K 액상 팟",
+    "price": 17000,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1786674197204_qbg3.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1786674199901_mj5n.jpg"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1786674197204_qbg3.jpg",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1786674202233_25yw.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1786674202233_25yw.png",
+    "cat": "일회용",
+    "flavor": "1% / 30,000 퍼프",
+    "options": [
+      "스트로베리",
+      "아이스 바나나",
+      "웨딩 피치",
+      "체리 클래식",
+      "미네랄 워터",
+      "스피아민트",
+      "콜라",
+      "소다팝",
+      "말차",
+      "더블 알로에"
+    ],
+    "optionPrices": {},
+    "soldOutOptions": [],
+    "sale": false,
+    "soldOut": false
   }
 ]
