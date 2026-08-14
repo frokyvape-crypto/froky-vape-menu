@@ -9401,5 +9401,30 @@
     "soldOutOptions": [],
     "sale": false,
     "soldOut": false
+  },
+  {
+    "id": 1786674387549,
+    "name": "펠릭스 Firerose 30K 배터리",
+    "price": 12000,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1786674381944_o5bz.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1786674381944_o5bz.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1786674384599_nvwh.png"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1786674384599_nvwh.png",
+    "cat": "일회용",
+    "flavor": "2,200 mAh / 액상 팟 미포함",
+    "options": [
+      "블랙",
+      "실버",
+      "스틸",
+      "레드"
+    ],
+    "optionPrices": {},
+    "soldOutOptions": [],
+    "sale": false,
+    "soldOut": false
   }
 ]
