@@ -224,7 +224,14 @@
       "오렌지 파인애플",
       "키위 패션후르츠"
     ],
-    "sale": false
+    "sale": false,
+    "optionPrices": {},
+    "soldOutOptions": [
+      "딥 블루베리",
+      "복분자 N 석류",
+      "알로에 그레이프"
+    ],
+    "soldOut": false
   },
   {
     "id": 1830,
