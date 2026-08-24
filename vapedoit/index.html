@@ -820,13 +820,27 @@
       $('drawer').classList.remove('open');
       document.body.style.overflow='';
     }
+    function formatAutoPayText(value){return String(value??'').replace(/\s+/g,' ').trim();}
+    function formatAutoPayOrderLines(items){
+      const seenProducts=new Set();
+      return items.map(item=>{
+        const productKey=String(item.id??item.name);
+        if(seenProducts.has(productKey)){
+          const normalizedOption=formatAutoPayText(item.option);
+          return [normalizedOption&&normalizedOption!=='옵션 없음'?normalizedOption:formatAutoPayText(item.name),`${item.qty}개`].filter(Boolean).join(' ');
+        }
+        const normalizedOption=formatAutoPayText(item.option);
+        seenProducts.add(productKey);
+        return [
+          formatAutoPayText(item.name),
+          normalizedOption&&normalizedOption!=='옵션 없음'?normalizedOption:null,
+          `${item.qty}개`
+        ].filter(Boolean).join(' / ');
+      });
+    }
     function buildAutoPayUrl(items,total){
       if(!items.length||total<=0||total%PAY_UNIT_PRICE!==0||!PurchaseRules.validate(items,products).valid)return '';
-      const lines=items.map(item=>[
-        item.name,
-        item.option&&item.option!=='옵션 없음'?item.option:null,
-        `${item.qty}개`
-      ].filter(Boolean).join(' / '));
+      const lines=formatAutoPayOrderLines(items);
       const chunks=[''];
       lines.forEach(line=>{
         const next=chunks[chunks.length-1]?`${chunks[chunks.length-1]} | ${line}`:line;
