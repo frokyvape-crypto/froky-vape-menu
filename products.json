@@ -2831,7 +2831,14 @@
       "유자 아이스"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "캐리비안 망고",
+      "레몬 체리",
+      "피치 아이스",
+      "레드 에너지"
+    ],
+    "soldOut": false
   },
   {
     "id": 2529,
