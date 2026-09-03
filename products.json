@@ -4661,7 +4661,10 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOutOptions": [],
+    "soldOutOptions": [
+      "(2mg) 아메리카노 (5병)",
+      "(2mg) 타박 멘솔 (5병)"
+    ],
     "soldOut": false
   },
   {
