@@ -763,7 +763,9 @@
     "sale": false,
     "soldOutOptions": [
       "포멜로 엔딩",
-      "스피아민트 엔딩"
+      "스피아민트 엔딩",
+      "자몽 엔딩",
+      "파인애플 엔딩"
     ],
     "soldOut": false
   },
