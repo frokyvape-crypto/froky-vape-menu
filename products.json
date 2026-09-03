@@ -6917,7 +6917,7 @@
     "id": 1819,
     "product_no": 1819,
     "name": "프라임 앗! 차가! 입호흡 액상 30ml",
-    "price": 11500,
+    "price": 13300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202412/c18a1cb81f6965b3c74ddcadeecdf7dd.png"
     ],
@@ -6943,7 +6943,9 @@
       "바나나"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 819,
