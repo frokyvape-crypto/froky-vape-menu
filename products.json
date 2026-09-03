@@ -3585,7 +3585,10 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOutOptions": [],
+    "soldOutOptions": [
+      "(블랙) 쿠바시가 (5병)",
+      "(블랙) 아메리카노 (5병)"
+    ],
     "soldOut": false
   },
   {
