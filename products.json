@@ -3868,7 +3868,7 @@
     "id": 1734,
     "product_no": 1734,
     "name": "[0.1mg] 프라임 입호흡 액상 30ml",
-    "price": 10600,
+    "price": 11100,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202411/27c2e661d85f3d1f439b9ea07d83c9a5.png"
     ],
@@ -3887,7 +3887,9 @@
       "[0.1mg] 쿨툰드라"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 306,
