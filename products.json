@@ -3921,7 +3921,7 @@
     "id": 290,
     "product_no": 290,
     "name": "[9.5mg] 프라임 입호흡 액상 30ml",
-    "price": 12200,
+    "price": 13300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202310/857cba2c7bb54f47527bb2c4822e3206.png"
     ],
@@ -3947,7 +3947,9 @@
       "[9.5mg] 누룽지"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 331,
