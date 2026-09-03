@@ -3895,7 +3895,7 @@
     "id": 306,
     "product_no": 306,
     "name": "프라임 체크 입호흡 액상 30ml",
-    "price": 12200,
+    "price": 13300,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202309/64b9b260016a7bcc0b5d215d16ce7135.png"
     ],
@@ -3913,7 +3913,9 @@
       "쿨 툰드라"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 290,
