@@ -24,10 +24,12 @@
       "쿨 멘솔",
       "쿨 청포도",
       "아메리카노",
-      "스오누아카시아 (5"
+      "스오누아카시아"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2467,
