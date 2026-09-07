@@ -6676,7 +6676,15 @@
       "쿨 소다"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "쿨 그린 망고 (쿨청망고)",
+      "쿨 머스켓 (쿨포도)",
+      "쿨 알로에",
+      "쿨 애플 (쿨사과)",
+      "쿨 플럼 (쿨자두)"
+    ],
+    "soldOut": false
   },
   {
     "id": 2536,
