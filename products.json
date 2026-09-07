@@ -5742,10 +5742,13 @@
     "flavor": "3mg",
     "options": [
       "3mg 알로에베라",
-      "3mg 용과"
+      "3mg 용과",
+      "3mg 파인애플"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 559,
