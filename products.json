@@ -5476,7 +5476,11 @@
       "3mg 딸기"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "3mg 오리지널"
+    ],
+    "soldOut": false
   },
   {
     "id": 1593,
