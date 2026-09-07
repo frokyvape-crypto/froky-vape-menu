@@ -6828,7 +6828,12 @@
       "딸기바나나 즙같네"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "아오리 즙같네",
+      "자몽 즙같네"
+    ],
+    "soldOut": false
   },
   {
     "id": 548,
