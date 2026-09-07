@@ -5450,7 +5450,12 @@
       "[9mg] 마르키사 딸기"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "[9mg] 마르키사 라즈베리",
+      "[9mg] 마르키사 딸기"
+    ],
+    "soldOut": false
   },
   {
     "id": 1693,
