@@ -3020,7 +3020,12 @@
       "핑크토닉"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "리얼파인",
+      "복자"
+    ],
+    "soldOut": false
   },
   {
     "id": 837,
