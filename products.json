@@ -3409,7 +3409,11 @@
       "리큐 바닐라 커스타드"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "리큐 스피아민트"
+    ],
+    "soldOut": false
   },
   {
     "id": 690,
