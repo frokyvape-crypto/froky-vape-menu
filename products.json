@@ -9078,7 +9078,14 @@
       "*슈퍼쿨* 블랙 커런트"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "*슈퍼쿨* 초코 스콘",
+      "*슈퍼쿨* 리치",
+      "*슈퍼쿨* 피치 망고",
+      "*슈퍼쿨* 블랙 커런트"
+    ],
+    "soldOut": false
   },
   {
     "id": 365,
