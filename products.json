@@ -3052,7 +3052,14 @@
       "화이트퀸"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "스피아민트 오션",
+      "리얼자몽",
+      "블루샤크",
+      "블루오션"
+    ],
+    "soldOut": false
   },
   {
     "id": 2003,
