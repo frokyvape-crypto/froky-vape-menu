@@ -605,9 +605,35 @@ async function handleCafe24Products(request, env) {
     if (batch.length < limit) break;
   }
 
+  // 3단계 (선택): with_options면 각 상품의 옵션을 서버사이드에서 조회해 raw로 첨부
+  // (브라우저는 CORS로 cafe24api.com 직접 호출 불가 → Worker가 대신 조회)
+  if (body.with_options && allProducts.length) {
+    for (const product of allProducts) {
+      product._optionsRaw = await fetchCafe24OptionsRaw(mall_id, product.product_no, tokenData.access_token);
+    }
+  }
+
   return {
     ok: true,
     products: allProducts,
     new_refresh_token: tokenData.refresh_token || null,
   };
+}
+
+// 상품별 옵션 raw 조회 — 성공한 응답들을 배열로 반환(클라이언트 extractC24Options가 파싱).
+// Cloudflare Worker 서브리퀘스트 한도를 고려해 상품당 후보 엔드포인트를 순차 시도하되 실패는 무시.
+async function fetchCafe24OptionsRaw(mallId, productNo, accessToken) {
+  const base = `https://${mallId}.cafe24api.com/api/v2/admin/products/${productNo}`;
+  const candidates = [`${base}?embed=options,variants`, `${base}/options`, `${base}/variants`];
+  const raws = [];
+  for (const apiUrl of candidates) {
+    try {
+      const res = await fetch(apiUrl, {
+        headers: { 'Authorization': `Bearer ${accessToken}`, 'X-Cafe24-Api-Version': '2026-03-01' },
+      });
+      if (!res.ok) continue;
+      raws.push(await res.json());
+    } catch (e) { /* 개별 실패는 무시 — 옵션 없는 상품으로 처리 */ }
+  }
+  return raws;
 }
