@@ -9485,5 +9485,48 @@
     "soldOutOptions": [],
     "sale": false,
     "soldOut": false
+  },
+  {
+    "id": 1789368727432,
+    "name": "쿠모카 플레이버 입호흡 액상 30ml",
+    "price": 12000,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1789368722523_6ugq.jpg"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1789368722523_6ugq.jpg",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1789368724532_mex2.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1789368724532_mex2.jpg",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "오하요 오렌지",
+      "토레토레 도링크",
+      "아카이 이치고",
+      "후와후와 브루베리",
+      "미도리 애플",
+      "후루후루 파인",
+      "마지 멜론",
+      "아오이 소다",
+      "엔젤 스무디",
+      "쿄호 그레이프",
+      "아마이 모모"
+    ],
+    "optionPrices": {},
+    "soldOutOptions": [
+      "토레토레 도링크",
+      "아카이 이치고",
+      "후와후와 브루베리",
+      "미도리 애플",
+      "후루후루 파인",
+      "마지 멜론",
+      "아오이 소다",
+      "엔젤 스무디",
+      "쿄호 그레이프",
+      "아마이 모모"
+    ],
+    "sale": false,
+    "soldOut": false
   }
 ]
