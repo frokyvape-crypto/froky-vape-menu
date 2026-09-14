@@ -144,7 +144,8 @@
       "딸기 & 초코"
     ],
     "sale": false,
-    "optionPrices": {}
+    "optionPrices": {},
+    "soldOut": true
   },
   {
     "id": 1912,
