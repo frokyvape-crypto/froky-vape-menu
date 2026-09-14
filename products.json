@@ -145,7 +145,12 @@
     ],
     "sale": false,
     "optionPrices": {},
-    "soldOut": true
+    "soldOut": false,
+    "soldOutOptions": [
+      "자몽 & 히비스커스",
+      "아샷추",
+      "딸기 & 초코"
+    ]
   },
   {
     "id": 1912,
