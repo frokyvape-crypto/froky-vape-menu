@@ -76,7 +76,8 @@
         "label": "저스코 · ㅇㄱㄹㅇ",
         "keywords": [
           "저스코"
-        ]
+        ],
+        "productIds": []
       },
       {
         "id": "tropicow",
@@ -88,6 +89,9 @@
           "체리엇",
           "텅 플레이버",
           "스피즈"
+        ],
+        "productIds": [
+          "1789368727432"
         ]
       },
       {
@@ -95,7 +99,8 @@
         "label": "모코 전체",
         "keywords": [
           "모코리퀴드"
-        ]
+        ],
+        "productIds": []
       },
       {
         "id": "tn-trump",
@@ -103,49 +108,56 @@
         "keywords": [
           "티엔 입호흡",
           "제이씨컴퍼니 트럼프"
-        ]
+        ],
+        "productIds": []
       },
       {
         "id": "smoji",
         "label": "스모지",
         "keywords": [
           "스모지"
-        ]
+        ],
+        "productIds": []
       },
       {
         "id": "goodjuice",
         "label": "굿쥬스",
         "keywords": [
           "굿쥬스"
-        ]
+        ],
+        "productIds": []
       },
       {
         "id": "felix",
         "label": "펠릭스 전체",
         "keywords": [
           "펠릭스"
-        ]
+        ],
+        "productIds": []
       },
       {
         "id": "gaemasisseo",
         "label": "개마시써",
         "keywords": [
           "개마시써"
-        ]
+        ],
+        "productIds": []
       },
       {
         "id": "vapebasket",
         "label": "베이프바스켓 전체",
         "keywords": [
           "베이프바스켓"
-        ]
+        ],
+        "productIds": []
       },
       {
         "id": "masha",
         "label": "마샤 전체",
         "keywords": [
           "마샤"
-        ]
+        ],
+        "productIds": []
       },
       {
         "id": "xhaler-flexx",
@@ -153,39 +165,42 @@
         "keywords": [
           "엑스헤일러",
           "플렉스엑스"
-        ]
+        ],
+        "productIds": []
       },
       {
         "id": "sweeden",
         "label": "스위든 전체",
         "keywords": [
           "스위든"
-        ]
+        ],
+        "productIds": []
       },
       {
         "id": "zapjuice",
         "label": "잽쥬스 전체",
         "keywords": [
           "잽쥬스"
-        ]
+        ],
+        "productIds": []
       },
       {
         "id": "bubblemon-30-33",
         "label": "버블몬 30ml · 33ml",
+        "keywords": [],
         "productIds": [
           "62",
           "2857"
-        ],
-        "keywords": []
+        ]
       },
       {
         "id": "nfuse-cream-of-crop",
         "label": "앤퓨즈 크오크 입호흡 30ml · 폐호흡 60ml",
+        "keywords": [],
         "productIds": [
           "1583",
           "1584"
-        ],
-        "keywords": []
+        ]
       }
     ]
   },
