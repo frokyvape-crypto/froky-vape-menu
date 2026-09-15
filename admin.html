@@ -90,6 +90,26 @@ html[data-storefront="vapedoit"] .topbar-logo{color:#e30613;}
 .option-price-help{font-size:.72rem;color:var(--muted);line-height:1.6;margin-top:6px;}
 @media(max-width:520px){.option-price-row{grid-template-columns:1fr;}}
 
+.rules-help{font-size:.75rem;color:var(--muted);line-height:1.7;margin:-4px 0 16px;}
+.rules-toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;}
+.rules-toolbar h3{font-size:.82rem;font-weight:800;color:var(--text);}
+.mix-group-list{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+.mix-group-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 12px;display:flex;align-items:center;gap:10px;}
+.mix-group-main{min-width:0;flex:1;}
+.mix-group-name{font-size:.84rem;font-weight:800;margin-bottom:3px;}
+.mix-group-meta{font-size:.72rem;color:var(--muted);line-height:1.5;word-break:break-word;}
+.mix-group-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;}
+.mix-product-picker{max-height:280px;overflow-y:auto;border:1px solid var(--border);border-radius:9px;background:var(--bg);padding:5px;}
+.mix-product-option{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;cursor:pointer;font-size:.78rem;}
+.mix-product-option:hover{background:rgba(128,128,128,.1);}
+.mix-product-option input{width:15px;height:15px;accent-color:var(--g);flex-shrink:0;}
+.mix-product-option span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.mix-product-option small{color:var(--muted);font-size:.68rem;white-space:nowrap;}
+.mix-product-empty{padding:24px 12px;text-align:center;color:var(--muted);font-size:.76rem;}
+.mix-selection-count{font-size:.72rem;color:var(--muted);margin-top:6px;}
+.mix-group-editor{border:1px solid rgba(46,204,64,.25);border-radius:10px;padding:14px;background:rgba(46,204,64,.035);}
+@media(max-width:640px){.mix-group-item{align-items:flex-start;flex-direction:column;}.mix-group-actions{width:100%;justify-content:flex-start;}}
+
 .toggle-wrap{display:flex;align-items:center;gap:8px;padding:8px 0;}
 .toggle{position:relative;width:42px;height:22px;cursor:pointer;flex-shrink:0;}
 .toggle input{opacity:0;width:0;height:0;}
@@ -256,10 +276,74 @@ tr:hover td{background:rgba(128,128,128,.06);}
         <div class="ac-title">카테고리 추가</div>
         <div class="ac-desc">상품 분류 버튼 추가/수정</div>
       </div>
+      <div class="action-card" onclick="showSection('sec-purchase-rules')">
+        <div class="ac-icon">🔗</div>
+        <div class="ac-title">교차묶음 관리</div>
+        <div class="ac-desc">상품을 묶어 합산 구매 조건 설정</div>
+      </div>
       <div class="action-card" data-deploy onclick="saveAndDeploy()">
         <div class="ac-icon">🚀</div>
         <div class="ac-title">새로고침 & 동기화</div>
         <div class="ac-desc">모든 관리자의 최신 상태 확인</div>
+      </div>
+    </div>
+
+    <div class="section" id="sec-purchase-rules" style="display:none">
+      <div class="section-head">
+        <h2>🔗 교차묶음·구매 규칙</h2>
+        <button class="btn btn-outline btn-xs" onclick="loadSiteConfig()">새로고침</button>
+      </div>
+      <div class="section-body">
+        <p class="rules-help">
+          교차묶음 그룹에 포함한 상품은 장바구니에서 서로 합산되어 지정한 수량 단위로 구매됩니다.
+          상품을 직접 선택하거나 상품명 키워드를 등록할 수 있습니다. 변경 후 아래 저장 버튼을 눌러야 사용자 페이지에 반영됩니다.
+        </p>
+        <div class="form-grid">
+          <div class="form-row">
+            <label>일반 상품 최소 구매 수량</label>
+            <input id="rule-default-unit" type="number" min="1" step="1" value="5" onchange="markConfigDirty()">
+          </div>
+          <div class="form-row">
+            <label>기존 묶음상품 판별 문구</label>
+            <input id="rule-pack-patterns" type="text" placeholder="5병, 10병, 10개입" onchange="markConfigDirty()">
+          </div>
+        </div>
+
+        <div class="rules-toolbar">
+          <h3>교차묶음 그룹</h3>
+          <button class="btn btn-outline btn-xs" type="button" onclick="startNewMixGroup()">새 그룹</button>
+        </div>
+        <div class="mix-group-list" id="mix-group-list"></div>
+
+        <div class="mix-group-editor">
+          <div class="rules-toolbar">
+            <h3 id="mix-editor-title">새 교차묶음 그룹</h3>
+            <span class="mix-selection-count" id="mix-selection-count">선택 상품 0개</span>
+          </div>
+          <input type="hidden" id="mix-edit-id">
+          <div class="form-grid">
+            <div class="form-row">
+              <label>그룹 이름 *</label>
+              <input id="mix-label" type="text" placeholder="예: 모코리퀴드 전체">
+            </div>
+            <div class="form-row">
+              <label>상품명 키워드</label>
+              <input id="mix-keywords" type="text" placeholder="쉼표 구분: 모코리퀴드, MOKO">
+            </div>
+          </div>
+          <div class="form-row">
+            <label>포함 상품 선택</label>
+            <input id="mix-product-search" type="search" placeholder="🔍 상품명 또는 상품번호 검색" oninput="renderMixProductPicker()">
+            <div class="mix-product-picker" id="mix-product-picker"></div>
+            <div class="mix-selection-count" id="mix-picker-help">상품을 선택하지 않고 키워드만으로도 자동 묶음할 수 있습니다.</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn btn-outline" type="button" onclick="startNewMixGroup()">입력 초기화</button>
+            <button class="btn btn-g" type="button" onclick="saveMixGroupDraft()">그룹 목록에 반영</button>
+          </div>
+        </div>
+
+        <button class="btn btn-g" id="btn-save-purchase-rules" onclick="saveSiteConfig('purchaseRules')" style="margin-top:16px">구매 규칙 저장</button>
       </div>
     </div>
 
@@ -569,8 +653,8 @@ tr:hover td{background:rgba(128,128,128,.06);}
 
 <div class="toast" id="toast"></div>
 
-<script src="admin-app1.js"></script>
-<script src="admin-app2.js"></script>
+<script src="admin-app1.js?v=20260915-purchase-rules"></script>
+<script src="admin-app2.js?v=20260915-purchase-rules"></script>
 <script>
 /* 보안 억제(눈속임): 우클릭/개발자도구 단축키 차단 + 경고 오버레이.
    ※ 실제 보안이 아니라 일반인 대상 심리적 억제용 — 아는 사람은 우회 가능. */

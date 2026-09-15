@@ -25,6 +25,11 @@ const DEFAULT_SITE_CONFIG = {
     { value: '고농도', label: '고농도 액상' },
     { value: '일회용', label: '일회용 기기' },
   ],
+  purchaseRules: {
+    defaultUnit: 5,
+    packPatterns: ['5병', '10병', '10개 단위', '10개입', '10개'],
+    mixGroups: [],
+  },
 };
 let TOKEN = '', fileSha = '', products = [];
 let siteConfig = {...DEFAULT_SITE_CONFIG}, siteConfigSha = '';
@@ -33,6 +38,9 @@ let imgSlots = { main: [], detail: [] };
 let noticeImgSlots = { banner: [], popup: [] };
 let noticeModes = [...DEFAULT_SITE_CONFIG.noticeModes];
 let categories = [...DEFAULT_SITE_CONFIG.categories];
+let purchaseRulesDraft = null;
+let editingMixGroupId = '';
+let mixDraftProductIds = new Set();
 let selectedNoticeMode = 'stock';
 let isSaving = false;
 let remoteHash = '';
@@ -180,7 +188,7 @@ async function ensureSiteConfigLoaded() {
 }
 
 async function showSection(id) {
-  const leavingConfigEditor = id !== 'sec-notice' && id !== 'sec-categories' && pendingRemoteConfig;
+  const leavingConfigEditor = !['sec-notice', 'sec-categories', 'sec-purchase-rules'].includes(id) && pendingRemoteConfig;
   if (leavingConfigEditor) applyRemoteConfig(pendingRemoteConfig);
   document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
   document.getElementById(id).style.display = 'block';
@@ -188,7 +196,8 @@ async function showSection(id) {
     await ensureSiteConfigLoaded();
     await loadProducts();
   }
-  if (id === 'sec-notice' || id === 'sec-categories') await loadSiteConfig();
+  if (id === 'sec-notice' || id === 'sec-categories' || id === 'sec-purchase-rules') await loadSiteConfig();
+  if (id === 'sec-purchase-rules' && !products.length) await loadProducts({silent: true});
   if (id === 'sec-cafe24') {
     const _cid = sessionStorage.getItem('fv-c24-id') || localStorage.getItem('fv-c24-id') || '';
     const _sec = sessionStorage.getItem('fv-c24-sec') || localStorage.getItem('fv-c24-sec') || '';
@@ -517,6 +526,7 @@ async function loadProducts({ silent = false } = {}) {
     recordKnownProductHash(remoteHash);
     dbSave();
     renderTable();
+    renderMixProductPicker();
     if (!silent) toast(`상품 ${products.length}개 로드`, 'ok');
   } catch (e) {
     if (!silent) toast('로드 실패: ' + e.message, 'err');
@@ -683,6 +693,192 @@ function updateOrphanWarning() {
   el.style.display = 'flex';
 }
 
+const DEFAULT_PURCHASE_RULES = {
+  defaultUnit: 5,
+  packPatterns: ['5병', '10병', '10개 단위', '10개입', '10개'],
+  mixGroups: [],
+};
+
+function normalizePurchaseRules(raw) {
+  const src = raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
+  const patterns = Array.isArray(src.packPatterns) ? src.packPatterns : DEFAULT_PURCHASE_RULES.packPatterns;
+  const seenPatterns = new Set();
+  const packPatterns = patterns.map(value => String(value || '').trim())
+    .filter(value => value && !seenPatterns.has(value) && seenPatterns.add(value));
+  const groups = Array.isArray(src.mixGroups) ? src.mixGroups : [];
+  const seenIds = new Set();
+  const mixGroups = groups.map((group, index) => {
+    let id = String(group?.id || `mix-${index + 1}`).trim();
+    if (!id || seenIds.has(id)) id = `mix-${index + 1}-${Date.now()}`;
+    seenIds.add(id);
+    const keywords = Array.isArray(group?.keywords) ? group.keywords : [];
+    const productIds = Array.isArray(group?.productIds) ? group.productIds : [];
+    return {
+      id,
+      label: String(group?.label || id).trim(),
+      keywords: [...new Set(keywords.map(value => String(value || '').trim()).filter(Boolean))],
+      productIds: [...new Set(productIds.map(value => String(value || '').trim()).filter(Boolean))],
+    };
+  }).filter(group => group.label);
+  return {
+    defaultUnit: Math.max(1, parseInt(src.defaultUnit, 10) || DEFAULT_PURCHASE_RULES.defaultUnit),
+    packPatterns: packPatterns.length ? packPatterns : [...DEFAULT_PURCHASE_RULES.packPatterns],
+    mixGroups,
+  };
+}
+
+function setPurchaseRulesForm() {
+  purchaseRulesDraft = normalizePurchaseRules(siteConfig.purchaseRules);
+  const unit = document.getElementById('rule-default-unit');
+  const patterns = document.getElementById('rule-pack-patterns');
+  if (unit) unit.value = purchaseRulesDraft.defaultUnit;
+  if (patterns) patterns.value = purchaseRulesDraft.packPatterns.join(', ');
+  startNewMixGroup({ silent: true });
+  renderMixGroupList();
+  renderMixProductPicker();
+}
+
+function renderMixGroupList() {
+  const el = document.getElementById('mix-group-list');
+  if (!el) return;
+  const groups = purchaseRulesDraft?.mixGroups || [];
+  if (!groups.length) {
+    el.innerHTML = '<div class="option-price-empty">등록된 교차묶음 그룹이 없습니다. 아래에서 새 그룹을 만들어 주세요.</div>';
+    return;
+  }
+  el.innerHTML = groups.map(group => {
+    const keywordText = group.keywords.length ? `키워드: ${group.keywords.join(', ')}` : '키워드 없음';
+    const productText = group.productIds.length ? `상품 ${group.productIds.length}개 직접 지정` : '직접 지정 상품 없음';
+    return `<div class="mix-group-item">
+      <div class="mix-group-main">
+        <div class="mix-group-name">${escHtml(group.label)}</div>
+        <div class="mix-group-meta">${escHtml(keywordText)} · ${escHtml(productText)}</div>
+      </div>
+      <div class="mix-group-actions">
+        <button class="btn btn-outline btn-xs" type="button" onclick="editMixGroup('${escHtml(group.id)}')">수정</button>
+        <button class="btn btn-red btn-xs" type="button" onclick="deleteMixGroup('${escHtml(group.id)}')">삭제</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function updateMixSelectionCount() {
+  const count = mixDraftProductIds.size;
+  const el = document.getElementById('mix-selection-count');
+  if (el) el.textContent = `선택 상품 ${count}개`;
+}
+
+function toggleMixProduct(input) {
+  const id = String(input?.dataset?.mixProductId || '');
+  if (!id) return;
+  if (input.checked) mixDraftProductIds.add(id);
+  else mixDraftProductIds.delete(id);
+  updateMixSelectionCount();
+  markConfigDirty();
+}
+
+function renderMixProductPicker() {
+  const el = document.getElementById('mix-product-picker');
+  if (!el) return;
+  const q = String(document.getElementById('mix-product-search')?.value || '').trim().toLowerCase();
+  const list = (products || []).filter(product => {
+    if (!q) return true;
+    return [product.name, product.flavor, product.id, product.product_no]
+      .some(value => String(value || '').toLowerCase().includes(q));
+  });
+  if (!list.length) {
+    el.innerHTML = '<div class="mix-product-empty">검색 결과가 없습니다.</div>';
+    updateMixSelectionCount();
+    return;
+  }
+  el.innerHTML = list.map(product => {
+    const id = String(product.id);
+    const checked = mixDraftProductIds.has(id) ? ' checked' : '';
+    return `<label class="mix-product-option">
+      <input type="checkbox" data-mix-product-id="${escHtml(id)}"${checked} onchange="toggleMixProduct(this)">
+      <span>${escHtml(product.name || '(상품명 없음)')}</span>
+      <small>#${escHtml(id)}</small>
+    </label>`;
+  }).join('');
+  updateMixSelectionCount();
+}
+
+function startNewMixGroup({ silent = false } = {}) {
+  editingMixGroupId = '';
+  mixDraftProductIds = new Set();
+  const id = document.getElementById('mix-edit-id');
+  const label = document.getElementById('mix-label');
+  const keywords = document.getElementById('mix-keywords');
+  const search = document.getElementById('mix-product-search');
+  if (id) id.value = '';
+  if (label) label.value = '';
+  if (keywords) keywords.value = '';
+  if (search) search.value = '';
+  const title = document.getElementById('mix-editor-title');
+  if (title) title.textContent = '새 교차묶음 그룹';
+  renderMixProductPicker();
+  if (!silent) toast('새 교차묶음 그룹 입력을 시작합니다', 'info');
+}
+
+function editMixGroup(id) {
+  const group = (purchaseRulesDraft?.mixGroups || []).find(item => item.id === id);
+  if (!group) return;
+  editingMixGroupId = group.id;
+  mixDraftProductIds = new Set(group.productIds);
+  document.getElementById('mix-edit-id').value = group.id;
+  document.getElementById('mix-label').value = group.label;
+  document.getElementById('mix-keywords').value = group.keywords.join(', ');
+  document.getElementById('mix-product-search').value = '';
+  document.getElementById('mix-editor-title').textContent = '교차묶음 그룹 수정';
+  renderMixProductPicker();
+  document.querySelector('.mix-group-editor')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function deleteMixGroup(id) {
+  const group = (purchaseRulesDraft?.mixGroups || []).find(item => item.id === id);
+  if (!group || !confirm(`"${group.label}" 교차묶음 그룹을 삭제할까요?`)) return;
+  purchaseRulesDraft.mixGroups = purchaseRulesDraft.mixGroups.filter(item => item.id !== id);
+  if (editingMixGroupId === id) startNewMixGroup({ silent: true });
+  renderMixGroupList();
+  markConfigDirty();
+  toast('교차묶음 그룹이 삭제되었습니다. 저장을 눌러 반영하세요.', 'info');
+}
+
+function saveMixGroupDraft() {
+  const label = document.getElementById('mix-label')?.value.trim() || '';
+  const rawKeywords = document.getElementById('mix-keywords')?.value || '';
+  const keywords = [...new Set(rawKeywords.split(',').map(value => value.trim()).filter(Boolean))];
+  if (!label) { toast('교차묶음 그룹 이름을 입력하세요', 'err'); return; }
+  if (!keywords.length && !mixDraftProductIds.size) {
+    toast('키워드 또는 포함 상품을 하나 이상 지정하세요', 'err');
+    return;
+  }
+  const group = {
+    id: editingMixGroupId || `mix-${Date.now()}`,
+    label,
+    keywords,
+    productIds: [...mixDraftProductIds],
+  };
+  const index = purchaseRulesDraft.mixGroups.findIndex(item => item.id === group.id);
+  if (index === -1) purchaseRulesDraft.mixGroups.push(group);
+  else purchaseRulesDraft.mixGroups[index] = group;
+  renderMixGroupList();
+  markConfigDirty();
+  startNewMixGroup({ silent: true });
+  toast('교차묶음 그룹 목록에 반영했습니다. 마지막으로 저장하세요.', 'ok');
+}
+
+function collectPurchaseRulesFromForm() {
+  const defaultUnit = Math.max(1, parseInt(document.getElementById('rule-default-unit')?.value, 10) || 1);
+  const rawPatterns = document.getElementById('rule-pack-patterns')?.value || '';
+  const packPatterns = [...new Set(rawPatterns.split(',').map(value => value.trim()).filter(Boolean))];
+  return normalizePurchaseRules({
+    defaultUnit,
+    packPatterns,
+    mixGroups: purchaseRulesDraft?.mixGroups || [],
+  });
+}
+
 async function reclassifyOrphans() {
   const targetCat = document.getElementById('orphan-target').value;
   if (!targetCat) { toast('이동할 카테고리를 선택하세요', 'err'); return; }
@@ -735,6 +931,7 @@ function setNoticeForm() {
   noticeImgSlots.popup  = popupImgs.map(url  => ({ url, file: null, preview: url }));
   renderNoticeImgGrid('banner');
   renderNoticeImgGrid('popup');
+  setPurchaseRulesForm();
 }
 
 async function fetchLatestSiteConfig({ fresh = false } = {}) {
@@ -798,9 +995,11 @@ async function loadSiteConfig({ silent = false } = {}) {
 async function saveSiteConfig(scope = 'notice') {
   const btn = document.getElementById('btn-save-config');
   const catBtn = document.getElementById('btn-save-categories');
+  const rulesBtn = document.getElementById('btn-save-purchase-rules');
   btn.disabled = true;
   if (catBtn) catBtn.disabled = true;
-  const activeBtn = scope === 'categories' ? catBtn : btn;
+  if (rulesBtn) rulesBtn.disabled = true;
+  const activeBtn = scope === 'categories' ? catBtn : scope === 'purchaseRules' ? rulesBtn : btn;
   const originalLabel = activeBtn?.textContent || '저장';
   if (activeBtn) activeBtn.innerHTML = '<span class="spin"></span>저장 중...';
   try {
@@ -826,6 +1025,8 @@ async function saveSiteConfig(scope = 'notice') {
       const latestConfig = await fetchLatestSiteConfig({ fresh: true }).catch(() => ({...DEFAULT_SITE_CONFIG}));
       const nextConfig = scope === 'categories'
         ? {...latestConfig, categories: normalizeCategories(categories)}
+        : scope === 'purchaseRules'
+        ? {...latestConfig, purchaseRules: collectPurchaseRulesFromForm()}
         : {
             ...latestConfig,
             noticeMode: selectedNoticeMode || noticeModes[0]?.value || 'stock',
@@ -856,7 +1057,7 @@ async function saveSiteConfig(scope = 'notice') {
         if (latest.ok) currentSha = (await latest.json()).sha;
         else if (latest.status !== 404) throw new Error(`설정 SHA 조회 실패 (${latest.status})`);
         const body = {
-          message: `chore: ${scope === 'categories' ? '카테고리' : '공지 설정'} 업데이트 ${new Date().toLocaleString('ko-KR')}`,
+          message: `chore: ${scope === 'categories' ? '카테고리' : scope === 'purchaseRules' ? '구매 규칙' : '공지 설정'} 업데이트 ${new Date().toLocaleString('ko-KR')}`,
           content: base64EncodeUtf8(JSON.stringify(nextConfig, null, 2) + '\n'),
           branch: 'main',
         };
@@ -882,12 +1083,13 @@ async function saveSiteConfig(scope = 'notice') {
     pendingRemoteConfig = null;
     setNoticeForm();
     if (scope === 'categories') updateOrphanWarning();
-    toast(scope === 'categories' ? '카테고리 저장 완료' : '공지 설정 저장 완료', 'ok');
+    toast(scope === 'categories' ? '카테고리 저장 완료' : scope === 'purchaseRules' ? '구매 규칙 저장 완료' : '공지 설정 저장 완료', 'ok');
   } catch (e) {
-    toast((scope === 'categories' ? '카테고리' : '공지 설정') + ' 저장 실패: ' + e.message, 'err');
+    toast((scope === 'categories' ? '카테고리' : scope === 'purchaseRules' ? '구매 규칙' : '공지 설정') + ' 저장 실패: ' + e.message, 'err');
   } finally {
     btn.disabled = false;
     if (catBtn) catBtn.disabled = false;
+    if (rulesBtn) rulesBtn.disabled = false;
     if (activeBtn) activeBtn.textContent = originalLabel;
   }
 }
@@ -988,14 +1190,15 @@ async function checkRemoteChanges() {
       remoteConfigHash = hash;
       const editingConfig = configDirty && (
         document.getElementById('sec-categories').style.display !== 'none' ||
-        document.getElementById('sec-notice').style.display !== 'none'
+        document.getElementById('sec-notice').style.display !== 'none' ||
+        document.getElementById('sec-purchase-rules').style.display !== 'none'
       );
       if (editingConfig) {
         pendingRemoteConfig = nextConfig;
-        toast('다른 관리자가 카테고리/공지를 변경했습니다. 저장 전 새로고침해 확인해 주세요.', 'info');
+        toast('다른 관리자가 설정을 변경했습니다. 저장 전 새로고침해 확인해 주세요.', 'info');
       } else {
         applyRemoteConfig(nextConfig);
-        toast('다른 관리자의 카테고리/공지 변경사항이 반영되었습니다', 'ok');
+        toast('다른 관리자의 설정 변경사항이 반영되었습니다', 'ok');
       }
     }
   } catch(e) {}
