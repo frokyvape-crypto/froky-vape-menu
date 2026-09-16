@@ -3012,7 +3012,11 @@
       "알로에베리"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "스피어민트"
+    ],
+    "soldOut": false
   },
   {
     "id": 1647,
