@@ -1416,7 +1416,15 @@
       "9.9mg / 피치망고"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "9.9mg / 아이스그린그레이프",
+      "9.9mg / 알로에베라",
+      "9.9mg / 쿠바시가",
+      "9.9mg / 트리플베리",
+      "9.9mg / 프리미엄시가"
+    ],
+    "soldOut": false
   },
   {
     "id": 2818,
