@@ -7128,7 +7128,11 @@
       "하이민트 시트러스"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "하이민트 시트러스"
+    ],
+    "soldOut": false
   },
   {
     "id": 1736,
