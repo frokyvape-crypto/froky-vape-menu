@@ -7163,7 +7163,12 @@
       "홍 T"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "ST 베리",
+      "스피아"
+    ],
+    "soldOut": false
   },
   {
     "id": 1426,
