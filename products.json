@@ -7034,7 +7034,11 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": false
+    "soldOut": false,
+    "soldOutOptions": [
+      "폐호흡 하이민트 멜론",
+      "폐호흡 하이민트 시트러스"
+    ]
   },
   {
     "id": 516,
