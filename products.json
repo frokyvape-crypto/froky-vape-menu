@@ -7010,7 +7010,11 @@
       "폐호흡 제로민트 시트러스"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "폐호흡 제로민트 망고"
+    ],
+    "soldOut": false
   },
   {
     "id": 517,
