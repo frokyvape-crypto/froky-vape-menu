@@ -2828,7 +2828,15 @@
       "워터멜론"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "피치 & 망고",
+      "사워 애플",
+      "교호 그레이프",
+      "포카리",
+      "파인애플 아이스"
+    ],
+    "soldOut": false
   },
   {
     "id": 2597,
