@@ -9690,6 +9690,7 @@
     "flavor": "25,000 퍼프",
     "options": [],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   }
 ]
