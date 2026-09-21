@@ -3557,7 +3557,8 @@
       "쿨피치"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   },
   {
     "id": 807,
