@@ -2905,7 +2905,8 @@
       "레몬"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   },
   {
     "id": 2517,
