@@ -3578,7 +3578,8 @@
       "이브"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   },
   {
     "id": 912,
