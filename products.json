@@ -3480,7 +3480,8 @@
       "톡 소다 up"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   },
   {
     "id": 691,
