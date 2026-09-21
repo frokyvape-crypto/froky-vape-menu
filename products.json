@@ -9760,7 +9760,7 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": true,
+    "soldOut": false,
     "soldOutOptions": [
       "[고농도] 01 피치 아이스",
       "[고농도] 02 샤인머스켓",
