@@ -174,7 +174,7 @@
     ],
     "sale": false,
     "optionPrices": {},
-    "soldOut": false,
+    "soldOut": true,
     "soldOutOptions": [
       "체리엇 더 오리지널"
     ]
