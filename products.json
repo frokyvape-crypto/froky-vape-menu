@@ -506,7 +506,12 @@
       "화이트 시가",
       "아이스 머스켓"
     ],
-    "sale": false
+    "sale": false,
+    "optionPrices": {},
+    "soldOutOptions": [
+      "아이스 머스켓"
+    ],
+    "soldOut": false
   },
   {
     "id": 1412,
