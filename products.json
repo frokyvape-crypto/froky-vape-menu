@@ -147,7 +147,7 @@
     ],
     "sale": false,
     "optionPrices": {},
-    "soldOut": false,
+    "soldOut": true,
     "soldOutOptions": [
       "자몽 & 히비스커스",
       "아샷추",
