@@ -6762,7 +6762,8 @@
       "[1.8%] 포카리"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   },
   {
     "id": 381,
