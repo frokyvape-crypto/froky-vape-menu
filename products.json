@@ -527,7 +527,12 @@
       "젤리 하트",
       "젤리 애플"
     ],
-    "sale": false
+    "sale": false,
+    "optionPrices": {},
+    "soldOutOptions": [
+      "젤리 하트"
+    ],
+    "soldOut": false
   },
   {
     "id": 1352,
