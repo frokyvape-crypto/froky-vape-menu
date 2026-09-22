@@ -5911,7 +5911,8 @@
     "options": [],
     "optionPrices": {},
     "sale": false,
-    "hidden": true
+    "hidden": true,
+    "soldOut": true
   },
   {
     "id": 275,
