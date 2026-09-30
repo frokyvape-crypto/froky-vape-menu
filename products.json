@@ -9746,5 +9746,34 @@
     "sale": false,
     "soldOut": false,
     "soldOutOptions": []
+  },
+  {
+    "id": 1790746611894,
+    "name": "텐션업 입호흡 액상 30ml",
+    "price": 9900,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1790746600092_u856.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1790746600092_u856.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1790746604656_4nyg.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1790746608093_izlu.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1790746604656_4nyg.jpg",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "망고",
+      "망고스틴",
+      "자몽",
+      "파인애플",
+      "패션후르츠",
+      "포도",
+      "피치 어프리콧"
+    ],
+    "optionPrices": {},
+    "soldOutOptions": [],
+    "sale": false,
+    "soldOut": false
   }
 ]
