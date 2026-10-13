@@ -101,7 +101,8 @@
       "지저스 마르키사"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   },
   {
     "id": 2071,
