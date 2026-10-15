@@ -5098,7 +5098,8 @@
       "사하라 (무향 담배) (10병)"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   },
   {
     "id": 2087,
