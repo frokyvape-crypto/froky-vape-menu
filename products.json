@@ -2155,26 +2155,28 @@
   {
     "id": 2477,
     "product_no": 2477,
-    "name": "과즙 입호흡 액상 30ml",
-    "price": 9900,
+    "name": "[대용량] 과즙 입호흡 액상 100ml",
+    "price": 18100,
     "imgs": [
-      "https://frokyvape.com/web/product/medium/202509/3e1b895c83d127c20d8caca08e6c6754.jpg"
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1792125561461_0lc4.jpg"
     ],
-    "img": "https://frokyvape.com/web/product/medium/202509/3e1b895c83d127c20d8caca08e6c6754.jpg",
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1792125561461_0lc4.jpg",
     "detailImgs": [
-      "https://og9og9.com/web/upload/NNEditor/20260120/EAB3BCECA699EC8381EC84B8.jpg"
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1792125563871_e5ne.png"
     ],
-    "detailImg": "https://og9og9.com/web/upload/NNEditor/20260120/EAB3BCECA699EC8381EC84B8.jpg",
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1792125563871_e5ne.png",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
-      "라임",
-      "자두",
-      "백향과",
-      "파인레몬"
+      "라임 100ml",
+      "자두 100ml",
+      "백향과 100ml",
+      "파인레몬 100ml"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2826,
