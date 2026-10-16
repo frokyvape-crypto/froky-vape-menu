@@ -2332,7 +2332,8 @@
       "옥수수수염차"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   },
   {
     "id": 2709,
