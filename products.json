@@ -9294,7 +9294,7 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": false,
+    "soldOut": true,
     "soldOutOptions": [
       "딸바몬 (딸기 + 바나나)",
       "알포"
