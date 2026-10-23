@@ -41,17 +41,20 @@
     ],
     "img": "https://frokyvape.com/web/product/medium/202509/30518a760f09a1acaec4dbfbab9b9c29.jpg",
     "detailImgs": [
-      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780967660302_zrqn.jpg"
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1792720662827_o4sm.jpg"
     ],
-    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1780967660302_zrqn.jpg",
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1792720662827_o4sm.jpg",
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
-      "망고 스틴"
+      "망고 스틴",
+      "선셋크러쉬",
+      "패션파인"
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": true
+    "soldOut": true,
+    "soldOutOptions": []
   },
   {
     "id": 2441,
