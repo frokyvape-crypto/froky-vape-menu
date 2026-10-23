@@ -69,12 +69,14 @@
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
-      "아크드립 수박",
-      "아크드립 백도우롱"
+      "백도우롱",
+      "수박",
+      "소다"
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": false
+    "soldOut": false,
+    "soldOutOptions": []
   },
   {
     "id": 2399,
