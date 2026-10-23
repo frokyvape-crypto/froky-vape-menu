@@ -182,7 +182,7 @@
     ],
     "sale": false,
     "optionPrices": {},
-    "soldOut": true,
+    "soldOut": false,
     "soldOutOptions": []
   },
   {
