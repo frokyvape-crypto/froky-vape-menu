@@ -3774,7 +3774,12 @@
       "라이징베리"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "피치크러쉬",
+      "샤이니머스켓"
+    ],
+    "soldOut": false
   },
   {
     "id": 3176,
