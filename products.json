@@ -9443,7 +9443,10 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOutOptions": [],
+    "soldOutOptions": [
+      "아이스 믹스베리",
+      "아이스 킹멘솔"
+    ],
     "soldOut": false
   },
   {
