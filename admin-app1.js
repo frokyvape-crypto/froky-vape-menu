@@ -149,14 +149,30 @@ function showApp() {
   startAutoRefresh();
   refreshAdminData({ silent: true });
 }
-function doLogin() {
-  const t = (document.getElementById('inp-token').value || '').trim();
+async function doLogin(t = (document.getElementById('inp-token').value || '').trim()) {
+  const btn = document.getElementById('btn-login') || document.querySelector('.btn-login');
+  if (btn.disabled) return;
   if (!t) { toast('토큰을 입력하세요', 'err'); return; }
-  TOKEN = t;
-  sessionStorage.setItem('fv-adm', t);
-  dbLoad();
-  showApp();
-  toast('로그인 완료' + (products.length ? ` (캐시 ${products.length}개 복원)` : ''), 'ok');
+  btn.disabled = true;
+  btn.textContent = '인증 확인 중...';
+  try {
+    const headers = { Authorization: 'Bearer ' + t, Accept: 'application/vnd.github+json' };
+    const user = await fetch('https://api.github.com/user', { headers, cache: 'no-store' });
+    if (!user.ok) throw new Error(`GitHub 인증 실패 (${user.status})`);
+    const repo = await fetch(`https://api.github.com/repos/${REPO}`, { headers, cache: 'no-store' });
+    if (!repo.ok) throw new Error(`저장소 접근 실패 (${repo.status})`);
+    if (!(await repo.json()).permissions?.push) throw new Error('이 저장소의 관리 권한이 없습니다');
+    TOKEN = t;
+    sessionStorage.setItem('fv-adm', t);
+    dbLoad();
+    showApp();
+    toast('GitHub 인증·저장소 접근 확인' + (products.length ? ` (캐시 ${products.length}개 복원)` : ''), 'ok');
+  } catch (e) {
+    toast('로그인 실패: ' + e.message, 'err');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '로그인';
+  }
 }
 function logout() {
   stopAutoRefresh();
@@ -169,7 +185,7 @@ function logout() {
   document.getElementById('inp-token').value = '';
 }
 
-(function init() {
+document.addEventListener('DOMContentLoaded', () => {
   renderStorefrontContext();
   if (localStorage.getItem('fv-theme') === 'light') {
     document.body.classList.add('light');
@@ -178,9 +194,12 @@ function logout() {
   const _lsToken = localStorage.getItem('fv-adm');
   const t = sessionStorage.getItem('fv-adm') || _lsToken;
   if (_lsToken && !sessionStorage.getItem('fv-adm')) { sessionStorage.setItem('fv-adm', _lsToken); localStorage.removeItem('fv-adm'); }
-  if (t) { TOKEN = t; dbLoad(); showApp(); }
-  else if (WORKER_URL && ADMIN_KEY) { dbLoad(); showApp(); }
-})();
+  if (t) doLogin(t);
+  else if (WORKER_URL && ADMIN_KEY) {
+    dbLoad(); showApp();
+    toast('Worker 연결 정보 복원 — 권한은 서버 요청 시 확인됩니다', 'info');
+  }
+}, { once: true });
 
 async function ensureSiteConfigLoaded() {
   if (!siteConfigLoaded) await loadSiteConfig();
@@ -949,7 +968,7 @@ async function fetchLatestSiteConfig({ fresh = false } = {}) {
       });
       if (r.ok) {
         const cfg = await r.json();
-        if (cfg && typeof cfg === 'object') return {...DEFAULT_SITE_CONFIG, ...cfg};
+        if (cfg && typeof cfg === 'object' && !Array.isArray(cfg)) return {...DEFAULT_SITE_CONFIG, ...cfg};
       }
     } catch (e) {}
   } else if (fresh) {
@@ -962,12 +981,13 @@ async function fetchLatestSiteConfig({ fresh = false } = {}) {
         const meta = await r.json();
         if (meta && meta.content) {
           const cfg = JSON.parse(atob(meta.content.replace(/\n/g, '')));
-          if (cfg && typeof cfg === 'object') return {...DEFAULT_SITE_CONFIG, ...cfg};
+          if (cfg && typeof cfg === 'object' && !Array.isArray(cfg)) return {...DEFAULT_SITE_CONFIG, ...cfg};
         }
       }
     } catch (e) {}
   }
-  // 폴백: raw CDN
+  if (fresh) throw new Error('최신 설정을 확인하지 못해 저장을 중단했습니다. 잠시 후 다시 시도하세요.');
+  // 표시용 조회에만 CDN 폴백을 허용한다.
   let r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${CONFIG_FILE}?t=${Date.now()}`, { cache: 'no-store' });
   if (!r.ok) r = await fetch(`${CONFIG_FILE}?t=${Date.now()}`, { cache: 'no-store' });
   if (!r.ok) throw new Error(`site-config.json 조회 실패 (${r.status})`);
@@ -1022,7 +1042,7 @@ async function saveSiteConfig(scope = 'notice') {
 
     let savedConfig = null;
     for (let attempt = 0; attempt < 2; attempt++) {
-      const latestConfig = await fetchLatestSiteConfig({ fresh: true }).catch(() => ({...DEFAULT_SITE_CONFIG}));
+      const latestConfig = await fetchLatestSiteConfig({ fresh: true });
       const nextConfig = scope === 'categories'
         ? {...latestConfig, categories: normalizeCategories(categories)}
         : scope === 'purchaseRules'

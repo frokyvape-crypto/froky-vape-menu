@@ -220,7 +220,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
     <label class="field-label">GitHub Personal Access Token</label>
     <input class="field" id="inp-token" type="password" placeholder="ghp_xxxxxxxxxxxxxxxx" autocomplete="off"
            onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="btn-login" onclick="doLogin()">로그인</button>
+    <button class="btn-login" id="btn-login" onclick="doLogin()">로그인</button>
     <div class="login-hint">
       토큰 없으면 <a href="https://github.com/settings/tokens/new?scopes=repo&description=FROKY+Admin" target="_blank">여기서 발급</a> (repo 권한 필요)
     </div>
@@ -247,7 +247,8 @@ tr:hover td{background:rgba(128,128,128,.06);}
   <div class="main">
     <div class="deploy-banner" id="deploy-banner">
       <div class="dot"></div>
-      <span>GitHub에 저장 후 배포 중... (30~60초)</span>
+      <span>GitHub 저장 완료 · 사용자 페이지 반영은 아직 확인되지 않았습니다.</span>
+      <a href="https://github.com/frokyvape-crypto/froky-vape-menu/actions/workflows/deploy.yml?query=branch%3Amain" target="_blank" rel="noopener">배포 이력 확인 ↗</a>
     </div>
 
     <div class="action-cards">
@@ -653,8 +654,8 @@ tr:hover td{background:rgba(128,128,128,.06);}
 
 <div class="toast" id="toast"></div>
 
-<script src="admin-app1.js?v=20260915-purchase-rules"></script>
-<script src="admin-app2.js?v=20260915-purchase-rules"></script>
+<script src="admin-app1.js?v=20261026-admin-safety"></script>
+<script src="admin-app2.js?v=20261026-admin-safety"></script>
 <script>
 /* 보안 억제(눈속임): 우클릭/개발자도구 단축키 차단 + 경고 오버레이.
    ※ 실제 보안이 아니라 일반인 대상 심리적 억제용 — 아는 사람은 우회 가능. */

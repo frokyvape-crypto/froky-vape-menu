@@ -182,7 +182,7 @@ async function saveViaDirect(nextProducts = products) {
 async function saveAndDeploy() {
   if (isSaving) { toast('이미 저장 중...', 'info'); return; }
   await refreshAdminData({ silent: true });
-  toast('상품·카테고리 최신 상태 확인 완료 — 각 수정은 저장 즉시 배포됩니다', 'ok');
+  toast('최신 상태를 조회했습니다. 저장·배포 결과는 각 작업과 배포 이력에서 확인하세요.', 'info');
 }
 
 function markDeployStarted(res, message) {
@@ -190,12 +190,8 @@ function markDeployStarted(res, message) {
   remoteHash = JSON.stringify(products);
   const banner = document.getElementById('deploy-banner');
   const span = banner?.querySelector('span');
-  if (span) span.textContent = 'GitHub에 저장 후 배포 중... (30~60초)';
+  if (span) span.textContent = 'GitHub 저장 완료 · 사용자 페이지 반영은 아직 확인되지 않았습니다.';
   banner?.classList.add('show');
-  setTimeout(() => {
-    if (span) span.textContent = '✅ 배포 완료 — 메뉴 페이지에 반영되었습니다';
-    setTimeout(() => banner?.classList.remove('show'), 4000);
-  }, 90000);
   toast(message + (res?.commitUrl ? ' (커밋 생성됨)' : ''), 'ok');
 }
 
@@ -222,8 +218,6 @@ async function persistProductsMutation(mutator, message) {
       const nextProducts = mutator(base.map(p => ({...p})));
       if (!Array.isArray(nextProducts)) throw new Error('상품 변경 결과가 올바르지 않습니다');
       try {
-        // 이번 변경분 기록 → 표시 일관성(내 편집 보호)
-        registerMyRecentEdits(base, nextProducts);
         let res, adopt;
         if (useWorker && await workerSupportsOps()) {
           // 변경분(ops)만 전송 → Worker가 GitHub 최신본 위에 병합. 동시 편집해도 서로 안 덮어씁.
@@ -245,6 +239,8 @@ async function persistProductsMutation(mutator, message) {
           res = await saveViaDirect(nextProducts);
           adopt = nextProducts;
         }
+        // 서버 저장에 성공한 변경만 캐시 전파 지연으로부터 보호한다.
+        registerMyRecentEdits(base, nextProducts);
         products = _delIds.size ? adopt.filter(p => !_delIds.has(Number(p.id))) : adopt;
         pendingRemoteProducts = null;
         remoteHash = JSON.stringify(products);
@@ -269,7 +265,7 @@ async function persistDeletedProductIds({ add = [], remove = [] } = {}) {
   if (!addSet.size && !removeSet.size) return;
 
   for (let attempt = 0; attempt < 2; attempt++) {
-    const latestConfig = await fetchLatestSiteConfig({ fresh: true }).catch(() => ({...DEFAULT_SITE_CONFIG}));
+    const latestConfig = await fetchLatestSiteConfig({ fresh: true });
     const deleted = new Set((latestConfig.deletedProductIds || []).map(Number).filter(Number.isFinite));
     addSet.forEach(id => deleted.add(id));
     removeSet.forEach(id => deleted.delete(id));
