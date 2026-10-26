@@ -9234,29 +9234,6 @@
     "sale": false
   },
   {
-    "id": 365,
-    "product_no": 365,
-    "name": "크로닉 입호흡 액상 30ml",
-    "price": 15500,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202507/b3e4c09edc72084d4cb81ba4fa4bb409.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202507/b3e4c09edc72084d4cb81ba4fa4bb409.png",
-    "detailImgs": [
-      "https://frokyvape.cafe24.com/web/upload/NNEditor/20240530/chronic_30_EC8381EC84B8_ECB694EAB080.png"
-    ],
-    "detailImg": "https://frokyvape.cafe24.com/web/upload/NNEditor/20240530/chronic_30_EC8381EC84B8_ECB694EAB080.png",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [
-      "피치망고"
-    ],
-    "optionPrices": {},
-    "sale": false,
-    "soldOutOptions": [],
-    "soldOut": true
-  },
-  {
     "id": 62,
     "product_no": 62,
     "name": "버블몬 입호흡 액상 30ml",
