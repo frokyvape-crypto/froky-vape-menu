@@ -7458,7 +7458,11 @@
       "[2%] 판타지 포도 100ml"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "[2%] 콜라 100ml"
+    ],
+    "soldOut": false
   },
   {
     "id": 2511,
