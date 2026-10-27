@@ -79,7 +79,9 @@
     "optionPrices": {},
     "sale": false,
     "soldOut": false,
-    "soldOutOptions": []
+    "soldOutOptions": [
+      "소다"
+    ]
   },
   {
     "id": 2399,
