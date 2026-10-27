@@ -185,7 +185,9 @@
     "sale": false,
     "optionPrices": {},
     "soldOut": false,
-    "soldOutOptions": []
+    "soldOutOptions": [
+      "체리엇 체리쥬빌레"
+    ]
   },
   {
     "id": 1898,
