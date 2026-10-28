@@ -9301,8 +9301,10 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": false,
-    "soldOutOptions": []
+    "soldOut": true,
+    "soldOutOptions": [
+      "멘솔"
+    ]
   },
   {
     "id": 2857,
