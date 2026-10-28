@@ -10088,5 +10088,27 @@
     "soldOutOptions": [],
     "sale": false,
     "soldOut": false
+  },
+  {
+    "id": 1793165441355,
+    "name": "리퀴드랩 베리베링 입호흡 액상 30ml",
+    "price": 77000,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793165434719_uc3s.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793165434719_uc3s.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793165437194_xyer.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793165437194_xyer.jpg",
+    "cat": "입호흡",
+    "flavor": "9.8mg / 10병단위 구매 가능",
+    "options": [
+      "베리베링 (10병)"
+    ],
+    "optionPrices": {},
+    "soldOutOptions": [],
+    "sale": false,
+    "soldOut": false
   }
 ]
