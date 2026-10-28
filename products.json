@@ -7266,7 +7266,11 @@
     "sale": false,
     "soldOutOptions": [
       "ST 베리",
-      "스피아"
+      "데미안",
+      "스윗치",
+      "스피아",
+      "토트",
+      "팔팔"
     ],
     "soldOut": false
   },
