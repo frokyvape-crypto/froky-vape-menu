@@ -9864,5 +9864,27 @@
     "soldOutOptions": [],
     "sale": false,
     "soldOut": true
+  },
+  {
+    "id": 1793164497521,
+    "name": "리퀴드랩 이탈리아 아메리카노 폐호흡 액상 60ml",
+    "price": 12800,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793164490252_2kb6.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793164490252_2kb6.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793164492812_oxut.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793164492812_oxut.jpg",
+    "cat": "폐호흡",
+    "flavor": "3mg",
+    "options": [
+      "폐호흡 이탈리아 아메리카노"
+    ],
+    "optionPrices": {},
+    "soldOutOptions": [],
+    "sale": false,
+    "soldOut": false
   }
 ]
