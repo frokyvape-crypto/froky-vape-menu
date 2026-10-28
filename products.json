@@ -9977,5 +9977,27 @@
     "soldOutOptions": [],
     "sale": false,
     "soldOut": true
+  },
+  {
+    "id": 1793164909811,
+    "name": "리퀴드랩 흡혈자두 폐호흡 액상 60ml",
+    "price": 12800,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793164903083_ic57.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793164903083_ic57.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793164905964_mgus.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793164905964_mgus.jpg",
+    "cat": "폐호흡",
+    "flavor": "3mg",
+    "options": [
+      "폐호흡 흡혈자두"
+    ],
+    "optionPrices": {},
+    "soldOutOptions": [],
+    "sale": false,
+    "soldOut": false
   }
 ]
