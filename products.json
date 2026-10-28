@@ -5815,7 +5815,9 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOutOptions": [],
+    "soldOutOptions": [
+      "3mg 파인애플"
+    ],
     "soldOut": false
   },
   {
