@@ -5484,7 +5484,8 @@
       "야쿠자르트"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   },
   {
     "id": 1694,
