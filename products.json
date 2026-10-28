@@ -5685,7 +5685,8 @@
       "칠성파 사이다"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   },
   {
     "id": 965,
