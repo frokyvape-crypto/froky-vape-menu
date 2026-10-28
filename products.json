@@ -10407,5 +10407,30 @@
     "soldOutOptions": [],
     "sale": false,
     "soldOut": false
+  },
+  {
+    "id": 1793166624315,
+    "name": "리퀴드랩 환타지아 오렌지맛 입호흡 액상 30ml",
+    "price": 77000,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793166608798_at6m.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793166608798_at6m.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793166611681_n6gv.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793166614255_18da.jpg",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793166617575_8l41.webp",
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793166621723_pj4e.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793166611681_n6gv.jpg",
+    "cat": "입호흡",
+    "flavor": "9.8mg / 10병단위 구매 가능",
+    "options": [
+      "환타지아 오렌지맛 (10병)"
+    ],
+    "optionPrices": {},
+    "soldOutOptions": [],
+    "sale": false,
+    "soldOut": false
   }
 ]
