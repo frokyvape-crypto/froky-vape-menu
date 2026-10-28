@@ -5568,7 +5568,8 @@
       "[9mg] 파인애플"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   },
   {
     "id": 1562,
