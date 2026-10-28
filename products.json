@@ -10132,5 +10132,27 @@
     "soldOutOptions": [],
     "sale": false,
     "soldOut": false
+  },
+  {
+    "id": 1793165698856,
+    "name": "리퀴드랩 따봉거봉 입호흡 액상 30ml",
+    "price": 77000,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793165692446_dyjj.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793165692446_dyjj.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793165694695_gwvb.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793165694695_gwvb.jpg",
+    "cat": "입호흡",
+    "flavor": "9.8mg / 10병단위 구매 가능",
+    "options": [
+      "따봉거봉 (10병)"
+    ],
+    "optionPrices": {},
+    "soldOutOptions": [],
+    "sale": false,
+    "soldOut": false
   }
 ]
