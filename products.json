@@ -10154,5 +10154,29 @@
     "soldOutOptions": [],
     "sale": false,
     "soldOut": false
+  },
+  {
+    "id": 1793165804533,
+    "name": "리퀴드랩 스윗하지않아 입호흡 액상 30ml",
+    "price": 77000,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793165797617_48ig.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793165797617_48ig.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793165800583_hy51.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793165800583_hy51.jpg",
+    "cat": "입호흡",
+    "flavor": "9.8mg / 10병단위 구매 가능",
+    "options": [
+      "샤인머스켓 (멘솔) (10병)",
+      "툰드라베리 (거의 노멘) (10병)",
+      "라임라임 (10병)"
+    ],
+    "optionPrices": {},
+    "soldOutOptions": [],
+    "sale": false,
+    "soldOut": false
   }
 ]
