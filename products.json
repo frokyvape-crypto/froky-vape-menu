@@ -9842,5 +9842,27 @@
     "soldOutOptions": [],
     "sale": false,
     "soldOut": false
+  },
+  {
+    "id": 1793164403359,
+    "name": "리퀴드랩 ㅇㅋㄹㅌ 폐호흡 액상 60ml",
+    "price": 12800,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793164396948_athz.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793164396948_athz.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793164399693_f8vd.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793164399693_f8vd.jpg",
+    "cat": "폐호흡",
+    "flavor": "3mg",
+    "options": [
+      "폐호흡 ㅇㅋㄹㅌ"
+    ],
+    "optionPrices": {},
+    "soldOutOptions": [],
+    "sale": false,
+    "soldOut": false
   }
 ]
