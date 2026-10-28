@@ -10507,5 +10507,31 @@
     "soldOutOptions": [],
     "sale": false,
     "soldOut": false
+  },
+  {
+    "id": 1793172040015,
+    "name": "버블몬 릴렉스 입호흡 액상 33ml",
+    "price": 12900,
+    "imgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793172034726_pwiz.png"
+    ],
+    "img": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793172034726_pwiz.png",
+    "detailImgs": [
+      "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793172036967_tqcz.jpg"
+    ],
+    "detailImg": "https://raw.githubusercontent.com/frokyvape-crypto/froky-vape-menu/main/images/1793172036967_tqcz.jpg",
+    "cat": "입호흡",
+    "flavor": "",
+    "options": [
+      "알로에 포도",
+      "이온 음료",
+      "블루베리",
+      "딸기",
+      "레몬 라임"
+    ],
+    "optionPrices": {},
+    "soldOutOptions": [],
+    "sale": false,
+    "soldOut": false
   }
 ]
