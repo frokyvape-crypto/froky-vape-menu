@@ -7640,13 +7640,15 @@
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
-      "레몬 그린티 100ml",
-      "빙홍차 100ml",
-      "자스민 머스켓 100ml",
-      "락 슈가 페어 100ml"
+      "레몬 그린티",
+      "빙홍차",
+      "자스민 머스켓",
+      "락 슈가 페어"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2696,
