@@ -9500,7 +9500,9 @@
       "3mg 크오크",
       "6mg 크오크"
     ],
-    "optionPrices": {},
+    "optionPrices": {
+      "6mg 크오크": 2200
+    },
     "sale": false,
     "soldOut": false,
     "soldOutOptions": []
