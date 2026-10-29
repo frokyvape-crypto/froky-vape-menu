@@ -6879,11 +6879,12 @@
     "cat": "고농도",
     "flavor": "1.8%",
     "options": [
-      "[1.8%] 포카리"
+      "포카리"
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": true
+    "soldOut": true,
+    "soldOutOptions": []
   },
   {
     "id": 381,
