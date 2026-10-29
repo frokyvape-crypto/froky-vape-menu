@@ -8710,13 +8710,15 @@
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
-      "그레이프 100ml",
-      "그린 그레이프 100ml",
-      "라임 100ml",
-      "멜론 100ml"
+      "그레이프",
+      "그린 그레이프",
+      "라임",
+      "멜론"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2858,
