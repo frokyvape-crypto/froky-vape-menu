@@ -7766,13 +7766,15 @@
     "cat": "고농도",
     "flavor": "2%",
     "options": [
-      "[2%] 레드 & 그린 애플 100ml",
-      "[2%] 사워 그레이프 100ml",
-      "[2%] 피치 블라썸 100ml",
-      "[2%] 피치 플럼 100ml"
+      "레드 & 그린 애플",
+      "사워 그레이프",
+      "피치 블라썸",
+      "피치 플럼"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2862,
