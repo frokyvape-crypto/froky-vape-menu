@@ -8006,11 +8006,13 @@
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
-      "애딸빙 100ml",
-      "애망빙 100ml"
+      "애딸빙",
+      "애망빙"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2697,
