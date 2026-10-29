@@ -4644,11 +4644,13 @@
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
-      "딸기 사과 빙수 100ml",
-      "애플 망고 빙수 100ml"
+      "딸기 사과 빙수",
+      "애플 망고 빙수"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2646,
