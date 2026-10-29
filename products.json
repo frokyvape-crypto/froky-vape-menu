@@ -8736,12 +8736,14 @@
     "cat": "고농도",
     "flavor": "2%",
     "options": [
-      "[2%] 아인슈페너 100ml",
-      "[2%] 카라멜마끼아또 100ml",
-      "[2%] 토피넛라떼 100ml"
+      "아인슈페너",
+      "카라멜마끼아또",
+      "토피넛라떼"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2691,
