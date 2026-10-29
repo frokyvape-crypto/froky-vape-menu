@@ -8684,13 +8684,15 @@
     "cat": "고농도",
     "flavor": "2%",
     "options": [
-      "[2%] 그레이프 100ml",
-      "[2%] 그린 그레이프 100ml",
-      "[2%] 라임 100ml",
-      "[2%] 멜론 100ml"
+      "그레이프",
+      "그린 그레이프",
+      "라임",
+      "멜론"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2503,
