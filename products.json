@@ -8154,12 +8154,14 @@
     "cat": "고농도",
     "flavor": "2%",
     "options": [
-      "[2%] 버너티 크림 100ml",
-      "[2%] 버애플 마제스티 100ml",
-      "[2%] 버위즐 100ml"
+      "버너티 크림",
+      "버애플 마제스티",
+      "버위즐"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2663,
