@@ -8605,13 +8605,15 @@
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
-      "딸기 100ml",
-      "멜론 100ml",
-      "백향과 100ml",
-      "적포도 100ml"
+      "딸기",
+      "멜론",
+      "백향과",
+      "적포도"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2488,
