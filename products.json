@@ -1684,12 +1684,14 @@
     "cat": "노멘솔",
     "flavor": "9.8mg",
     "options": [
-      "[제로쿨] 라임",
-      "[제로쿨] 소다 블라스트",
-      "[제로쿨] 알로에 베라"
+      "라임",
+      "소다 블라스트",
+      "알로에 베라"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2930,
