@@ -9253,11 +9253,13 @@
     "cat": "고농도",
     "flavor": "9.8mg",
     "options": [
-      "[2%] 애딸빙",
-      "[2%] 애망빙"
+      "애딸빙",
+      "애망빙"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 1781234827122,
