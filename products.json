@@ -5578,7 +5578,7 @@
   {
     "id": 1693,
     "product_no": 1693,
-    "name": "잽쥬스 마르키사 폐호흡 액상 60ml",
+    "name": "[3mg] 잽쥬스 마르키사 폐호흡 액상 60ml",
     "price": 27500,
     "imgs": [
       "https://frokyvape.com/web/product/medium/202409/82895a58ae1dbe252e76ad36f1badc1a.png"
@@ -5594,16 +5594,13 @@
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
-      "3mg 오리지널",
-      "3mg 라즈베리",
-      "3mg 딸기"
+      "오리지널",
+      "라즈베리",
+      "딸기"
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOutOptions": [
-      "3mg 오리지널",
-      "3mg 라즈베리"
-    ],
+    "soldOutOptions": [],
     "soldOut": true
   },
   {
