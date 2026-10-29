@@ -1058,13 +1058,15 @@
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
-      "폐호흡 유자",
-      "폐호흡 발렌시가",
-      "폐호흡 딸기",
-      "폐호흡 샤인머스킷"
+      "유자",
+      "발렌시가",
+      "딸기",
+      "샤인머스킷"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 1037,
