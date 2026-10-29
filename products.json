@@ -9497,12 +9497,10 @@
     "cat": "폐호흡",
     "flavor": "3mg / 6mg",
     "options": [
-      "3mg 크오크 폐호흡",
-      "6mg 크오크 폐호흡"
+      "3mg 크오크",
+      "6mg 크오크"
     ],
-    "optionPrices": {
-      "6mg 크오크 폐호흡": 23600
-    },
+    "optionPrices": {},
     "sale": false,
     "soldOut": false,
     "soldOutOptions": []
