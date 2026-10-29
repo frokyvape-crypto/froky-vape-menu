@@ -5875,7 +5875,10 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOutOptions": [],
+    "soldOutOptions": [
+      "용과",
+      "파인애플"
+    ],
     "soldOut": false
   },
   {
