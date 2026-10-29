@@ -8527,13 +8527,15 @@
     "cat": "고농도",
     "flavor": "2%",
     "options": [
-      "[2%] 딸기 100ml",
-      "[2%] 멜론 100ml",
-      "[2%] 백향과 100ml",
-      "[2%] 적포도 100ml"
+      "딸기",
+      "멜론",
+      "백향과",
+      "적포도"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2814,
