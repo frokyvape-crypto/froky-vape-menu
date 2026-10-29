@@ -7193,17 +7193,14 @@
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
-      "폐호흡 하이민트 망고",
-      "폐호흡 하이민트 멜론",
-      "폐호흡 하이민트 시트러스"
+      "망고",
+      "멜론",
+      "시트러스"
     ],
     "optionPrices": {},
     "sale": false,
     "soldOut": false,
-    "soldOutOptions": [
-      "폐호흡 하이민트 멜론",
-      "폐호흡 하이민트 시트러스"
-    ]
+    "soldOutOptions": []
   },
   {
     "id": 516,
