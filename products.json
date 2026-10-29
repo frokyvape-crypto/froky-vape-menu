@@ -7293,15 +7293,13 @@
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
-      "하이민트 망고",
-      "하이민트 멜론",
-      "하이민트 시트러스"
+      "망고",
+      "멜론",
+      "시트러스"
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOutOptions": [
-      "하이민트 시트러스"
-    ],
+    "soldOutOptions": [],
     "soldOut": true
   },
   {
