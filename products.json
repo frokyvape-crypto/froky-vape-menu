@@ -7690,13 +7690,15 @@
     "cat": "고농도",
     "flavor": "2%",
     "options": [
-      "[2%] 라임 100ml",
-      "[2%] 자두 100ml",
-      "[2%] 파인 레몬에이드 100ml",
-      "[2%] 패션후르츠 100ml"
+      "라임",
+      "자두",
+      "파인 레몬에이드",
+      "패션후르츠"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2507,
