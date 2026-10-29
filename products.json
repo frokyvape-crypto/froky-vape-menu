@@ -9333,7 +9333,7 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": true,
+    "soldOut": false,
     "soldOutOptions": [
       "멘솔",
       "폴라 (청포도)",
