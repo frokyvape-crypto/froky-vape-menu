@@ -8052,14 +8052,16 @@
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
-      "소다 밀크 100ml",
-      "스윗 밀크 100ml",
-      "커피 우유 100ml",
-      "딸기 우유 100ml",
-      "말차 라떼 100ml"
+      "소다 밀크",
+      "스윗 밀크",
+      "커피 우유",
+      "딸기 우유",
+      "말차 라떼"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2846,
