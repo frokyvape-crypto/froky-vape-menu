@@ -7505,15 +7505,17 @@
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
-      "레드 윙스 100ml",
-      "제로 사이다 100ml",
-      "카보네이티드 100ml",
-      "콜라 100ml",
-      "판타지 오렌지 100ml",
-      "판타지 포도 100ml"
+      "레드 윙스",
+      "제로 사이다",
+      "카보네이티드",
+      "콜라",
+      "판타지 오렌지",
+      "판타지 포도"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2860,
