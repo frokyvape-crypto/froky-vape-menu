@@ -1133,10 +1133,12 @@
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
-      "폐호흡 블루베리 블라썸"
+      "블루베리 블라썸"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 811,
