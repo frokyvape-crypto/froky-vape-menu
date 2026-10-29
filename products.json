@@ -8784,14 +8784,16 @@
     "cat": "고농도",
     "flavor": "2%",
     "options": [
-      "[2%] 소다 밀크 100ml",
-      "[2%] 스윗 밀크 100ml",
-      "[2%] 커피 우유 100ml",
-      "[2%] 딸기 우유 100ml",
-      "[2%] 말차 라떼 100ml"
+      "소다 밀크",
+      "스윗 밀크",
+      "커피 우유",
+      "딸기 우유",
+      "말차 라떼"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2698,
