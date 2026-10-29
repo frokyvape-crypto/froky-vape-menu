@@ -8204,12 +8204,14 @@
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
-      "너티 크림 100ml",
-      "애플 마제스티 100ml",
-      "위즐 100ml"
+      "너티 크림",
+      "애플 마제스티",
+      "위즐"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2849,
