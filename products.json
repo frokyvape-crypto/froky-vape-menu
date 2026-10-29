@@ -8990,15 +8990,17 @@
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
-      "라즈베리 100ml",
-      "사과 100ml",
-      "오렌지 100ml",
-      "체리 100ml",
-      "키위 100ml",
-      "파인애플 100ml"
+      "라즈베리",
+      "사과",
+      "오렌지",
+      "체리",
+      "키위",
+      "파인애플"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 1781232643842,
