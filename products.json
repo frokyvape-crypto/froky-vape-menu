@@ -8279,12 +8279,14 @@
     "cat": "고농도",
     "flavor": "2%",
     "options": [
-      "[2%] 라임",
-      "[2%] 소다블라스트",
-      "[2%] 알로에베라"
+      "라임",
+      "소다블라스트",
+      "알로에베라"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2508,
