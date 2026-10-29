@@ -1581,12 +1581,14 @@
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
-      "[슈퍼쿨] 라임",
-      "[슈퍼쿨] 소다 블라스트",
-      "[슈퍼쿨] 알로에 베라"
+      "라임",
+      "소다 블라스트",
+      "알로에 베라"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2929,
