@@ -5389,10 +5389,12 @@
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
-      "카라멜 팝콘 100ml"
+      "카라멜 팝콘"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 1780899063979,
