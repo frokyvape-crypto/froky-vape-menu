@@ -5566,16 +5566,13 @@
     "cat": "폐호흡-고농도",
     "flavor": "9mg",
     "options": [
-      "[9mg] 마르키사 오리지널",
-      "[9mg] 마르키사 라즈베리",
-      "[9mg] 마르키사 딸기"
+      "오리지널",
+      "라즈베리",
+      "딸기"
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOutOptions": [
-      "[9mg] 마르키사 라즈베리",
-      "[9mg] 마르키사 딸기"
-    ],
+    "soldOutOptions": [],
     "soldOut": true
   },
   {
