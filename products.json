@@ -1481,13 +1481,15 @@
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
-      "폐호흡 라임 100ml",
-      "폐호흡 자두 100ml",
-      "폐호흡 파인 레몬에이드 100ml",
-      "폐호흡 패션후르츠 100ml"
+      "라임",
+      "자두",
+      "파인 레몬에이드",
+      "패션후르츠"
     ],
     "sale": false,
-    "optionPrices": {}
+    "optionPrices": {},
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2859,
