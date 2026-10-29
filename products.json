@@ -8179,12 +8179,14 @@
     "cat": "고농도",
     "flavor": "2%",
     "options": [
-      "[2%] 너티 크림",
-      "[2%] 애플 마제스티",
-      "[2%] 위즐"
+      "너티 크림",
+      "애플 마제스티",
+      "위즐"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2506,
