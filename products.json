@@ -1084,11 +1084,13 @@
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
-      "폐호흡 치즈 카라멜팝콘",
-      "폐호흡 코코넛 커스타드 케이크"
+      "치즈 카라멜팝콘",
+      "코코넛 커스타드 케이크"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 825,
