@@ -8860,10 +8860,12 @@
     "cat": "고농도",
     "flavor": "2%",
     "options": [
-      "[2%] 크오크"
+      "크오크"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 1781166623995,
