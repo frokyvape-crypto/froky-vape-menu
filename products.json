@@ -9128,13 +9128,15 @@
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
-      "그레이프 100ml",
-      "레드 아오리 100ml",
-      "피치 블라썸 100ml",
-      "피치 플럼 100ml"
+      "그레이프",
+      "레드 아오리",
+      "피치 블라썸",
+      "피치 플럼"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 1781234357637,
