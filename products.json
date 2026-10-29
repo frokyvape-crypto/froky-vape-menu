@@ -7218,13 +7218,14 @@
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
-      "폐호흡 망고",
-      "폐호흡 멜론",
-      "폐호흡 시트러스 (레몬 오렌지)"
+      "망고",
+      "멜론",
+      "시트러스"
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": true
+    "soldOut": true,
+    "soldOutOptions": []
   },
   {
     "id": 355,
