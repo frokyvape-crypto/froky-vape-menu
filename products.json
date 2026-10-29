@@ -7982,11 +7982,13 @@
     "cat": "고농도",
     "flavor": "2%",
     "options": [
-      "[2%] 애딸빙 100ml",
-      "[2%] 애망빙 100ml"
+      "애딸빙",
+      "애망빙"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2798,
