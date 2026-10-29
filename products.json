@@ -1632,13 +1632,15 @@
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
-      "[슈퍼쿨] 그레이프",
-      "[슈퍼쿨] 그린 그레이프",
-      "[슈퍼쿨] 라임",
-      "[슈퍼쿨] 멜론"
+      "그레이프",
+      "그린 그레이프",
+      "라임",
+      "멜론"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2926,
