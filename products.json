@@ -4120,12 +4120,14 @@
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
-      "폐호흡 슬로우 블로우",
-      "폐호흡 쿠쉬맨",
-      "폐호흡 아삽 그레이프"
+      "슬로우 블로우",
+      "쿠쉬맨",
+      "아삽 그레이프"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 388,
