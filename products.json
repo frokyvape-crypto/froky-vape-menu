@@ -8079,12 +8079,14 @@
     "cat": "고농도",
     "flavor": "2%",
     "options": [
-      "[2%] 레몬 케이크 100ml",
-      "[2%] 바나나 케이크 100ml",
-      "[2%] 애플파이 100ml"
+      "레몬 케이크",
+      "바나나 케이크",
+      "애플파이"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2630,
