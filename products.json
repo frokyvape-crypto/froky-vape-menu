@@ -5620,13 +5620,14 @@
     "cat": "폐호흡-고농도",
     "flavor": "9mg",
     "options": [
-      "[9mg] 알로에베라",
-      "[9mg] 용과",
-      "[9mg] 파인애플"
+      "알로에베라",
+      "용과",
+      "파인애플"
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOut": true
+    "soldOut": true,
+    "soldOutOptions": []
   },
   {
     "id": 1562,
