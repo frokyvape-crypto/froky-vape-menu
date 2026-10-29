@@ -7792,13 +7792,15 @@
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
-      "레드 & 그린 애플 100ml",
-      "사워 그레이프 100ml",
-      "피치 블라썸 100ml",
-      "피치 플럼 100ml"
+      "레드 & 그린 애플",
+      "사워 그레이프",
+      "피치 블라썸",
+      "피치 플럼"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2816,
