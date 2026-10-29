@@ -1003,17 +1003,15 @@
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
-      "폐호흡 레몬 사와",
-      "폐호흡 자몽 사와",
-      "폐호흡 유자 사와",
-      "폐호흡 체리 사와",
-      "폐호흡 라임 사와"
+      "레몬 사와",
+      "자몽 사와",
+      "유자 사와",
+      "체리 사와",
+      "라임 사와"
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOutOptions": [
-      "폐호흡 라임 사와"
-    ],
+    "soldOutOptions": [],
     "soldOut": false
   },
   {
