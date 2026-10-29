@@ -3426,7 +3426,8 @@
     "optionPrices": {
       "알로에베라 (9MG / 검은색 병)": 23600
     },
-    "sale": false
+    "sale": false,
+    "soldOut": true
   },
   {
     "id": 356,
