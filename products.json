@@ -9154,12 +9154,14 @@
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
-      "아인슈페너 100ml",
-      "카라멜 넛 라떼 100ml",
-      "카라멜 바닐라 라떼 100ml"
+      "아인슈페너",
+      "카라멜 넛 라떼",
+      "카라멜 바닐라 라떼"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 1781234427412,
