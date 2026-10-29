@@ -8304,12 +8304,14 @@
     "cat": "폐호흡고농도",
     "flavor": "9.8mg",
     "options": [
-      "라임 100ml",
-      "소다 블러스트 100ml",
-      "알로에 베라 100ml"
+      "라임",
+      "소다 블러스트",
+      "알로에 베라"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 2475,
