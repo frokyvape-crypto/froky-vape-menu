@@ -9614,8 +9614,10 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOutOptions": [],
-    "soldOut": false
+    "soldOutOptions": [
+      "아이스 믹스베리"
+    ],
+    "soldOut": true
   },
   {
     "id": 2634,
