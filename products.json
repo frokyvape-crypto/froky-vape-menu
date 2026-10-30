@@ -7545,7 +7545,9 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOutOptions": [],
+    "soldOutOptions": [
+      "콜라"
+    ],
     "soldOut": false
   },
   {
