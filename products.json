@@ -9385,7 +9385,15 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOutOptions": [],
+    "soldOutOptions": [
+      "피카라임",
+      "무향담배",
+      "맥스 멘솔",
+      "알베",
+      "털복숭아",
+      "거봉",
+      "샤인 샤인"
+    ],
     "soldOut": false
   },
   {
