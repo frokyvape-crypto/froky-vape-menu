@@ -3381,7 +3381,8 @@
       "솔티 알로에베라"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   },
   {
     "id": 1445,
