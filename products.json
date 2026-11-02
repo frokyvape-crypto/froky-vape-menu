@@ -4318,13 +4318,15 @@
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
-      "폐호흡 그랜드 마스터",
-      "폐호흡 캐슬롱",
-      "폐호흡 보우든메이트",
-      "폐호흡 갬빗"
+      "그랜드 마스터",
+      "캐슬롱",
+      "보우든메이트",
+      "갬빗"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 552,
