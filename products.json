@@ -3517,16 +3517,14 @@
     "cat": "입호흡",
     "flavor": "9.8mg",
     "options": [
-      "리큐 스피아민트",
-      "리큐 그레이프 아이스",
-      "리큐 레몬 아이스",
-      "리큐 바닐라 커스타드"
+      "스피아민트",
+      "그레이프 아이스",
+      "레몬 아이스",
+      "바닐라 커스타드"
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOutOptions": [
-      "리큐 스피아민트"
-    ],
+    "soldOutOptions": [],
     "soldOut": false
   },
   {
