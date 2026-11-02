@@ -3963,7 +3963,8 @@
       "폐호흡 피치"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   },
   {
     "id": 395,
