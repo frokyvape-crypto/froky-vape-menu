@@ -9351,7 +9351,16 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOutOptions": [],
+    "soldOutOptions": [
+      "피카라임",
+      "크림시가",
+      "털복숭아",
+      "거봉",
+      "민트",
+      "알베",
+      "레드애플",
+      "샤인샤인"
+    ],
     "soldOut": false
   },
   {
