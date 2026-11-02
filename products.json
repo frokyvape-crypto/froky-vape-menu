@@ -3987,7 +3987,11 @@
       "오리지널 시가"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "오리지널 시가"
+    ],
+    "soldOut": false
   },
   {
     "id": 1734,
