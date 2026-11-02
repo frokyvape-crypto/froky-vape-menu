@@ -3893,7 +3893,8 @@
       "비타레몬"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOut": true
   },
   {
     "id": 315,
