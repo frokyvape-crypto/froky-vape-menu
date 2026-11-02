@@ -9440,7 +9440,13 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOutOptions": [],
+    "soldOutOptions": [
+      "02 딸기 키위 아이스",
+      "03 레몬 라임",
+      "01 블루라즈베리 아이스",
+      "09 포카리 아이스",
+      "07 피치 아이스"
+    ],
     "soldOut": false
   },
   {
