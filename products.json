@@ -3359,7 +3359,11 @@
       "콜라"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "라임소다"
+    ],
+    "soldOut": false
   },
   {
     "id": 1445,
