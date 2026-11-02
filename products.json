@@ -6453,7 +6453,11 @@
       "19 블랙 스트로베리 민트"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [
+      "12 자스민 그린티"
+    ],
+    "soldOut": false
   },
   {
     "id": 1820,
