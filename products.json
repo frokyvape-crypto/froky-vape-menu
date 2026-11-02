@@ -3362,29 +3362,6 @@
     "sale": false
   },
   {
-    "id": 1535,
-    "product_no": 1535,
-    "name": "DEER 솔티 입호흡 액상 30ml",
-    "price": 13300,
-    "imgs": [
-      "https://frokyvape.com/web/product/medium/202407/5a3ecc2d66957e21886c56e8083c9f4d.png"
-    ],
-    "img": "https://frokyvape.com/web/product/medium/202407/5a3ecc2d66957e21886c56e8083c9f4d.png",
-    "detailImgs": [
-      "https://og9og9.com/web/upload/NNEditor/20240613/KakaoTalk_20240613_134455741.jpg"
-    ],
-    "detailImg": "https://og9og9.com/web/upload/NNEditor/20240613/KakaoTalk_20240613_134455741.jpg",
-    "cat": "입호흡",
-    "flavor": "9.8mg",
-    "options": [
-      "솔티 리치",
-      "솔티 알로에베라"
-    ],
-    "optionPrices": {},
-    "sale": false,
-    "soldOut": true
-  },
-  {
     "id": 1445,
     "product_no": 1445,
     "name": "네스티바 20,000 일회용 전자담배  20ml",
