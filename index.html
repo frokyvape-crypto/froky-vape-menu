@@ -516,6 +516,7 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
 <button class="kakao-float" onclick="window.open('http://pf.kakao.com/_MxhQqX','_blank')">카카오톡 문의</button>
 <div class="toast" id="toast"></div>
 <script src="purchase-rules.js?v=20261103-paytext"></script>
+<script src="catalog-search.js?v=20261103-search"></script>
 <script>
 const PAY_URL='https://frokyvape.com/product/찾으시는-제품-찾아드립니다/1134/category/54/display/1/';
 const PERSONAL_PAY_PRODUCT_NO='1134';
@@ -607,26 +608,7 @@ function startBestCarousel(){
 function buildCarousel(){const best=P.filter(p=>p.cat==='best');const track=document.getElementById('carousel-track');track.innerHTML=best.map(p=>{const partial=!p.soldOut&&Array.isArray(p.soldOutOptions)&&p.soldOutOptions.length;return`<div class="best-card${p.soldOut?' sold-out':''}" onclick="openBestCard(${p.id})"><img src="${getImgs(p)[0]||''}" alt="${escH(p.name)}" loading="lazy" draggable="false">${p.soldOut?'<span class="soldout-badge">품절</span>':partial?'<span class="soldout-badge">일부 옵션 품절</span>':''}<div class="best-card-body"><div class="best-card-name">${escH(p.name)}${p.sale?'<span class="hot">SALE</span>':''}</div><div class="best-card-price">${p.soldOut?'품절':productDisplayPrice(p)}</div></div></div>`;}).join('');startBestCarousel();}
 function renderGrid(cat){currentCat=cat;const items=cat==='all'?P:P.filter(p=>p.cat===cat);document.getElementById('best-section').style.display=cat==='all'?'':'none';document.getElementById('section-label').textContent=cat==='all'?'전체 상품':categoryLabel(cat);document.getElementById('product-grid').innerHTML=items.map(cardHTML).join('');}
 function filterCat(cat,el){currentCat=cat;document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');renderGrid(cat);}
-const SEARCH_SYNONYM_GROUPS=[
-  ['포도','그레이프','grape'],
-  ['자두','플럼','plum'],
-  ['복숭아','피치','peach'],
-  ['딸기','스트로베리','strawberry'],
-  ['수박','워터멜론','watermelon'],
-  ['사과','애플','apple'],
-  ['파인애플','pineapple'],
-];
-function searchKey(s){return String(s||'').toLowerCase().replace(/\s+/g,'');}
-function searchKeys(s){
-  const key=searchKey(s),keys=new Set([key]);
-  if(!key)return[];
-  SEARCH_SYNONYM_GROUPS.forEach(group=>{
-    const normalized=group.map(searchKey);
-    if(normalized.some(term=>key.includes(term)||(key.length>=2&&term.includes(key))))normalized.forEach(term=>keys.add(term));
-  });
-  return[...keys];
-}
-function onSearch(val){const q=val.trim(),keys=searchKeys(q);document.getElementById('search-clear').style.display=q?'block':'none';if(!q){document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');return;}document.getElementById('best-section').style.display='none';const res=P.filter(p=>[p.name,p.flavor,...(Array.isArray(p.options)?p.options:[])].some(v=>{const value=searchKey(v);return keys.some(key=>value.includes(key));}));const lbl=document.getElementById('search-result-label');lbl.style.display='block';lbl.textContent=`"${q}" 검색 결과 ${res.length}개`;document.getElementById('section-label').textContent='검색 결과';document.getElementById('product-grid').innerHTML=res.length?res.map(cardHTML).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0">검색 결과가 없습니다 😢</div>';}
+function onSearch(val){const q=val.trim();document.getElementById('search-clear').style.display=q?'block':'none';if(!q){document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');return;}document.getElementById('best-section').style.display='none';const res=P.filter(p=>CatalogSearch.matches(p,q));const lbl=document.getElementById('search-result-label');lbl.style.display='block';lbl.textContent=`"${q}" 검색 결과 ${res.length}개`;document.getElementById('section-label').textContent='검색 결과';document.getElementById('product-grid').innerHTML=res.length?res.map(cardHTML).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0">검색 결과가 없습니다 😢</div>';}
 function clearSearch(){document.getElementById('search-input').value='';document.getElementById('search-clear').style.display='none';document.getElementById('search-result-label').style.display='none';document.getElementById('best-section').style.display='';renderGrid('all');}
 function renderCurrentView(){const q=document.getElementById('search-input')?.value||'';buildCarousel();if(q.trim())onSearch(q);else renderGrid(currentCat||'all');}
 function renderSheetOptions(p,selected=''){const options=Array.isArray(p.options)?p.options:[];const optionEl=document.getElementById('s-option');optionEl.innerHTML=options.length?'<option value="">옵션 선택</option>'+options.map(o=>{const soldOut=isOptionSoldOut(p,o);return`<option value="${escAttr(o)}" ${soldOut?'disabled':''}>${escAttr(optionLabel(p,o))}${soldOut?' (품절)':''}</option>`;}).join(''):'<option value="옵션 없음">옵션 없음</option>';optionEl.disabled=!options.length;if(options.includes(selected)&&!isOptionSoldOut(p,selected))optionEl.value=selected;else if(!options.length)optionEl.value='옵션 없음';}
@@ -787,41 +769,44 @@ function sheetBuyNow(){
   if(!opt){showToast('⚠️ 옵션을 선택해 주세요');return;}
   if(isOptionSoldOut(sp,opt)){showToast('⚠️ 품절된 옵션입니다');return;}
   const unit=optionUnitPrice(sp,opt);
-  const total=unit*sq;
   const purchase=PurchaseRules.validate([{id:sp.id,name:sp.name,option:opt,qty:sq,price:unit}],P);
   if(!purchase.valid){showToast(`⚠️ ${purchase.errors[0]}`);return;}
+  showPayModal([{id:sp.id,name:sp.name,option:opt,qty:sq,price:unit}]);
+  closeSheet();
+  refreshIfChanged();
+}
+let _pmPayQty=0,_pmPayCopyText='',_pmRealCopyText='',_pmOrderItems=[];
+function pmTotal(){return _pmOrderItems.reduce((sum,item)=>sum+item.price*item.qty,0);}
+function showPayModal(items){
+  _pmOrderItems=items.map(({id,name,option,qty,price})=>({id,name,option,qty,price}));
+  const total=pmTotal();
   _pmPayQty=privatePayQuantity(total);
   _pmPayCopyText=String(_pmPayQty);
-  _pmRealCopyText=formatPmAutoInputPreview([{name:sp.name,option:opt,qty:sq}]);
-  _pmOrderItems=[{id:sp.id,name:sp.name,option:opt,qty:sq,price:unit}];
-  document.getElementById('pm-items').innerHTML=`<div class="order-row"><div><div class="order-row-name">${escH(sp.name)}</div><div class="order-row-opt">${opt&&opt!=='옵션 없음'?`${escH(opt)} × `:''}${sq}개</div></div><span class="order-row-price">${fmt(total)}</span></div>`;
+  _pmRealCopyText=formatPmAutoInputPreview(_pmOrderItems);
+  document.getElementById('pm-items').innerHTML=_pmOrderItems.map(c=>`<div class="order-row"><div><div class="order-row-name">${escH(c.name)}</div><div class="order-row-opt">${c.option&&c.option!=='옵션 없음'?`${escH(c.option)} × `:''}${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');
   document.getElementById('pm-total').textContent=fmt(total);
   document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();
   document.getElementById('pm-pay-amount').textContent=fmt(total);
   document.getElementById('pm-real-qty').textContent=_pmRealCopyText;
   resetPayRequiredCheck();
   document.getElementById('pay-modal-overlay').classList.add('open');
-  closeSheet();
 }
-let _pmPayQty=0,_pmPayCopyText='',_pmRealCopyText='',_pmOrderItems=[];
+function isPayModalOpen(){return document.getElementById('pay-modal-overlay').classList.contains('open');}
+// 결제창을 연 사이 가격이 바뀌면 새 가격으로 다시 그린다. 총액이 바뀌었으면 true.
+function syncOpenPayModal(){
+  if(!isPayModalOpen())return false;
+  const before=pmTotal();
+  showPayModal(_pmOrderItems.map(item=>{const p=P.find(x=>String(x.id)===String(item.id));return p?{...item,name:p.name,price:optionUnitPrice(p,item.option)}:item;}));
+  return pmTotal()!==before;
+}
 function openPayModal(){
   closeCart();
   const soldOutItem=cart.find(item=>isCartItemSoldOut(item,P.find(p=>String(p.id)===String(item.id))));
   if(soldOutItem){showToast(`⚠️ ${soldOutItem.name} 상품 또는 옵션이 품절되었습니다`);syncCartWithProducts();openCart();return;}
   const purchase=PurchaseRules.validate(cart,P);
   if(!purchase.valid){showToast(`⚠️ ${purchase.errors[0]}`);openCart();return;}
-  const total=cart.reduce((s,c)=>s+c.price*c.qty,0);
-  _pmPayQty=privatePayQuantity(total);
-  _pmPayCopyText=String(_pmPayQty);
-  _pmRealCopyText=formatPmAutoInputPreview(cart);
-  _pmOrderItems=cart.map(c=>({id:c.id,name:c.name,option:c.option,qty:c.qty,price:c.price}));
-  document.getElementById('pm-items').innerHTML=cart.map(c=>`<div class="order-row"><div><div class="order-row-name">${escH(c.name)}</div><div class="order-row-opt">${escH(c.option)} × ${c.qty}개</div></div><span class="order-row-price">${fmt(c.price*c.qty)}</span></div>`).join('');
-  document.getElementById('pm-total').textContent=fmt(total);
-  document.getElementById('pm-pay-qty').textContent=_pmPayQty.toLocaleString();
-  document.getElementById('pm-pay-amount').textContent=fmt(total);
-  document.getElementById('pm-real-qty').textContent=_pmRealCopyText;
-  resetPayRequiredCheck();
-  document.getElementById('pay-modal-overlay').classList.add('open');
+  showPayModal(cart);
+  refreshIfChanged();
 }
 function closePayModal(){document.getElementById('pay-modal-overlay').classList.remove('open');}
 function resetPayRequiredCheck(){
@@ -869,8 +854,7 @@ async function goToPay(){
   if(soldOutItem){showToast(`⚠️ ${soldOutItem.name} 상품 또는 옵션이 품절되었습니다`);return;}
   const purchase=PurchaseRules.validate(_pmOrderItems,P);
   if(!purchase.valid){showToast(`⚠️ ${purchase.errors[0]}`);return;}
-  const total=_pmOrderItems.reduce((sum,item)=>sum+item.price*item.qty,0);
-  const payUrl=buildAutoPayUrl(_pmOrderItems,total);
+  const payUrl=buildAutoPayUrl(_pmOrderItems,pmTotal());
   if(!payUrl){showToast('총금액이 100원 단위인지 확인해 주세요.');return;}
   if(document.getElementById('pm-overflow').style.display!=='none')copyOrderMemo();
   // 비로그인 고객이 결제 주소로 바로 가면 몰이 주문 정보를 버려 로그인 주소로 보낸다. 이미 로그인한 고객은 스킨 member/login.html의 스크립트가 결제창으로 넘긴다.
@@ -943,11 +927,12 @@ async function refreshIfChanged(){
       syncCartWithProducts();
       syncOpenProductSheet();
       renderCurrentView();
-      showToast('상품 정보가 업데이트되었습니다');
+      showToast(syncOpenPayModal()?'⚠️ 가격이 변경되어 결제 금액을 다시 계산했습니다':'상품 정보가 업데이트되었습니다');
     }
   }catch(e){}
 }
-function startAutoRefresh(){clearInterval(autoRefreshTimer);autoRefreshTimer=setInterval(refreshIfChanged,5000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshIfChanged();});}
+// 상품 데이터가 커서 평소에는 1분마다 확인하고, 결제창이 열려 있을 때만 5초마다 확인한다.
+function startAutoRefresh(){clearInterval(autoRefreshTimer);let ticks=0;autoRefreshTimer=setInterval(()=>{if(isPayModalOpen()||++ticks%12===0)refreshIfChanged();},5000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshIfChanged();});}
 async function initPage(){await loadSiteConfig({allowPopup:true});await loadProducts();startAutoRefresh();}
 initPage();
 </script>

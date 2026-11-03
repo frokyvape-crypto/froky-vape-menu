@@ -290,6 +290,12 @@ function getModalOptions() {
   const seen = new Set();
   return raw.split(',').map(s => s.trim()).filter(Boolean).filter(opt => !seen.has(opt) && seen.add(opt));
 }
+// 결제 수량이 금액÷100이라 100원 단위가 아니면 고객이 결제할 수 없다.
+function priceError(value) {
+  const price = Number(value);
+  if (!Number.isInteger(price) || price <= 0) return '0원보다 큰 정수로 입력하세요';
+  return price % 100 ? '100원 단위로 입력하세요' : '';
+}
 function normalizeOptionPrices(map, allowedOptions) {
   const allowed = new Set(allowedOptions || []);
   const out = {};
@@ -1120,7 +1126,7 @@ function renderTable() {
   const sort = document.getElementById('flt-sort')?.value || 'newest';
   const stock = document.getElementById('flt-stock')?.value || '';
   let list = products.filter(p =>
-    (!q || p.name.toLowerCase().includes(q) || (p.flavor || '').toLowerCase().includes(q)) &&
+    CatalogSearch.matches(p, q) &&
     (!c || p.cat === c) &&
     (!stock || (stock === 'off' ? !!p.soldOut : !p.soldOut))
   );
@@ -1173,7 +1179,7 @@ async function toggleSoldOut(id) {
 }
 
 async function checkRemoteChanges() {
-  if (isSaving) return;
+  if (isSaving || document.hidden) return;
   const anyModalOpen = !!document.querySelector('.modal-bg.open');
   try {
     const rawData = applyMyRecentEdits(await fetchLatestProducts());
@@ -1225,7 +1231,7 @@ async function checkRemoteChanges() {
 }
 function startAutoRefresh() {
   stopAutoRefresh();
-  autoRefreshTimer = setInterval(checkRemoteChanges, 5000);
+  autoRefreshTimer = setInterval(checkRemoteChanges, 30000);
 }
 function stopAutoRefresh() {
   if (autoRefreshTimer) { clearInterval(autoRefreshTimer); autoRefreshTimer = null; }

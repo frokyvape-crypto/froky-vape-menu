@@ -426,6 +426,7 @@
   <div class="toast" id="toast"></div>
 
   <script src="../purchase-rules.js?v=20261103-paytext"></script>
+  <script src="../catalog-search.js?v=20261103-search"></script>
   <script>
     const PRODUCT_URL='../products.json';
     const CONFIG_URL='../site-config.json';
@@ -450,7 +451,6 @@
     const $=id=>document.getElementById(id);
     const won=n=>`${Number(n||0).toLocaleString('ko-KR')}원`;
     const text=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    const normalized=v=>String(v??'').toLowerCase().replace(/\s+/g,'');
     const images=p=>[...(Array.isArray(p.imgs)?p.imgs:[]),p.img].filter((v,i,a)=>v&&a.indexOf(v)===i);
     const detailImages=p=>[...(Array.isArray(p.detailImgs)?p.detailImgs:[]),p.detailImg].filter((v,i,a)=>v&&a.indexOf(v)===i);
     const productPrice=(p,option)=>Number(p?.optionPrices?.[option]??p?.price??0);
@@ -562,9 +562,11 @@
         refreshInFlight=false;
       }
     }
+    // 상품 데이터가 커서 평소에는 1분마다 확인하고, 장바구니가 열려 있을 때만 5초마다 확인한다.
     function startAutoRefresh(){
       clearInterval(autoRefreshTimer);
-      autoRefreshTimer=setInterval(refreshIfChanged,5000);
+      let ticks=0;
+      autoRefreshTimer=setInterval(()=>{if($('drawer').classList.contains('open')||++ticks%12===0)refreshIfChanged()},5000);
       document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshIfChanged()});
     }
     function renderCategories(){
@@ -577,11 +579,10 @@
       }));
     }
     function visibleProducts(){
-      const query=normalized($('searchInput').value);
+      const query=$('searchInput').value;
       let list=products.filter(p=>{
         const categoryOk=activeCategory==='all'||p.cat===activeCategory;
-        const searchOk=!query||[p.name,p.flavor,...(Array.isArray(p.options)?p.options:[])].some(v=>normalized(v).includes(query));
-        return categoryOk&&searchOk;
+        return categoryOk&&CatalogSearch.matches(p,query);
       });
       const sort=$('sortSelect').value;
       if(sort==='low')list.sort((a,b)=>Number(a.price)-Number(b.price));
@@ -816,6 +817,7 @@
       saveCart();
     }
     function openCart(){
+      refreshIfChanged();
       renderCart();
       $('scrim').classList.add('open');
       $('drawer').classList.add('open');

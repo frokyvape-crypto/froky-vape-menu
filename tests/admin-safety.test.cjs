@@ -179,6 +179,22 @@ test('confirmed saves still protect their cache and no-op saves add nothing', as
   assert.equal(h.run('myRecentEdits.get(7).product.name'), 'confirmed');
 });
 
+test('prices must be positive whole numbers in 100 won units', () => {
+  const h = admin();
+  for (const good of [100, 8300, '12000']) assert.equal(h.run(`priceError(${JSON.stringify(good)})`), '', good);
+  for (const bad of [-100, 0, '', 8350, 12000.5, 'abc']) assert.notEqual(h.run(`priceError(${JSON.stringify(bad)})`), '', bad);
+});
+
+test('bad prices stop every save path, but untouched products do not block saves', async () => {
+  const h = admin();
+  h.run("WORKER_URL=''; siteConfig={}; fetchLatestProducts=async()=>[{id:7,name:'old',price:8350},{id:8,name:'ok',price:8300}]; var writes=0; saveViaDirect=async()=>{writes++; return {ok:true}};");
+  await assert.rejects(h.run("persistProductsMutation(list=>list.map(p=>p.id===8?{...p,price:-100}:p),'fixture')"), /0원보다 큰/);
+  await assert.rejects(h.run("persistProductsMutation(list=>[...list,{id:9,name:'new',price:1250}],'fixture')"), /100원 단위/);
+  assert.equal(h.run('writes'), 0);
+  await h.run("persistProductsMutation(list=>list.map(p=>p.id===8?{...p,name:'renamed'}:p),'fixture')");
+  assert.equal(h.run('writes'), 1);
+});
+
 test('elapsed time cannot announce deployment success', () => {
   const h = admin(), span = { textContent: '' };
   h.node('deploy-banner').querySelector = () => span;

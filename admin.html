@@ -359,7 +359,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
       </div>
       <div class="section-body">
         <div class="filter-bar">
-          <input type="text" id="flt-q" placeholder="🔍 상품명 검색..." oninput="renderTable()">
+          <input type="text" id="flt-q" placeholder="🔍 상품명·옵션 검색..." oninput="renderTable()">
           <select id="flt-cat" onchange="renderTable()">
             <option value="">전체</option>
             <option value="best">베스트</option>
@@ -554,7 +554,7 @@ tr:hover td{background:rgba(128,128,128,.06);}
       <input type="hidden" id="f-id">
       <div class="form-grid">
         <div class="form-row"><label>상품명 *</label><input id="f-name" type="text" placeholder="망고 아이스"></div>
-        <div class="form-row"><label>가격 (원) *</label><input id="f-price" type="number" placeholder="12000"></div>
+        <div class="form-row"><label>가격 (원) *</label><input id="f-price" type="number" min="100" step="100" placeholder="12000"></div>
       </div>
       <div class="form-row"><label>상품 안내 문구</label><input id="f-flavor" type="text" placeholder="예: 1박스 (10병) 단위로 구매 가능 상품입니다"></div>
 
@@ -654,8 +654,9 @@ tr:hover td{background:rgba(128,128,128,.06);}
 
 <div class="toast" id="toast"></div>
 
-<script src="admin-app1.js?v=20261026-admin-safety"></script>
-<script src="admin-app2.js?v=20261026-admin-safety"></script>
+<script src="catalog-search.js?v=20261103-search"></script>
+<script src="admin-app1.js?v=20261103-price"></script>
+<script src="admin-app2.js?v=20261103-price"></script>
 <script>
 /* 보안 억제(눈속임): 우클릭/개발자도구 단축키 차단 + 경고 오버레이.
    ※ 실제 보안이 아니라 일반인 대상 심리적 억제용 — 아는 사람은 우회 가능. */

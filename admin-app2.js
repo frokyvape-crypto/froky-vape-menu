@@ -217,6 +217,10 @@ async function persistProductsMutation(mutator, message) {
       recordKnownProductHash(preSaveHash); // 저장 직전 상태도 "우리가 본 상태"로 기록 (CDN 지연 대비)
       const nextProducts = mutator(base.map(p => ({...p})));
       if (!Array.isArray(nextProducts)) throw new Error('상품 변경 결과가 올바르지 않습니다');
+      // 카페24 가져오기처럼 입력창을 거치지 않는 저장도 막는다. 건드리지 않은 상품은 저장을 막지 않는다.
+      const basePrices = new Map(base.map(p => [p.id, p.price]));
+      const badPrice = nextProducts.find(p => p.price !== basePrices.get(p.id) && priceError(p.price));
+      if (badPrice) throw new Error(`${badPrice.name} 가격 ${badPrice.price}원: ${priceError(badPrice.price)}`);
       try {
         let res, adopt;
         if (useWorker && await workerSupportsOps()) {
@@ -384,6 +388,10 @@ async function saveProduct() {
   const flavor = document.getElementById('f-flavor').value.trim();
   if (!name) { toast('상품명을 입력하세요', 'err'); return; }
   if (!price || isNaN(price)) { toast('가격을 입력하세요', 'err'); return; }
+  const basePriceError = priceError(document.getElementById('f-price').value);
+  if (basePriceError) { toast('가격: ' + basePriceError, 'err'); return; }
+  const badOption = [...document.querySelectorAll('#option-price-list input[data-option]')].find(input => input.value.trim() && priceError(input.value));
+  if (badOption) { toast(`${badOption.dataset.option} 가격: ${priceError(badOption.value)} (비우면 기본가)`, 'err'); badOption.focus(); return; }
   const btn = document.getElementById('btn-save-prod');
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span>저장 중...';
   try {
