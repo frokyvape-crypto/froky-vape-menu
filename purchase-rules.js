@@ -159,11 +159,13 @@
 
   // 결제창 스킨이 inputOption0·1을 ' | '로 합쳐 200자 입력칸 하나에 넣는다.
   const PAY_TEXT_LIMIT=200;
-  function payOrderText(lines,totalQty){
-    const plain=[lines.join(' | '),`총 구매수량 ${totalQty}개`];
+  // 입금액과 바로 대조하도록 합계 금액을 항상 넣는다.
+  function payOrderText(lines,totalQty,totalAmount){
+    const amount=`${Number(totalAmount).toLocaleString('ko-KR')}원`;
+    const plain=[lines.join(' | '),`총 구매수량 ${totalQty}개 · 합계 ${amount}`];
     if(plain.join(' | ').length<=PAY_TEXT_LIMIT)return {fits:true,chunks:plain};
     const short=lines.map(line=>line.replace(/ (액상|전자담배)(?= |$)/g,'').replace(/ \/ /g,'/'));
-    const total=`총 ${totalQty}개`;
+    const total=`총 ${totalQty}개 ${amount}`;
     if([...short,total].join(' | ').length<=PAY_TEXT_LIMIT)return {fits:true,chunks:[short.join(' | '),total]};
     // 다 못 넣으면 몰래 자르지 않고, 들어가는 상품까지만 넣고 남은 종수를 밝힌다.
     const rest=count=>`외 ${count}종 카톡 전달`;
@@ -175,6 +177,75 @@
     return {fits:false,chunks:[[...kept,rest(short.length-kept.length)].join(' | '),total]};
   }
 
+  // 옵션 가격이 없거나 0 이하면 기본 가격을 쓴다.
+  function unitPrice(product,option){
+    const price=Number(product?.optionPrices?.[option]);
+    return price>0?price:Number(product?.price||0);
+  }
+
+  // 상품·옵션이 삭제됐거나 품절이면 결제할 수 없다.
+  function isUnavailable(item,product){
+    if(!product||product.soldOut)return true;
+    const options=Array.isArray(product.options)?product.options:[];
+    if(options.length&&!options.includes(item?.option))return true;
+    return Array.isArray(product.soldOutOptions)&&product.soldOutOptions.includes(item?.option);
+  }
+
+  function orderTotal(items){
+    return items.reduce((sum,item)=>sum+item.price*item.qty,0);
+  }
+
+  function orderLines(items){
+    const groups=new Map();
+    items.forEach(item=>{
+      const key=String(item.id??item.name);
+      if(!groups.has(key))groups.set(key,[oneLine(item.name)]);
+      const option=oneLine(item.option);
+      groups.get(key).push([option&&option!=='옵션 없음'?option:null,`${item.qty}개`].filter(Boolean).join(' '));
+    });
+    return [...groups.values()].map(parts=>parts.filter(Boolean).join(' / '));
+  }
+
+  function oneLine(value){
+    return String(value??'').replace(/\s+/g,' ').trim();
+  }
+
+  function payText(items){
+    return payOrderText(orderLines(items),items.reduce((sum,item)=>sum+item.qty,0),orderTotal(items));
+  }
+
+  // 결제 상품 단가가 100원이라 수량은 총액÷100이고, 100원 단위가 아니면 결제할 수 없다.
+  function payQuantity(total){
+    return total>0&&total%100===0?total/100:0;
+  }
+
+  function payUrl(baseUrl,items,products){
+    const total=orderTotal(items);
+    const quantity=payQuantity(total);
+    if(!items.length||!quantity||!validate(items,products).valid)return '';
+    const url=new URL(baseUrl);
+    url.searchParams.set('customOrder','Y');
+    url.searchParams.set('buyQty',String(quantity));
+    url.searchParams.set('orderAmount',String(total));
+    payText(items).chunks.forEach((chunk,index)=>url.searchParams.set(`inputOption${index}`,chunk));
+    return url.toString();
+  }
+
+  function statusLines(result){
+    const lines=[];
+    if(result.general)lines.push(result.general.valid
+      ?`✅ 일반 상품 전체: 합계 ${result.general.total}개로 최소 주문 충족`
+      :`⚠️ 일반 상품 전체: 현재 ${result.general.total}/${result.general.unit}개 · ${result.general.needed}개 더 담아주세요`
+    );
+    lines.push(...result.groups.map(group=>group.valid
+      ?`✅ ${group.label}: 합계 ${group.total}개로 교차묶음 완성`
+      :`⚠️ ${group.label}: 현재 ${group.total%group.unit}/${group.unit}개 · ${group.needed}개 더 담아주세요`
+    ));
+    result.errors.filter(error=>!lines.some(line=>line.includes(error.split(' 교차묶음')[0])||(error.startsWith('일반 상품은')&&line.includes('일반 상품 전체')))).forEach(error=>lines.push(`⚠️ ${error}`));
+    if(!lines.length&&result.valid&&result.hasFiveUnitItem)lines.push('✅ 5개 단위 구매 조건을 충족했습니다.');
+    return lines;
+  }
+
   function hint(product,option){
     const rule=ruleFor(product,option);
     if(rule.mode==='pack')return rule.packUnit?`기존 ${rule.packUnit}개 묶음 상품으로 구매됩니다.`:'기존 묶음 상품으로 구매됩니다.';
@@ -182,5 +253,5 @@
     return `일반 상품은 종류와 맛에 관계없이 장바구니 전체 합계 최소 ${rule.unit}개부터 구매할 수 있습니다.`;
   }
 
-  root.PurchaseRules={configure,ruleFor,initialQty,normalizeQty,adjustQty,validate,hint,isPackOption,mixGroupFor,payOrderText};
+  root.PurchaseRules={configure,ruleFor,initialQty,normalizeQty,adjustQty,validate,hint,isPackOption,mixGroupFor,payOrderText,unitPrice,isUnavailable,orderTotal,orderLines,payText,payQuantity,payUrl,statusLines};
 })(typeof window!=='undefined'?window:globalThis);
