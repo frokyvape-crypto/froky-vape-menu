@@ -157,6 +157,24 @@
     return {valid:errors.length===0,errors,groups,general,hasFiveUnitItem};
   }
 
+  // 결제창 스킨이 inputOption0·1을 ' | '로 합쳐 200자 입력칸 하나에 넣는다.
+  const PAY_TEXT_LIMIT=200;
+  function payOrderText(lines,totalQty){
+    const plain=[lines.join(' | '),`총 구매수량 ${totalQty}개`];
+    if(plain.join(' | ').length<=PAY_TEXT_LIMIT)return {fits:true,chunks:plain};
+    const short=lines.map(line=>line.replace(/ (액상|전자담배)(?= |$)/g,'').replace(/ \/ /g,'/'));
+    const total=`총 ${totalQty}개`;
+    if([...short,total].join(' | ').length<=PAY_TEXT_LIMIT)return {fits:true,chunks:[short.join(' | '),total]};
+    // 다 못 넣으면 몰래 자르지 않고, 들어가는 상품까지만 넣고 남은 종수를 밝힌다.
+    const rest=count=>`외 ${count}종 카톡 전달`;
+    const kept=[];
+    for(const line of short){
+      if([...kept,line,rest(short.length-kept.length-1),total].join(' | ').length>PAY_TEXT_LIMIT)break;
+      kept.push(line);
+    }
+    return {fits:false,chunks:[[...kept,rest(short.length-kept.length)].join(' | '),total]};
+  }
+
   function hint(product,option){
     const rule=ruleFor(product,option);
     if(rule.mode==='pack')return rule.packUnit?`기존 ${rule.packUnit}개 묶음 상품으로 구매됩니다.`:'기존 묶음 상품으로 구매됩니다.';
@@ -164,5 +182,5 @@
     return `일반 상품은 종류와 맛에 관계없이 장바구니 전체 합계 최소 ${rule.unit}개부터 구매할 수 있습니다.`;
   }
 
-  root.PurchaseRules={configure,ruleFor,initialQty,normalizeQty,adjustQty,validate,hint,isPackOption,mixGroupFor};
+  root.PurchaseRules={configure,ruleFor,initialQty,normalizeQty,adjustQty,validate,hint,isPackOption,mixGroupFor,payOrderText};
 })(typeof window!=='undefined'?window:globalThis);
