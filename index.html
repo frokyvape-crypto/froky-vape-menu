@@ -497,11 +497,10 @@ body:not([data-notice-mode="stock"]):not([data-notice-mode="default"]) .notice-b
         </div>
         <div class="pm-login-guide">
           <div class="pm-login-title">🔒 결제 전 로그인 확인</div>
-          <div class="pm-login-text">프로키베이프 회원만 결제할 수 있습니다. 로그인하지 않았다면 <b>로그인하고 결제하기</b>를 눌러 주세요. 로그인하면 주문 내용이 결제창에 그대로 이어집니다.</div>
+          <div class="pm-login-text">프로키베이프 회원만 결제할 수 있습니다. 로그인하지 않았다면 로그인 화면이 먼저 열리고, 로그인하면 주문 내용이 결제창에 그대로 이어집니다.</div>
         </div>
         <div class="pay-btns">
-          <button class="go-pay-btn" id="go-login-btn" onclick="goToPay(true)">로그인하고 결제하기 →</button>
-          <button class="go-pay-sub-btn" id="go-pay-btn" onclick="goToPay(false)">이미 로그인했어요 · 바로 결제</button>
+          <button class="go-pay-btn" id="go-pay-btn" onclick="goToPay()">결제하러 가기 →</button>
         </div>
       </div>
     </div>
@@ -865,7 +864,7 @@ function buildAutoPayUrl(items,total){
   return url.toString();
 }
 function loginPayUrl(payUrl){const u=new URL(payUrl);return `${u.origin}/member/login.html?returnUrl=${encodeURIComponent(u.pathname+u.search)}`;}
-async function goToPay(viaLogin=false){
+async function goToPay(){
   const soldOutItem=_pmOrderItems.find(item=>isCartItemSoldOut(item,P.find(p=>String(p.id)===String(item.id))));
   if(soldOutItem){showToast(`⚠️ ${soldOutItem.name} 상품 또는 옵션이 품절되었습니다`);return;}
   const purchase=PurchaseRules.validate(_pmOrderItems,P);
@@ -874,8 +873,9 @@ async function goToPay(viaLogin=false){
   const payUrl=buildAutoPayUrl(_pmOrderItems,total);
   if(!payUrl){showToast('총금액이 100원 단위인지 확인해 주세요.');return;}
   if(document.getElementById('pm-overflow').style.display!=='none')copyOrderMemo();
-  const target=viaLogin?loginPayUrl(payUrl):payUrl;
-  // 비로그인 고객이 바로 이동하면 몰이 주문 정보를 버리므로, 새 탭으로 열어 이 화면의 장바구니를 남긴다.
+  // 비로그인 고객이 결제 주소로 바로 가면 몰이 주문 정보를 버려 로그인 주소로 보낸다. 이미 로그인한 고객은 스킨 member/login.html의 스크립트가 결제창으로 넘긴다.
+  const target=loginPayUrl(payUrl);
+  // 로그인을 그만두거나 회원가입으로 빠져도 이 화면의 장바구니가 남도록 새 탭으로 연다.
   const tab=window.open(target,'_blank');
   if(tab)tab.opener=null;else window.location.assign(target);
 }
