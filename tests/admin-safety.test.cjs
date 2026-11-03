@@ -195,6 +195,39 @@ test('bad prices stop every save path, but untouched products do not block saves
   assert.equal(h.run('writes'), 1);
 });
 
+test('uploads shrink only when the result is safe and smaller', async () => {
+  const h = admin();
+  const file = (name, type, bytes = new Uint8Array(400 * 1024)) => new File([bytes], name, { type });
+  const shrink = input => { h.c.input = input; return h.run('shrinkImage(input)'); };
+  let canvas, encoded = new Blob([new Uint8Array(1000)], { type: 'image/webp' });
+  h.c.File = File;
+  h.c.createImageBitmap = async () => ({ width: 2400, height: 1000 });
+  h.c.encode = done => done(encoded);
+  h.c.remember = value => { canvas = value; return value; };
+  h.run("document.createElement = () => remember({ getContext: () => ({ drawImage() {} }), toBlob: done => encode(done) })");
+
+  const small = await shrink(file('a.png', 'image/png'));
+  assert.equal(small.name, 'a.webp');
+  assert.equal(small.type, 'image/webp');
+  assert.equal(small.size, 1000);
+  assert.deepEqual([canvas.width, canvas.height], [1200, 500]);
+
+  for (const keep of [
+    file('tiny.png', 'image/png', new Uint8Array(1000)),
+    file('moving.gif', 'image/gif'),
+    file('moving.png', 'image/png', new TextEncoder().encode('acTL'.padEnd(400 * 1024))),
+    file('moving.webp', 'image/webp', new TextEncoder().encode('ANIM'.padEnd(400 * 1024))),
+  ]) assert.equal(await shrink(keep), keep, keep.name);
+
+  const original = file('b.jpg', 'image/jpeg');
+  encoded = new Blob([new Uint8Array(1000)], { type: 'image/png' });
+  assert.equal(await shrink(original), original, 'Safari는 WebP 대신 PNG를 돌려준다');
+  encoded = new Blob([new Uint8Array(500 * 1024)], { type: 'image/webp' });
+  assert.equal(await shrink(original), original, '더 커지면 원본을 쓴다');
+  h.c.createImageBitmap = async () => { throw Error('decode failed'); };
+  assert.equal(await shrink(original), original, '읽지 못하면 원본을 쓴다');
+});
+
 test('elapsed time cannot announce deployment success', () => {
   const h = admin(), span = { textContent: '' };
   h.node('deploy-banner').querySelector = () => span;

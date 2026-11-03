@@ -244,7 +244,32 @@ async function ghApi(method, path, body) {
   return r;
 }
 
+// 저장소 용량이 1GB 한도에 가까워 올리기 전에 줄인다. 줄이지 못하면 원본을 올린다.
+// shortcut: Safari는 WebP를 만들지 못해 원본을 올린다, Safari로 관리하게 되면 JPEG 경로를 추가한다.
+async function shrinkImage(file) {
+  if (file.size <= 300 * 1024 || !/^image\/(jpeg|png|webp)$/.test(file.type)) return file;
+  try {
+    // 움직이는 PNG·WebP는 첫 장면만 남으므로 그대로 올린다.
+    const head = new TextDecoder('latin1').decode(await file.slice(0, 65536).arrayBuffer());
+    if (/acTL|ANIM/.test(head)) return file;
+    const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, 1200 / bitmap.width);
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(bitmap.width * scale);
+    canvas.height = Math.round(bitmap.height * scale);
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    const blob = await new Promise(done => canvas.toBlob(done, 'image/webp', 0.82));
+    if (!blob || blob.type !== 'image/webp' || blob.size >= file.size) return file;
+    return new File([blob], file.name.replace(/\.\w+$/, '') + '.webp', { type: 'image/webp' });
+  } catch (e) {
+    return file;
+  }
+}
+
 async function uploadImg(file) {
+  file = await shrinkImage(file);
   const base64 = await new Promise((res, rej) => {
     const r = new FileReader();
     r.onload = e => res(e.target.result.split(',')[1]);
