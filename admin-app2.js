@@ -50,30 +50,6 @@ function clearWorker() {
   toast('Worker 설정 초기화', 'info');
 }
 
-async function saveViaWorker(nextProducts = products) {
-  const url = WORKER_URL + '/api/github/products';
-  console.log('[saveAndDeploy] Worker mode:', url);
-  const r = await fetch(url, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
-    body: JSON.stringify({ products: nextProducts }),
-  });
-  let data;
-  try { data = await r.json(); } catch { data = { message: 'Invalid JSON response' }; }
-  if (!r.ok || !data.ok) {
-    showErrorModal({
-      action: 'GitHub 상품 데이터 저장 (Worker)',
-      cause: data.message || `HTTP ${r.status}`,
-      fix: data.guide || 'Worker URL/Admin Key/Worker 환경변수를 확인하세요.',
-      status: data.status || r.status,
-      message: data.message || 'Unknown',
-    });
-    throw Object.assign(new Error(data.message || `HTTP ${r.status}`), { status: data.status || r.status });
-  }
-  console.log('[saveAndDeploy] Worker OK', data);
-  return data;
-}
-
 // before→after를 비교해 실제 변경분(ops)만 추출. stale한 부분은 ops에 포함되지 않으므로
 // Worker가 최신 위에 병합할 때 다른 관리자의 변경을 덮어쓰지 않는다.
 function diffProducts(before, after) {
@@ -91,18 +67,6 @@ function diffProducts(before, after) {
 }
 
 // ops(변경분)만 Worker로 전송 → Worker가 GitHub 최신본 위에 병합 후 저장. 병합된 전체 배열 반환
-// Worker가 ops 병합 모드를 지원하는지 확인 (구버전 Worker와의 하위 호환). 한 번 true면 캐시.
-let workerOpsSupported = false;
-async function workerSupportsOps() {
-  if (workerOpsSupported) return true;
-  try {
-    const r = await fetch(WORKER_URL + '/api/health', { cache: 'no-store' });
-    const d = await r.json();
-    workerOpsSupported = !!d.productsOpsMerge;
-  } catch { workerOpsSupported = false; }
-  return workerOpsSupported;
-}
-
 async function saveViaWorkerOps(ops) {
   const url = WORKER_URL + '/api/github/products';
   console.log('[saveAndDeploy] Worker ops merge:', url, ops.length + ' ops');
@@ -129,25 +93,28 @@ async function saveViaWorkerOps(ops) {
 
 async function saveViaDirect(nextProducts = products) {
   console.log('[saveAndDeploy] Direct mode');
-  const check = await ghApi('GET', `/repos/${REPO}/contents/${FILE}?ref=main`);
-  let currentSha = '';
-  if (check.ok) {
-    const cur = await check.json();
-    currentSha = cur.sha;
-    console.log('[saveAndDeploy] GET OK sha=', currentSha);
-  } else if (check.status === 404) {
-    console.log('[saveAndDeploy] products.json 없음 (신규)');
-  } else {
-    let msg = ''; try { msg = (await check.json()).message; } catch {}
-    showErrorModal({
-      action: 'GitHub 상품 데이터 저장 — 현재 파일 SHA 조회',
-      cause: `GET /contents/${FILE} 응답 ${check.status}`,
-      fix: check.status === 401 || check.status === 403
-        ? 'GitHub PAT의 repo 스코프 또는 fine-grained Contents:write 권한을 확인하세요.'
-        : 'owner/repo/path/branch 설정을 확인하세요.',
-      status: check.status, message: msg || `HTTP ${check.status}`,
-    });
-    throw new Error(`SHA 조회 실패 (HTTP ${check.status})`);
+  // 읽은 시점의 버전을 모를 때만 지금 버전을 조회한다.
+  let currentSha = catalogSha.products;
+  if (!currentSha) {
+    const check = await ghApi('GET', `/repos/${REPO}/contents/${FILE}?ref=main`);
+    if (check.ok) {
+      const cur = await check.json();
+      currentSha = cur.sha;
+      console.log('[saveAndDeploy] GET OK sha=', currentSha);
+    } else if (check.status === 404) {
+      console.log('[saveAndDeploy] products.json 없음 (신규)');
+    } else {
+      let msg = ''; try { msg = (await check.json()).message; } catch {}
+      showErrorModal({
+        action: 'GitHub 상품 데이터 저장 — 현재 파일 SHA 조회',
+        cause: `GET /contents/${FILE} 응답 ${check.status}`,
+        fix: check.status === 401 || check.status === 403
+          ? 'GitHub PAT의 repo 스코프 또는 fine-grained Contents:write 권한을 확인하세요.'
+          : 'owner/repo/path/branch 설정을 확인하세요.',
+        status: check.status, message: msg || `HTTP ${check.status}`,
+      });
+      throw new Error(`SHA 조회 실패 (HTTP ${check.status})`);
+    }
   }
 
   const content = base64EncodeUtf8(JSON.stringify(nextProducts, null, 2));
@@ -175,7 +142,6 @@ async function saveViaDirect(nextProducts = products) {
     throw Object.assign(new Error(`PUT ${r.status}: ${e.message || ''}`), { status: r.status });
   }
   const rj = await r.json();
-  fileSha = rj.content.sha;
   return { ok: true, commitUrl: rj.commit?.html_url };
 }
 
@@ -206,15 +172,13 @@ async function persistProductsMutation(mutator, message) {
         await new Promise(r => setTimeout(r, 600 * attempt));
       }
       const useWorker = WORKER_URL && ADMIN_KEY;
-      // fresh: true → 실시간 데이터 조회. 직접(PAT) 모드에서는 requireFresh로 옛 캐시 폴백을 차단해
-      // stale한 base 위에 저장하는 것을 원천 봉쇄한다. (Worker 모드는 서버가 다시 최신을 읽어 병합하므로 불필요)
-      const latest = await fetchLatestProducts({ fresh: true, requireFresh: !useWorker });
+      // 옛 캐시로 폴백하지 않는다. 옛 상품에 수정을 얹어 보내면 다른 관리자의 변경이 되돌아간다.
+      const latest = await fetchLatestProducts({ fresh: true, requireFresh: true });
       const _delIds = new Set((siteConfig.deletedProductIds || []).map(Number));
       // latest가 CDN/전파 지연으로 옛 버전이면, 내가 방금 저장한 변경분을 복원해 되돌아감 방지
       const base = applyMyRecentEdits(latest.map(p => ({...p})));
       const filteredLatest = _delIds.size ? base.filter(p => !_delIds.has(Number(p.id))) : base;
-      preSaveHash = JSON.stringify(filteredLatest);
-      recordKnownProductHash(preSaveHash); // 저장 직전 상태도 "우리가 본 상태"로 기록 (CDN 지연 대비)
+      recordKnownProductHash(JSON.stringify(filteredLatest)); // 저장 직전 상태도 "우리가 본 상태"로 기록 (CDN 지연 대비)
       const nextProducts = mutator(base.map(p => ({...p})));
       if (!Array.isArray(nextProducts)) throw new Error('상품 변경 결과가 올바르지 않습니다');
       // 카페24 가져오기처럼 입력창을 거치지 않는 저장도 막는다. 건드리지 않은 상품은 저장을 막지 않는다.
@@ -223,7 +187,7 @@ async function persistProductsMutation(mutator, message) {
       if (badPrice) throw new Error(`${badPrice.name} 가격 ${badPrice.price}원: ${priceError(badPrice.price)}`);
       try {
         let res, adopt;
-        if (useWorker && await workerSupportsOps()) {
+        if (useWorker) {
           // 변경분(ops)만 전송 → Worker가 GitHub 최신본 위에 병합. 동시 편집해도 서로 안 덮어씁.
           const ops = diffProducts(base, nextProducts);
           if (!ops.length) {
@@ -235,10 +199,6 @@ async function persistProductsMutation(mutator, message) {
           res = await saveViaWorkerOps(ops);
           // Worker가 돌려준 병합 결과(다른 관리자 변경 포함)를 권위본으로 채택
           adopt = Array.isArray(res.products) ? res.products : nextProducts;
-        } else if (useWorker) {
-          // 구버전 Worker(ops 미지원) — 기존 전체 배열 저장으로 폴백 (하위 호환)
-          res = await saveViaWorker(nextProducts);
-          adopt = nextProducts;
         } else {
           res = await saveViaDirect(nextProducts);
           adopt = nextProducts;
@@ -269,7 +229,9 @@ async function persistDeletedProductIds({ add = [], remove = [] } = {}) {
   if (!addSet.size && !removeSet.size) return;
 
   for (let attempt = 0; attempt < 2; attempt++) {
+    if (attempt > 0) await waitForCatalogCache();
     const latestConfig = await fetchLatestSiteConfig({ fresh: true });
+    const baseSha = catalogSha.config;
     const deleted = new Set((latestConfig.deletedProductIds || []).map(Number).filter(Number.isFinite));
     addSet.forEach(id => deleted.add(id));
     removeSet.forEach(id => deleted.delete(id));
@@ -280,7 +242,7 @@ async function persistDeletedProductIds({ add = [], remove = [] } = {}) {
       const wr = await fetch(WORKER_URL + '/api/github/config', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
-        body: JSON.stringify({ config: nextConfig }),
+        body: JSON.stringify({ config: nextConfig, sha: baseSha }),
       });
       const data = await wr.json();
       status = data.status || wr.status;
@@ -289,10 +251,7 @@ async function persistDeletedProductIds({ add = [], remove = [] } = {}) {
         throw Object.assign(new Error(data.message || `삭제 목록 저장 실패 (${wr.status})`), { status });
       }
     } else {
-      const latest = await ghApi('GET', `/repos/${REPO}/contents/${CONFIG_FILE}?ref=main`);
-      let currentSha = '';
-      if (latest.ok) currentSha = (await latest.json()).sha;
-      else if (latest.status !== 404) throw new Error(`설정 SHA 조회 실패 (${latest.status})`);
+      const currentSha = await currentConfigSha();
       const body = {
         message: `chore: 삭제 상품 목록 업데이트 ${new Date().toLocaleString('ko-KR')}`,
         content: base64EncodeUtf8(JSON.stringify(nextConfig, null, 2) + '\n'),
@@ -468,8 +427,7 @@ function missingWorkerMessage() {
 function startCafe24Auth() {
   const cid = document.getElementById('c24-id').value.trim();
   if (!cid) { toast('Client ID를 먼저 입력하세요', 'err'); return; }
-  const state = Math.random().toString(36).slice(2);
-  sessionStorage.setItem('c24-state', state);
+  const state = crypto.randomUUID();
   const scope = 'mall.read_product';
   const authUrl = `https://${CAFE24_MALL_ID}.cafe24api.com/api/v2/oauth/authorize`
     + `?response_type=code&client_id=${encodeURIComponent(cid)}`
@@ -478,7 +436,7 @@ function startCafe24Auth() {
 
   // postMessage 수신 대기
   window._c24AuthHandler = async (e) => {
-    if (e.data?.type !== 'cafe24-auth-code') return;
+    if (e.origin !== location.origin || e.data?.type !== 'cafe24-auth-code' || e.data.state !== state) return;
     window.removeEventListener('message', window._c24AuthHandler);
     document.getElementById('c24-code-row').style.display = 'none';
     document.getElementById('c24-code').value = e.data.code;
@@ -568,14 +526,15 @@ async function fetchCafe24() {
         }),
       });
       const d = await r.json();
-      if (!r.ok || !d.ok) throw new Error(d.message || `카페24 조회 실패 (${r.status})`);
-      items = d.products || [];
+      // 조회에 실패해도 토큰은 이미 교체됐을 수 있으니 먼저 저장한다.
       if (d.new_refresh_token && d.new_refresh_token !== rt) {
         sessionStorage.setItem('fv-c24-rt', d.new_refresh_token);
         localStorage.removeItem('fv-c24-rt');
         document.getElementById('c24-rt').value = d.new_refresh_token;
         toast('Refresh Token 자동 갱신됨', 'info');
       }
+      if (!r.ok || !d.ok) throw new Error(d.message || `카페24 조회 실패 (${r.status})`);
+      items = d.products || [];
       // Worker가 옵션 raw를 첨부한 경우 클라이언트 파서(extractC24Options)로 옵션명 추출
       if (withOptions) {
         if (!items.some(p => p._optionsRaw !== undefined)) {
@@ -589,7 +548,8 @@ async function fetchCafe24() {
             if (opts.length) optionProducts++;
             return { ...p, _options: opts };
           });
-          toast(`옵션명 ${optionProducts}/${items.length}개 상품에서 확인`, optionProducts ? 'ok' : 'info');
+          const optionFailed = items.filter(p => p._optionError).length;
+          toast(`옵션명 ${optionProducts}/${items.length}개 상품에서 확인${optionFailed ? ` · ${optionFailed}개 조회 실패, 상품명으로 검색해 다시 불러오세요` : ''}`, optionProducts ? 'ok' : 'info');
         }
       }
     } else {
@@ -617,6 +577,13 @@ async function fetchCafe24() {
     toast(items.length + '개 상품 불러옴', 'ok');
   } catch (e) { toast('오류: ' + e.message, 'err'); }
   finally { btn.disabled = false; btn.innerHTML = '카페24 상품 불러오기'; }
+}
+
+function c24ImageUrl(s) {
+  if (!s) return '';
+  if (s.startsWith('//')) return 'https:' + s;
+  if (s.startsWith('/')) return 'https://frokyvape.cafe24.com' + s;
+  return s;
 }
 
 function c24SelAll(v) { document.querySelectorAll('.import-check').forEach(cb => cb.checked = v); }
@@ -710,13 +677,8 @@ function updateC24SellingButtons() {
 function filterC24() {
   const q = (document.getElementById('c24-filter')?.value || '').toLowerCase().trim();
   if (!window._c24) return;
-  const existingNos = new Set(products.map(p => p.product_no).filter(Boolean));
-  const toImg = s => {
-    if (!s) return '';
-    if (s.startsWith('//')) return 'https:' + s;
-    if (s.startsWith('/')) return 'https://frokyvape.cafe24.com' + s;
-    return s;
-  };
+  const existingNos = new Set(products.flatMap(p => [p.id, p.product_no]).filter(Boolean));
+  const deletedIds = new Set((siteConfig.deletedProductIds || []).map(Number));
   const statusFilter = window._c24SellingFilter || '';
   let filtered = window._c24;
   if (statusFilter === 'selling') filtered = filtered.filter(isC24Selling);
@@ -728,9 +690,12 @@ function filterC24() {
     `${filtered.length}/${window._c24.length}개 표시 · 판매중 ${sellingCount}개 · 판매안함 ${notSellingCount}개`;
   document.getElementById('c24-tbody').innerHTML = filtered.map(p => {
     const origIdx = window._c24.indexOf(p);
-    const img = toImg(p.list_image || p.detail_image || '');
+    const img = c24ImageUrl(p.list_image || p.detail_image || '');
     const isDupe = existingNos.has(p.product_no);
+    const isDeleted = deletedIds.has(Number(p.product_no));
     const selling = isC24Selling(p);
+    // 일부러 지운 상품, 판매안함 상품, 옵션을 못 읽은 상품은 직접 고를 때만 가져온다.
+    const preselect = !isDupe && !isDeleted && selling && !p._optionError;
     const optionCount = Array.isArray(p._options) ? p._options.length : 0;
     const optionNames = optionCount
       ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:5px;max-width:520px">${p._options.map(opt => `<span title="${String(opt).replace(/"/g,'&quot;')}" style="display:inline-block;background:rgba(46,204,64,.1);border:1px solid rgba(46,204,64,.25);color:var(--g);border-radius:999px;padding:2px 7px;font-size:.66rem;font-weight:800;line-height:1.45">${escHtml(opt)}</span>`).join('')}</div>`
@@ -740,10 +705,10 @@ function filterC24() {
       : p._optionError
         ? ` <span title="${String(p._optionError).replace(/"/g,'&quot;')}" style="font-size:.65rem;color:var(--red);font-weight:800;margin-left:4px">옵션 확인 실패</span>`
         : '';
-    return `<tr style="${isDupe ? 'opacity:.45' : ''}">
-      <td><input type="checkbox" class="import-check" data-i="${origIdx}" ${isDupe ? '' : 'checked'}></td>
+    return `<tr style="${preselect ? '' : 'opacity:.45'}">
+      <td><input type="checkbox" class="import-check" data-i="${origIdx}" ${preselect ? 'checked' : ''}></td>
       <td><img src="${img}" style="width:32px;height:32px;object-fit:cover;border-radius:5px;" onerror="this.src=''"></td>
-      <td>${escHtml(p.product_name)}${isDupe ? ' <span style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">중복</span>' : ''}${optionStatus}</td>
+      <td>${escHtml(p.product_name)}${isDupe ? ' <span style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">중복</span>' : ''}${isDeleted ? ' <span style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 5px;border-radius:3px;margin-left:4px">삭제한 상품</span>' : ''}${optionStatus}</td>
       <td style="white-space:nowrap">${Number(p.price).toLocaleString('ko-KR')}원</td>
       <td><span style="display:inline-block;padding:2px 7px;border-radius:4px;font-size:.68rem;font-weight:800;background:${selling ? 'rgba(46,204,64,.16)' : 'rgba(229,57,53,.14)'};color:${selling ? 'var(--g)' : 'var(--red)'}">${c24SellingLabel(p)}</span></td>
       <td><span class="cat-tag c-${CAT(p.product_name)}">${categoryLabel(CAT(p.product_name))}</span></td>
@@ -826,57 +791,28 @@ async function deleteSelected() {
 }
 
 async function importSelected() {
-  const sel = [...document.querySelectorAll('.import-check:checked')].map(cb => window._c24[+cb.dataset.i]);
+  const checked = [...document.querySelectorAll('.import-check:checked')].map(cb => window._c24[+cb.dataset.i]);
+  // 옵션을 못 읽은 상품은 옵션 없이 판매되므로 가져오지 않는다.
+  const sel = checked.filter(p => !p._optionError);
+  const skipped = checked.length - sel.length;
   let added = 0, updated = 0;
-  if (!sel.length) { toast('추가할 상품을 선택하세요', 'err'); return; }
-
-  // 낙관적 업데이트: GitHub 저장 전에 로컬 products 즉시 반영
-  const toUrl = s => {
-    if (!s) return '';
-    if (s.startsWith('//')) return 'https:' + s;
-    if (s.startsWith('/')) return 'https://frokyvape.cafe24.com' + s;
-    return s;
-  };
-  sel.forEach(p => {
-    const mainImg = toUrl(p.list_image || p.detail_image || '');
-    const detailImg = toUrl(p.detail_image || '');
-    const extraImgs = Array.isArray(p.additional_images)
-      ? p.additional_images.map(img => toUrl(typeof img === 'string' ? img : (img.big || img.medium || img.url || img.small || ''))).filter(Boolean)
-      : [];
-    const allDetailImgs = [detailImg, ...extraImgs].filter(Boolean);
-    const importedOptions = Array.isArray(p._options) ? p._options : [];
-    const existing = products.find(x => x.id === p.product_no || x.product_no === p.product_no);
-    if (!existing) {
-      products.push({
-        id: p.product_no, product_no: p.product_no, name: p.product_name, price: parseInt(p.price) || 0,
-        imgs: mainImg ? [mainImg] : [], img: mainImg,
-        detailImgs: allDetailImgs, detailImg: allDetailImgs[0] || '',
-        cat: CAT(p.product_name), flavor: (p.summary_description || '').trim(),
-        options: importedOptions, optionPrices: {}, sale: !!p.price_content,
-      });
-    }
-  });
-  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-  document.getElementById('sec-products').style.display = 'block';
-  renderTable();
+  if (!sel.length) {
+    toast(skipped ? '옵션을 못 읽은 상품은 가져올 수 없습니다. 상품명으로 검색해 다시 불러오세요' : '추가할 상품을 선택하세요', 'err');
+    return;
+  }
   toast(`상품 추가 중... (${sel.length}개)`, 'info');
 
   try {
     await persistDeletedProductIds({ remove: sel.map(p => p.product_no) });
     await persistProductsMutation(latest => {
       const next = latest.map(p => ({...p}));
+      added = updated = 0; // 충돌로 다시 실행돼도 두 번 세지 않는다.
       sel.forEach(p => {
         const importedOptions = Array.isArray(p._options) ? p._options : [];
-        const toUrl = s => {
-          if (!s) return '';
-          if (s.startsWith('//')) return 'https:' + s;
-          if (s.startsWith('/')) return 'https://frokyvape.cafe24.com' + s;
-          return s;
-        };
-        const mainImg = toUrl(p.list_image || p.detail_image || '');
-        const detailImg = toUrl(p.detail_image || '');
+        const mainImg = c24ImageUrl(p.list_image || p.detail_image || '');
+        const detailImg = c24ImageUrl(p.detail_image || '');
         const extraImgs = Array.isArray(p.additional_images)
-          ? p.additional_images.map(img => toUrl(typeof img === 'string' ? img : (img.big || img.medium || img.url || img.small || ''))).filter(Boolean)
+          ? p.additional_images.map(img => c24ImageUrl(typeof img === 'string' ? img : (img.big || img.medium || img.url || img.small || ''))).filter(Boolean)
           : [];
         const allDetailImgs = [detailImg, ...extraImgs].filter(Boolean);
         const existing = next.find(x => x.id === p.product_no || x.product_no === p.product_no);
@@ -906,7 +842,7 @@ async function importSelected() {
     document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
     document.getElementById('sec-products').style.display = 'block';
     startAutoRefresh();
-    toast(`${added}개 추가됨${updated ? `, 기존 ${updated}개 옵션 갱신됨` : ''}`, added || updated ? 'ok' : 'info');
+    toast(`${added}개 추가됨${updated ? `, 기존 ${updated}개 옵션 갱신됨` : ''}${skipped ? `, 옵션 조회 실패 ${skipped}개 제외` : ''}`, added || updated ? 'ok' : 'info');
   } catch (e) {
     toast('카페24 상품 반영 실패: ' + e.message, 'err');
   }

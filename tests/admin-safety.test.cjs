@@ -147,12 +147,11 @@ test('successful config updates preserve unrelated settings', async () => {
 });
 
 test('failed saves never register unsaved changes in any transport', async () => {
-  for (const mode of ['direct', 'worker', 'ops']) {
+  for (const mode of ['direct', 'ops']) {
     const h = admin();
     h.run(`WORKER_URL=${JSON.stringify(mode === 'direct' ? '' : 'http://localhost')}; ADMIN_KEY='fixture-key';
       products=[{id:7,name:'original'}]; siteConfig={}; fetchLatestProducts=async()=>[{id:7,name:'original'}];
-      workerSupportsOps=async()=>${mode === 'ops'};
-      saveViaDirect=saveViaWorker=saveViaWorkerOps=async()=>{throw Object.assign(Error('denied'),{status:403})};`);
+      saveViaDirect=saveViaWorkerOps=async()=>{throw Object.assign(Error('denied'),{status:403})};`);
     await assert.rejects(h.run("persistProductsMutation(list=>list.map(p=>({...p,name:'unsaved'})),'fixture')"), /denied/);
     assert.equal(h.run('myRecentEdits.size'), 0, mode);
     assert.equal(h.run('products[0].name'), 'original', mode);
@@ -172,7 +171,7 @@ test('conflict retries preserve earlier confirmed edits without adding failed ed
 
 test('confirmed saves still protect their cache and no-op saves add nothing', async () => {
   const h = admin();
-  h.run("WORKER_URL='http://localhost'; ADMIN_KEY='fixture-key'; siteConfig={}; fetchLatestProducts=async()=>[{id:7,name:'original'}]; workerSupportsOps=async()=>true; saveViaWorkerOps=async()=>({ok:true});");
+  h.run("WORKER_URL='http://localhost'; ADMIN_KEY='fixture-key'; siteConfig={}; fetchLatestProducts=async()=>[{id:7,name:'original'}]; saveViaWorkerOps=async()=>({ok:true});");
   await h.run("persistProductsMutation(list=>list,'fixture')");
   assert.equal(h.run('myRecentEdits.size'), 0);
   await h.run("persistProductsMutation(list=>list.map(p=>({...p,name:'confirmed'})),'fixture')");
@@ -226,6 +225,59 @@ test('uploads shrink only when the result is safe and smaller', async () => {
   assert.equal(await shrink(original), original, '더 커지면 원본을 쓴다');
   h.c.createImageBitmap = async () => { throw Error('decode failed'); };
   assert.equal(await shrink(original), original, '읽지 못하면 원본을 쓴다');
+});
+
+test('a GitHub fallback read keeps Korean text intact', async () => {
+  const config = { categories: [{ value: '입호흡', label: '입호흡 액상' }] };
+  const content = Buffer.from(JSON.stringify(config)).toString('base64');
+  const h = admin({ fetch: async url => url.includes('/api/catalog/') ? response(503) : response(200, { content, sha: 'read-sha' }) });
+  const loaded = await h.run('fetchLatestSiteConfig({fresh:true})');
+  assert.equal(loaded.categories[0].label, '입호흡 액상');
+  assert.equal(h.run('catalogSha.config'), 'read-sha');
+});
+
+test('saves stop when no fresh product list can be read, even in Worker mode', async () => {
+  let writes = 0;
+  const h = admin({ fetch: async (url, options = {}) => {
+    if (options.method === 'PUT') writes++;
+    return url.includes('raw.githubusercontent') ? response(200, [{ id: 7, name: 'stale' }]) : response(503);
+  } });
+  h.run("WORKER_URL='http://localhost'; ADMIN_KEY='fixture-key'; siteConfig={};");
+  await assert.rejects(h.run("persistProductsMutation(list=>list.map(p=>({...p,soldOut:true})),'fixture')"), /최신 상품/);
+  assert.equal(writes, 0);
+});
+
+test('config saves send the version that was read', async () => {
+  const bodies = [];
+  const h = admin({ fetch: async (url, options = {}) => {
+    if (options.method === 'PUT') { bodies.push(JSON.parse(options.body)); return response(200, { ok: true }); }
+    return response(200, { ok: true, data: { customSetting: 'keep' }, sha: 'read-sha' });
+  } });
+  h.run("WORKER_URL='http://localhost'; ADMIN_KEY='fixture-key';");
+  await h.run("saveSiteConfig('categories')");
+  await h.run('persistDeletedProductIds({add:[7]})');
+  assert.deepEqual(bodies.map(body => body.sha), ['read-sha', 'read-sha']);
+});
+
+test('Cafe24 import leaves deleted, unsold and unreadable products unchecked', () => {
+  const h = admin();
+  h.run(`siteConfig={deletedProductIds:[3]}; products=[{id:4,name:'있음'}];
+    window._c24=[{product_no:1,product_name:'새 상품',selling:'T',price:'1000'},{product_no:2,product_name:'판매안함',selling:'F',price:'1000'},
+      {product_no:3,product_name:'지운 상품',selling:'T',price:'1000'},{product_no:4,product_name:'이미 있음',selling:'T',price:'1000'},
+      {product_no:5,product_name:'옵션 실패',selling:'T',price:'1000',_optionError:'옵션 조회 실패'}]; filterC24();`);
+  const rows = h.node('c24-tbody').innerHTML.split('<tr').slice(1);
+  assert.deepEqual(rows.map(row => /type="checkbox"[^>]*checked/.test(row)), [true, false, false, false, false]);
+  assert.match(rows[2], /삭제한 상품/);
+});
+
+test('Cafe24 import skips products whose options could not be read', async () => {
+  const h = admin();
+  const checks = [{ dataset: { i: '0' } }];
+  h.c.document.querySelectorAll = selector => selector.includes('import-check') ? checks : [];
+  h.run("window._c24=[{product_no:5,product_name:'옵션 실패',selling:'T',price:'1000',_optionError:'옵션 조회 실패'}]; var saves=0; persistProductsMutation=async()=>{saves++};");
+  await h.run('importSelected()');
+  assert.equal(h.run('saves'), 0);
+  assert.match(h.node('toast').textContent, /옵션을 못 읽은/);
 });
 
 test('elapsed time cannot announce deployment success', () => {

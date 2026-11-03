@@ -31,8 +31,8 @@ const DEFAULT_SITE_CONFIG = {
     mixGroups: [],
   },
 };
-let TOKEN = '', fileSha = '', products = [];
-let siteConfig = {...DEFAULT_SITE_CONFIG}, siteConfigSha = '';
+let TOKEN = '', products = [];
+let siteConfig = {...DEFAULT_SITE_CONFIG};
 let siteConfigLoaded = false;
 let imgSlots = { main: [], detail: [] };
 let noticeImgSlots = { banner: [], popup: [] };
@@ -45,8 +45,6 @@ let selectedNoticeMode = 'stock';
 let isSaving = false;
 let remoteHash = '';
 let remoteConfigHash = '';
-let lastSaveTime = 0;
-let preSaveHash = ''; // 저장 직전 remoteHash — CDN 구버전 구별용
 // 내가 방금 저장한 상품 변경분 보호용 (CDN/전파 지연으로 latest가 옛 버전을 줄 때 되돌아감 방지)
 // id → { product, prev, deleted, savedAt }
 let myRecentEdits = new Map();
@@ -76,31 +74,31 @@ function catalogReadBase() {
   return `${(WORKER_URL || DEFAULT_WORKER_URL).replace(/\/+$/, '')}/api/catalog`;
 }
 
+// 마지막으로 읽은 파일 버전. 이 버전으로 저장해야 그 사이 다른 저장을 덮어쓰지 않고 충돌로 알 수 있다.
+const catalogSha = { products: '', config: '' };
+const waitForCatalogCache = () => new Promise(r => setTimeout(r, 3200)); // Worker 조회 캐시(3초)가 지난 뒤 다시 읽는다.
+const parseBase64Json = b64 => JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(b64.replace(/\n/g, '')), c => c.charCodeAt(0))));
+
 async function fetchCatalogSnapshot(type) {
+  catalogSha[type] = '';
   const r = await fetch(`${catalogReadBase()}/${type}`, { cache: 'no-store' });
   if (!r.ok) throw new Error(`Worker 최신 조회 실패 (${r.status})`);
   const payload = await r.json();
   if (!payload?.ok || payload.data == null) throw new Error(payload?.message || 'Worker 최신 조회 응답 오류');
+  catalogSha[type] = payload.sha || '';
   return payload.data;
 }
 
 // ── localStorage DB ────────────────────────────
 function dbSave() {
   localStorage.setItem('fv-products', JSON.stringify(products));
-  if (fileSha) localStorage.setItem('fv-sha', fileSha);
   updateTopbar();
 }
 function dbLoad() {
   try {
     const raw = localStorage.getItem('fv-products');
     if (raw) products = JSON.parse(raw);
-    fileSha = localStorage.getItem('fv-sha') || '';
   } catch(e) { products = []; }
-}
-function dbClear() {
-  localStorage.removeItem('fv-products');
-  localStorage.removeItem('fv-sha');
-  products = []; fileSha = '';
 }
 function updateTopbar() {
   document.getElementById('topbar-user').textContent =
@@ -179,7 +177,7 @@ function logout() {
   TOKEN = '';
   sessionStorage.removeItem('fv-adm');
   localStorage.removeItem('fv-adm');
-  products = []; fileSha = '';
+  products = [];
   document.getElementById('page-app').style.display = 'none';
   document.getElementById('page-login').style.display = 'flex';
   document.getElementById('inp-token').value = '';
@@ -513,8 +511,7 @@ function applyMyRecentEdits(list) {
 
 async function fetchLatestProducts({ fresh = false, requireFresh = false } = {}) {
   // requireFresh: 인증/실시간 조회가 실패하면 stale CDN으로 폴백하지 않고 에러를 던진다
-  // (직접 PAT 모드에서 옛 데이터 위에 저장해 다른 관리자 변경을 덮어쓰는 것을 차단)
-  let apiAttempted = true;
+  // (옛 데이터 위에 저장해 다른 관리자 변경을 되돌리는 것을 차단)
   // 관리자끼리 같은 최신본을 보도록 Worker가 읽은 GitHub main을 최우선 사용한다.
   try {
     const data = await fetchCatalogSnapshot('products');
@@ -533,7 +530,6 @@ async function fetchLatestProducts({ fresh = false, requireFresh = false } = {})
       }
     } catch (e) {}
   } else if (fresh) {
-    apiAttempted = true;
     // Worker 전용 모드: 저장 직전에만 GitHub Contents API로 최신 데이터 조회 (공개 레포, rate-limit 60회/h 주의)
     try {
       const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}?ref=main&t=${Date.now()}`, {
@@ -543,13 +539,13 @@ async function fetchLatestProducts({ fresh = false, requireFresh = false } = {})
       if (r.ok) {
         const meta = await r.json();
         if (meta && meta.content) {
-          const data = JSON.parse(atob(meta.content.replace(/\n/g, '')));
-          if (Array.isArray(data)) return data;
+          const data = parseBase64Json(meta.content);
+          if (Array.isArray(data)) { catalogSha.products = meta.sha || ''; return data; }
         }
       }
     } catch (e) {}
   }
-  if (requireFresh && apiAttempted) {
+  if (requireFresh) {
     // 실시간 조회 실패 → 덮어쓰기 사고 방지를 위해 저장 중단
     throw Object.assign(
       new Error('최신 상품 데이터를 확인하지 못했습니다(캐시 폴백 차단). 잠시 후 다시 시도해 주세요.'),
@@ -569,7 +565,6 @@ async function loadProducts({ silent = false } = {}) {
   if (!silent) document.getElementById('tbl-body').innerHTML = '<tr><td colspan="9" class="empty-msg"><span class="spin"></span>불러오는 중...</td></tr>';
   try {
     const latest = applyMyRecentEdits(await fetchLatestProducts({ fresh: true }));
-    fileSha = '';
     const _delIds = new Set((siteConfig.deletedProductIds || []).map(Number));
     products = _delIds.size ? latest.filter(p => !_delIds.has(Number(p.id))) : latest;
     remoteHash = JSON.stringify(products);
@@ -1011,8 +1006,8 @@ async function fetchLatestSiteConfig({ fresh = false } = {}) {
       if (r.ok) {
         const meta = await r.json();
         if (meta && meta.content) {
-          const cfg = JSON.parse(atob(meta.content.replace(/\n/g, '')));
-          if (cfg && typeof cfg === 'object' && !Array.isArray(cfg)) return {...DEFAULT_SITE_CONFIG, ...cfg};
+          const cfg = parseBase64Json(meta.content);
+          if (cfg && typeof cfg === 'object' && !Array.isArray(cfg)) { catalogSha.config = meta.sha || ''; return {...DEFAULT_SITE_CONFIG, ...cfg}; }
         }
       }
     } catch (e) {}
@@ -1025,10 +1020,18 @@ async function fetchLatestSiteConfig({ fresh = false } = {}) {
   return {...DEFAULT_SITE_CONFIG, ...(await r.json())};
 }
 
+// 직접(PAT) 모드 저장용. 읽은 시점의 버전을 모를 때만 지금 버전을 조회한다.
+async function currentConfigSha() {
+  if (catalogSha.config) return catalogSha.config;
+  const latest = await ghApi('GET', `/repos/${REPO}/contents/${CONFIG_FILE}?ref=main`);
+  if (latest.ok) return (await latest.json()).sha;
+  if (latest.status !== 404) throw new Error(`설정 SHA 조회 실패 (${latest.status})`);
+  return '';
+}
+
 async function loadSiteConfig({ silent = false } = {}) {
   try {
     siteConfig = await fetchLatestSiteConfig();
-    siteConfigSha = '';
     siteConfigLoaded = true;
     remoteConfigHash = JSON.stringify(siteConfig);
     configDirty = false;
@@ -1073,7 +1076,9 @@ async function saveSiteConfig(scope = 'notice') {
 
     let savedConfig = null;
     for (let attempt = 0; attempt < 2; attempt++) {
+      if (attempt > 0) await waitForCatalogCache();
       const latestConfig = await fetchLatestSiteConfig({ fresh: true });
+      const baseSha = catalogSha.config;
       const nextConfig = scope === 'categories'
         ? {...latestConfig, categories: normalizeCategories(categories)}
         : scope === 'purchaseRules'
@@ -1090,23 +1095,20 @@ async function saveSiteConfig(scope = 'notice') {
           };
 
       let status = 0;
-      let contentSha = '';
       if (WORKER_URL && ADMIN_KEY) {
         const wr = await fetch(WORKER_URL + '/api/github/config', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
-          body: JSON.stringify({ config: nextConfig }),
+          body: JSON.stringify({ config: nextConfig, sha: baseSha }),
         });
         const wd = await wr.json();
         status = wd.status || wr.status;
-        if (wr.ok && wd.ok) contentSha = wd.contentSha || '';
-        else if (attempt === 0 && (status === 409 || status === 422)) continue;
-        else throw Object.assign(new Error(wd.message || `Worker config ${wr.status}`), { status });
+        if (!wr.ok || !wd.ok) {
+          if (attempt === 0 && (status === 409 || status === 422)) continue;
+          throw Object.assign(new Error(wd.message || `Worker config ${wr.status}`), { status });
+        }
       } else {
-        const latest = await ghApi('GET', `/repos/${REPO}/contents/${CONFIG_FILE}?ref=main`);
-        let currentSha = '';
-        if (latest.ok) currentSha = (await latest.json()).sha;
-        else if (latest.status !== 404) throw new Error(`설정 SHA 조회 실패 (${latest.status})`);
+        const currentSha = await currentConfigSha();
         const body = {
           message: `chore: ${scope === 'categories' ? '카테고리' : scope === 'purchaseRules' ? '구매 규칙' : '공지 설정'} 업데이트 ${new Date().toLocaleString('ko-KR')}`,
           content: base64EncodeUtf8(JSON.stringify(nextConfig, null, 2) + '\n'),
@@ -1120,11 +1122,8 @@ async function saveSiteConfig(scope = 'notice') {
           let e = {}; try { e = await r.json(); } catch {}
           throw Object.assign(new Error(e.message || `HTTP ${status}`), { status });
         }
-        const saved = await r.json();
-        contentSha = saved.content?.sha || '';
       }
       savedConfig = nextConfig;
-      siteConfigSha = contentSha;
       break;
     }
     if (!savedConfig) throw new Error('다른 관리자의 저장과 충돌했습니다. 다시 시도해 주세요.');

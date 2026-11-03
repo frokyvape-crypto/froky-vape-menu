@@ -16,14 +16,14 @@
 
 ### `PUT /api/github/products`
 
-상품 목록을 `products.json` 으로 저장.
+변경된 상품(ops)을 최신 `products.json` 위에 병합해 저장.
 
 - 헤더
   - `Content-Type: application/json`
   - `X-Admin-Key: <ADMIN_KEY>` — 관리자 인증
 - 바디
   ```json
-  { "products": [ { "id": 1, "name": "...", "price": 12000, ... } ] }
+  { "ops": [ { "type": "upsert", "product": { "id": 1, "name": "...", "price": 12000 } }, { "type": "delete", "id": 2 } ] }
   ```
 - 응답 (성공)
   ```json
@@ -41,13 +41,10 @@
 
 1. `X-Admin-Key` 검증
 2. 환경변수 검증 (`GITHUB_OWNER`, `GITHUB_REPO`, `GITHUB_BRANCH`, `PRODUCTS_PATH`, `GITHUB_TOKEN`, `ADMIN_KEY`)
-3. body의 `products` 배열 검증
-4. `GET /repos/{owner}/{repo}/contents/{path}?ref={branch}`
-   - `200` → `data.sha` 보관 (기존 파일 업데이트)
-   - `404` → `sha` 생략 (신규 파일 생성)
-   - 기타 → 에러 응답
-5. UTF-8 안전 base64 인코딩 (`TextEncoder` 기반)
-6. `PUT /repos/{owner}/{repo}/contents/{path}` 호출
+3. body의 `ops` 배열 검증 (전체 목록 덮어쓰기는 받지 않음)
+4. GitHub에서 최신 `products.json`과 `sha`를 읽음 (1MB 초과 파일은 원본 형식으로 다시 읽음)
+5. 목록을 읽지 못하면 저장 중단, 읽으면 ops 병합
+6. 읽은 `sha`로 PUT, 충돌하면 다시 읽어 최대 5회 재시도
 
 ## 배포
 

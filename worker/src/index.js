@@ -67,8 +67,7 @@ export default {
     if (url.pathname === '/api/health' && request.method === 'GET') {
       return jsonResponse({
         ok: true,
-        version: '2026-08-11-public-catalog-v1',
-        productsOpsMerge: true,
+        version: '2026-11-03-audit-fixes',
         hardened: true,
         catalogReadEndpoints: ['/api/catalog/products', '/api/catalog/config'],
         cafe24ProductsEndpoint: '/api/v2/admin/products',
@@ -228,26 +227,13 @@ async function handleSaveProducts(request, env) {
     return { ok: false, status: 400, message: 'Invalid JSON body', guide: 'request body는 JSON 이어야 합니다.' };
   }
 
-  // ── ops 병합 모드 (동시 편집 안전) ──────────────────────────────
   // 클라이언트가 "내가 바꾼 변경분(ops)"만 보내면, Worker가 GitHub에서 최신 products.json을
-  // 직접 읽어(인증 → 항상 최신) 그 위에 병합 후 저장한다. 브라우저 캐시가 옛 버전이어도
-  // stale한 부분은 애초에 전송되지 않으므로 다른 관리자의 변경을 덮어쓰지 않는다.
-  if (Array.isArray(body.ops)) {
-    try {
-      return await saveProductsWithOps(env, body.ops);
-    } catch (e) {
-      return { ok: false, status: 502, message: e.message || String(e), guide: 'GitHub API 호출 중 예외 발생.' };
-    }
+  // 직접 읽어(인증 → 항상 최신) 그 위에 병합 후 저장한다. 전체 덮어쓰기는 옛 목록으로 되돌릴 수 있어 받지 않는다.
+  if (!Array.isArray(body.ops)) {
+    return { ok: false, status: 400, message: 'ops 배열이 필요합니다.', guide: '{ "ops": [...] } 형태로 전송하세요.' };
   }
-
-  // ── 레거시 전체 배열 저장 모드 (대량 일괄 교체용) ────────────────
-  const products = body.products;
-  if (!Array.isArray(products)) {
-    return { ok: false, status: 400, message: 'products 배열 또는 ops 배열이 필요합니다.', guide: '{ "ops": [...] } 또는 { "products": [...] } 형태로 전송하세요.' };
-  }
-
   try {
-    return await saveGithubJson(env, env.PRODUCTS_PATH, products, 'chore: update products from admin');
+    return await saveProductsWithOps(env, body.ops);
   } catch (e) {
     return { ok: false, status: 502, message: e.message || String(e), guide: 'GitHub API 호출 중 예외 발생.' };
   }
@@ -256,20 +242,24 @@ async function handleSaveProducts(request, env) {
 // products.json을 GitHub에서 읽어 { data, sha } 반환 (인증 → 항상 최신/일관)
 async function readGithubJsonWithSha(env, path) {
   const url = `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${path}?ref=${env.GITHUB_BRANCH}&t=${Date.now()}`;
-  const res = await fetch(url, {
-    headers: {
-      'Authorization': `Bearer ${env.GITHUB_TOKEN}`,
-      'Accept': 'application/vnd.github+json',
-      'User-Agent': 'froky-vape-menu-worker',
-      'Cache-Control': 'no-cache',
-    },
-  });
+  const headers = {
+    'Authorization': `Bearer ${env.GITHUB_TOKEN}`,
+    'Accept': 'application/vnd.github+json',
+    'User-Agent': 'froky-vape-menu-worker',
+    'Cache-Control': 'no-cache',
+  };
+  const res = await fetch(url, { headers });
   if (res.status === 404) return { data: null, sha: null };
   const meta = await res.json();
   if (!res.ok) throw new Error(`GitHub read failed: ${res.status} ${meta.message || ''}`);
   let data = null;
   if (meta && meta.content) {
     data = JSON.parse(base64DecodeUtf8(meta.content.replace(/\n/g, '')));
+  } else if (meta && meta.encoding === 'none') {
+    // GitHub는 1MB가 넘는 파일의 내용을 비워서 준다. 원본 형식으로 다시 받는다.
+    const raw = await fetch(url, { headers: { ...headers, 'Accept': 'application/vnd.github.raw+json' } });
+    if (!raw.ok) throw new Error(`GitHub raw read failed: ${raw.status}`);
+    data = await raw.json();
   }
   return { data, sha: meta.sha || null };
 }
@@ -323,8 +313,11 @@ async function saveProductsWithOps(env, ops) {
   }
   for (let attempt = 0; attempt < 5; attempt++) {
     const { data, sha } = await readGithubJsonWithSha(env, env.PRODUCTS_PATH);
-    const baseArr = Array.isArray(data) ? data : [];
-    const merged = applyProductOps(baseArr, ops);
+    // 목록을 못 읽었는데 빈 목록으로 보고 병합하면 전체 상품이 사라진다.
+    if (!Array.isArray(data)) {
+      return { ok: false, status: 502, message: `${env.PRODUCTS_PATH}를 읽지 못해 저장을 중단했습니다.`, guide: 'GitHub 응답과 파일 경로를 확인하세요.' };
+    }
+    const merged = applyProductOps(data, ops);
     const put = await putGithubJsonWithSha(env, env.PRODUCTS_PATH, merged, 'chore: update products from admin (merge)', sha);
     if (put.ok) {
       return {
@@ -367,7 +360,7 @@ async function handleSaveConfig(request, env) {
   }
 
   try {
-    return await saveGithubJson(env, 'site-config.json', config, 'chore: update site-config from admin');
+    return await saveGithubJson(env, 'site-config.json', config, 'chore: update site-config from admin', body.sha);
   } catch (e) {
     return { ok: false, status: 502, message: e.message || String(e), guide: 'GitHub API 호출 중 예외 발생.' };
   }
@@ -387,6 +380,10 @@ async function handleUploadFile(request, env) {
   const { path, content } = body;
   if (!path || !content) {
     return { ok: false, status: 400, message: 'path와 content(base64)가 필요합니다.' };
+  }
+  // 이미지 전용 API다. 키가 새도 페이지나 작업 파일을 덮어쓰지 못하게 막는다.
+  if (!/^images\/[\w-][\w.-]*$/.test(path)) {
+    return { ok: false, status: 400, message: 'images/ 아래 파일만 올릴 수 있습니다.' };
   }
 
   try {
@@ -441,8 +438,9 @@ async function getGithubFileSha(env, path) {
   return data.sha;
 }
 
-async function saveGithubJson(env, path, jsonData, commitMessage) {
-  const currentSha = await getGithubFileSha(env, path);
+async function saveGithubJson(env, path, jsonData, commitMessage, baseSha) {
+  // 클라이언트가 읽은 시점의 버전으로 저장해야 그 사이 다른 저장을 덮어쓰지 않고 충돌(409)로 알 수 있다.
+  const currentSha = baseSha || await getGithubFileSha(env, path);
 
   const contentText = JSON.stringify(jsonData, null, 2);
   const encodedContent = base64EncodeUtf8(contentText);
@@ -566,6 +564,18 @@ async function handleCafe24Products(request, env) {
     };
   }
 
+  // 토큰은 이미 교체됐으므로 조회에 실패해도 새 토큰을 돌려줘야 다시 인증하지 않는다.
+  const new_refresh_token = tokenData.refresh_token || null;
+  try {
+    return { ...(await fetchCafe24Catalog(body, tokenData.access_token)), new_refresh_token };
+  } catch (e) {
+    return { ok: false, status: 502, message: e.message || String(e), new_refresh_token };
+  }
+}
+
+async function fetchCafe24Catalog(body, accessToken) {
+  const { mall_id, product_name, offset: reqOffset } = body;
+
   // 2단계: 상품 목록 조회
   // offset이 명시적으로 전달되면 해당 페이지 1개만, 없으면 전체 상품을 끝까지 수집
   const limit = 100;
@@ -581,7 +591,7 @@ async function handleCafe24Products(request, env) {
 
     const prodRes = await fetch(cafe24ProductsUrl, {
       headers: {
-        'Authorization': `Bearer ${tokenData.access_token}`,
+        'Authorization': `Bearer ${accessToken}`,
         'X-Cafe24-Api-Version': '2026-03-01',
       },
     });
@@ -609,14 +619,15 @@ async function handleCafe24Products(request, env) {
   // (브라우저는 CORS로 cafe24api.com 직접 호출 불가 → Worker가 대신 조회)
   if (body.with_options && allProducts.length) {
     for (const product of allProducts) {
-      product._optionsRaw = await fetchCafe24OptionsRaw(mall_id, product.product_no, tokenData.access_token);
+      product._optionsRaw = await fetchCafe24OptionsRaw(mall_id, product.product_no, accessToken);
+      // 전부 실패하면(호출 한도 초과 포함) 옵션 없는 상품으로 등록되지 않게 표시한다.
+      if (!product._optionsRaw.length) product._optionError = '옵션 조회 실패';
     }
   }
 
   return {
     ok: true,
     products: allProducts,
-    new_refresh_token: tokenData.refresh_token || null,
   };
 }
 
