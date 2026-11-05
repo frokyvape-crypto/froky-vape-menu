@@ -4278,10 +4278,12 @@
     "cat": "폐호흡",
     "flavor": "3mg",
     "options": [
-      "폐호흡 와이키키M (수박 메론 딸기)"
+      "와이키키M"
     ],
     "optionPrices": {},
-    "sale": false
+    "sale": false,
+    "soldOutOptions": [],
+    "soldOut": false
   },
   {
     "id": 630,
