@@ -9627,7 +9627,11 @@
       "피치 어프리콧"
     ],
     "optionPrices": {},
-    "soldOutOptions": [],
+    "soldOutOptions": [
+      "망고",
+      "자몽",
+      "포도"
+    ],
     "sale": false,
     "soldOut": false
   },
