@@ -4259,7 +4259,9 @@
     ],
     "optionPrices": {},
     "sale": false,
-    "soldOutOptions": [],
+    "soldOutOptions": [
+      "타박멘솔 (5병)"
+    ],
     "soldOut": false
   },
   {
